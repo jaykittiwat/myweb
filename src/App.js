@@ -5,8 +5,7 @@ class App extends Component{
     return(
       <div>
 
-              Hello world 567ssasdasdas
-
+              Hello world 567ssasda
               Hello world 567ssrtretretet
 
       </div>
