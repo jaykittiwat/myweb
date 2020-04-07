@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import Monitor from './Monitor';
 
 
-class App extends Component{
+class Webpage extends Component{
   render(){
     return(
       <div>
+        
 
-        <Monitor/>
-  
+
       </div>
     )
   }
 }
 
-export default App;
+export default Webpage;
