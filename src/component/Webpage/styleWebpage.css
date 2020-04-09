@@ -32,7 +32,7 @@
     padding-top: 9px;
 }
 .r4-pad{
-    padding: 12px;
+    padding-top: 30px;
 }
 .box-bg{
     background-color: #F3F3F3;
@@ -44,5 +44,36 @@
     background-color: #B4B4B4;
     width: 625px;
     height: 340px;
+}
+.img1-box{
+    widows: 166px;
+    height: 166px;
+}
+.img2-box{
+    widows: 197px;
+    height: 197px;
+}
+.img3-box{
+    widows: 163px;
+    height: 163px;
+}
+.img4-box{
+    widows: 116px;
+    height: 116px;
+}
+.img5-box{
+    widows: 135px;
+    height: 135px;
+}
+.img6-box{
+    widows: 129px;
+    height: 129px;
+}
+.footer-style{
+    color:#ffffff;
+    background-color: #040034;
+}
+.bg-magin{
+    width:100%;
 }
 
