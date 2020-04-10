@@ -1,0 +1,118 @@
+
+@font-face{
+    font-family: 'Kanit-Medium';
+    src: url('/font/Kanit-Medium.ttf');
+}
+@font-face{
+    font-family: 'Kanit-Light';
+    src: url('/font/Kanit-Light.ttf');
+}
+@font-face{
+    font-family: 'Kanit-Regular';
+    src: url('/font/Kanit-Regular.ttf');
+}
+@font-face{
+    font-family: 'Kanit-ExtraLight';
+    src: url('/font/Kanit-ExtraLight.ttf');
+}
+
+.r1-style{
+   background-color: #000657;
+   color:#ffffff;
+
+}
+
+.r1-c1{
+    text-align: left;
+}
+
+.r1-c2{
+    text-align: right;
+}
+.r2{
+    height: 73px;
+}
+.r2-c1{
+    color: #fe571a;
+    font-size: 35px;
+    font-family: 'Kanit-Light';
+}
+
+.r2-c1-t2
+{
+    color:#040034;
+    font-size: 20px;
+    font-family: 'Kanit-Regular';
+}
+
+.r2-c2{
+    color: #ffffff;
+    text-align: center;
+    background-color:#fe571a;
+    font-size: 28px;
+    padding-top: 15px;
+}
+.r4-pad{
+    padding-top: 60px;
+}
+.box-bg{
+    background-color: #F3F3F3;
+    width: 623px;
+    height: 338px;
+    margin: 6px;
+}
+.box-bg:hover{
+    background-color: rgba(219, 219, 219, 0.829);
+    width: 625px;
+    height: 340px;
+}
+.img1-box{
+    widows: 166px;
+    height: 166px;
+}
+.img2-box{
+    widows: 197px;
+    height: 197px;
+}
+.img3-box{
+    widows: 163px;
+    height: 163px;
+}
+.img4-box{
+    widows: 116px;
+    height: 116px;
+}
+.img5-box{
+    widows: 135px;
+    height: 135px;
+}
+.img6-box{
+    widows: 129px;
+    height: 129px;
+}
+.footer-style{
+    color:#ffffff;
+    background-color: #040034;
+    margin-top:60px ;
+    font-family: "Kanit-ExtraLight";
+    font-size: 22px;
+}
+.footer-padding{
+    padding:10px ;
+}
+.bg-img{
+    width:100%;
+}
+.box-style1{
+    font-size: 30px;
+    font-family: "Kanit-Medium";
+    color: #040034;
+}
+.box-style2{
+    font-size: 24px;
+    font-family: "Kanit-Light";
+    color: #0D047A;
+
+}
+
+
