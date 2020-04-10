@@ -21,17 +21,19 @@ class Webpage extends Component{
         </div>
 
         <div className="row">
-            <div className="col-4"> 
+            <div className="col-5"> 
                 <div className="row container-fluid r2-c1 ">เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</div> 
                 <div className="row  container-fluid r2-c1-t2">Webapplication Dam Management System</div>
             </div> 
-               <div className="col-6"></div> 
+               <div className="col-5"></div> 
             <div className="col-1 r2-c2">ลงทะเบียน</div>
             <div className="col-1 r2-c2 ">เข้าสู่ระบบ</div>
         </div>
             
         <div className="row">
+        
        <img className="bg-img" src={imgcow1} alt="asd"></img>
+       
         </div>
 
         <div className="r4-pad container-fluid" >
