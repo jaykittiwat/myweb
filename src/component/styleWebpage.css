@@ -95,7 +95,14 @@
     background-color: #040034;
     margin-top:60px ;
     font-family: "Kanit-ExtraLight";
-    font-size: 22px;
+    font-size: 20px;
+}
+.footer-style2{
+    color:#ffffff;
+    background-color: #040034;
+    margin-top:1px ;
+    font-family: "Kanit-ExtraLight";
+    font-size: 20px;
 }
 .footer-padding{
     padding:10px ;
@@ -124,13 +131,56 @@
     }
     .bg-box-log-color{
         background-color: #ffffff;
-        width: 505px;
+        width: 480px;
         height: 630px;
         position: sticky;
         left: 750px;
         top: 140px;
     }
    .form-padding{
+    
        padding: 20px;
    }
+   .form-padding-top{
+    
+    padding-top: 50px;
+}
 
+.bt {
+    background-color:#f14000;
+    border-color: #f14000;  
+}
+ .bt:visited {
+    background-color:#f14000;
+    border-color: #f14000;  
+}
+
+.bt:hover {
+    background-color:#ff4b09;
+    border-color: #f14000;  
+}
+.bt:active {
+    background-color:#f14000;
+    border-color: #f14000;  
+}
+ .bt:focus{
+    background-color:#f14000;
+    border-color: #f14000;  
+}
+.bt:not(:disabled):not(.disabled):active,
+.bt:not(:disabled):not(.disabled).active,
+.show>.bt.dropdown-toggle {
+
+    background-color: #f14000;
+    border-color:  #f14000;
+}
+
+
+.title1{
+    font-size: 40px;
+    font-family: "Kanit-ExtraLight";
+    color:#000657 ;
+    text-align: center;
+    padding-top:55px ;
+  
+}
