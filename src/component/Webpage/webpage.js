@@ -7,6 +7,8 @@ import cow3 from "../Img/cow3.png";
 import cow4 from "../Img/cow4.png";
 import cow5 from "../Img/cow5.png";
 import cow6 from "../Img/cow6.png";
+import {Link} from 'react-router-dom';
+
 
 
 
@@ -27,7 +29,7 @@ class Webpage extends Component{
             </div> 
                <div className="col-5"></div> 
             <div className="col-md-1 r2-c2">ลงทะเบียน</div>
-            <div className="col-md-1 r2-c2 ">เข้าสู่ระบบ</div>
+            <div className="col-md-1 r2-c2 "> <Link to="/login" className="r2-c2">เข้าสู่ระบบ</Link> </div>
         </div>
             
         <div className="row">

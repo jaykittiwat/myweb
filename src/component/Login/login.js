@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import "../styleWebpage.css";
 import {Form} from 'react-bootstrap'; 
 import {Button} from 'react-bootstrap'; 
+import {Link} from 'react-router-dom';
 
 class Login extends Component{
   render(){
@@ -35,9 +36,9 @@ class Login extends Component{
                     <Form.Group controlId="formBasicCheckbox">
                       <Form.Check type="checkbox" label="จำรหัสผ่าน" />
                     </Form.Group>
-                    <Button className="container-fluid bt " href="/" aria-disabled="true" >
+                    <Link to=" "><Button className="container-fluid bt " aria-disabled="true" >
                     เข้าสู่ระบบ
-                    </Button>
+                    </Button></Link>
                   </Form>
                   </div>
                     
