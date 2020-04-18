@@ -1,22 +1,15 @@
 import React,{Component} from 'react';
 import "../styleWebpage.css";
-import {Form} from 'react-bootstrap'; 
-import {Button} from 'react-bootstrap'; 
+import {Form,Button} from 'react-bootstrap'; 
 import {Link} from 'react-router-dom';
-
+import Header from '../../Header';
 class Login extends Component{
   render(){
       return(
           <div className="container-fluid ">
-                 <div className="row">
-                    <div className="col-md-5"> 
-                            <div className="row container-fluid r2-c1 ">เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</div> 
-                            <div className="row  container-fluid r2-c1-t2">Webapplication Dam Management System</div>
-                    </div> 
-                    <div className="col-md-5"></div> 
-                    <div className="col-md-1 r2-c2">ลงทะเบียน</div>
-                    <div className="col-md-1 r2-c2 ">เข้าสู่ระบบ</div>
-                </div>
+               
+
+               <Header/>
 
 
                 <div className="row">
@@ -36,7 +29,7 @@ class Login extends Component{
                     <Form.Group controlId="formBasicCheckbox">
                       <Form.Check type="checkbox" label="จำรหัสผ่าน" />
                     </Form.Group>
-                    <Link to=" "><Button className="container-fluid bt " aria-disabled="true" >
+                    <Link to=""><Button className="container-fluid bt " aria-disabled="true" >
                     เข้าสู่ระบบ
                     </Button></Link>
                   </Form>

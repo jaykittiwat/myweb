@@ -141,6 +141,7 @@
     
        padding: 20px;
    }
+
    .form-padding-top{
     
     padding-top: 50px;
@@ -150,6 +151,7 @@
     background-color:#f14000;
     border-color: #f14000;  
 }
+
  .bt:visited {
     background-color:#f14000;
     border-color: #f14000;  
@@ -159,14 +161,17 @@
     background-color:#ff4b09;
     border-color: #f14000;  
 }
+
 .bt:active {
     background-color:#f14000;
     border-color: #f14000;  
 }
+
  .bt:focus{
     background-color:#f14000;
     border-color: #f14000;  
 }
+
 .bt:not(:disabled):not(.disabled):active,
 .bt:not(:disabled):not(.disabled).active,
 .show>.bt.dropdown-toggle {
@@ -175,7 +180,6 @@
     border-color:  #f14000;
 }
 
-
 .title1{
     font-size: 40px;
     font-family: "Kanit-ExtraLight";
@@ -183,4 +187,36 @@
     text-align: center;
     padding-top:55px ;
   
+}
+
+.form-regis{
+border: #707070;
+width: 0px;
+height: 0px;
+}
+
+.title-regis{
+    font-family: "Kanit-Light";
+    font-size: 26px;
+    text-align: center;
+    color:#000657 ;
+}
+
+.button-text{
+    font-family: "Kanit-Regular";
+}
+
+.button-w{
+    width: 186px;
+    text-align: center;
+}
+
+.boxImgFrom{
+   padding-top:50px ;
+   
+}
+
+.button-w2{
+    width: 200px;
+
 }

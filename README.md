@@ -95,3 +95,30 @@ git push -u origin master
 1. git add .
 2. git commit -m "update to remote githup"
 3. git push origin master
+
+
+
+
+npm insta//
+
+react-bootstrap
+react-router-dom
+
+
+
+npm install firebase
+
+--เกร็จเล๋กเก็ดน้อย
+
+function FormExample() {
+  const [validated, setValidated] = useState(false); -->เซต validater = false
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };

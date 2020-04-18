@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "../styleWebpage.css";
+//ยังไม่ได้ชื่อมภาพกับserver
 import imgcow1 from "../Img/imgcow1.jpg";
 import cow from "../Img/cow.png";
 import cow2 from "../Img/cow2.png";
@@ -7,7 +8,7 @@ import cow3 from "../Img/cow3.png";
 import cow4 from "../Img/cow4.png";
 import cow5 from "../Img/cow5.png";
 import cow6 from "../Img/cow6.png";
-import {Link} from 'react-router-dom';
+import Header from '../../Header';
 
 
 
@@ -18,19 +19,12 @@ class Webpage extends Component{
   render(){
     return(
       <div className="container-fluid">
+        
         <div className="row r1-style">
             <div className="col-md r1-c1">01/01/2020 |10.00 Pm</div> <div className="col r1-c2">ติดต่อได้ที่ | jaykittiwat2542@gmail.com</div>
         </div>
 
-        <div className="row">
-            <div className="col-md-5"> 
-                <div className="row container-fluid r2-c1 ">เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</div> 
-                <div className="row  container-fluid r2-c1-t2">Webapplication Dam Management System</div>
-            </div> 
-               <div className="col-5"></div> 
-            <div className="col-md-1 r2-c2">ลงทะเบียน</div>
-            <div className="col-md-1 r2-c2 "> <Link to="/login" className="r2-c2">เข้าสู่ระบบ</Link> </div>
-        </div>
+        <Header/>
             
         <div className="row">
         
