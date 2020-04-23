@@ -16,11 +16,10 @@ class App extends Component{
     )
   }
   render(){
+    
     return(
       <div>
-
       <BrowserRouter>{this.renderRouter()}</BrowserRouter>
-  
       </div>
     )
   }
