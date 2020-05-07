@@ -1,0 +1,35 @@
+import React,{Component} from 'react';
+import firebase from './../../backEnd/firebase/index';
+import Home from './../Home/homepage.js';
+import  Login from './login';
+
+
+class Loginpage extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            currentUser:null,
+        }
+    }
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            this.setState({
+              currentUser:user
+            });
+                     //console.log("Login Success");
+          }
+        })
+       
+      }
+      
+    render(){
+        return(
+            <div>
+                
+                 {this.state.currentUser? <Home/>:<Login/>}
+            </div>
+        )
+    }
+}
+export default Loginpage;

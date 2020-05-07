@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Monitor from './Monitor';
 import {BrowserRouter,Route,Switch} from "react-router-dom";
-import Login from './component/Login/login';
+import Loginpage from './component/Login/Loginpage';
 import Registor from './component/Login/registor';
-
-
+import Homepage from './component/Home/homepage';
 // Router to path component
 class App extends Component{
   
@@ -12,8 +11,9 @@ class App extends Component{
     return(
       <Switch>
         <Route exact path="/" component={Monitor}/>
-        <Route path="/login" component={Login}/>
+        <Route path="/Loginpage" component={Loginpage}/>
         <Route path="/registor" component={Registor}/>
+        <Route path="/home" component={Homepage}/>
       </Switch>
     )
   }

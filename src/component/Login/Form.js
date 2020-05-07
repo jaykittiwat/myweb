@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 
 
 
-//หน้าสำหรับกรอกข้อมูลการสมัคร
+////////////////////////หน้าสำหรับกรอกข้อมูลการสมัคร/////////////////////
 export default function FormData() {
   const intailState={
       username:"",
