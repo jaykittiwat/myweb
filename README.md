@@ -103,8 +103,8 @@ npm insta//
 npm install axios
 react-bootstrap
 react-router-dom
-ืnpm install axios --savve
-npm install firebase
+ืnpm install axios --save
+npm install firebase react-router-dom axios
 
 
 

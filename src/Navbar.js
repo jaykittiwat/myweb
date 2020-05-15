@@ -14,7 +14,7 @@ export default function NavbarLogin() {
         <div className="dropdown">
           <div className="dropbtn">หน้าหลัก</div>
           <div className="dropdown-content">
-            <a href="/login">login</a>
+            <a href="/login">Link 1</a>
             <a href="#2">Link 2</a>
             <a href="#3">Link 3</a>
           </div>
@@ -23,19 +23,21 @@ export default function NavbarLogin() {
         <div className="dropdown">
           <div className="dropbtn">ลงทะเบียนโค</div>
           <div className="dropdown-content">
-            <a href="/regiscow">บันทึกพันธุ์ประวัติโค</a>
+            <a href="#1">Link 1</a>
+            <a href="#3">Link 2</a>
+            <a href="#2">Link 3</a>
           </div>
         </div>
 
         <div className="dropdown">
           <div className="dropbtn">จัดการแม่พันธุ์โค</div>
           <div className="dropdown-content">
-            <a href="/fatten">บันทึกการบำรุง</a>
-            <a href="/induction">บันทึกการเหนี่ยวนำ</a>
-            <a href="/breed">บันทึกการผสมพันธุ์</a>
-            <a href="/checkup">บันทึกการตรวจท้อง</a>
-            <a href="/calve">บันทึกการคลอดลูก</a>
-            <a href="/abortion">บันทึกการแท้งลูก</a>
+            <Link to="/letsgo">กดดิ</Link>
+            <a href="#3">Link 2</a>
+            <a href="#2">Link 3</a>
+            <a href="#1">Link 1</a>
+            <a href="#3">Link 2</a>
+            <a href="#2">Link 3</a>
           </div>
         </div>
 
