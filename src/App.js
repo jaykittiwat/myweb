@@ -11,6 +11,9 @@ import breed from "./component/manager/cow/breed";
 import checkup from "./component/manager/cow/checkup";
 import calve from "./component/manager/cow/calve";
 import abortion from "./component/manager/cow/abortion";
+import dehorner from "./component/manager/calf/dehorner";
+import wean from "./component/manager/calf/wean";
+import hitnumber from "./component/manager/calf/hitnumber";
 // Router to path component
 class App extends Component{
   
@@ -27,6 +30,9 @@ class App extends Component{
         <Route path="/checkup" component={checkup}/>
         <Route path="/calve" component={calve}/>
         <Route path="/abortion" component={abortion}/>
+        <Route path="/dehorner" component={dehorner}/>
+        <Route path="/wean" component={wean}/>
+        <Route path="/hitnumber" component={hitnumber}/>
       </Switch>
     )
   }
