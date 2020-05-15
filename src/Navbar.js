@@ -1,22 +1,20 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import firebase from "./backEnd/firebase/index";
+//import { Button } from "react-bootstrap";
 import "./styleNavbar.css";
+import {Link} from "react-router-dom";
+import Singout from './Signout';
 //react------ HOOK
 export default function NavbarLogin() {
-  const logout = e => {
-    //console.log("Logout");
-    firebase.auth().signOut();
-    window.location.reload();
-  };
+ 
 
   return (
     <div className="container-fluid">
+
       <nav className="row">
         <div className="dropdown">
           <div className="dropbtn">หน้าหลัก</div>
           <div className="dropdown-content">
-            <a href="#1">Link 1</a>
+            <a href="/login">Link 1</a>
             <a href="#2">Link 2</a>
             <a href="#3">Link 3</a>
           </div>
@@ -34,7 +32,7 @@ export default function NavbarLogin() {
         <div className="dropdown">
           <div className="dropbtn">จัดการแม่พันธุ์โค</div>
           <div className="dropdown-content">
-            <a href="#1">Link 111111111111111111</a>
+            <Link to="/letsgo">กดดิ</Link>
             <a href="#3">Link 2</a>
             <a href="#2">Link 3</a>
             <a href="#1">Link 1</a>
@@ -97,11 +95,12 @@ export default function NavbarLogin() {
           </div>
         </div>
         
-             <div className="  col floatRight">
-                 <Button className=" floatRight" variant='danger' onClick={logout} >ออกจากระบบ</Button>
-            </div>
+        <div className="  col floatRight">
+        <Singout/>
+          </div>
        
       </nav>
+  
     </div>
   );
 }
