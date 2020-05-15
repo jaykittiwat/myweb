@@ -103,12 +103,13 @@ npm insta//
 npm install axios
 react-bootstrap
 react-router-dom
-
-
-
+ืnpm install axios --savve
 npm install firebase
 
---เกร็จเล๋กเก็ดน้อย
+
+
+
+--เกร็จเล๋กเก็ดน้อย   //น่าจะไม่ได้ใช้   React hook
 
 function FormExample() {
   const [validated, setValidated] = useState(false); -->เซต validater = false

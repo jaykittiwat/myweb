@@ -5,6 +5,7 @@ import FormData from './Form';
 //import imgcow1 from "../Img/imgcow1.jpg";
 //import FormImg from './FormImg';
 //import { Button } from "react-bootstrap";
+import Header from './../../Header';
 class Registor extends Component{
 constructor(props){
     super(props);
@@ -18,17 +19,16 @@ constructor(props){
 
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md"> 
-                        <div className="row container-fluid r2-c1 ">เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</div> 
-                        <div className="row  container-fluid r2-c1-t2">Webapplication Dam Management System</div>
+                    <div className='container-fluid'>
+                    <Header/>
                     </div>
                 </div>
-                <hr/>
+            
                 <div className="row ">
                    
                 <div className="title-regis container-fluid">ระบบลงทะเบียน</div>
 
-                    <div className="col-12"><FormData/></div>
+                    <div className="col-md-12"><FormData/></div>
 
                     
                 </div>

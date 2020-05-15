@@ -8,7 +8,8 @@ import "../styleWebpage.css";
 import {Form,Button} from 'react-bootstrap'; 
 import Header from '../../Header';
 import firebase from './../../backEnd/firebase/index';
-
+import Home from "./../Home/homepage";
+//import { BrowserRouter, Route, Switch, Router,Redirect,Link } from "react-router-dom";
 class Login extends Component{
 
 
@@ -18,7 +19,8 @@ class Login extends Component{
             this.state = {
               email: '',
               password: '',
-              message: ''
+              message: '',
+              currentUser: null,
             }
           }
               // setState ตาม name ที่ได้รับมาจากForm
@@ -51,19 +53,33 @@ class Login extends Component{
                 this.setState({
                   message: error.message
                 })
+                alert('ไอดี หรือ  รหัสผ่าน ของท่านไม่ถูกต้อง');
               })
           }
      //หลังจาก renderแล้วจะทำการเชคว่ามีการล็อคอินอยู่ไหม ถ้ามี ไป setState currentUser: user
         
 
 
-
+     componentDidMount() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.setState({
+            currentUser: user
+          });
+          //console.log("Logined already");
+        }
+      });
+    
+    }
+   
 
 
 
   render(){
 
-       
+       if(this.state.currentUser){
+            return (<Home/>)
+       }
     //if user haven't id and password  return -->
       return(
           <div className="container-fluid ">
@@ -127,3 +143,4 @@ class Login extends Component{
 }
 export default Login;
 
+//กดปุ่ม ---->link to component (ส่งprop ไปตาม link) อีกทีหนึ่ง น่าจะแก้ได้
