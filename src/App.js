@@ -14,6 +14,15 @@ import abortion from "./component/manager/cow/abortion";
 import dehorner from "./component/manager/calf/dehorner";
 import wean from "./component/manager/calf/wean";
 import hitnumber from "./component/manager/calf/hitnumber";
+import treatment from "./component/treatment/treatment";
+import notification from "./component/notification/notification";
+import checkinformation from "./component/checkinformationandreport/checkinformation";
+import report from "./component/checkinformationandreport/report";
+import brandsetting from "./component/setting/brandsetting";
+import drugsetting from "./component/setting/drugsetting";
+import farmsetting from "./component/setting/farmsetting";
+import usersetting from "./component/setting/usersetting";
+import instructionmanual from "./component/instructionmanual/instructionmanual";
 // Router to path component
 class App extends Component{
   
@@ -33,6 +42,15 @@ class App extends Component{
         <Route path="/dehorner" component={dehorner}/>
         <Route path="/wean" component={wean}/>
         <Route path="/hitnumber" component={hitnumber}/>
+        <Route path="/treatment" component={treatment}/>
+        <Route path="/notification" component={notification}/>
+        <Route path="/checkinformation" component={checkinformation}/>
+        <Route path="/report" component={report}/>
+        <Route path="/brandsetting" component={brandsetting}/>
+        <Route path="/drugsetting" component={drugsetting}/>
+        <Route path="/farmsetting" component={farmsetting}/>
+        <Route path="/usersetting" component={usersetting}/>
+        <Route path="/instructionmanual" component={instructionmanual}/>
       </Switch>
     )
   }
