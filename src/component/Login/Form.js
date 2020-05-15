@@ -3,7 +3,7 @@ import { Form, Col, Button } from "react-bootstrap";
 //import { Button } from "react-bootstrap";
 import FormImg from "./FormImg";
 import { Link } from "react-router-dom";
-import firebase from "./../../backEnd/firebase/index";
+//import firebase from "./../../backEnd/firebase/index";
 
 //ยังไม่ได้ทำ ระบบบลงทะเบียน
 
