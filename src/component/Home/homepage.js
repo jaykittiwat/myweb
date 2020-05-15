@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import firebase from "./../../backEnd/firebase/index";
 //import { Button, Navbar, Nav, NavDropdown,Dropdown } from "react-bootstrap";
 import HeaderLogin from "./../../HeaderLogin";
-
+import logout from "../../Signout";
 import NavbarLogin from './../../Navbar';
 //import { Button,Nav,NavDropdown,Navbar,ListGroup } from "react-bootstrap";
 //import axios from "axios";
@@ -41,6 +41,7 @@ class Home extends Component {
              <div className='row '>
            
             <NavbarLogin/>
+            
             
                 </div>
 

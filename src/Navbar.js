@@ -1,17 +1,15 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import firebase from "./backEnd/firebase/index";
+//import { Button } from "react-bootstrap";
 import "./styleNavbar.css";
+import {Link} from "react-router-dom";
+import Singout from './Signout';
 //react------ HOOK
 export default function NavbarLogin() {
-  const logout = e => {
-    //console.log("Logout");
-    firebase.auth().signOut();
-    window.location.reload();
-  };
+ 
 
   return (
     <div className="container-fluid">
+
       <nav className="row">
         <div className="dropdown">
           <div className="dropbtn">หน้าหลัก</div>
@@ -95,11 +93,12 @@ export default function NavbarLogin() {
           </div>
         </div>
         
-             <div className="  col floatRight">
-                 <Button className=" floatRight" variant='danger' onClick={logout} >ออกจากระบบ</Button>
-            </div>
+        <div className="  col floatRight">
+        <Singout/>
+          </div>
        
       </nav>
+  
     </div>
   );
 }
