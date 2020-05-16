@@ -1,32 +1,34 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, Col, Button } from "react-bootstrap";
 //import { Button } from "react-bootstrap";
 import FormImg from "./FormImg";
 import { Link } from "react-router-dom";
-//import firebase from "./../../backEnd/firebase/index";
+import firebase from "./../../backEnd/firebase/index";
+
 
 //ยังไม่ได้ทำ ระบบบลงทะเบียน
 
 ////////////////////////หน้าสำหรับกรอกข้อมูลการสมัคร [เจ้าของฟาร์ม]/////////////////////
 export default function FormData() {
   const intailState = {
-    user: "",
-    pass: "",
-    question: "",
+    user:"",
+    pass:"",
+    question:"",
     anwser: "",
-    email: "",
-    fname: "",
-    lname: "",
-    gender: "",
-    id_card: "",
-    address: "",
-    day_of_birth: "",
-    phone_num: "",
-    fax: "",
+    email:"",
+    fname:"",
+    lname:"",
+    gender:"",
+    id_card:"",
+    address:"",
+    day_of_birth:"",
+    phone_num:"",
+    fax:"",
     privilege: "เจ้าของฟาร์ม"
   };
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
+  const [validated, setValidated] = useState(false);
   /*
     user:"",
     pass:"",
@@ -46,19 +48,50 @@ export default function FormData() {
     vacancy:"[ตำแหน่งงงาน]"
     */
 
-  const handleSubmit = event => {
+
+     
+
+    
+ /* const handleSubmit = event => {
+
+    if((account.user==="")||(account.pass==="")||(account.email==="")||(account.fname==="")||(account.lname==="")||(account.id_card==="")){
+      event.preventDefault();
+      alert("กรุณากรอกข้อมูลให้ครับ")
+    }
+    else{
+      var firebaseRef = firebase.database().ref();
+      firebaseRef.child("user").push().set(account);
+      console.log(account);
+    }
+    
+  }*/
+  
+
+const checkFrom=(event)=>{
+
+  const form = event.currentTarget;
+  if (form.checkValidity() === false) {
     event.preventDefault();
-    console.log(account);
-    /*var firebaseRef = firebase.database().ref();
-    firebaseRef
-      .child("user")
-      .push()
-      .set(account);*/
+    event.stopPropagation();
+  }else{
+    setValidated(true);
+    alert('สำเร็จ');
+  }       
+}
+
+  const handleSubmit = (event) => {
+   checkFrom(event);
+   
+
   }
+
+ 
+
+
 
   return (
     <div>
-      <Form>
+      <Form  noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
           <Col>
             <Form.Group controlId="formUserId">
@@ -72,6 +105,7 @@ export default function FormData() {
                   setAccount({ ...account, user: e.target.value });
                 }}
               />
+             
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -148,7 +182,7 @@ export default function FormData() {
                   setAccount({ ...account, gender: e.target.value });
                 }}
               >
-                <option>เพศ</option>
+                
                 <option>ชาย</option>
                 <option>หญิง</option>
               </Form.Control>
@@ -222,17 +256,29 @@ export default function FormData() {
               <Form.Label>คำถาม</Form.Label>
               <Form.Control
                 as="select"
+             
                 value={account.question}
                 onChange={e => {
                   setAccount({ ...account, question: e.target.value });
                 }}
               >
-                <option>โปรดเลือกคำถาม</option>
                 <option>สัตว์เลี้ยงของคุณชื่ออะไร</option>
                 <option>คุณชอบสีอะไร</option>
                 <option>แฟนของคุณคือใคร</option>
                 <option>คูณสอบเที่ยวที่ไหน</option>
               </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="exampleForm.aswer">
+              <Form.Label>คำตอบ</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="คำตอบ"
+                value={account.anwser}
+                onChange={e => {
+                  setAccount({ ...account, anwser: e.target.value });
+                }}
+              />
             </Form.Group>
           </Col>
 
@@ -246,21 +292,22 @@ export default function FormData() {
         <div className="row  ">
           <div className="text-center container-fluid">
             <Form.Group>
-              <Link to="/login">
+              
                 <Button
                   type="submit"
                   className="button-w2"
-                  onClick={event => handleSubmit(event)}
+                 
                 >
                   ตกลง
                 </Button>
-              </Link>
+            
             </Form.Group>
           </div>
         </div>
       </Form>
     </div>
   );
+
 }
 //form กรอกข้อมูลสมัคร
 //...account   ไม่ต้อง พิมพ์เยอะ
@@ -273,6 +320,6 @@ export default function FormData() {
       .catch(function(error) {
         var errorMessage = error.message;
         alert(errorMessage);
-      });*/
+      });
 
-// add data
+*/
