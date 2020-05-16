@@ -34,7 +34,7 @@ class Webpage extends Component{
 
         <div className="r4-pad container-fluid" >
             <div className="row">
-                <div className="col-md box-bg"><img src={cow} alt="cow" className="img1-box box" ></img> <p className="box-style1">ระบบบันทึกพันธุ์ประวัติโค</p>   <p className="box-style2">สามารถบันทึกสายพันธุ์ประวัติโคได้ </p></div>
+                <div className="col-md box-bg"><img src={cow} alt="cow" className="img1-box" ></img> <p className="box-style1">ระบบบันทึกพันธุ์ประวัติโค</p>   <p className="box-style2">สามารถบันทึกสายพันธุ์ประวัติโคได้ </p></div>
                 <div className="col-md box-bg "><img src={cow2} alt="cow2" className="img2-box" ></img> <p  className="box-style1">ระบบบันทึกการสืบพันธุ์แม่โค</p> <p className="box-style2"> TEXT</p></div>
                 <div className="col-md box-bg"><img src={cow3} alt="cow3" className="img3-box" ></img> <p   className="box-style1">ระบบบันทึกการจัดการลูกโค</p>  <p className="box-style2">บันทึกข้อมูล การสูญเขา อย่านม ตีเบอร์ ของลูกโค</p></div>
             </div>

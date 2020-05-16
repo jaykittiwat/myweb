@@ -1,30 +1,29 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Col, Button } from "react-bootstrap";
 //import { Button } from "react-bootstrap";
 import FormImg from "./FormImg";
-import { Link } from "react-router-dom";
-import firebase from "./../../backEnd/firebase/index";
-
+//import { Link } from "react-router-dom";
+//import firebase from "./../../backEnd/firebase/index";
 
 //ยังไม่ได้ทำ ระบบบลงทะเบียน
 
 ////////////////////////หน้าสำหรับกรอกข้อมูลการสมัคร [เจ้าของฟาร์ม]/////////////////////
 export default function FormData() {
   const intailState = {
-    user:"",
-    pass:"",
-    question:"",
+    user: "",
+    pass: "",
+    question: "",
     anwser: "",
-    email:"",
-    fname:"",
-    lname:"",
-    gender:"",
-    id_card:"",
-    address:"",
-    day_of_birth:"",
-    phone_num:"",
-    fax:"",
-    privilege: "เจ้าของฟาร์ม"
+    email: "",
+    fname: "",
+    lname: "",
+    gender: "",
+    id_card: "",
+    address: "",
+    day_of_birth: "",
+    phone_num: "",
+    fax: "",
+    privilege: "เจ้าของฟาร์ม",
   };
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
@@ -48,11 +47,7 @@ export default function FormData() {
     vacancy:"[ตำแหน่งงงาน]"
     */
 
-
-     
-
-    
- /* const handleSubmit = event => {
+  /* const handleSubmit = event => {
 
     if((account.user==="")||(account.pass==="")||(account.email==="")||(account.fname==="")||(account.lname==="")||(account.id_card==="")){
       event.preventDefault();
@@ -65,19 +60,20 @@ export default function FormData() {
     }
     
   }*/
-  
 
-const checkFrom=(event)=>{
-
-  const form = event.currentTarget;
-  if (form.checkValidity() === false) {
-    event.preventDefault();
-    event.stopPropagation();
-  }else{
+  const checkFrom = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      alert("กรูณากรอกข้อมูลให้ครบถ้วน");
+    } else {
+      alert("สำเร็จ");
+    }
     setValidated(true);
-    alert('สำเร็จ');
+   
   }       
-}
+
 
   const handleSubmit = (event,callback) => {
    checkFrom(event);
@@ -86,13 +82,28 @@ const checkFrom=(event)=>{
 
   }
 
+  const handleFrom = (event, callback) => {
+    checkFrom(event);
+    if (validated === true) {
+      callback(); //เมื่อเป็น true
+    }
+  };
+
+  const callbackFrom = () => {
+    console.log("hello");
+    console.log(validated);
+  };
+
  
-
-
+  
 
   return (
     <div>
-      <Form  noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form
+        noValidate
+        validated={validated}
+        onSubmit={event=>handleSubmit(event)}
+      >
         <Form.Row>
           <Col>
             <Form.Group controlId="formUserId">
@@ -102,11 +113,10 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="กรอกไอดี 6 ตัว ขึ้นไป"
                 value={account.user}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, user: e.target.value });
                 }}
               />
-             
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -116,7 +126,7 @@ const checkFrom=(event)=>{
                 type="password"
                 placeholder="กรอกรหัสผ่าน 6 หลัก ขึ้นไป"
                 value={account.pass}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, pass: e.target.value });
                 }}
               />
@@ -129,7 +139,7 @@ const checkFrom=(event)=>{
                 type="password"
                 placeholder="กรอกรหัสผ่านอีกครัง"
                 value={checkpass}
-                onChange={e => {
+                onChange={(e) => {
                   setCheckpass(e.target.value);
                 }}
               />
@@ -142,7 +152,7 @@ const checkFrom=(event)=>{
                 type="email"
                 placeholder="กรอก Email"
                 value={account.email}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, email: e.target.value });
                 }}
               />
@@ -155,7 +165,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="กรอกชื่อ"
                 value={account.fname}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, fname: e.target.value });
                 }}
               />
@@ -168,7 +178,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="กรอกนามสกุล"
                 value={account.lname}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, lname: e.target.value });
                 }}
               />
@@ -179,11 +189,10 @@ const checkFrom=(event)=>{
               <Form.Control
                 as="select"
                 value={account.gender}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, gender: e.target.value });
                 }}
               >
-                
                 <option>ชาย</option>
                 <option>หญิง</option>
               </Form.Control>
@@ -196,7 +205,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="เลขบัตร 13 หลัก"
                 value={account.id_card}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, id_card: e.target.value });
                 }}
               />
@@ -209,7 +218,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="วันเกิด"
                 value={account.day_of_birth}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, day_of_birth: e.target.value });
                 }}
               />
@@ -222,7 +231,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="บ้านเลขที่ หมู่"
                 value={account.address}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, address: e.target.value });
                 }}
               />
@@ -235,7 +244,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="เบอร์โทรศัพท์"
                 value={account.phone_num}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, phone_num: e.target.value });
                 }}
               />
@@ -248,7 +257,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="fax"
                 value={account.fax}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, fax: e.target.value });
                 }}
               />
@@ -257,9 +266,8 @@ const checkFrom=(event)=>{
               <Form.Label>คำถาม</Form.Label>
               <Form.Control
                 as="select"
-             
                 value={account.question}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, question: e.target.value });
                 }}
               >
@@ -276,7 +284,7 @@ const checkFrom=(event)=>{
                 type="text"
                 placeholder="คำตอบ"
                 value={account.anwser}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, anwser: e.target.value });
                 }}
               />
@@ -293,22 +301,15 @@ const checkFrom=(event)=>{
         <div className="row  ">
           <div className="text-center container-fluid">
             <Form.Group>
-              
-                <Button
-                  type="submit"
-                  className="button-w2"
-                 
-                >
-                  ตกลง
-                </Button>
-            
+              <Button type="submit" className="button-w2">
+                ตกลง
+              </Button>
             </Form.Group>
           </div>
         </div>
       </Form>
     </div>
   );
-
 }
 //form กรอกข้อมูลสมัคร
 //...account   ไม่ต้อง พิมพ์เยอะ

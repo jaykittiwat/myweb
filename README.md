@@ -104,7 +104,7 @@ npm install axios
 react-bootstrap
 react-router-dom
 ืnpm install axios --save
-npm install firebase react-router-dom axios
+npm install firebase react-router-dom axios react-bootstrap
 
 
 
