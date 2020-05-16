@@ -79,8 +79,9 @@ const checkFrom=(event)=>{
   }       
 }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event,callback) => {
    checkFrom(event);
+   callback();
    
 
   }
