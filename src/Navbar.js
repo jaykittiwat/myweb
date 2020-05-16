@@ -12,8 +12,6 @@ export default function NavbarLogin() {
           <div className="dropbtn">หน้าหลัก</div>
           <div className="dropdown-content">
             <a href="/login">login</a>
-            <a href="#2">Link 2</a>
-            <a href="#3">Link 3</a>
           </div>
         </div>
 

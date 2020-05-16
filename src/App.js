@@ -4,7 +4,7 @@ import {BrowserRouter,Route,Switch} from "react-router-dom";
 //import Loginpage from './component/Login/Loginpage';
 import Registor from './component/Login/registor';
 import login from "./component/Login/login";
-import regiscow from "./component/regiscow/regiscow";
+
 import fatten from "./component/manager/cow/fatten";
 import induction from "./component/manager/cow/induction";
 import breed from "./component/manager/cow/breed";
@@ -20,7 +20,6 @@ class App extends Component{
         <Route exact path="/" component={Monitor}/>
         <Route path="/login" component={login}/>
         <Route path="/registor" component={Registor}/>
-        <Route path="/regiscow" component={regiscow}/>
         <Route path="/fatten" component={fatten}/>
         <Route path="/induction" component={induction}/>
         <Route path="/breed" component={breed}/>
