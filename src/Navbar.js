@@ -23,7 +23,7 @@ export default function NavbarLogin() {
         </div>
 
         <div className="dropdown">
-          <div className="dropbtn">จัดการแม่พันธุ์โค</div>
+          <div className="dropbtn">การจัดการแม่พันธุ์โค</div>
           <div className="dropdown-content">
             <a href="/fatten">บันทึกการบำรุง</a>
             <a href="/induction">บันทึกการเหนี่ยวนำ</a>
@@ -35,56 +35,50 @@ export default function NavbarLogin() {
         </div>
 
         <div className="dropdown">
-          <div className="dropbtn">บันทึกจัดการลูกโค</div>
+          <div className="dropbtn">การจัดการลูกโค</div>
           <div className="dropdown-content">
-            <a href="#1">Link 1</a>
-            <a href="#3">Link 2</a>
-            <a href="#2">Link 3</a>
+            <a href="/dehorner">บันทึกการสูญเขา</a>
+            <a href="/wean">บันทึกการหย่านม</a>
+            <a href="/hitnumber">บันทึกการตีเบอร์</a>
           </div>
         </div>
 
         <div className="dropdown">
           <div className="dropbtn">บันทึกการรักษา</div>
           <div className="dropdown-content">
-            <a href="#1">Link 1</a>
-            <a href="#3">Link 2</a>
-            <a href="#2">Link 3</a>
+            <a href="/treatment">บันทึกการรักษา</a>
           </div>
         </div>
 
         <div className="dropdown">
-          <div className="dropbtn">แจ้งเตือน</div>
+          <div className="dropbtn">การแจ้งเตือน</div>
           <div className="dropdown-content">
-            <a href="#1">Link 1</a>
-            <a href="#3">Link 2</a>
-            <a href="#2">Link 3</a>
+            <a href="/notification">การแจ้งเตือน</a>
           </div>
         </div>
 
         <div className="dropdown">
           <div className="dropbtn">ตรวจสอบข้อมูลและออกรายงาน</div>
           <div className="dropdown-content">
-            <a href="#1">Link 1</a>
-            <a href="#3">Link 2</a>
-            <a href="#2">Link 3</a>
+            <a href="/checkinformation">ตรวจสอบข้อมูล</a>
+            <a href="/report">ออกรายงาน</a>
           </div>
         </div>
 
         <div className="dropdown">
           <div className="dropbtn">ตั้งค่าระบบฟาร์ม</div>
           <div className="dropdown-content">
-            <a href="#1">Link 1</a>
-            <a href="#3">Link 2</a>
-            <a href="#2">Link 3</a>
+            <a href="/brandsetting">ตั้งค่าแบรนด์</a>
+            <a href="/usersetting">ตั้งค่าข้อมูลผู้ใช้</a>
+            <a href="/farmsetting">ตั้งค่าระบบฟาร์ม</a>
+            <a href="/drugsetting">ตั้งค่าระบบยา</a>
           </div>
         </div>
 
         <div className="dropdown">
           <div className="dropbtn">คู่มือการใช้งาน</div>
           <div className="dropdown-content">
-            <a href="#1">Link 1</a>
-            <a href="#3">Link 2</a>
-            <a href="#2">Link 3</a>
+            <a href="/instructionmanual">คู่มือการใช้งาน</a>
           </div>
           
         </div>
