@@ -32,26 +32,11 @@
 .r2{
     height: 73px;
 }
-.r2-c1{
-    color: #fe571a;
-    font-size: 35px;
-    font-family: 'Kanit-Light';
-}
 
-.r2-c1-t2
-{
-    color:#040034;
-    font-size: 20px;
-    font-family: 'Kanit-Regular';
-}
 
-.r2-c2{
-    color: #ffffff;
-    text-align: center;
-    background-color:#fe571a;
-    font-size: 28px;
-    padding-top: 15px;
-}
+
+
+
 .r4-pad{
     padding-top: 60px;
 }
@@ -145,6 +130,10 @@
    .form-padding-top{
     
     padding-top: 50px;
+}
+.form-padding-top2{
+    
+    padding-top: 15px;
 }
 
 .bt {

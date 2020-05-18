@@ -53,6 +53,9 @@ nav{
    width: 220px; /*ความยาวปุ่มออกจากระบบ*/
  
  }
+ .shadowstyle{
+  box-shadow: 0px 1px 10px rgba(12, 11, 22, 0.466);
+ }
  
 
  

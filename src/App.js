@@ -4,7 +4,6 @@ import {BrowserRouter,Route,Switch} from "react-router-dom";
 //import Loginpage from './component/Login/Loginpage';
 import Registor from './component/Login/registor';
 import login from "./component/Login/login";
-
 import fatten from "./component/manager/cow/fatten";
 import induction from "./component/manager/cow/induction";
 import breed from "./component/manager/cow/breed";

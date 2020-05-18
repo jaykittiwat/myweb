@@ -4,7 +4,7 @@ import { Form, Col, Button } from "react-bootstrap";
 import FormImg from "./FormImg";
 
 import { Link } from "react-router-dom";
-import firebase from "./../../backEnd/firebase/index";
+//import firebase from "./../../backEnd/firebase/index";
 import axios from "axios";
 //ยังไม่ได้ทำ ระบบบลงทะเบียน
 
@@ -28,7 +28,7 @@ export default function FormData() {
   };
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
-  const [validated, setValidated] = useState(false)
+  const [validated] = useState(false)
 //ยังไม่ได้ทำ  check Form
   const handleSubmit = event => {
     event.preventDefault();
