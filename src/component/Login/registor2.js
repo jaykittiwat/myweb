@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../styleWebpage.css";
 
-import FormData from "./Form";
+import FormData from "./Form2";
 
 import Header from "./../../Header";
 ////////////////////////พนักงาน/////////////////////////

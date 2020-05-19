@@ -4,7 +4,7 @@ import { Form, Col, Button } from "react-bootstrap";
 import FormImg from "./FormImg";
 
 import { Link } from "react-router-dom";
-import firebase from "./../../backEnd/firebase/index";
+import firebase from "../../backEnd/firebase/index";
 //import axios from "axios";
 //ยังไม่ได้ทำ ระบบบลงทะเบียน
 
@@ -24,7 +24,7 @@ export default function FormData() {
     day_of_birth: "",
     phone_num: "",
     fax: "",
-    privilege: "เจ้าของฟาร์ม",
+    aminFarm: "รอการอนุมัติ",
   };
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
@@ -38,8 +38,23 @@ export default function FormData() {
       .then((res) => {
         console.log(res.user);
         alert("สำเร็จ");
-        
-       /* axios.post(`http://localhost:4000/user/registor`, {
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(error);
+        console.log(errorCode);
+        console.log(errorMessage);
+        if (errorCode === "auth/email-already-in-use") {
+          alert("Email มีผู้ใช้แล้ว");
+        }
+        if (errorCode === "auth/invalid-email") {
+          alert("Email ไม่ถูกต้อง");
+        }
+        // ...
+      });
+    /* axios
+      .post(`http://localhost:4000/user/registor`, {
         user: account.user,
         pass:  account.pass,
         question: account.question,
@@ -66,20 +81,6 @@ export default function FormData() {
         alert('เกิดความผิดพลาด');
 
       });*/
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        
-
-        if (errorCode === "auth/email-already-in-use") {
-          alert("Email มีผู้ใช้แล้ว");
-        }
-        if (errorCode === "auth/invalid-email") {
-          alert("Email ไม่ถูกต้อง");
-        }
-        
-      });
- 
   };
 
   return (
