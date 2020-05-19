@@ -26,7 +26,7 @@ class Header extends Component {
               <button className="dropbtn1">ลงทะเบียน   <i className="fa fa-caret-down"></i></button>
               <div className="dropdown-content">
                 <Link to="/registor">เจ้าของฟาร์ม</Link>
-                <Link to="#2">พนักงาน</Link>
+                <Link to="/registor2">พนักงาน</Link>
               </div>
             </div>
 

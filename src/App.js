@@ -3,7 +3,9 @@ import Monitor from './Monitor';
 import {BrowserRouter,Route,Switch} from "react-router-dom";
 //import Loginpage from './component/Login/Loginpage';
 import Registor from './component/Login/registor';
+import Registor2 from './component/Login/registor2';
 import login from "./component/Login/login";
+import regiscow from './component/regiscow/regiscow';
 import fatten from "./component/manager/cow/fatten";
 import induction from "./component/manager/cow/induction";
 import breed from "./component/manager/cow/breed";
@@ -22,6 +24,7 @@ import drugsetting from "./component/setting/drugsetting";
 import farmsetting from "./component/setting/farmsetting";
 import usersetting from "./component/setting/usersetting";
 import instructionmanual from "./component/instructionmanual/instructionmanual";
+
 // Router to path component
 class App extends Component{
   
@@ -31,6 +34,8 @@ class App extends Component{
         <Route exact path="/" component={Monitor}/>
         <Route path="/login" component={login}/>
         <Route path="/registor" component={Registor}/>
+        <Route path="/registor2" component={Registor2}/>
+        <Route path="/regiscow" component={regiscow}/>
         <Route path="/fatten" component={fatten}/>
         <Route path="/induction" component={induction}/>
         <Route path="/breed" component={breed}/>

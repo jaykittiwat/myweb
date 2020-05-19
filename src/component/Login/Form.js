@@ -4,7 +4,7 @@ import { Form, Col, Button } from "react-bootstrap";
 import FormImg from "./FormImg";
 
 import { Link } from "react-router-dom";
-//import firebase from "./../../backEnd/firebase/index";
+import firebase from "./../../backEnd/firebase/index";
 import axios from "axios";
 //ยังไม่ได้ทำ ระบบบลงทะเบียน
 
@@ -32,8 +32,21 @@ export default function FormData() {
 //ยังไม่ได้ทำ  check Form
   const handleSubmit = event => {
     event.preventDefault();
-   
-    axios
+    firebase.auth().createUserWithEmailAndPassword(account.email, account.pass).catch((error)=> {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode);
+      console.log(errorMessage);
+      if(errorCode==="auth/email-already-in-use"){
+        alert('Email มีผู้ใช้แล้ว');
+      }
+      if(errorCode==="auth/invalid-email"){
+        alert('Email ไม่ถูกต้อง');
+      }
+      // ...
+    });
+   /* axios
       .post(`http://localhost:4000/user/registor`, {
         user: account.user,
         pass:  account.pass,
@@ -60,7 +73,7 @@ export default function FormData() {
         console.log(error);
         alert('เกิดความผิดพลาด');
 
-      });
+      });*/
   };
 
   return (

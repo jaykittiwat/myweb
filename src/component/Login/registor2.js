@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "../styleWebpage.css";
-//import {Form} from 'react-bootstrap';
-import FormData from "./Form";
-//import imgcow1 from "../Img/imgcow1.jpg";
-//import FormImg from './FormImg';
-//import { Button } from "react-bootstrap";
-import Header from "./../../Header";
 
-class Registor extends Component {
+import FormData from "./Form";
+
+import Header from "./../../Header";
+////////////////////////พนักงาน/////////////////////////
+class Registor2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +24,7 @@ class Registor extends Component {
    
       
         <div className="row ">
-          <div className="title-regis container-fluid">ระบบลงทะเบียนเจ้าของฟาร์ม</div>
+          <div className="title-regis container-fluid">ระบบลงทะเบียนพนักงาน</div>
 
           <div className="col-md-12">
             <FormData />
@@ -40,4 +38,4 @@ class Registor extends Component {
   }
 }
 
-export default Registor;
+export default Registor2;
