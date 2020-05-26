@@ -3,9 +3,10 @@ import Posts from './TableFatter';
 import Pagi from './Pagination';
 import HeaderLogin from "../../../HeaderLogin";
 import NavbarLogin from "../../../Navbar";
-//import { Table,Button } from "react-bootstrap";
+import { Button,Pagination } from "react-bootstrap";
 import "./CowStyle.css";
 import axios from 'axios';
+//import { Next } from "react-bootstrap/PageItem";
 
 export default function Fatter() {
  
@@ -43,8 +44,32 @@ const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 //ส่ง funtionนี้เข้าไปในprops pigination
 const paginate = pageNumber => setCurrentPage(pageNumber);
 
+const nextPage = () =>{
+  let i=currentPage; 
+ const y=posts.length;
 
 
+  if(i<y/postsPerPage)
+  {
+        setCurrentPage(i+1)
+     
+  }
+ 
+}
+
+const PrevPage = () =>{
+  let i=currentPage; 
+  if(i>1)
+  {
+    console.log(i);
+    setCurrentPage(i-1);
+  }
+    
+
+  
+
+ 
+}
   return (
     <div className="container-fluid">
       <div className="row ">
@@ -53,13 +78,27 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
       <div className="row Nav-shadow">
         <NavbarLogin />
       </div>
-  <div >
+  <div className="box-border" >
     <Posts posts={currentPosts} loading={loading}/>
-    <Pagi
+    <hr/>
+    <div className="row " >
+      <div className="container-fluid   ">
+        <div className="pagi-pos">
+      <Pagination size="sm">
+    <Pagination.Prev onClick={()=>PrevPage()}/>
+  <Pagi
         postsPerPage={postsPerPage}
         totalPosts={posts.length}
         paginate={paginate}
+     
+      
       />
+      
+         <Pagination.Next onClick={()=>nextPage()}/>
+         </Pagination>
+         </div>
+         </div>
+         </div>
 </div>
 
 

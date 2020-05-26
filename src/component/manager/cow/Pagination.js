@@ -19,22 +19,22 @@ const Pagination1 = ({ postsPerPage, totalPosts, paginate }) => {
 const numberPage=()=>{
 return (
     pageNumbers.map(number => (
-        <div  key={number} >
-          <Link to='/fatten#'><Pagination className="col" onClick={() => paginate(number)} >
+       
+         <Pagination.Item onClick={() => paginate(number)}  key={number}>
             {number}
-          </Pagination></Link>
-        </div>
+          </Pagination.Item>
+       
       ))
 )
 }
   return (
     
-      <div className="row" >
-      
+      <>
+        
           {numberPage()}
         
        
-      </div>
+      </>
     
   );
 };

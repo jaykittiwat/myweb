@@ -52,8 +52,8 @@ const Posts = ({ posts, loading }) => {
 
   return (
     <>
-      <Table striped hover bordered   >
-        <thead >
+      <Table  hover className="table table-sm"    >
+        <thead className="bg-primary" >
           <tr>
             <th>เลือก</th>
             <th>UserId</th>
