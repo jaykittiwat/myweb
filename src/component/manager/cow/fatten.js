@@ -53,7 +53,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
       <div className="row Nav-shadow">
         <NavbarLogin />
       </div>
-  <div>
+  <div >
     <Posts posts={currentPosts} loading={loading}/>
     <Pagi
         postsPerPage={postsPerPage}
