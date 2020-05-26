@@ -7,6 +7,7 @@ export default function NavbarLogin() {
   return (
     <div className="container-fluid">
       <nav className="row">
+        
         <div className="dropdown">
           <Link to="/login">
             {" "}
@@ -107,7 +108,18 @@ export default function NavbarLogin() {
           </Link>
         </div>
 
-        <div className="col floatRight">
+        <div className="col-md-2">
+
+</div>
+        <div className="col-md-1 floatRight  ">
+        <div >
+            
+            <div className=" floatRight sigOut-color"  >Account : kittiwat</div>    
+       </div>
+        </div>
+       
+
+        <div className="col floatRight sigout-div ">
           <Signout />
         </div>
       </nav>

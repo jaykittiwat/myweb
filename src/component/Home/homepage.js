@@ -7,12 +7,12 @@ import NavbarLogin from "./../../Navbar";
 import thor from "../Img/thor.jpg";
 
 import {
-  ListGroupItem,
+
   ListGroup,
   Card,
-  Button,
+
   Form,
-  Col,
+
 } from "react-bootstrap";
 //import axios from "axios";
 // หน้า login แล้ว

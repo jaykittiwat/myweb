@@ -5,7 +5,7 @@ import FormImg from "./FormImg";
 
 import { Link } from "react-router-dom";
 import firebase from "./../../backEnd/firebase/index";
-//import axios from "axios";
+import axios from "axios";
 //ยังไม่ได้ทำ ระบบบลงทะเบียน
 
 ////////////////////////หน้าสำหรับกรอกข้อมูลการสมัคร [เจ้าของฟาร์ม]/////////////////////
@@ -39,7 +39,7 @@ export default function FormData() {
         console.log(res.user);
         alert("สำเร็จ");
         
-       /* axios.post(`http://localhost:4000/user/registor`, {
+        axios.post(`http://localhost:4000/user/registor`, {
         user: account.user,
         pass:  account.pass,
         question: account.question,
@@ -65,7 +65,7 @@ export default function FormData() {
         console.log(error);
         alert('เกิดความผิดพลาด');
 
-      });*/
+      });
       })
       .catch((error) => {
         var errorCode = error.code;

@@ -28,7 +28,7 @@ class Webpage extends Component{
             
         <div className="row">
         
-       <img className="bg-img" src={imgcow1} alt="asd"></img>
+       <img className="bg-img" src={imgcow1} alt="asd" style={{boxShadow:"0px 5px 5px #000000"}}></img>
        
         </div>
 

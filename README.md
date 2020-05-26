@@ -105,9 +105,10 @@ react-bootstrap
 react-router-dom
 ืnpm install axios --save
 npm install firebase react-router-dom axios react-bootstrap
-
+npm i mdbootstrap
 npm install simple-react-calendar
-
+ npm install @material-ui/core
+npm update http-proxy --depth 4
 
 --เกร็จเล๋กเก็ดน้อย   //น่าจะไม่ได้ใช้   React hook
 
