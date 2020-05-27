@@ -1,6 +1,6 @@
 import React from "react";
 
-
+import Table from './tableintrution';
 import HeaderLogin from "../../../HeaderLogin";
 import NavbarLogin from "../../../Navbar";
 //import { Form, Col, Button } from "react-bootstrap";
@@ -19,7 +19,7 @@ export default function Induction() {
       </div>
      
            
-
+<Table/>
       <div className="row mar"></div>
     </div>
   );

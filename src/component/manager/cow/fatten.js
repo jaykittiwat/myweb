@@ -83,7 +83,7 @@ const PrevPage = () =>{
     <hr/>
     <div className="row " >
       <div className="container-fluid   ">
-        <div className="pagi-pos">
+        <div >
       <Pagination size="sm">
     <Pagination.Prev onClick={()=>PrevPage()}/>
   <Pagi

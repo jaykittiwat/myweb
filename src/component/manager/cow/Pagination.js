@@ -1,6 +1,5 @@
 
 import React from 'react';
-import {Link} from 'react-router-dom'
 import{Pagination} from 'react-bootstrap'
 //ปุ่ม เปลี่ยนหน้าตาราง
 
