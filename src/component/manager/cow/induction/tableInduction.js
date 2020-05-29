@@ -1,4 +1,5 @@
 import React from "react";
+import { Spinner } from "react-bootstrap";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -26,7 +27,10 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import "date-fns";
+import InputLabel from "@material-ui/core/InputLabel";
 
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function EnhancedTable({ posts, loading }) {
@@ -302,14 +306,30 @@ export default function EnhancedTable({ posts, loading }) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
+  const [state, setState] = React.useState({
+    age: ""
+  });
+
+  const handleChange = event => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value
+    });
+  };
   /*------------------------------------------------------------------------------*/
 
   if (loading) {
-    return <div>loading</div>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
   }
 
   return (
-    <div>
+    <div className="container">
       <div className={classes.root}>
         <Paper className={classes.paper}>
           <EnhancedTableToolbar numSelected={selected.length} />
@@ -415,7 +435,10 @@ export default function EnhancedTable({ posts, loading }) {
         />
       </div>
 
-      <Paper>
+      <Paper
+        //ตัวบันทึก
+        style={{ textAlign: "center" }}
+      >
         <form
           className={classes.root}
           noValidate
@@ -426,59 +449,82 @@ export default function EnhancedTable({ posts, loading }) {
             id="outlined-basic"
             label="ผู้บันทึก"
             variant="outlined"
-            style={{ width: "20%" }}
+            style={{ width: "400px", margin: "10px" }}
             size="small"
           />{" "}
           <TextField
             id="outlined-basic2"
             label="ผู้ปฏิบัติการ"
             variant="outlined"
-            style={{ width: "20%" }}
+            style={{ width: "400px", margin: "10px" }}
             size="small"
           />
         </form>
+
         <form className={classes.root} style={{ padding: "0.3%" }}>
-       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid  >
-      
-        <KeyboardDatePicker
-        style={{ width: "20%" }}
-        size="small"
-          margin="normal"
-          id="date-picker-dialog"
-          label="วันที่"
-          format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date"
-          }}
-        />
-        {" "}
-        <KeyboardTimePicker
-        style={{ width: "20%" }}
-        size="small"
-          margin="normal"
-          id="time-picker"
-          label="เวลา"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change time"
-          }}
-        />
-      </Grid>
-    </MuiPickersUtilsProvider>
-    
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-         style={{width:"250px"}}
-      >
-        บันทึก
-      </Button>
-    </form>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid>
+              <KeyboardDatePicker
+                style={{ width: "400px", margin: "10px" }}
+                size="small"
+                margin="normal"
+                id="date-picker-dialog"
+                label="วันที่"
+                format="MM/dd/yyyy"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date"
+                }}
+              />{" "}
+              <KeyboardTimePicker
+                style={{ width: "400px", margin: "10px" }}
+                size="small"
+                margin="normal"
+                id="time-picker"
+                label="เวลา"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change time"
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+        </form>
+        <form className={classes.root} style={{ padding: "0.3%" }}>
+          <FormControl style={{ width: "400px", margin: "10px" }}>
+            <InputLabel htmlFor="age-native-simple">รายการยา</InputLabel>
+            <Select
+              native
+              value={state.age}
+              onChange={handleChange}
+              inputProps={{
+                name: "age",
+                id: "age-native-simple"
+              }}
+            >
+              <option aria-label="None" value="" />
+              <option value={10}>Ten</option>
+              <option value={20}>Twenty</option>
+              <option value={30}>Thirty</option>
+            </Select>
+          </FormControl>
+          <TextField
+            id="standard-basic"
+            label="ปริมาณ cc."
+            //ยังไม้ได้สร้างstateให้มัน
+            style={{ width: "400px", margin: "10px" }}
+          />
+        </form>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          style={{ width: "250px", margin: "10px" }}
+        >
+          บันทึก
+        </Button>
       </Paper>
     </div>
   );
