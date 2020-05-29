@@ -1,13 +1,32 @@
-import React from "react";
-
+import React,{useEffect,useState} from "react";
+import axios from 'axios';
 import Table from './tableintrution';
-import HeaderLogin from "../../../HeaderLogin";
-import NavbarLogin from "../../../Navbar";
+import HeaderLogin from './../../../../HeaderLogin';
+import NavbarLogin from "../../../../Navbar";
 //import { Form, Col, Button } from "react-bootstrap";
-import "./CowStyle.css";
+import "./../CowStyle.css";
 
 export default function Induction() {
-  
+
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+
+
+
+
+useEffect(()=>{
+  const fetchPost=async()=>{
+    setLoading(true);
+    //set เป็น true เพื่อเข้าสู่สถานะโหลดข้อมูล
+    const res = await axios.get('https://jsonplaceholder.typicode.com/todos');
+    //await บรรทัดอยู้ข้างล่าง นี้   รอไปก่อน จนกว่าจะโลหดเสร็จ
+    setPosts(res.data);
+    setLoading(false);
+  }
+  fetchPost();
+},[]);
+
 
   return (
     <div className="container-fluid">
@@ -19,7 +38,7 @@ export default function Induction() {
       </div>
      
            
-<Table/>
+<Table posts={posts} loading={loading}/>
       <div className="row mar"></div>
     </div>
   );

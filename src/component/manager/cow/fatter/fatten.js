@@ -1,10 +1,10 @@
 import React,{useEffect,useState} from "react";
 import Posts from './TableFatter';
-import Pagi from './Pagination';
-import HeaderLogin from "../../../HeaderLogin";
-import NavbarLogin from "../../../Navbar";
-import { Button,Pagination } from "react-bootstrap";
-import "./CowStyle.css";
+import Pagi from '../Pagination';
+import HeaderLogin from "../../../../HeaderLogin";
+import NavbarLogin from "../../../../Navbar";
+import {Pagination } from "react-bootstrap";
+import "./../CowStyle.css";
 import axios from 'axios';
 //import { Next } from "react-bootstrap/PageItem";
 
