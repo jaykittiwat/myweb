@@ -101,7 +101,7 @@ git push -u origin master
 5/26/2020 +++
 npm i --save date-fns@next @date-io/date-fns
 npm i @material-ui/pickers
- npm i --save date-fns@next @date-io/date-fns@1.x
+npm i --save date-fns@next @date-io/date-fns@1.x
 
 npm insta//
 npm install axios
