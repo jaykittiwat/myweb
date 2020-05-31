@@ -1,5 +1,5 @@
-import React from "react";
-import {Spinner} from 'react-bootstrap';
+import React, { useState } from "react";
+import { Spinner } from "react-bootstrap";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -24,20 +24,35 @@ import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from "@material-ui/pickers";
 import "date-fns";
-
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableFatter({ posts, loading }) {
   const rows = posts;
   /*-----------------------------------------------------------------------------*/
 
+  const [medic, setMedic] = useState([]);
+  const addtable = (event) => {
+    console.log(medic);
+    setMedic([
+      ...medic,
+      {
+        name: "",
+        value: "",
+      },
+    ]);
+  };
   //ฟังก์ชั่นเรียกวันที่
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
-  const handleDateChange = date => {
+  const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
@@ -65,7 +80,7 @@ export default function TableFatter({ posts, loading }) {
       if (order !== 0) return order;
       return a[1] - b[1];
     });
-    return stabilizedThis.map(el => el[0]);
+    return stabilizedThis.map((el) => el[0]);
   }
   // headCells คอลัม หัวตาราง
   const headCells = [
@@ -73,7 +88,7 @@ export default function TableFatter({ posts, loading }) {
     { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
     { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
     { id: "4", numeric: true, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" }
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -84,11 +99,11 @@ export default function TableFatter({ posts, loading }) {
       orderBy,
       numSelected,
       rowCount,
-      onRequestSort
+      onRequestSort,
     } = props;
 
     //รับheadCell.id  สำหรับปุ่ม เรียงค่า
-    const createSortHandler = property => event => {
+    const createSortHandler = (property) => (event) => {
       //calback
       onRequestSort(event, property);
     };
@@ -109,7 +124,7 @@ export default function TableFatter({ posts, loading }) {
               inputProps={{ "aria-label": "select all desserts" }}
             />
           </TableCell>
-          {headCells.map(headCell => (
+          {headCells.map((headCell) => (
             //map headCells ชื่อหัวตาราง และจัดหน้า
             <TableCell
               key={headCell.id}
@@ -154,37 +169,37 @@ export default function TableFatter({ posts, loading }) {
     onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(["asc", "desc"]).isRequired,
     orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired
+    rowCount: PropTypes.number.isRequired,
   };
 
-  const useToolbarStyles = makeStyles(theme => ({
+  const useToolbarStyles = makeStyles((theme) => ({
     root: {
       paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.primary.main,
-            backgroundColor: lighten(theme.palette.primary.light, 0.85)
+            backgroundColor: lighten(theme.palette.primary.light, 0.85),
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
           },
     title: {
-      flex: "1 1 100%"
-    }
+      flex: "1 1 100%",
+    },
   }));
 
-  const EnhancedTableToolbar = props => {
+  const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
 
     return (
       <Toolbar
         className={clsx(classes.root, {
-          [classes.highlight]: numSelected > 0
+          [classes.highlight]: numSelected > 0,
         })}
       >
         {numSelected > 0 ? (
@@ -206,19 +221,19 @@ export default function TableFatter({ posts, loading }) {
   };
 
   EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired
+    numSelected: PropTypes.number.isRequired,
   };
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      width: "100%"
+      width: "100%",
     },
     paper: {
       width: "100%",
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     table: {
-      minWidth: 750
+      minWidth: 750,
     },
     visuallyHidden: {
       border: 0,
@@ -229,8 +244,8 @@ export default function TableFatter({ posts, loading }) {
       padding: 0,
       position: "absolute",
       top: 20,
-      width: 1
-    }
+      width: 1,
+    },
   }));
 
   const classes = useStyles();
@@ -249,12 +264,12 @@ export default function TableFatter({ posts, loading }) {
     setOrderBy(property);
   };
   //checkBox  ทั้งหมด
-  const handleSelectAllClick = event => {
+  const handleSelectAllClick = (event) => {
     //ถ้ามีการ คลิกเชค
     if (event.target.checked) {
       //map row    idเก็บ ไว้ใน newSelecteds
 
-      const newSelecteds = rows.map(n => n.id);
+      const newSelecteds = rows.map((n) => n.id);
       //console.log(newSelecteds) ;
       setSelected(newSelecteds);
       return;
@@ -289,31 +304,75 @@ export default function TableFatter({ posts, loading }) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleChangeDense = event => {
+  const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
 
-  const isSelected = id => selected.indexOf(id) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
+  const [state, setState] = React.useState({
+    age: "",
+  });
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
   /*------------------------------------------------------------------------------*/
-  
-  /*------------------------------------------------------------------------------*/
+
+  const showTable = ()=>{
+    return(
+      medic.map((medics)=> <  form className={classes.root} style={{ padding: "0.3%" }} key={medic.indexOf(medics)} >
+      <FormControl style={{ width: "40%", margin: "10px" }}>
+        <InputLabel htmlFor="age-native-simple">รายการยา</InputLabel>
+        <Select
+          native
+          value={state.age}
+          onChange={handleChange}
+          inputProps={{
+            name: "age",
+            id: "age-native-simple",
+          }}
+        >
+          <option aria-label="None" value="" />
+          <option value={10}>Ten</option>
+          <option value={20}>Twenty</option>
+          <option value={30}>Thirty</option>
+        </Select>
+      </FormControl>
+      <TextField
+        id="standard-basic"
+        label="ปริมาณ cc."
+        //ยังไม้ได้สร้างstateให้มัน
+        style={{ width: "40%", margin: "10px" }}
+      />
+    </form>)
+      
+     
+    )
+  }
   if (loading) {
-    return <Spinner animation="border" role="status">
-    <span className="sr-only">Loading...</span>
-  </Spinner>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
   }
 
   return (
-    <div>
+    <div className="container">
       <div className={classes.root}>
         <Paper className={classes.paper}>
           <EnhancedTableToolbar numSelected={selected.length} />
@@ -344,50 +403,52 @@ export default function TableFatter({ posts, loading }) {
               <TableBody
               /* ----------------------------ตัวตาราง--------------------------- */
               >
-                {//ส่ง Array Rows กับ call back getComparator()
-                //แสดงข้อมูลและการจัดการต่างๆทีละแถว
-                stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.id);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+                {
+                  //ส่ง Array Rows กับ call back getComparator()
+                  //แสดงข้อมูลและการจัดการต่างๆทีละแถว
+                  stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.id);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                        onClick={event => handleClick(event, row.id)}
-                        role="checkbox"
-                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
-                        tabIndex={-1}
-                        key={row.id /*keyyyyyyyyyyyyy*/}
-                      >
-                        <TableCell
-                          padding="checkbox"
-                          /*ส่วนของcheckBox แต่ละแถว*/
+                      return (
+                        <TableRow
+                          hover
+                          //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
+                          onClick={(event) => handleClick(event, row.id)}
+                          role="checkbox"
+                          aria-checked={isItemSelected} //คลิกเลืองตรงตารา
+                          tabIndex={-1}
+                          key={row.id /*keyyyyyyyyyyyyy*/}
                         >
-                          <Checkbox
-                            checked={isItemSelected}
-                            inputProps={{ "aria-labelledby": labelId }}
-                            color="primary"
-                          />
-                        </TableCell>
+                          <TableCell
+                            padding="checkbox"
+                            /*ส่วนของcheckBox แต่ละแถว*/
+                          >
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ "aria-labelledby": labelId }}
+                              color="primary"
+                            />
+                          </TableCell>
 
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        >
-                          {row.id}
-                        </TableCell>
-                        <TableCell align="right">{row.userId}</TableCell>
-                        <TableCell align="right">{row.title}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
+                            {row.id}
+                          </TableCell>
+                          <TableCell align="right">{row.userId}</TableCell>
+                          <TableCell align="right">{row.title}</TableCell>
+                          <TableCell align="right">{row.carbs}</TableCell>
+                          <TableCell align="right">{row.protein}</TableCell>
+                        </TableRow>
+                      );
+                    })
+                }
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                     <TableCell colSpan={6} />
@@ -419,7 +480,10 @@ export default function TableFatter({ posts, loading }) {
         />
       </div>
 
-      <Paper>
+      <Paper
+        //ตัวบันทึก
+        style={{ textAlign: "center" }}
+      >
         <form
           className={classes.root}
           noValidate
@@ -430,59 +494,70 @@ export default function TableFatter({ posts, loading }) {
             id="outlined-basic"
             label="ผู้บันทึก"
             variant="outlined"
-            style={{ width: "20%" }}
+            style={{ width: "400px", margin: "10px" }}
             size="small"
           />{" "}
           <TextField
             id="outlined-basic2"
             label="ผู้ปฏิบัติการ"
             variant="outlined"
-            style={{ width: "20%" }}
+            style={{ width: "400px", margin: "10px" }}
             size="small"
           />
         </form>
+
         <form className={classes.root} style={{ padding: "0.3%" }}>
-       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid  >
-      
-        <KeyboardDatePicker
-        style={{ width: "20%" }}
-        size="small"
-          margin="normal"
-          id="date-picker-dialog"
-          label="วันที่"
-          format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date"
-          }}
-        />
-        {" "}
-        <KeyboardTimePicker
-        style={{ width: "20%" }}
-        size="small"
-          margin="normal"
-          id="time-picker"
-          label="เวลา"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change time"
-          }}
-        />
-      </Grid>
-    </MuiPickersUtilsProvider>
-    
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-         style={{width:"250px"}}
-      >
-        บันทึก
-      </Button>
-    </form>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid>
+              <KeyboardDatePicker
+                style={{ width: "400px", margin: "10px" }}
+                size="small"
+                margin="normal"
+                id="date-picker-dialog"
+                label="วันที่"
+                format="MM/dd/yyyy"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />{" "}
+              <KeyboardTimePicker
+                style={{ width: "400px", margin: "10px" }}
+                size="small"
+                margin="normal"
+                id="time-picker"
+                label="เวลา"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change time",
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+        </form>
+
+        <Paper elevation={3} style={{ margin: "5%" }}>
+      {showTable()}
+
+          <Fab
+            color="primary"
+            aria-label="add"
+            size="small"
+            style={{ margin: "10px" }}
+          >
+            <AddIcon onClick={addtable} />
+          </Fab>
+        </Paper>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          style={{ width: "250px", margin: "10px" }}
+        >
+          บันทึก
+        </Button>
       </Paper>
     </div>
   );

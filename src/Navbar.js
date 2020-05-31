@@ -2,12 +2,12 @@ import React from "react";
 import Signout from "./Signout";
 import "./styleNavbar.css";
 import { Link } from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
 //react------ HOOK
 export default function NavbarLogin() {
   return (
     <div className="container-fluid">
       <nav className="row">
-        
         <div className="dropdown">
           <Link to="/login">
             {" "}
@@ -108,18 +108,17 @@ export default function NavbarLogin() {
           </Link>
         </div>
 
-        <div className="col-md-2">
-
-</div>
-        <div className="col-md-1 floatRight  ">
-        <div >
-            
-            <div className=" floatRight sigOut-color"  >Account : kittiwat</div>    
-       </div>
+        <div className="col-md-1"></div>
+        <div className="col-md">
+          <div className="row" style={{ float: "right", marginTop: "8px" ,marginRight:"5%"}}>
+         
+            <Avatar style={{ backgroundColor: "#ff5722" }}>N</Avatar>
+            <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%"}}>Nanthawat</div>
+         
+          </div>
         </div>
-       
 
-        <div className="col floatRight sigout-div ">
+        <div className="col-md-1 floatRight sigout-div ">
           <Signout />
         </div>
       </nav>
