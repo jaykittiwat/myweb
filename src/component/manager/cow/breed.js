@@ -1,49 +1,132 @@
-import React from 'react';
+import React,{Component} from 'react';
+import HeaderLogin from '../../../HeaderLogin';
+import NavbarLogin from '../../../Navbar';
+import { Form, Col ,Button,Table,Card} from "react-bootstrap";
+import './CowStyle.css';
+class breed extends Component{
+  render(){
+      return(
+        <div className="container-fluid">
+        <div className="row ">
+          <HeaderLogin />
+        </div>
+        <div className="row Nav-shadow">
+          <NavbarLogin />
+        </div>
+        <div className="row mar"><div className="container box-border">
+        <Card.Title>บันทึกการผสมพันธุ์</Card.Title>
+        
+      
+        <Form className="pad"> 
+  <Form.Row>
+    <Col>
+      <Form.Control placeholder="โรงเรือน" />
+    </Col>
+    <Col>
+      <Form.Control placeholder="คอก" />
+    </Col>
+    <Col>
+      <Form.Control placeholder="ฝูง" />
+    </Col>
+    <Col>
+      <Form.Control placeholder="หมายเลข" />
+    </Col>
 
-import InputLabel from '@material-ui/core/InputLabel';
+  </Form.Row>
+</Form>
+     
+       <Table striped bordered hover>
+          
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+  
+  </tbody>
+</Table>
+          
+          
+          </div>
+          </div>
+        <div className="row mar" ><div className="container box-border">
+          <Form>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" placeholder="Enter email" />
+              </Form.Group>
 
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Buttom from '@material-ui/core/Button';
+              <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" />
+              </Form.Group>
+            </Form.Row>
 
+            <Form.Group controlId="formGridAddress1">
+              <Form.Label>Address</Form.Label>
+              <Form.Control placeholder="1234 Main St" />
+            </Form.Group>
 
+            <Form.Group controlId="formGridAddress2">
+              <Form.Label>Address 2</Form.Label>
+              <Form.Control placeholder="Apartment, studio, or floor" />
+            </Form.Group>
 
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>City</Form.Label>
+                <Form.Control />
+              </Form.Group>
 
-export default function NativeSelects() {
+              <Form.Group as={Col} controlId="formGridState">
+                <Form.Label>State</Form.Label>
+                <Form.Control as="select" value="Choose...">
+                  <option>Choose...</option>
+                  <option>...</option>
+                </Form.Control>
+              </Form.Group>
 
-  const [state, setState] = React.useState({
-    age: '',
-    
-  });
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Zip</Form.Label>
+                <Form.Control />
+              </Form.Group>
+            </Form.Row>
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
+            <Form.Group id="formGridCheckbox">
+              <Form.Check type="checkbox" label="Check me out" />
+            </Form.Group>
 
-  return (
-    <div>
-      <FormControl >
-        <InputLabel htmlFor="age-native-simple">Age</InputLabel>
-        <Select
-          native
-          value={state.age}
-          onChange={handleChange}
-          inputProps={{
-            name: 'age',
-            id: 'age-native-simple',
-          }}
-        >
-          <option aria-label="None" value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
-        </Select>
-      </FormControl>
-
-    </div>
-  );
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </div>
+        </div>
+      </div>
+      )
+  }
 }
+export default breed;
