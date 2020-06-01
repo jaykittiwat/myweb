@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from "react";
 import Posts from './TableFatter';
-import Pagi from '../Pagination';
+//import Pagi from '../Pagination';
 import HeaderLogin from "../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
-import {Pagination } from "react-bootstrap";
+//import {Pagination } from "react-bootstrap";
 import "./../CowStyle.css";
 import axios from 'axios';
 //import { Next } from "react-bootstrap/PageItem";
@@ -12,7 +12,8 @@ export default function Fatter() {
  
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
+  //setCurrentPage
 
   //จำนวนข้อมูล  ใน1หน้า
   const [postsPerPage] = useState(10);
@@ -42,9 +43,9 @@ const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 // Change page
 //pageNumber เมื่อคลิกหน้า 2  ค่าก็จะเปลี่ยน
 //ส่ง funtionนี้เข้าไปในprops pigination
-const paginate = pageNumber => setCurrentPage(pageNumber);
+//const paginate = pageNumber => setCurrentPage(pageNumber);
 
-const nextPage = () =>{
+/*const nextPage = () =>{
   let i=currentPage; 
  const y=posts.length;
 
@@ -69,7 +70,7 @@ const PrevPage = () =>{
   
 
  
-}
+}*/
   return (
     <div className="container-fluid">
       <div className="row ">

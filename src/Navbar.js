@@ -46,18 +46,9 @@ export default function NavbarLogin() {
         </div>
 
         <div className="dropdown">
-          <div className="dropbtn">การจัดการลูกโค</div>
-          <div className="dropdown-content">
-            <Link to="/dehorner">
-              <div>บันทึกการสูญเขา</div>
-            </Link>
-            <Link to="/wean">
-              <div>บันทึกการหย่านม</div>
-            </Link>
-            <Link to="/hitnumber">
-              <div>บันทึกการตีเบอร์</div>
-            </Link>
-          </div>
+          <Link to="/calfmanage">
+            <div className="dropbtn">การจัดการลูกโค</div>
+          </Link>
         </div>
 
         <div className="dropdown">
