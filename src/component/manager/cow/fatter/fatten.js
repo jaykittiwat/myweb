@@ -81,24 +81,7 @@ const PrevPage = () =>{
   <div className="box-border" >
     <Posts posts={currentPosts} loading={loading}/>
     <hr/>
-    <div className="row " >
-      <div className="container-fluid   ">
-        <div >
-      <Pagination size="sm">
-    <Pagination.Prev onClick={()=>PrevPage()}/>
-  <Pagi
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-        paginate={paginate}
-     
-      
-      />
-      
-         <Pagination.Next onClick={()=>nextPage()}/>
-         </Pagination>
-         </div>
-         </div>
-         </div>
+    
 </div>
 
 
