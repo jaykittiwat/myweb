@@ -32,15 +32,22 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Box } from "@material-ui/core";
+
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableFatter({ posts, loading }) {
   const rows = posts;
   /*-----------------------------------------------------------------------------*/
 
-  const [medic, setMedic] = useState([]);
+  const [medic, setMedic] = useState([{
+    name: "",
+    value: "",
+  },]);
   const addtable = (event) => {
-    console.log(medic);
+    
     setMedic([
       ...medic,
       {
@@ -323,33 +330,37 @@ export default function TableFatter({ posts, loading }) {
     age: "",
   });
 
-  const handleChange = (event) => {
-    const name = event.target.name;
+  const handleChange = (event,index) => {
+    setState({age:event.target.value})
+
+    
+    /*const name = event.target.name;
     setState({
       ...state,
       [name]: event.target.value,
-    });
+    });*/
   };
+
   /*------------------------------------------------------------------------------*/
 
   const showTable = ()=>{
     return(
-      medic.map((medics)=> <  form className={classes.root} style={{ padding: "0.3%" }} key={medic.indexOf(medics)} >
-      <FormControl style={{ width: "40%", margin: "10px" }}>
+      medic.map((medics)=> <  form className={classes.root} key={medic.indexOf(medics)} >
+    
+         
+
+      <FormControl style={{ width: "45%", margin: "10px" }}>
         <InputLabel htmlFor="age-native-simple">รายการยา</InputLabel>
         <Select
           native
           value={state.age}
-          onChange={handleChange}
-          inputProps={{
-            name: "age",
-            id: "age-native-simple",
-          }}
+          onChange={event=>handleChange(event,medic.indexOf(medics))} 
+      
         >
           <option aria-label="None" value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          <option >Ten</option>
+          <option>Twenty</option>
+          <option >Thirty</option>
         </Select>
       </FormControl>
       <TextField
@@ -358,6 +369,9 @@ export default function TableFatter({ posts, loading }) {
         //ยังไม้ได้สร้างstateให้มัน
         style={{ width: "40%", margin: "10px" }}
       />
+       <IconButton aria-label="delete" color="secondary" style={{marginTop:"15px" ,outline:"none"}}>
+        <DeleteIcon />
+      </IconButton>
     </form>)
       
      
@@ -538,14 +552,14 @@ export default function TableFatter({ posts, loading }) {
           </MuiPickersUtilsProvider>
         </form>
 
-        <Paper elevation={3} style={{ margin: "5%" }}>
+        <Paper elevation={3} style={{ marginLeft: "10%",marginRight: "10%"  }}>
       {showTable()}
 
           <Fab
             color="primary"
             aria-label="add"
             size="small"
-            style={{ margin: "10px" }}
+            style={{ margin: "10px",outline:"none" }}
           >
             <AddIcon onClick={addtable} />
           </Fab>
@@ -554,7 +568,8 @@ export default function TableFatter({ posts, loading }) {
           variant="contained"
           color="primary"
           size="large"
-          style={{ width: "250px", margin: "10px" }}
+          style={{ width: "250px", margin: "10px" ,outline:"none"}}
+          onClick={()=>console.log(medic)}
         >
           บันทึก
         </Button>

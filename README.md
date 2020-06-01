@@ -98,7 +98,8 @@ git push -u origin master
 
 
 
-5/26/2020 +++
+5/26/2020 +++ 
+npm install @material-ui/core
 npm i --save date-fns@next @date-io/date-fns
 npm i @material-ui/pickers
 npm i --save date-fns@next @date-io/date-fns@1.x
@@ -111,7 +112,7 @@ react-router-dom
 npm install firebase react-router-dom axios react-bootstrap
 npm i mdbootstrap
 npm install simple-react-calendar
- npm install @material-ui/core
+
 npm update http-proxy --depth 4
 
 --เกร็จเล๋กเก็ดน้อย   //น่าจะไม่ได้ใช้   React hook
