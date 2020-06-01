@@ -22,16 +22,16 @@ class Header extends Component {
         <div className="row float-right">
         
             
-            <div className="dropdown">
-              <button className="dropbtn1">ลงทะเบียน   <i className="fa fa-caret-down"></i></button>
-              <div className="dropdown-content">
+            <div className="dropdown" style={{textAlign:"center"}}>
+              <div className="dropbtn1" style={{paddingTop:"20px"}}>ลงทะเบียน  <i className="fa fa-caret-down"></i></div>
+              <div className="dropdown-content" style={{textAlign:"left"}}>
                 <Link to="/registor">เจ้าของฟาร์ม</Link>
                 <Link to="/registor2">พนักงาน</Link>
               </div>
             </div>
 
-            <div className="dropdown">
-            <Link to="/login"><button className="dropbtn1">เข้าสู่ระบบ</button></Link> 
+            <div className="dropdown" style={{textAlign:"center"}} >
+            <Link to="/login"  style={{textDecorationLine:"none"}}><div className="dropbtn1" style={{paddingTop:"20px"}}>เข้าสู่ระบบ</div></Link> 
             </div>
             </div>
           </div>

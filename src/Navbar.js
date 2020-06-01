@@ -112,8 +112,8 @@ export default function NavbarLogin() {
         <div className="col-md">
           <div className="row" style={{ float: "right", marginTop: "8px" ,marginRight:"5%"}}>
          
-            <Avatar style={{ backgroundColor: "#ff5722" }}>N</Avatar>
-            <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%"}}>Nanthawat</div>
+            <Avatar style={{ backgroundColor: "#ff5722" }}>J</Avatar>
+            <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%"}}>Kittiwat</div>
          
           </div>
         </div>

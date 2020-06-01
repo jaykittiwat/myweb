@@ -27,16 +27,6 @@ useEffect(()=>{
   fetchPost();
 },[]);
 
-
-
-
-
-    
-
-  
-
-
-
   return (
     <div className="container-fluid">
       <div className="row ">

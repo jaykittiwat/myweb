@@ -521,7 +521,7 @@ export default function EnhancedTable({ posts, loading }) {
           variant="contained"
           color="primary"
           size="large"
-          style={{ width: "250px", margin: "10px" }}
+          style={{ width: "250px", margin: "10px" ,outline:"none"}}
         >
           บันทึก
         </Button>
