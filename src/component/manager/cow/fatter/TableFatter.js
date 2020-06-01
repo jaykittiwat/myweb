@@ -328,27 +328,18 @@ export default function TableFatter({ posts, loading }) {
 
   /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
   const [state, setState] = React.useState({
-    item: "",
-    val:""
-     
+    age: ""
   });
 
-
-
-
   const handleChange = (event, index) => {
-    
+    setState({ age: event.target.value });
 
-
-
-  medic.map((obj)=>)
     /*const name = event.target.name;
     setState({
       ...state,
       [name]: event.target.value,
     });*/
   };
-  
 
   /*------------------------------------------------------------------------------*/
 
@@ -371,7 +362,6 @@ export default function TableFatter({ posts, loading }) {
         <TextField
           id="standard-basic"
           label="ปริมาณ cc."
-          onChange={(event)=>handleChange2(event,medic.indexOf(medics))}
           //ยังไม้ได้สร้างstateให้มัน
           style={{ width: "40%", margin: "10px" }}
         />
