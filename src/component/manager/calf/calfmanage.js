@@ -1,10 +1,10 @@
 import React,{useEffect,useState} from "react";
 import axios from 'axios';
-import Table from './tableintrution';
-import HeaderLogin from './../../../../HeaderLogin';
-import NavbarLogin from "../../../../Navbar";
+import Table from './tablecalf';
+import HeaderLogin from '../../../HeaderLogin';
+import NavbarLogin from "../../../Navbar";
 //import { Form, Col, Button } from "react-bootstrap";
-import "./../CowStyle.css";
+import "./../calf/CalfStyle.css";
 
 export default function Induction() {
 
