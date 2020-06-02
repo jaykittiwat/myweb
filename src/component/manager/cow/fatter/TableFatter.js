@@ -467,8 +467,9 @@ setMedic(result);
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
+          <div ><TablePagination
             //ปุ่มเปลี่ยนห้นา
+         
             rowsPerPageOptions={[5, 10, 15, 20]}
             component="div"
             count={rows.length}
@@ -476,7 +477,8 @@ setMedic(result);
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+          /></div>
+          
         </Paper >
         <FormControlLabel
           control={
