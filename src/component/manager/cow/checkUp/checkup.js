@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from "react";
 import axios from 'axios';
-import Table from './TableFatter';
+import TableCheckUp from './tableCheckup';
 import HeaderLogin from './../../../../HeaderLogin';
 import NavbarLogin from "../../../../Navbar";
 //import { Form, Col, Button } from "react-bootstrap";
@@ -38,7 +38,7 @@ useEffect(()=>{
       </div>
      
            
-<Table posts={posts} loading={loading}/>
+<TableCheckUp  posts={posts} loading={loading}/>
       <div className="row mar"></div>
     </div>
   );

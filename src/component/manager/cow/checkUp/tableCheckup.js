@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import Button from "@material-ui/core/Button";
+
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
@@ -18,34 +18,21 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import "date-fns";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-/*import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";*/
+
+
+
+
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
-export default function TableBreed({ posts, loading }) {
+export default function TableIduction({ posts, loading }) {
   const rows = posts;
   /*-----------------------------------------------------------------------------*/
 
-  //ฟังก์ชั่นเรียกวันที่
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  
+  
+ 
+
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -70,7 +57,7 @@ export default function TableBreed({ posts, loading }) {
       if (order !== 0) return order;
       return a[1] - b[1];
     });
-    return stabilizedThis.map((el) => el[0]);
+    return stabilizedThis.map(el => el[0]);
   }
   // headCells คอลัม หัวตาราง
   const headCells = [
@@ -78,7 +65,7 @@ export default function TableBreed({ posts, loading }) {
     { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
     { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
     { id: "4", numeric: true, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -89,11 +76,11 @@ export default function TableBreed({ posts, loading }) {
       orderBy,
       numSelected,
       rowCount,
-      onRequestSort,
+      onRequestSort
     } = props;
 
     //รับheadCell.id  สำหรับปุ่ม เรียงค่า
-    const createSortHandler = (property) => (event) => {
+    const createSortHandler = property => event => {
       //calback
       onRequestSort(event, property);
     };
@@ -114,7 +101,7 @@ export default function TableBreed({ posts, loading }) {
               inputProps={{ "aria-label": "select all desserts" }}
             />
           </TableCell>
-          {headCells.map((headCell) => (
+          {headCells.map(headCell => (
             //map headCells ชื่อหัวตาราง และจัดหน้า
             <TableCell
               key={headCell.id}
@@ -159,37 +146,37 @@ export default function TableBreed({ posts, loading }) {
     onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(["asc", "desc"]).isRequired,
     orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
+    rowCount: PropTypes.number.isRequired
   };
 
-  const useToolbarStyles = makeStyles((theme) => ({
+  const useToolbarStyles = makeStyles(theme => ({
     root: {
       paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
+      paddingRight: theme.spacing(1)
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.primary.main,
-            backgroundColor: lighten(theme.palette.primary.light, 0.85),
+            backgroundColor: lighten(theme.palette.primary.light, 0.85)
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.primary.dark,
+            backgroundColor: theme.palette.primary.dark
           },
     title: {
-      flex: "1 1 100%",
-    },
+      flex: "1 1 100%"
+    }
   }));
 
-  const EnhancedTableToolbar = (props) => {
+  const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
 
     return (
       <Toolbar
         className={clsx(classes.root, {
-          [classes.highlight]: numSelected > 0,
+          [classes.highlight]: numSelected > 0
         })}
       >
         {numSelected > 0 ? (
@@ -211,19 +198,19 @@ export default function TableBreed({ posts, loading }) {
   };
 
   EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
+    numSelected: PropTypes.number.isRequired
   };
 
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(theme => ({
     root: {
-      width: "100%",
+      width: "100%"
     },
     paper: {
       width: "100%",
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(2)
     },
     table: {
-      minWidth: 750,
+      minWidth: 750
     },
     visuallyHidden: {
       border: 0,
@@ -234,8 +221,8 @@ export default function TableBreed({ posts, loading }) {
       padding: 0,
       position: "absolute",
       top: 20,
-      width: 1,
-    },
+      width: 1
+    }
   }));
 
   const classes = useStyles();
@@ -254,12 +241,12 @@ export default function TableBreed({ posts, loading }) {
     setOrderBy(property);
   };
   //checkBox  ทั้งหมด
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllClick = event => {
     //ถ้ามีการ คลิกเชค
     if (event.target.checked) {
       //map row    idเก็บ ไว้ใน newSelecteds
 
-      const newSelecteds = rows.map((n) => n.id);
+      const newSelecteds = rows.map(n => n.id);
       //console.log(newSelecteds) ;
       setSelected(newSelecteds);
       return;
@@ -294,19 +281,30 @@ export default function TableBreed({ posts, loading }) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
+  const handleChangeDense = event => {
     setDense(event.target.checked);
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+  const isSelected = id => selected.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+
+ 
+
+
+
+
+
+
+  /*------------------------------------------------------------------------------*/
+
 
   if (loading) {
     return (
@@ -317,9 +315,9 @@ export default function TableBreed({ posts, loading }) {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className={classes.root}>
-        <Paper className={classes.paper} elevation={3}>
+        <Paper className={classes.paper} elevation={3} >
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table
@@ -348,52 +346,50 @@ export default function TableBreed({ posts, loading }) {
               <TableBody
               /* ----------------------------ตัวตาราง--------------------------- */
               >
-                {
-                  //ส่ง Array Rows กับ call back getComparator()
-                  //แสดงข้อมูลและการจัดการต่างๆทีละแถว
-                  stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.id);
-                      const labelId = `enhanced-table-checkbox-${index}`;
+                {//ส่ง Array Rows กับ call back getComparator()
+                //แสดงข้อมูลและการจัดการต่างๆทีละแถว
+                stableSort(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                      return (
-                        <TableRow
-                          hover
-                          //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                          onClick={(event) => handleClick(event, row.id)}
-                          role="checkbox"
-                          aria-checked={isItemSelected} //คลิกเลืองตรงตารา
-                          tabIndex={-1}
-                          key={row.id /*keyyyyyyyyyyyyy*/}
+                    return (
+                      <TableRow
+                        hover
+                        //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
+                        onClick={event => handleClick(event, row.id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
+                        tabIndex={-1}
+                        key={row.id /*keyyyyyyyyyyyyy*/}
+                      >
+                        <TableCell
+                          padding="checkbox"
+                          /*ส่วนของcheckBox แต่ละแถว*/
                         >
-                          <TableCell
-                            padding="checkbox"
-                            /*ส่วนของcheckBox แต่ละแถว*/
-                          >
-                            <Checkbox
-                              checked={isItemSelected}
-                              inputProps={{ "aria-labelledby": labelId }}
-                              color="primary"
-                            />
-                          </TableCell>
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ "aria-labelledby": labelId }}
+                            color="primary"
+                          />
+                        </TableCell>
 
-                          <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                          >
-                            {row.id}
-                          </TableCell>
-                          <TableCell align="right">{row.userId}</TableCell>
-                          <TableCell align="right">{row.title}</TableCell>
-                          <TableCell align="right">{row.carbs}</TableCell>
-                          <TableCell align="right">{row.protein}</TableCell>
-                        </TableRow>
-                      );
-                    })
-                }
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {row.id}
+                        </TableCell>
+                        <TableCell align="right">{row.userId}</TableCell>
+                        <TableCell align="right">{row.title}</TableCell>
+                        <TableCell align="right">{row.carbs}</TableCell>
+                        <TableCell align="right">{row.protein}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                     <TableCell colSpan={6} />
@@ -412,7 +408,7 @@ export default function TableBreed({ posts, loading }) {
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
-        </Paper>
+        </Paper >
         <FormControlLabel
           control={
             <Switch
@@ -425,128 +421,7 @@ export default function TableBreed({ posts, loading }) {
         />
       </div>
 
-      <Paper
-        elevation={3}
-        //ตัวบันทึก///////////////////////////////////
-        style={{ textAlign: "left" }}
-      >
-        <h4 style={{ paddingTop: "15px", marginLeft: "20px" }}>
-          บันทึกการจัดการ
-        </h4>
-        <form
-          className={classes.root}
-          noValidate
-          autoComplete="off"
-          style={{ padding: "0.3%" }}
-        >
-          <TextField
-            id="outlined-basic"
-            label="ผู้บันทึก"
-            variant="outlined"
-            style={{ width: "400px", margin: "10px" }}
-            size="small"
-          />{" "}
-          <TextField
-            id="outlined-basic2"
-            label="ผู้ปฏิบัติการ"
-            variant="outlined"
-            style={{ width: "400px", margin: "10px" }}
-            size="small"
-          />
-          <div style={{ textAlign: "left", marginLeft: "10px" }}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid>
-                <KeyboardDatePicker
-                  style={{ width: "400px" }}
-                  size="small"
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="วันที่"
-                  format="dd/MM/yyyy"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />{" "}
-              </Grid>
-            </MuiPickersUtilsProvider>
-          </div>
-          <Paper elevation={0} style={{ marginTop: "15px" }}>
-            <TextField
-              label="เวลาเป็นสัด"
-              variant="outlined"
-              style={{ width: "260px", margin: "10px" }}
-              size="small"
-            />
-            <TextField
-              label="เวลานิ่ง"
-              variant="outlined"
-              style={{ width: "260px", margin: "10px" }}
-              size="small"
-            />
-            <TextField
-              label="เวลาผสม"
-              variant="outlined"
-              style={{ width: "260px", margin: "10px" }}
-              size="small"
-            />{" "}
-          </Paper>
-          <FormControl style={{ width: "400px", margin: "10px" }}>
-            <InputLabel htmlFor="age-native-simple">วิธีการผสม</InputLabel>
-            <Select
-              //ยังไม่ได้setState ให้
-              native
-              value=""
-              //onChange={event => handleChange(event,index)}
-            >
-              <option aria-label="None" value="" />
-              <option>พ่อพันธุ์</option>
-              <option>น้ำเชื้อ</option>
-            </Select>
-          </FormControl>
-          <Paper elevation={0} style={{ marginTop: "20px" }}>
-            <TextField
-              label="หมายเลขพ่อพันธุ์/น้ำเชื้อ"
-              variant="outlined"
-              style={{ width: "400px", margin: "10px" }}
-              size="small"
-            />
-            <TextField
-              label="หมาเหตุ"
-              variant="outlined"
-              style={{ width: "400px", margin: "10px" }}
-              size="small"
-            />
-          </Paper>
-        </form>
-       <Grid container spacing={2} style={{textAlign:"center",marginTop:"10px"}} >
-       <Grid item xs={12} sm={3}>
-           
-          </Grid >
-          <Grid item xs={12} sm={3}>
-            <Paper elevation={3} style={{height:"60px",paddingTop:"20px",color:"#1d1499"}}>ตรวจวันกลับสัด วันที่ dd/mm/yy</Paper>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Paper  elevation={3} style={{height:"60px",paddingTop:"20px",color:"#1d1499"}}>เริ่มการตรวจท้อง วันที่ dd/mm/yy</Paper>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-           
-          </Grid>
-        </Grid>
-        
-
-        <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: "250px", margin: "10px", outline: "none" }}
-          >
-            บันทึก
-          </Button>
-        </Paper>
-      </Paper>
+      
     </div>
   );
 }

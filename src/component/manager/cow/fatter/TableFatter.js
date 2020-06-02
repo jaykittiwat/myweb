@@ -551,7 +551,7 @@ setMedic(result);
           </MuiPickersUtilsProvider>
         </form>
 
-        <Paper elevation={3} style={{ marginLeft: "10%", marginRight: "10%" }}>
+       
           {showTable()}
 
           <Fab
@@ -562,7 +562,7 @@ setMedic(result);
           >
             <AddIcon onClick={addtable} />
           </Fab>
-        </Paper>
+     
         
         <Paper elevation={3} style={{  marginLeft: "300px", marginRight: "300px",height:"70px",marginTop:"10px",paddingTop:"20px",fontSize:"20px",color:"#1d1499"}}  >
                     เริ่มการเหนี่ยวนำ วันที่ dd/mm/yy
