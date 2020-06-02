@@ -38,7 +38,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
-export default function TableInduction({ posts, loading }) {
+export default function TableBreed({ posts, loading }) {
   const rows = posts;
   /*-----------------------------------------------------------------------------*/
 
@@ -565,7 +565,7 @@ setMedic(result);
         </Paper>
         
         <Paper elevation={3} style={{  marginLeft: "300px", marginRight: "300px",height:"70px",marginTop:"10px",paddingTop:"20px",fontSize:"20px",color:"#1d1499"}}  >
-                    เริ่มการผสมพันธุ์ วันที่ dd/mm/yy
+                    เริ่มการเหนี่ยวนำ วันที่ dd/mm/yy
         </Paper>
         <Button
           variant="contained"

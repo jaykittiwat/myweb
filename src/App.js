@@ -8,7 +8,7 @@ import login from "./component/Login/login";
 import regiscow from './component/regiscow/regiscow';
 import fatten from "./component/manager/cow/fatter/fatten";
 import induction from "./component/manager/cow/induction/induction";
-import breed from "./component/manager/cow/breed";
+import breed from "./component/manager/cow/breed/breed";
 import checkup from "./component/manager/cow/checkup";
 import calve from "./component/manager/cow/calve";
 import abortion from "./component/manager/cow/abortion";

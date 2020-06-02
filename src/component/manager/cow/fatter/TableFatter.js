@@ -42,21 +42,7 @@ export default function TableFatter({ posts, loading }) {
   const rows = posts;
   /*-----------------------------------------------------------------------------*/
 
-  const [medic, setMedic] = useState([
-    {
-      name: "",
-      value: ""
-    }
-  ]);
-  const addtable = event => {
-    setMedic([
-      ...medic,
-      {
-        name: "",
-        value: ""
-      }
-    ]);
-  };
+  
   //ฟังก์ชั่นเรียกวันที่
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
@@ -327,40 +313,49 @@ export default function TableFatter({ posts, loading }) {
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
-  const [state, setState] = React.useState({
-    item: "",
-    val:""
-     
-  });
+  const [medic, setMedic] = useState([
+    {
+      item: "",
+      
+    }
+  ]);
+ 
+  const addtable = event => {
+    setMedic([
+      ...medic,
+      {
+        item: "",
+      
+      }
+    ]);
+  };
 
 
 
 
   const handleChange = (event, index) => {
-    
 
-
-
-  medic.map((obj)=>)
-    /*const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });*/
+  medic.splice(index,1,{item:event.target.value})
   };
-  
+
+  const deleteItem=(index)=>{
+   const result = medic.filter(results=>results!==medic[index]);
+console.log(result);
+setMedic(result);
+           
+  }
 
   /*------------------------------------------------------------------------------*/
 
   const showTable = () => {
-    return medic.map(medics => (
-      <form className={classes.root} key={medic.indexOf(medics)}>
+    return medic.map((medics,index) => (
+      <form className={classes.root} key={index}>
         <FormControl style={{ width: "45%", margin: "10px" }}>
           <InputLabel htmlFor="age-native-simple">รายการยา</InputLabel>
           <Select
             native
-            value={state.age}
-            onChange={event => handleChange(event, medic.indexOf(medics))}
+            value={medic.item}
+            onChange={event => handleChange(event,index)}
           >
             <option aria-label="None" value="" />
             <option>Ten</option>
@@ -368,17 +363,12 @@ export default function TableFatter({ posts, loading }) {
             <option>Thirty</option>
           </Select>
         </FormControl>
-        <TextField
-          id="standard-basic"
-          label="ปริมาณ cc."
-          onChange={(event)=>handleChange2(event,medic.indexOf(medics))}
-          //ยังไม้ได้สร้างstateให้มัน
-          style={{ width: "40%", margin: "10px" }}
-        />
+      
         <IconButton
           aria-label="delete"
           color="secondary"
           style={{ marginTop: "15px", outline: "none" }}
+          onClick={()=>deleteItem(index)}
         >
           <DeleteIcon />
         </IconButton>
@@ -396,7 +386,7 @@ export default function TableFatter({ posts, loading }) {
   return (
     <div className="container">
       <div className={classes.root}>
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={3} >
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table
@@ -487,7 +477,7 @@ export default function TableFatter({ posts, loading }) {
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
-        </Paper>
+        </Paper >
         <FormControlLabel
           control={
             <Switch
@@ -501,9 +491,11 @@ export default function TableFatter({ posts, loading }) {
       </div>
 
       <Paper
+      elevation={3} 
         //ตัวบันทึก
         style={{ textAlign: "center" }}
       >
+      <h4 style={{paddingTop:"15px"}}>บันทึกการจัดการ</h4>
         <form
           className={classes.root}
           noValidate
@@ -527,6 +519,7 @@ export default function TableFatter({ posts, loading }) {
         </form>
 
         <form className={classes.root} style={{ padding: "0.3%" }}>
+        
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid>
               <KeyboardDatePicker
@@ -569,6 +562,10 @@ export default function TableFatter({ posts, loading }) {
           >
             <AddIcon onClick={addtable} />
           </Fab>
+        </Paper>
+        
+        <Paper elevation={3} style={{  marginLeft: "300px", marginRight: "300px",height:"70px",marginTop:"10px",paddingTop:"20px",fontSize:"20px",color:"#1d1499"}}  >
+                    เริ่มการเหนี่ยวนำ วันที่ dd/mm/yy
         </Paper>
         <Button
           variant="contained"

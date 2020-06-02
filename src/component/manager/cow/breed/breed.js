@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import TableFatter from './TableFatter';
+import TableBreed from './tableBreed';
 
 import HeaderLogin from "../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
@@ -8,7 +8,7 @@ import "./../CowStyle.css";
 import axios from 'axios';
 //import { Next } from "react-bootstrap/PageItem";
 
-export default function Fatter() {
+export default function Breed() {
  
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ useEffect(()=>{
         <NavbarLogin />
       </div>
 
-    <TableFatter posts={posts} loading={loading}/>
+    <TableBreed posts={posts} loading={loading}/>
    
 
 
