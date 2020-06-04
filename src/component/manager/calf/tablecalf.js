@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Spinner } from "react-bootstrap";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -23,33 +23,44 @@ import TextField from "@material-ui/core/TextField";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker
+  
+  KeyboardDatePicker,
 } from "@material-ui/pickers";
 import "date-fns";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Fab from "@material-ui/core/Fab";
+/*import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-
+import DeleteIcon from "@material-ui/icons/Delete";*/
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
-export default function TableInduction({ posts, loading }) {
+export default function TableBreed({ posts, loading }) {
   const rows = posts;
   /*-----------------------------------------------------------------------------*/
 
-  
   //ฟังก์ชั่นเรียกวันที่
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-
-  const handleDateChange = date => {
+  const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
+  const [selectedDate2, setSelectedDate2] = React.useState(new Date());
+  const handleDateChange2 = date2 => {
+    setSelectedDate2(date2);
+  };
+
+  const [selectedDate3, setSelectedDate3] = React.useState(new Date());
+  const handleDateChange3 = date3 => {
+    setSelectedDate3(date3);
+  };
+
+  const [selectedDate4, setSelectedDate4] = React.useState(new Date());
+  const handleDateChange4 = date4 => {
+    setSelectedDate4(date4);
+  };
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -74,7 +85,7 @@ export default function TableInduction({ posts, loading }) {
       if (order !== 0) return order;
       return a[1] - b[1];
     });
-    return stabilizedThis.map(el => el[0]);
+    return stabilizedThis.map((el) => el[0]);
   }
   // headCells คอลัม หัวตาราง
   const headCells = [
@@ -82,7 +93,8 @@ export default function TableInduction({ posts, loading }) {
     { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
     { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
     { id: "4", numeric: true, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" }
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
+    { id: "6", numeric: true, disablePadding: false, label: "น้ำหนัก วันเกิด เพศ พ่อ แม่ (แทนโรงเรือนคอกฝูง)" },
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -93,11 +105,11 @@ export default function TableInduction({ posts, loading }) {
       orderBy,
       numSelected,
       rowCount,
-      onRequestSort
+      onRequestSort,
     } = props;
 
     //รับheadCell.id  สำหรับปุ่ม เรียงค่า
-    const createSortHandler = property => event => {
+    const createSortHandler = (property) => (event) => {
       //calback
       onRequestSort(event, property);
     };
@@ -118,7 +130,7 @@ export default function TableInduction({ posts, loading }) {
               inputProps={{ "aria-label": "select all desserts" }}
             />
           </TableCell>
-          {headCells.map(headCell => (
+          {headCells.map((headCell) => (
             //map headCells ชื่อหัวตาราง และจัดหน้า
             <TableCell
               key={headCell.id}
@@ -163,37 +175,37 @@ export default function TableInduction({ posts, loading }) {
     onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(["asc", "desc"]).isRequired,
     orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired
+    rowCount: PropTypes.number.isRequired,
   };
 
-  const useToolbarStyles = makeStyles(theme => ({
+  const useToolbarStyles = makeStyles((theme) => ({
     root: {
       paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.primary.main,
-            backgroundColor: lighten(theme.palette.primary.light, 0.85)
+            backgroundColor: lighten(theme.palette.primary.light, 0.85),
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
           },
     title: {
-      flex: "1 1 100%"
-    }
+      flex: "1 1 100%",
+    },
   }));
 
-  const EnhancedTableToolbar = props => {
+  const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
 
     return (
       <Toolbar
         className={clsx(classes.root, {
-          [classes.highlight]: numSelected > 0
+          [classes.highlight]: numSelected > 0,
         })}
       >
         {numSelected > 0 ? (
@@ -215,19 +227,19 @@ export default function TableInduction({ posts, loading }) {
   };
 
   EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired
+    numSelected: PropTypes.number.isRequired,
   };
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      width: "100%"
+      width: "100%",
     },
     paper: {
       width: "100%",
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     table: {
-      minWidth: 750
+      minWidth: 750,
     },
     visuallyHidden: {
       border: 0,
@@ -238,8 +250,8 @@ export default function TableInduction({ posts, loading }) {
       padding: 0,
       position: "absolute",
       top: 20,
-      width: 1
-    }
+      width: 1,
+    },
   }));
 
   const classes = useStyles();
@@ -258,12 +270,12 @@ export default function TableInduction({ posts, loading }) {
     setOrderBy(property);
   };
   //checkBox  ทั้งหมด
-  const handleSelectAllClick = event => {
+  const handleSelectAllClick = (event) => {
     //ถ้ามีการ คลิกเชค
     if (event.target.checked) {
       //map row    idเก็บ ไว้ใน newSelecteds
 
-      const newSelecteds = rows.map(n => n.id);
+      const newSelecteds = rows.map((n) => n.id);
       //console.log(newSelecteds) ;
       setSelected(newSelecteds);
       return;
@@ -298,83 +310,20 @@ export default function TableInduction({ posts, loading }) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleChangeDense = event => {
+  const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
 
-  const isSelected = id => selected.indexOf(id) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
-  const [medic, setMedic] = useState([
-    {
-      item: "",
-      
-    }
-  ]);
- 
-  const addtable = event => {
-    setMedic([
-      ...medic,
-      {
-        item: "",
-      
-      }
-    ]);
-  };
-
-
-
-
-  const handleChange = (event, index) => {
-
-  medic.splice(index,1,{item:event.target.value})
-  };
-
-  const deleteItem=(index)=>{
-   const result = medic.filter(results=>results!==medic[index]);
-console.log(result);
-setMedic(result);
-           
-  }
-
-  /*------------------------------------------------------------------------------*/
-
-  const showTable = () => {
-    return medic.map((medics,index) => (
-      <form className={classes.root} key={index}>
-        <FormControl style={{ width: "45%", margin: "10px" }}>
-          <InputLabel htmlFor="age-native-simple">รายการยา</InputLabel>
-          <Select
-            native
-            value={medic.item}
-            onChange={event => handleChange(event,index)}
-          >
-            <option aria-label="None" value="" />
-            <option>Ten</option>
-            <option>Twenty</option>
-            <option>Thirty</option>
-          </Select>
-        </FormControl>
-      
-        <IconButton
-          aria-label="delete"
-          color="secondary"
-          style={{ marginTop: "15px", outline: "none" }}
-          onClick={()=>deleteItem(index)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </form>
-    ));
-  };
   if (loading) {
     return (
       <Spinner animation="border" role="status">
@@ -386,7 +335,7 @@ setMedic(result);
   return (
     <div className="container">
       <div className={classes.root}>
-        <Paper className={classes.paper} elevation={3} >
+        <Paper className={classes.paper} elevation={3}>
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table
@@ -415,50 +364,52 @@ setMedic(result);
               <TableBody
               /* ----------------------------ตัวตาราง--------------------------- */
               >
-                {//ส่ง Array Rows กับ call back getComparator()
-                //แสดงข้อมูลและการจัดการต่างๆทีละแถว
-                stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.id);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+                {
+                  //ส่ง Array Rows กับ call back getComparator()
+                  //แสดงข้อมูลและการจัดการต่างๆทีละแถว
+                  stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.id);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                        onClick={event => handleClick(event, row.id)}
-                        role="checkbox"
-                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
-                        tabIndex={-1}
-                        key={row.id /*keyyyyyyyyyyyyy*/}
-                      >
-                        <TableCell
-                          padding="checkbox"
-                          /*ส่วนของcheckBox แต่ละแถว*/
+                      return (
+                        <TableRow
+                          hover
+                          //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
+                          onClick={(event) => handleClick(event, row.id)}
+                          role="checkbox"
+                          aria-checked={isItemSelected} //คลิกเลืองตรงตารา
+                          tabIndex={-1}
+                          key={row.id /*keyyyyyyyyyyyyy*/}
                         >
-                          <Checkbox
-                            checked={isItemSelected}
-                            inputProps={{ "aria-labelledby": labelId }}
-                            color="primary"
-                          />
-                        </TableCell>
+                          <TableCell
+                            padding="checkbox"
+                            /*ส่วนของcheckBox แต่ละแถว*/
+                          >
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ "aria-labelledby": labelId }}
+                              color="primary"
+                            />
+                          </TableCell>
 
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        >
-                          {row.id}
-                        </TableCell>
-                        <TableCell align="right">{row.userId}</TableCell>
-                        <TableCell align="right">{row.title}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
+                            {row.id}
+                          </TableCell>
+                          <TableCell align="right">{row.userId}</TableCell>
+                          <TableCell align="right">{row.title}</TableCell>
+                          <TableCell align="right">{row.carbs}</TableCell>
+                          <TableCell align="right">{row.protein}</TableCell>
+                        </TableRow>
+                      );
+                    })
+                }
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                     <TableCell colSpan={6} />
@@ -477,7 +428,7 @@ setMedic(result);
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
-        </Paper >
+        </Paper>
         <FormControlLabel
           control={
             <Switch
@@ -491,11 +442,13 @@ setMedic(result);
       </div>
 
       <Paper
-      elevation={3} 
-        //ตัวบันทึก
-        style={{ textAlign: "center" }}
+        elevation={3}
+        //ตัวบันทึก///////////////////////////////////
+        style={{ textAlign: "left" }}
       >
-      <h4 style={{paddingTop:"15px"}}>บันทึกการจัดการ</h4>
+        <h4 style={{ paddingTop: "15px", marginLeft: "20px" }}>
+          บันทึกการจัดการ
+        </h4>
         <form
           className={classes.root}
           noValidate
@@ -516,66 +469,119 @@ setMedic(result);
             style={{ width: "400px", margin: "10px" }}
             size="small"
           />
+          <div style={{ textAlign: "left", marginLeft: "10px" }}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid>
+                <KeyboardDatePicker
+                  style={{ width: "400px" }}
+                  size="small"
+                  margin="normal"
+                  id="date-picker-dialog"
+                  label="วันที่สักหู"
+                  format="dd/MM/yyyy"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />{" "}
+                <KeyboardDatePicker
+                  style={{ width: "400px" }}
+                  size="small"
+                  margin="normal"
+                  id="date-picker-dialog2"
+                  label="วันที่สูญเขา"
+                  format="dd/MM/yyyy"
+                  value={selectedDate2}
+                  onChange={handleDateChange2}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+          </div>
+
+          <div style={{ textAlign: "left", marginLeft: "10px" }}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid>
+                <KeyboardDatePicker
+                  style={{ width: "400px" }}
+                  size="small"
+                  margin="normal"
+                  id="date-picker-dialog2"
+                  label="วันที่หย่านม"
+                  format="dd/MM/yyyy"
+                  value={selectedDate3}
+                  onChange={handleDateChange3}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />{" "}
+                <KeyboardDatePicker
+                  style={{ width: "400px" }}
+                  size="small"
+                  margin="normal"
+                  id="date-picker-dialog3"
+                  label="วันที่ตีเบอร์"
+                  format="dd/MM/yyyy"
+                  value={selectedDate4}
+                  onChange={handleDateChange4}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+          </div>
+
+      
+          <FormControl style={{ width: "400px", margin: "10px" }}>
+            <InputLabel htmlFor="age-native-simple">สายพันธุ์</InputLabel>
+            <Select
+              //ยังไม่ได้setState ให้
+              native
+              value=""
+              //onChange={event => handleChange(event,index)}
+            >
+              <option aria-label="None" value="" />
+              <option>พันธุ์1</option>
+              <option>พันธุ์2</option>
+              <option>พันธุ์3</option>
+              <option>พันธุ์4</option>
+              <option>พันธุ์5</option>
+              <option>พันธุ์6</option>
+              <option>พันธุ์7</option>
+              <option>พันธุ์8</option>
+              
+            </Select>
+          </FormControl>
+          <Paper elevation={0} style={{ marginTop: "20px" }}>
+            <TextField
+              label="หมายเลขพ่อพันธุ์/น้ำเชื้อ"
+              variant="outlined"
+              style={{ width: "400px", margin: "10px" }}
+              size="small"
+            />
+            <TextField
+              label="หมาเหตุ"
+              variant="outlined"
+              style={{ width: "400px", margin: "10px" }}
+              size="small"
+            />
+          </Paper>
         </form>
-
-        <form className={classes.root} style={{ padding: "0.3%" }}>
-        
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid>
-              <KeyboardDatePicker
-                style={{ width: "400px", margin: "10px" }}
-                size="small"
-                margin="normal"
-                id="date-picker-dialog"
-                label="วันที่"
-                format="MM/dd/yyyy"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
-              />{" "}
-              <KeyboardTimePicker
-                style={{ width: "400px", margin: "10px" }}
-                size="small"
-                margin="normal"
-                id="time-picker"
-                label="เวลา"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change time"
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
-        </form>
-
-        <Paper elevation={3} style={{ marginLeft: "10%", marginRight: "10%" }}>
-          {showTable()}
-
-          <Fab
+      
+        <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>
+          <Button
+            variant="contained"
             color="primary"
-            aria-label="add"
-            size="small"
-            style={{ margin: "10px", outline: "none" }}
+            size="large"
+            style={{ width: "250px", margin: "10px", outline: "none" }}
           >
-            <AddIcon onClick={addtable} />
-          </Fab>
+            บันทึก
+          </Button>
         </Paper>
-        
-        <Paper elevation={3} style={{  marginLeft: "300px", marginRight: "300px",height:"70px",marginTop:"10px",paddingTop:"20px",fontSize:"20px",color:"#1d1499"}}  >
-                    เริ่มการผสมพันธุ์ วันที่ dd/mm/yy
-        </Paper>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          style={{ width: "250px", margin: "10px", outline: "none" }}
-          onClick={() => console.log(medic)}
-        >
-          บันทึก
-        </Button>
       </Paper>
     </div>
   );
