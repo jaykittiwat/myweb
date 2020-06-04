@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import HeaderLogin from '../../../HeaderLogin';
-import NavbarLogin from '../../../Navbar';
+import HeaderLogin from '../../../../HeaderLogin';
+import NavbarLogin from '../../../../Navbar';
 import { Form, Col ,Button,Table,Card} from "react-bootstrap";
 import './CowStyle.css';
 class Header extends Component{

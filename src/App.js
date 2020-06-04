@@ -10,7 +10,7 @@ import fatten from "./component/manager/cow/fatter/fatten";
 import induction from "./component/manager/cow/induction/induction";
 import breed from "./component/manager/cow/breed/breed";
 import checkup from "./component/manager/cow/checkUp/checkup";
-import calve from "./component/manager/cow/calve";
+import calve from "./component/manager/cow/calve/calve";
 import abortion from "./component/manager/cow/abortion";
 import calfmanage from "./component/manager/calf/calfmanage";
 import treatment from "./component/treatment/treatment";
