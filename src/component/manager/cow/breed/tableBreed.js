@@ -319,7 +319,7 @@ export default function TableBreed({ posts, loading }) {
   return (
     <div className="container">
       <div className={classes.root}>
-        <Paper className={classes.paper} elevation={3}>
+        <Paper className={classes.paper} elevation={3} style={{marginTop:"20px"}}>
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table
@@ -437,27 +437,27 @@ export default function TableBreed({ posts, loading }) {
           className={classes.root}
           noValidate
           autoComplete="off"
-          style={{ padding: "0.3%" }}
+         
         >
           <TextField
             id="outlined-basic"
             label="ผู้บันทึก"
             variant="outlined"
-            style={{ width: "400px", margin: "10px" }}
+            style={{ width: "97.5%"  ,margin:"10px"}}
             size="small"
-          />{" "}
+          />
           <TextField
             id="outlined-basic2"
             label="ผู้ปฏิบัติการ"
             variant="outlined"
-            style={{ width: "400px", margin: "10px" }}
+            style={{ width: "97.5%" ,margin:"10px"}}
             size="small"
           />
-          <div style={{ textAlign: "left", marginLeft: "10px" }}>
+        
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <Grid>
                 <KeyboardDatePicker
-                  style={{ width: "400px" }}
+                  style={{ width: "97.5%",margin:"10px" }}
                   size="small"
                   margin="normal"
                   id="date-picker-dialog"
@@ -468,31 +468,31 @@ export default function TableBreed({ posts, loading }) {
                   KeyboardButtonProps={{
                     "aria-label": "change date",
                   }}
-                />{" "}
+                />
               </Grid>
             </MuiPickersUtilsProvider>
-          </div>
-          <Paper elevation={0} style={{ marginTop: "15px" }}>
+       
+          <Paper elevation={0} >
             <TextField
               label="เวลาเป็นสัด"
               variant="outlined"
-              style={{ width: "260px", margin: "10px" }}
+              style={{ width: "348px", margin: "10px" }}
               size="small"
             />
             <TextField
               label="เวลานิ่ง"
               variant="outlined"
-              style={{ width: "260px", margin: "10px" }}
+              style={{ width: "348px", margin: "10px" }}
               size="small"
             />
             <TextField
               label="เวลาผสม"
               variant="outlined"
-              style={{ width: "260px", margin: "10px" }}
+              style={{ width: "348px", margin: "10px" }}
               size="small"
             />{" "}
           </Paper>
-          <FormControl style={{ width: "400px", margin: "10px" }}>
+          <FormControl style={{ width: "48%", margin: "10px" }}>
             <InputLabel htmlFor="age-native-simple">วิธีการผสม</InputLabel>
             <Select
               //ยังไม่ได้setState ให้
@@ -505,17 +505,18 @@ export default function TableBreed({ posts, loading }) {
               <option>น้ำเชื้อ</option>
             </Select>
           </FormControl>
-          <Paper elevation={0} style={{ marginTop: "20px" }}>
+         
             <TextField
               label="หมายเลขพ่อพันธุ์/น้ำเชื้อ"
               variant="outlined"
-              style={{ width: "400px", margin: "10px" }}
+              style={{ width: "48%", margin: "10px",marginTop:"20px" }}
               size="small"
-            />
+            /> 
+            <Paper elevation={0} style={{ marginTop: "20px" }}>
             <TextField
               label="หมาเหตุ"
               variant="outlined"
-              style={{ width: "400px", margin: "10px" }}
+              style={{ width: "97.5%", margin: "10px" }}
               size="small"
             />
           </Paper>

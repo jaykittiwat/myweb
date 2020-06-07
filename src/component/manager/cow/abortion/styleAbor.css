@@ -1,0 +1,22 @@
+.pad-l-20{
+   padding-left: 20px;
+}
+
+.text-header{
+    margin: 0;
+    padding: 10px;
+    font-size:18px ;
+    background-image:linear-gradient( #3128b9,#1d1499,#100874) ;
+    color: #fff;
+    border-radius:5px 5px 0 0 ;
+    
+}
+
+.textField-width{
+    width: 100%;
+ 
+}
+.pad-10{
+    padding: 30px;
+}
+

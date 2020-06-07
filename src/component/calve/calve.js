@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import HeaderLogin from '../../../HeaderLogin';
-import NavbarLogin from '../../../Navbar';
+import HeaderLogin from '../../../../HeaderLogin';
+import NavbarLogin from '../../../../Navbar';
 import { Form, Col ,Button,Table,Card} from "react-bootstrap";
 import './CowStyle.css';
 class Header extends Component{
@@ -14,7 +14,7 @@ class Header extends Component{
           <NavbarLogin />
         </div>
         <div className="row mar"><div className="container box-border">
-        <Card.Title>บันทึกการแท้งลูก</Card.Title>
+        <Card.Title>บันทึกการคลอดลูก</Card.Title>
         
       
         <Form className="pad"> 
@@ -126,7 +126,6 @@ class Header extends Component{
         </div>
         </div>
       </div>
-      
       )
   }
 }

@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import SaveIcon from '@material-ui/icons/Save';
+import './styleCalve.css';
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -18,6 +19,7 @@ const useStyles = makeStyles({
   fonts:{
     fontSize:"30px"
   }
+  
 });
 
 function createData(name, calories, fat, carbs, protein) {
@@ -32,7 +34,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function SimpleTable() {
+export default function TableCalve() {
   const classes = useStyles();
 
   return (
@@ -43,16 +45,17 @@ export default function SimpleTable() {
         <TableHead >
         
           <TableRow >
-            <TableCell align="left"><h5>ลำดับ</h5></TableCell>
-            <TableCell align="center"><h5>หมายเลขโค</h5></TableCell>
-            <TableCell align="center"><h5>วันที่ผสม</h5></TableCell>
-            <TableCell align="center"><h5>หมายเลขน้ำเชื้อ</h5></TableCell>
-            <TableCell align="center"><h5>วันที่ตรวจ</h5></TableCell>
-            <TableCell align="center"><h5>เวลา</h5></TableCell>
-            <TableCell align="center"><h5>ผล</h5></TableCell>
-            <TableCell align="center"><h5>วันแจ้งเตือน</h5></TableCell>
-            <TableCell align="center"><h5>หมายเหตุ</h5></TableCell>
-            <TableCell align="center"><h5>บันทึก</h5></TableCell> 
+            <TableCell align="left"><div className="fs">ลำดับ</div></TableCell>
+            <TableCell align="center"><div className="fs">หมายเลขโค</div></TableCell>
+            <TableCell align="center"><div className="fs">วันที่ผสม</div></TableCell>
+            <TableCell align="center"><div className="fs">วิธีผสม</div></TableCell>
+            <TableCell align="center"><div className="fs">หมายเลขน้ำเชื้อ</div></TableCell>
+            <TableCell align="center"><div className="fs">วันที่คลอด</div></TableCell>
+            <TableCell align="center"><div className="fs">เวลา</div></TableCell>
+            <TableCell align="center"><div className="fs">กำหนดการรักษา</div></TableCell>
+            <TableCell align="center"><div className="fs">กำหนดการบำรุง</div></TableCell>
+            <TableCell align="center"><div className="fs">หมายเหตุ</div></TableCell>
+            <TableCell align="center"><div className="fs">บันทึก</div></TableCell> 
           </TableRow>
         </TableHead>
         <TableBody>
@@ -64,10 +67,11 @@ export default function SimpleTable() {
               <TableCell align="center">{row.calories}</TableCell>
               <TableCell align="center">{row.fat}</TableCell>
               <TableCell align="center"> {row.fat}</TableCell>
+              <TableCell align="center"> {row.fat}</TableCell>
               <TableCell align="center"><TextField  variant="outlined" size="small" /></TableCell>
               <TableCell align="center"><TextField   variant="outlined" size="small" /></TableCell>
               <TableCell align="center"><TextField   variant="outlined" size="small" /></TableCell>
-              <TableCell align="center">{row.protein}</TableCell>
+              <TableCell align="center"><TextField   variant="outlined" size="small" /></TableCell>
               <TableCell align="center"><TextField id="outlined-basic"  variant="outlined" size="small" /></TableCell>
               <TableCell align="center"> <Button
         variant="contained"

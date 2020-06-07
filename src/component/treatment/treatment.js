@@ -1,15 +1,22 @@
+//โมดูลการรักษา
 import React,{Component} from 'react';
 import HeaderLogin from './../../HeaderLogin';
 import NavbarLogin from './../../Navbar';
-class Header extends Component{
+import TableTeatment from './tableTreatment';
+class Treatment extends Component{
   render(){
       return(
-          <div >
-            <HeaderLogin/>
-            <NavbarLogin/>
-        </div>
+        <div className="container-fluid">
+      <div className="row ">
+        <HeaderLogin />
+      </div>
+      <div className="row Nav-shadow">
+        <NavbarLogin />
+      </div>
+      <TableTeatment />
+    </div>
       
       )
   }
 }
-export default Header;
+export default Treatment;

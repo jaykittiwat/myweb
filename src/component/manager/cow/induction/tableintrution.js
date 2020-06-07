@@ -386,7 +386,7 @@ setMedic(result);
   return (
     <div className="container">
       <div className={classes.root}>
-        <Paper className={classes.paper} elevation={3} >
+        <Paper className={classes.paper} elevation={3}  style={{marginTop:"20px"}}>
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table
