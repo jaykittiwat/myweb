@@ -129,3 +129,7 @@ function FormExample() {
 
     setValidated(true);
   };
+
+
+
+  1.res.Json แปลงเป็น json
