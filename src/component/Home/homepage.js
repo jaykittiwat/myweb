@@ -10,39 +10,40 @@ import {
   Card,
   Form,
 } from "react-bootstrap";
-//import axios from "axios";
+import axios from "axios";
 // หน้า login แล้ว
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: [],
+      user: {},
       param: "show",
     };
   }
 
   componentDidMount() {
-    console.log(this.props);
-    //const user=firebase.database//อะไรสักอย่าง
-    /*axios
-      .get("http://localhost:4000/"+this.state.param)
+ 
+    
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos/1")
       .then(res => {
         const users = res.data;
         this.setState({ user:users });
       })
       .then(res => {
-        console.log(this.state.user);
-      });*/
+     
+      });
   }
 
   render() {
+  
     return (
       <div className="container-fluid ">
         <div className="row ">
-          <HeaderLogin />
+          <HeaderLogin  />
         </div>
-        <div className="row Nav-shadow">
-          <NavbarLogin />
+        <div className="row">
+          <NavbarLogin  />
         </div>
         <div className="row ">
           <div className="row container-fluid bg-boxbox">

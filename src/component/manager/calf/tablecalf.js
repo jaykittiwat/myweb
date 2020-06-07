@@ -49,7 +49,7 @@ export default function TableBreed({ posts, loading }) {
 
   const [selectedDate2, setSelectedDate2] = React.useState(new Date());
   const handleDateChange2 = date2 => {
-    setSelectedDate2(date2+2(int));
+    setSelectedDate2(date2);
   };
 
   const [selectedDate3, setSelectedDate3] = React.useState(new Date());
@@ -95,6 +95,7 @@ export default function TableBreed({ posts, loading }) {
     { id: "4", numeric: true, disablePadding: false, label: "คอก" },
     { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
     { id: "6", numeric: true, disablePadding: false, label: "น้ำหนัก วันเกิด เพศ พ่อ แม่ (แทนโรงเรือนคอกฝูง)" },
+    { id: "7", numeric: true, disablePadding: false, label: "ฝูง" },
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -405,6 +406,7 @@ export default function TableBreed({ posts, loading }) {
                           <TableCell align="right">{row.userId}</TableCell>
                           <TableCell align="right">{row.title}</TableCell>
                           <TableCell align="right">{row.carbs}</TableCell>
+                          <TableCell align="right">{row.protein}</TableCell>
                           <TableCell align="right">{row.protein}</TableCell>
                         </TableRow>
                       );

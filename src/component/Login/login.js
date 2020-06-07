@@ -23,6 +23,9 @@ class Login extends Component{
               currentUser: null,
             }
           }
+
+      
+
               // setState ตาม name ที่ได้รับมาจากForm
           onChange = e => {
             const { name, value } = e.target
@@ -34,7 +37,8 @@ class Login extends Component{
          
           }
 
-          handleSignup=(e)=>{
+
+          handleSignIn=(e)=>{
             //console.log(this.state.email);
             //console.log(this.state.password);
         
@@ -77,39 +81,45 @@ class Login extends Component{
        <> <Header/>
        <div className="row">
      <div className="image-bg"> 
-           <div className="bg-box-log-color">
-           <Form  className="form-padding " onSubmit={this.handleSignup} >
-           <div className="title1">เข้าสู่ระบบ</div>
-           <Form.Group controlId="formBasicEmail" className="form-padding-top">
-             <Form.Label>ไอดีผู้ใช้</Form.Label>
-             <Form.Control 
-             required
-             name="email"
-             type="text" 
-             placeholder="Enter email"
-             onChange={this.onChange}
-              /> 
-           </Form.Group>
-         
-           <Form.Group controlId="formBasicPassword">
-             <Form.Label>รหัสผ่าน</Form.Label>
-             <Form.Control 
-             required
-             name="password"
-             type="password" 
-             placeholder="Password" 
-             onChange={this.onChange}
-             />
-           </Form.Group>
-           <Form.Group controlId="formBasicCheckbox">
-             <Form.Check type="checkbox" label="จำรหัสผ่าน" />
-           </Form.Group>
-       
-       <Button className="container-fluid bt " aria-disabled="true" type="submit"  >
-           เข้าสู่ระบบ
-           </Button> 
-         </Form>
-         </div>
+     <div className="container-fluid">
+      <div  className="row r-martop">
+        <Form className="container-fluid form-padding bg-box-log-color"   onSubmit={this.handleSignIn} >
+          <div className="title1">เข้าสู่ระบบ</div>
+          <Form.Group controlId="formBasicEmail" className="form-padding-top">
+            <Form.Label>ไอดีผู้ใช้</Form.Label>
+            <Form.Control
+              required
+              name="email"
+              type="text"
+              placeholder="Enter email"
+              onChange={this.onChange}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>รหัสผ่าน</Form.Label>
+            <Form.Control
+              required
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={this.onChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicCheckbox">
+            <Form.Check type="checkbox" label="จำรหัสผ่าน" />
+          </Form.Group>
+
+          <Button
+            className="container-fluid bt "
+            aria-disabled="true"
+            type="submit"
+          >
+            เข้าสู่ระบบ
+          </Button>
+        </Form>
+      </div>
+    </div>
            
      </div>
        </div>
@@ -125,6 +135,8 @@ class Login extends Component{
      )
    }
    
+
+
 
   render(){
 
