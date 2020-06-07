@@ -49,7 +49,7 @@ export default function TableBreed({ posts, loading }) {
 
   const [selectedDate2, setSelectedDate2] = React.useState(new Date());
   const handleDateChange2 = date2 => {
-    setSelectedDate2(date2);
+    setSelectedDate2(date2+2(int));
   };
 
   const [selectedDate3, setSelectedDate3] = React.useState(new Date());
