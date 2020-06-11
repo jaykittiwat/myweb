@@ -32,7 +32,7 @@ class Home extends Component {
         this.setState({ user:getUser });
       })
      
-  await console.log(this.state.user[0].email)
+  await console.log(this.state.user)
   
   }
 

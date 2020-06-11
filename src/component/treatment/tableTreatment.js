@@ -101,7 +101,7 @@ export default function TableTreatment() {
             <Grid item xs={12}>
               <TextField
                 className="textField-w-treat"
-                id="outlined8"
+                id="outlined80"
                 label="ระบุอาการ"
                 variant="outlined"
                 size="small"
@@ -162,7 +162,7 @@ export default function TableTreatment() {
             <Grid item xs={12}>
               <TextField
                 className="textField-w-treat"
-                id="outlined8"
+                id="outlined82"
                 label="หมายเหตุ"
                 variant="outlined"
                 size="small"

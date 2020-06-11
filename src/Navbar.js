@@ -12,11 +12,29 @@ import firebase from "./backEnd/firebase"
 
 class NavbarLogin extends Component {
 
-  componentDidMount(){
+ constructor(props){
+   super(props);
+   this.state={
+     currentUser:""
+   }
+ }
+   async componentDidMount() {
+    await firebase.auth().onAuthStateChanged(user => {
+   
+      if (user) {
+        this.setState({
+          currentUser: user.email
+        });
+       
+      }
+    });
+
 
   }
 
 render(){
+ 
+
   return (
     <div className="container-fluid">
       <nav className="row">
@@ -115,8 +133,8 @@ render(){
         <div className="col-md">
           <div className="row" style={{ float: "right", marginTop: "8px" ,marginRight:"5%"}}>
          
-            <Avatar style={{ backgroundColor: "#ff5722" }}>J</Avatar>
-            <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%"}}>Kittiwat</div>
+  <Avatar style={{ backgroundColor: "#ff5722" }}>{this.state.currentUser.substring(0,1)}</Avatar>
+  <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%"}}>{this.state.currentUser}</div>
          
           </div>
         </div>
