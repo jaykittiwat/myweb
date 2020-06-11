@@ -9,36 +9,42 @@ import {
   ListGroup,
   Card,
   Form,
+
 } from "react-bootstrap";
 import axios from "axios";
+
 // หน้า login แล้ว
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {},
-      param: "show",
+      param: this.props,
     };
   }
 
-  componentDidMount() {
+ async componentDidMount() {   
  
-    
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos/1")
+   await axios
+      .get("http://localhost:4000/user/logIn/"+this.state.param.currentUser.email)
       .then(res => {
-        const users = res.data;
-        this.setState({ user:users });
+        const getUser = res.data;
+        this.setState({ user:getUser });
       })
-      .then(res => {
      
-      });
+  await console.log(this.state.user[0].email)
+  
   }
+
+
+
+  
 
   render() {
   
     return (
       <div className="container-fluid ">
+     
         <div className="row ">
           <HeaderLogin  />
         </div>

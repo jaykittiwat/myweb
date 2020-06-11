@@ -1,10 +1,22 @@
-import React from "react";
+import React,{Component} from "react";
 import Signout from "./Signout";
 import "./styleNavbar.css";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+import firebase from "./backEnd/firebase"
+
+//import axios from "axios";
 //react------ HOOK
-export default function NavbarLogin() {
+
+
+
+class NavbarLogin extends Component {
+
+  componentDidMount(){
+
+  }
+
+render(){
   return (
     <div className="container-fluid">
       <nav className="row">
@@ -116,3 +128,7 @@ export default function NavbarLogin() {
     </div>
   );
 }
+ 
+}
+
+export default NavbarLogin;
