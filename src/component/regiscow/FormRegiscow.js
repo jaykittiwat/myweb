@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
-import { Form, Col, Button } from "react-bootstrap";
+import { Form, Col} from "react-bootstrap";
 import FormImg from "../Login/FormImg";
 import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
 //ลงทะเบียนโค เข้้าฟาร์ม
 class FormRegiscow extends Component {
@@ -152,17 +153,21 @@ class FormRegiscow extends Component {
             </Form.Row>
             <hr />
             <div className="row">
-              <div className="text-center container-fluid">
-                <Form.Group>
-                  <Button type="submit" className="button-w2">
+              <div className="text-center container-fluid"> 
+                    <Form.Group>
+                <Button variant="contained" color="primary" className="button-w2" style={{outline:"none"}}>
                     ตกลง
                   </Button>
 
-                  <Link to="/login">
-                    <Button variant="danger" className="button-w2">
+          {" "}
+       <Link to="/login">
+                    <Button variant="contained" color="secondary" className="button-w2" style={{outline:"none"}}>
                       ยกเลิก
                     </Button>
                   </Link>
+         
+                  
+                  
                 </Form.Group>
               </div>
             </div>

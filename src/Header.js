@@ -21,6 +21,9 @@ class Header extends Component {
           <div className="col-md-2 ">
         <div className="row float-right">
         
+             <div className="dropdown" style={{textAlign:"center"}} >
+            <Link to="/login"  style={{textDecorationLine:"none"}}><div className="dropbtn1" style={{paddingTop:"20px"}}>เข้าสู่ระบบ</div></Link> 
+            </div>
             
             <div className="dropdown" style={{textAlign:"center"}}>
               <div className="dropbtn1" style={{paddingTop:"20px"}}>ลงทะเบียน  <i className="fa fa-caret-down"></i></div>
@@ -30,9 +33,7 @@ class Header extends Component {
               </div>
             </div>
 
-            <div className="dropdown" style={{textAlign:"center"}} >
-            <Link to="/login"  style={{textDecorationLine:"none"}}><div className="dropbtn1" style={{paddingTop:"20px"}}>เข้าสู่ระบบ</div></Link> 
-            </div>
+           
             </div>
           </div>
         </div>

@@ -1,224 +1,215 @@
-
-@font-face{
-    font-family: 'Kanit-Medium';
-    src: url('/font/Kanit-Medium.ttf');
+@font-face {
+  font-family: "Kanit-Medium";
+  src: url("/font/Kanit-Medium.ttf");
 }
-@font-face{
-    font-family: 'Kanit-Light';
-    src: url('/font/Kanit-Light.ttf');
+@font-face {
+  font-family: "Kanit-Light";
+  src: url("/font/Kanit-Light.ttf");
 }
-@font-face{
-    font-family: 'Kanit-Regular';
-    src: url('/font/Kanit-Regular.ttf');
+@font-face {
+  font-family: "Kanit-Regular";
+  src: url("/font/Kanit-Regular.ttf");
 }
-@font-face{
-    font-family: 'Kanit-ExtraLight';
-    src: url('/font/Kanit-ExtraLight.ttf');
-}
-
-.r1-style{
-   background-color: #000657;
-   color:#ffffff;
-
+@font-face {
+  font-family: "Kanit-ExtraLight";
+  src: url("/font/Kanit-ExtraLight.ttf");
 }
 
-.r1-c1{
-    text-align: left;
+.r1-style {
+  background-color: #000657;
+  color: #ffffff;
 }
 
-.r1-c2{
-    text-align: right;
-}
-.r2{
-    height: 73px;
+.r1-c1 {
+  text-align: left;
 }
 
+.r1-c2 {
+  text-align: right;
+}
+.r2 {
+  height: 73px;
+}
 
+.r4-pad {
+  padding-top: 60px;
+}
+.box-bg {
+  background-color: #f3f3f3;
+  width: 623px;
+  height: 338px;
+  margin: 6px;
+}
+.box-bg:hover {
+  background-color: rgba(219, 219, 219, 0.829);
+  width: 625px;
+  height: 340px;
+}
+.img1-box {
+  widows: 166px;
+  height: 166px;
+}
+.img2-box {
+  widows: 197px;
+  height: 197px;
+}
+.img3-box {
+  widows: 163px;
+  height: 163px;
+}
+.img4-box {
+  widows: 116px;
+  height: 116px;
+}
+.img5-box {
+  widows: 135px;
+  height: 135px;
+}
+.img6-box {
+  widows: 129px;
+  height: 129px;
+}
+.footer-style {
+  color: #ffffff;
+  background-color: #040034;
 
+  font-family: "Kanit-ExtraLight";
+  font-size: 20px;
+}
+.footer-style2 {
+  color: #ffffff;
+  background-color: #040034;
+  margin-top: 1px;
+  font-family: "Kanit-ExtraLight";
+  font-size: 20px;
+}
+.footer-padding {
+  padding: 10px;
+}
+.bg-img {
+  width: 100%;
+  height: 100%;
+}
 
-
-.r4-pad{
-    padding-top: 60px;
-}
-.box-bg{
-    background-color: #F3F3F3;
-    width: 623px;
-    height: 338px;
-    margin: 6px;
-}
-.box-bg:hover{
-    background-color: rgba(219, 219, 219, 0.829);
-    width: 625px;
-    height: 340px;
-}
-.img1-box{
-    widows: 166px;
-    height: 166px;
-}
-.img2-box{
-    widows: 197px;
-    height: 197px;
-}
-.img3-box{
-    widows: 163px;
-    height: 163px;
-}
-.img4-box{
-    widows: 116px;
-    height: 116px;
-}
-.img5-box{
-    widows: 135px;
-    height: 135px;
-}
-.img6-box{
-    widows: 129px;
-    height: 129px;
-}
-.footer-style{
-    color:#ffffff;
-    background-color: #040034;
-    margin-top:60px ;
-    font-family: "Kanit-ExtraLight";
-    font-size: 20px;
-}
-.footer-style2{
-    color:#ffffff;
-    background-color: #040034;
-    margin-top:1px ;
-    font-family: "Kanit-ExtraLight";
-    font-size: 20px;
-}
-.footer-padding{
-    padding:10px ;
-}
-.bg-img{
-    width:100%;
-}
-.box-style1{
-    font-size: 30px;
-    font-family: "Kanit-Medium";
-    color: #040034;
-}
-.box-style2{
-    font-size: 24px;
+.title-onimg {
     font-family: "Kanit-Light";
-    color: #0D047A;
-
+  color: #fff;
+  font-size: 26px;
+  z-index: 1;
+  position: absolute;
+}
+.box-style1 {
+  font-size: 30px;
+  font-family: "Kanit-Medium";
+  color: #040034;
+}
+.box-style2 {
+  font-size: 24px;
+  font-family: "Kanit-Light";
+  color: #0d047a;
 }
 
-
-    .image-bg{
-        background: url("./Img/imgcow1.jpg") ;
-        width: 100%;
-        height: 751px;
-      
-    }
-    .r-martop{
-        margin-top:5%;
-    }
-    .bg-box-log-color{
-        background-color: #fff;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 5px;
-        border-color: #d3d3d3;
-
-    }
-   .form-padding{
-       padding: 20px;
-    width: 480px;
-    height: 550px;
-
-   }
-   .container123 {
-    position: relative;
-  }
-  
-
-   .form-padding-top{
-    
-    padding-top: 70px;
+.image-bg {
+  background: url("./Img/imgcow1.jpg");
+  width: 100%;
+  height: 751px;
 }
-.form-padding-top2{
-    
-    padding-top: 15px;
+.r-martop {
+  margin-top: 5%;
+}
+.bg-box-log-color {
+  background-color: #fff;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: #d3d3d3;
+}
+.form-padding {
+  padding: 20px;
+  width: 480px;
+  height: 550px;
+}
+.container123 {
+  position: relative;
+}
+
+.form-padding-top {
+  padding-top: 70px;
+}
+.form-padding-top2 {
+  padding-top: 15px;
 }
 
 .bt {
-    background-color:#f14000;
-    border-color: #f14000;  
+  background-color: #f14000;
+  border-color: #f14000;
 }
 
- .bt:visited {
-    background-color:#f14000;
-    border-color: #f14000;  
+.bt:visited {
+  background-color: #f14000;
+  border-color: #f14000;
 }
 
 .bt:hover {
-    background-color:#ff4b09;
-    border-color: #f14000;  
+  background-color: #ff4b09;
+  border-color: #f14000;
 }
 
 .bt:active {
-    background-color:#f14000;
-    border-color: #f14000;  
+  background-color: #f14000;
+  border-color: #f14000;
 }
 
- .bt:focus{
-    background-color:#f14000;
-    border-color: #f14000;  
+.bt:focus {
+  background-color: #f14000;
+  border-color: #f14000;
 }
 
 .bt:not(:disabled):not(.disabled):active,
 .bt:not(:disabled):not(.disabled).active,
-.show>.bt.dropdown-toggle {
-
-    background-color: #f14000;
-    border-color:  #f14000;
+.show > .bt.dropdown-toggle {
+  background-color: #f14000;
+  border-color: #f14000;
 }
 
-.title1{
-    font-size: 40px;
-    font-family: "Kanit-ExtraLight";
-    color:#000657 ;
-    text-align: center;
-    padding-top:45px ;
-  
+.title1 {
+  font-size: 40px;
+  font-family: "Kanit-ExtraLight";
+  color: #000657;
+  text-align: center;
+  padding-top: 45px;
 }
 
-.form-regis{
-border: #707070;
-width: 0px;
-height: 0px;
+.form-regis {
+  border: #707070;
+  width: 0px;
+  height: 0px;
 }
 
-.title-regis{
-    font-family: "Kanit-Light";
-    font-size: 26px;
-    text-align: center;
-    color:#000657 ;
-    padding-top:35px ;
-    padding-bottom: 10px;
+.title-regis {
+  font-family: "Kanit-Light";
+  font-size: 26px;
+  text-align: center;
+  color: #000657;
+  padding-top: 35px;
+  padding-bottom: 10px;
 }
 
-.button-text{
-    font-family: "Kanit-Regular";
+.button-text {
+  font-family: "Kanit-Regular";
 }
 
-.button-w{
-    width: 186px;
-    text-align: center;
+.button-w {
+  width: 186px;
+  text-align: center;
 }
 
-.boxImgFrom{
-   padding-top:35px ;
-   
+.boxImgFrom {
+  padding-top: 35px;
 }
 
-.button-w2{
-    width: 250px;
-    margin: 10px;
+.button-w2 {
+  width: 250px;
+  margin: 10px;
 
 }
-

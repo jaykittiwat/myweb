@@ -290,7 +290,7 @@ export default function FormData() {
                 ตกลง
               </Button>
 
-              <Link to="/">
+              <Link to="/login">
                 <Button variant="danger" className="button-w2">
                   ยกเลิก
                 </Button>
