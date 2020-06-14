@@ -18,7 +18,7 @@ export default function TableTreatment() {
   };
   return (
     <div className="container martop-10">
-      <Paper elevation={3}>
+      <Paper elevation={3} >
         <div className="text-header-treat">บันทึกการรักษา</div>
 
         <Grid container spacing={3} className="pad-10-treat">

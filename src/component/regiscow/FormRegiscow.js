@@ -12,28 +12,30 @@ class FormRegiscow extends Component {
     this.state = {
       currentUser: "",
       data: {
-        birth_chest_head_ratio: "",//รอบอกเกิด*
-        birth_date: "",//วันเกิด*
-        birth_weight: "",//น้ำหนักเกิด*
-        breed: "",//พันธุ์*
-        breed_method: "",//วิธีผสม*
-        breeder: "",//เจ้าของ
-        cattle_id: "",//เลขโค*
-        color: "",//สี
-        corral: "",//คอก
-        dam_id: "",//id แม่
-        herd_no: "",//ฝูง
-        number_of_breeding: null,//จำนวนการผสมพันธุ์
-        owner: "",//เจ้าของ
-        process_date: null,
-        sex: "",//เพศ//BULLผู้/MISSเมีย*
-        sire_id: "",//id พ่อ
-        status: "",//สถานะ
-        waen_weight: "",//น้ำหนักล่าสุดsหลังอย่านม*
-        wean_chest_head_ratio: "",//รอบออกล่าสุดหลังอย่านม
-        wean_date: "",//วันอย่านม
-        year_hip_hight: "",//ความสูงสะโพก1ปี
-        year_weight: "",//น้ำหนักอายุ1ปี
+        name_cow: "", //ชื่อ
+        birth_chest_head_ratio: "", //รอบอกเกิด*
+        birth_date: "", //วันเกิด*
+        birth_weight: "", //น้ำหนักเกิด*
+        breed: "", //พันธุ์*
+        breed_method: "", //วิธีผสม*
+        breeder: "", //เจ้าของ---
+        cattle_id: "", //เลขโค*
+        color: "", //สี*
+        bigcorral: "", //โณงเรือน
+        corral: "", //คอก*
+        dam_id: "", //id แม่*
+        herd_no: "", //ฝูง*
+        number_of_breeding: "", //จำนวนการผสมพันธุ์*
+        owner: "", //เจ้าของ//เซดเอง//ชื่อนามกสุลของUID--
+        process_date: null, //น่าจะวันที่บีันทึก--
+        sex: "", //เพศ//BULLผู้/MISSเมีย*
+        sire_id: "", //id พ่อ*
+        status: "", //สถานะ//ระบบเซต--
+        waen_weight: "", //น้ำหนักล่าสุดsหลังอย่านม*
+        wean_chest_head_ratio: "", //รอบออกล่าสุดหลังอย่านม
+        wean_date: "", //วันอย่านม
+        year_hip_hight: "", //ความสูงสะโพก1ปี
+        year_weight: "" //น้ำหนักอายุ1ปี
       }
     };
   }
@@ -48,8 +50,38 @@ class FormRegiscow extends Component {
     });
   }
 
-  saveData(event) {}
+  saveData(e) {
+    const { name, value } = e.target;
 
+    this.setState(prestate => ({
+      currentUser: prestate.currentUser,
+
+      data: {
+        ...prestate.data,
+        [name]: value
+      }
+    }));
+  }
+
+  saveDataCowTodatabase() {
+    
+     axios
+      .get(
+        "http://localhost:4000/user/logIn/" + this.state.currentUser
+      )
+      .then((res) => {
+       
+        const sentData = this.state.data;
+       
+       axios.post("http://localhost:4000/user/cow/registor/" + res.data[0].user,
+        sentData
+       ).then(res=>{
+         alert("ลงทะเบียนโคสำเร็จ");
+       }).catch(err=>{
+         alert("เกิดข้อผิดพลาดกับระบบ")
+       })
+      });
+  }
   render() {
     console.log(this.state.currentUser);
     return (
@@ -65,109 +97,149 @@ class FormRegiscow extends Component {
             </Form.Row>
             <Form.Row>
               <Col md={{ span: 4, offset: 1 }}>
-                <Form.Group controlId="formcowname">
+                <Form.Group>
                   <Form.Label>ชื่อโค</Form.Label>
                   <Form.Control
-                    required
+            
+                    name="name_cow"
                     type="text"
                     placeholder="กรุณากรอกชื่อโค"
-                  
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
 
-                <Form.Group controlId="formtracknum">
+                <Form.Group>
                   <Form.Label>
                     หมายเลขประจำตัวสัตว์ (์NID/RFID/Microchip/เบอร์หู)
                   </Form.Label>
                   <Form.Control
-                    required
+                    name="cattle_id"
                     type="text"
                     placeholder="กรุณากรอกหมายเลขประจำตัวสัตว์"
-                   
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
 
-                <Form.Group controlId="formcowtype">
+                <Form.Group>
                   <Form.Label>เพศ</Form.Label>
-                  <Form.Control as="select" >
+                  <Form.Control
+                    as="select"
+                    name="sex"
+                    onChange={event => this.saveData(event)}
+                  >
+                    <option value="">เลือก</option>
                     <option value="MISS">เพศเมีย</option>
                     <option value="BULL">เพศผู้</option>
-               
-                  </Form.Control> 
+                  </Form.Control>
                 </Form.Group>
-                <Form.Group controlId="formcowtype">
+                <Form.Group>
                   <Form.Label>วิธีผสม</Form.Label>
-                  <Form.Control as="select"
-                   onChange={event =>console.log(event.target.value)}>
+                  <Form.Control
+                    as="select"
+                    name="breed_method"
+                    onChange={event => this.saveData(event)}
+                  >
                     <option value="ไม่ระบุ">เลือก </option>
                     <option value="AI">น้ำเชื้อ</option>
                     <option value="NT">พ่อพันธุ์</option>
                   </Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId="formpedi">
+                <Form.Group>
                   <Form.Label>สายพันธุ์โค</Form.Label>
                   <Form.Control
-                    required
+                    onChange={event => this.saveData(event)}
+                    name="breed"
                     type="text"
                     placeholder="กรุณากรอกสายพันธุ์"
-                    onChange=""
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>แม่พันธุ์</Form.Label>
+                  <Form.Control
+                    name="dam_id"
+                    type="text"
+                    placeholder="กรุณากรอกแม่พันธุ์"
+                    onChange={event => this.saveData(event)}
+                  />
+                </Form.Group>
+                <Form.Group controlId="sire_id">
+                  <Form.Label>พ่อพันธุ์</Form.Label>
+                  <Form.Control
+                    name="sire_id"
+                    type="text"
+                    placeholder="กรุณากรอกพ่อพันธุ์"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
                 <Form.Group controlId="color">
                   <Form.Label>สี</Form.Label>
-                  <Form.Control as="select"
-                   onChange={event =>console.log(event.target.value)}>
+                  <Form.Control
+                    as="select"
+                    name="color"
+                    onChange={event => this.saveData(event)}
+                  >
                     <option value="ไม่ระบุ">เลือก </option>
-                    <option >ขาว</option>
-                    <option >ดำ</option>
-                    <option >น้ำตาล</option>
-                    <option >แดง</option>
+                    <option>ขาว</option>
+                    <option>ดำ</option>
+                    <option>น้ำตาล</option>
+                    <option>แดง</option>
                   </Form.Control>
                 </Form.Group>
 
-
                 <Form.Group controlId="formbday">
                   <Form.Label>วัน/เดือน/ปีเกิด</Form.Label>
-                  <Form.Control required type="date" onChange="" />
-                </Form.Group>
-
-                <Form.Group controlId="age">
-                  <Form.Label>อายุ (ปี)</Form.Label>
                   <Form.Control
-                    required
-                    type="text"
-                    placeholder="กรุณากรอกอายุ (ปี)"
-                    onChange=""
+                    name="birth_date"
+                    type="date"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
 
-              
+                <Form.Group //ต้องไปดูในแอพอีกที
+                >
+                  <Form.Label>ชื่อ breeder</Form.Label>
+                  <Form.Control
+                    name="breeder"
+                    type="text"
+                    placeholder="กรุณากรอกชื่อโค"
+                    onChange={event => this.saveData(event)}
+                  />
+                </Form.Group>
 
                 <Form.Group controlId="formwight">
                   <Form.Label>น้ำหนักตอนเกิด (กก.)</Form.Label>
                   <Form.Control
-                    onChange=""
-                    required
+                    name="birth_weight"
                     type="text"
                     placeholder="กรุณากรอกน้ำหนักตอนเกิด (กก.)"
+                    onChange={event => this.saveData(event)}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formwight">
+                  <Form.Label>น้ำหนักอายุ 1ปี (กก.)</Form.Label>
+                  <Form.Control
+                    name="year_weight"
+                    type="text"
+                    placeholder="กรุณากรอกน้ำหนักตอนเกิด (กก.)"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formheight">
-                  <Form.Label>ความสูง (ซม.)</Form.Label>
+                  <Form.Label>ความสูงโพก 1ปี (ซม.)</Form.Label>
                   <Form.Control
-                    onChange=""
-                    required
+                    name="year_hip_hight"
                     type="text"
-                    placeholder="กรุณากรอกความสูง (ซม.)"
+                    placeholder="กรุณากรอกความสูงสะโพก (ซม.)"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
                 <Form.Group controlId="formchest">
                   <Form.Label>ขนาดรอบอกตอนเกิด (ซม.)</Form.Label>
                   <Form.Control
-                    onChange=""
-                    required
+                    onChange={event => this.saveData(event)}
+                    name="birth_chest_head_ratio"
                     type="text"
                     placeholder="กรุณากรอกขนาดรอบอกตอนเกิด (ซม.)"
                   />
@@ -175,50 +247,52 @@ class FormRegiscow extends Component {
                 <Form.Group controlId="formchest">
                   <Form.Label>ขนาดรอบอกหลังอย่านม (ซม.)</Form.Label>
                   <Form.Control
-                    onChange=""
+                    onChange={event => this.saveData(event)}
+                    name=" wean_chest_head_ratio"
                     required
                     type="text"
                     placeholder="กรุณากรอกขนาดรอบอกหลังอย่านม (ซม.)"
                   />
                 </Form.Group>
 
-                <Form.Group controlId="formbodylength">
-                  <Form.Label>ความยาวลำตัว (ซม.)</Form.Label>
+                <Form.Group controlId="formbday">
+                  <Form.Label>วัน/เดือน/ปี ที่หย่านม (หากมี)</Form.Label>
                   <Form.Control
-                    onChange=""
-                    required
-                    type="text"
-                    placeholder="กรุณากรอกความยาวลำตัว (ซม.)"
+                    name="wean_date"
+                    type="date"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formhouse">
                   <Form.Label>โรงเรือน</Form.Label>
                   <Form.Control
-                    onChange=""
+                    name="bigcorral"
                     required
                     type="text"
                     placeholder="กรุณากรอกโรงเรือน"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
 
-                <Form.Group controlId="formstall">
+                <Form.Group controlId="corral">
                   <Form.Label>คอกโค</Form.Label>
                   <Form.Control
-                    onChange=""
+                    name="corral"
                     required
                     type="text"
                     placeholder="กรุณากรอกคอกโค"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
 
                 <Form.Group controlId="formmasses">
                   <Form.Label>ฝูงโค</Form.Label>
                   <Form.Control
-                    onChange=""
-                    required
+                    name="herd_no"
                     type="text"
                     placeholder="กรุณากรอกฝูงโค"
+                    onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
               </Col>
@@ -238,6 +312,7 @@ class FormRegiscow extends Component {
                     color="primary"
                     className="button-w2"
                     style={{ outline: "none" }}
+                    onClick={() => this.saveDataCowTodatabase()}
                   >
                     ตกลง
                   </Button>{" "}
@@ -269,3 +344,14 @@ export default FormRegiscow;
   <option>เพศเมีย</option>
 </Form.Control>
 </Form.Group>*/
+
+//จัดการอายุวัว
+/*  <Form.Group controlId="age">
+                  <Form.Label>อายุ (ปี)</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="กรุณากรอกอายุ (ปี)"
+                 
+                  />
+                </Form.Group> */

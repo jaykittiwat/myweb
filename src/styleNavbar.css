@@ -1,11 +1,19 @@
 nav{
   background-image: linear-gradient(  #3128b9,#1d1499,#100874);
+ 
+  }
 
+
+  .posi{
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
   nav .dropdown {
     
     display: inline-block;
      margin-right: -4px;
+     
   
   }
   

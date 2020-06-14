@@ -104,11 +104,13 @@ class Login extends Component {
                       placeholder="Password"
                       onChange={this.onChange}
                     />
-                  </Form.Group>
-                  <Form.Group controlId="formBasicCheckbox">
+                  </Form.Group >
+                  <div className="row">
+                  <Form.Group controlId="formBasicCheckbox" className="col-6">
                     <Form.Check type="checkbox" label="จำรหัสผ่าน" />
                   </Form.Group>
-
+                  <div className="col-6 text-right"><a href="#restpassword">ลืมรหัสผ่าน</a></div>
+</div>
                   <Button
                     className="container-fluid bt "
                     aria-disabled="true"

@@ -32,7 +32,7 @@ useEffect(()=>{
       <div className="row ">
         <HeaderLogin />
       </div>
-      <div className="row Nav-shadow">
+      <div className="row Nav-shadow posi">
         <NavbarLogin />
       </div>
 

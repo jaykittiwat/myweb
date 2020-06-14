@@ -38,7 +38,7 @@ render(){
  
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid posi">
       <nav className="row">
         <div className="dropdown">
           <Link to="/login">

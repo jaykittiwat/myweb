@@ -75,8 +75,12 @@ export default function FormData() {
           alert("Email มีผู้ใช้แล้ว");
         }
         if (errorCode === "auth/invalid-email") {
-          alert("Email ไม่ถูกต้อง");
+          alert("กรอกข้อมููลให้ครบ");
         }
+        if (errorCode === "auth/weak-password") {
+          alert("รหัสผ่านไม่ถูกต้อง");
+        }
+     
         
       });
  
