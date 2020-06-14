@@ -133,3 +133,10 @@ function FormExample() {
 
 
   1.res.Json แปลงเป็น json
+
+
+  var d = new Date();
+var d = new Date(milliseconds);
+var d = new Date(dateString);
+var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);
+

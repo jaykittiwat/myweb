@@ -39,7 +39,7 @@ export default function TableCalve() {
 
   return (
     <TableContainer component={Paper} style={{marginTop:"20px"}}>
-       <div style={{margin:"0px",fontSize:"18px", backgroundImage: "linear-gradient(  #3128b9,#1d1499,#100874)",padding:"10px",color:"#fff"}}>บันทึกการตรวจท้อง</div>
+       <div className="text-header-clave">บันทึกการตรวจท้อง</div>
       <Table className={classes.table} aria-label="simple table">
      
         <TableHead >

@@ -1,7 +1,4 @@
-.martop-10{
-    margin-top:20px ;
-}
-.text-header-treat{
+.text-header-checkup{
     margin: 0;
     padding: 10px;
     font-size:22px ;
@@ -9,13 +6,4 @@
     color: #fff;
     border-radius:5px 5px 0 0 ;
     
-}
-.pad-10-treat{
-  padding: 20px;
-
-}
-.textField-w-treat{
- 
-    width: 100%;
-
 }

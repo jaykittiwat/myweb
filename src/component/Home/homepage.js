@@ -5,7 +5,7 @@ import HeaderLogin from "./../../HeaderLogin";
 import "./styh.css";
 import NavbarLogin from "./../../Navbar";
 import thor from "../Img/thor.jpg";
-import { ListGroup, Card, Form } from "react-bootstrap";
+import {  Card, Form } from "react-bootstrap";
 import axios from "axios";
 
 // หน้า login แล้ว

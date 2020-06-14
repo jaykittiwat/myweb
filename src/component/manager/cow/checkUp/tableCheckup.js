@@ -9,11 +9,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import './styleCheckup.css';
 import SaveIcon from '@material-ui/icons/Save';
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+
   },
   fonts:{
     fontSize:"30px"
@@ -37,7 +38,7 @@ export default function SimpleTable() {
 
   return (
     <TableContainer component={Paper} style={{marginTop:"20px"}}>
-       <div style={{margin:"0px",fontSize:"18px", backgroundImage: "linear-gradient(  #3128b9,#1d1499,#100874)",padding:"10px",color:"#fff"}}>บันทึกการตรวจท้อง</div>
+       <div className="text-header-checkup">บันทึกการตรวจท้อง</div>
       <Table className={classes.table} aria-label="simple table">
      
         <TableHead >

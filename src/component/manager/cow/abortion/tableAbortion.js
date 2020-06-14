@@ -6,11 +6,16 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import {
+  MuiPickersUtilsProvider,
+
+  KeyboardDatePicker
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -21,24 +26,28 @@ const useStyles = makeStyles(theme => ({
 
 export default function TableAbortion() {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
-
+  const [item, setItem] = React.useState("");
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const handleChange = event => {
-    setAge(event.target.value);
+    setItem(event.target.value);
+  };
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
   };
 
   return (
     <div className="container" style={{ marginTop: "20px" }}>
       {" "}
       <Paper elevation={3}>
-        <div className="text-header">บันทึกโคแท้ง</div>
+        <div className="text-header-ab">บันทึกโคแท้ง</div>
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
             <TextField
               className="textField-width"
               id="outlined1"
-              label="Outlined"
-              variant="outlined"
+              label="หมายเลขโค"
+            
               size="small"
             />
           </Grid>
@@ -46,8 +55,8 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined2"
-              label="Outlined"
-              variant="outlined"
+              label="วันที่ผสม"
+             
               size="small"
             />
           </Grid>
@@ -55,8 +64,9 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined3"
-              label="Outlined"
-              variant="outlined"
+              label="ท้องครั้งที่"
+          
+          
               size="small"
             />
           </Grid>
@@ -64,8 +74,8 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined4"
-              label="Outlined"
-              variant="outlined"
+              label="วันที่ผสม"
+             
               size="small"
             />
           </Grid>
@@ -73,8 +83,8 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined5"
-              label="Outlined"
-              variant="outlined"
+              label="จำนวนการแท้ง"
+          
               size="small"
             />
           </Grid>
@@ -82,8 +92,9 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined6"
-              label="Outlined"
-              variant="outlined"
+              label="หมายเลขน้ำเชื้อ/พ่อพันธ์ุ"
+      
+            
               size="small"
             />
           </Grid>
@@ -95,21 +106,30 @@ export default function TableAbortion() {
           </div>
         </div>
         <Grid container spacing={3} className="pad-10">
-          <Grid item xs={6}>
-            <TextField
+        <Grid item xs={6}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        
+         
+            <KeyboardDatePicker
+            style={{outline:"none"}}
               className="textField-width"
               id="outlined1"
-              label="Outlined"
-              variant="outlined"
+              label="วันที่แท้ง"
+              format="MM/dd/yyyy"
+            
+              value={selectedDate}
+              onChange={handleDateChange}
+              
               size="small"
             />
-          </Grid>
+        
+          </MuiPickersUtilsProvider>  </Grid>
           <Grid item xs={6}>
             <TextField
               className="textField-width"
               id="outlined2"
-              label="Outlined"
-              variant="outlined"
+              label="ผู้บันทึก"
+             
               size="small"
             />
           </Grid>
@@ -117,8 +137,8 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined3"
-              label="Outlined"
-              variant="outlined"
+              label="สาเหตุ"
+            
               size="small"
             />
           </Grid>
@@ -126,8 +146,8 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined4"
-              label="Outlined"
-              variant="outlined"
+              label="หมายเหตุ"
+            
               size="small"
             />
           </Grid>
@@ -143,9 +163,9 @@ export default function TableAbortion() {
             <TextField
               className="textField-width"
               id="outlined1"
-              label="Outlined"
-              variant="outlined"
+              label="ติดตามผลการรักษา (วัน)"
               size="small"
+                
             />
           </Grid>
           <Grid item xs={6}>
@@ -153,22 +173,22 @@ export default function TableAbortion() {
               className="textField-width"
               id="outlined2"
               label="Outlined"
-              variant="outlined"
+           
               size="small"
             />
           </Grid>
           <Grid item xs={12}>
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <InputLabel id="demo-simple-select-label">รายการายา</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
+                value={item}
                 onChange={handleChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value="10">A</MenuItem>
+                <MenuItem value="20">B</MenuItem>
+                <MenuItem value="30">C</MenuItem>
               </Select>
             </FormControl>
           </Grid>

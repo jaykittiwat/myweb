@@ -1,15 +1,23 @@
 import React,{Component} from 'react';
 import HeaderLogin from './../../HeaderLogin';
 import NavbarLogin from './../../Navbar';
-class Header extends Component{
+import PaperNotificaion from './paper';
+
+class Notification extends Component{
   render(){
       return(
-          <div >
+          <div  >
             <HeaderLogin/>
-            <NavbarLogin/>
+            <div className="row Nav-shadow">
+        <NavbarLogin />
+      </div>
+            
+            <PaperNotificaion/>
+     
+
         </div>
       
       )
   }
 }
-export default Header;
+export default Notification;

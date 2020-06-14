@@ -19,6 +19,7 @@ class NavbarLogin extends Component {
    }
  }
    async componentDidMount() {
+    
     await firebase.auth().onAuthStateChanged(user => {
    
       if (user) {
@@ -31,6 +32,7 @@ class NavbarLogin extends Component {
 
 
   }
+  
 
 render(){
  
