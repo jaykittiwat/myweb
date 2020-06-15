@@ -5,7 +5,7 @@ import FormImg from "../Login/FormImg";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import { isSameHour } from "date-fns/esm";
+
 //ลงทะเบียนโค เข้้าฟาร์ม
 class FormRegiscow extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class FormRegiscow extends Component {
         birth_weight: "", //น้ำหนักเกิด*
         breed: "", //พันธุ์*
         breed_method: "", //วิธีผสม*
-        breeder: "", //เจ้าของ---
+        breeder: "-", //เจ้าของ---
         cattle_id: "", //เลขโค*
         color: "", //สี*
         bigcorral: "", //โณงเรือน
@@ -27,12 +27,12 @@ class FormRegiscow extends Component {
         dam_id: "", //id แม่*
         herd_no: "", //ฝูง*
         number_of_breeding:0, //จำนวนการผสมพันธุ์*
-        owner: "", //เจ้าของ//เซดเอง//ชื่อนามกสุลของUID--
-        process_date: null, //น่าจะวันที่บีันทึก--
+        owner: "-", //เจ้าของ//เซดเอง//ชื่อนามกสุลของUID--
+        process_date: "-", //น่าจะวันที่บีันทึก--
         sex: "", //เพศ//BULLผู้/MISSเมีย*
         sire_id: "", //id พ่อ*
         status: "ท้องว่าง", //สถานะ//ระบบเซต--
-        waen_weight: "", //น้ำหนักล่าสุดsหลังอย่านม*
+        waen_weight: "-", //น้ำหนักล่าสุดsหลังอย่านม*
         wean_chest_head_ratio: "", //รอบออกล่าสุดหลังอย่านม
         wean_date: "", //วันอย่านม
         year_hip_hight: "", //ความสูงสะโพก1ปี
@@ -65,9 +65,19 @@ class FormRegiscow extends Component {
   }
 
   saveDataCowTodatabase() {
+const x=(Object.values(this.state.data).includes(""));
+console.log(x);
+console.log(this.state.data);
+    if(x!==true){
+      alert("legiH");
 
+    }
+    else{
+      alert("no value")
+    }
+  
 //set time of process_dare:""
-   let date=new Date()
+   /*let date=new Date()
    let dd=date.getDay();
    let mm=date.getMonth()+1;
    let yyyy=date.getFullYear();
@@ -103,7 +113,7 @@ let today = yyyy + '-' + mm + '-' + dd;
        }).catch(err=>{
          alert("เกิดข้อผิดพลาดกับระบบ")
        })
-      });
+      });*/
   }
   render() {
     console.log(this.state.currentUser);
@@ -271,7 +281,7 @@ let today = yyyy + '-' + mm + '-' + dd;
                   <Form.Label>ขนาดรอบอกหลังอย่านม (ซม.)</Form.Label>
                   <Form.Control
                     onChange={event => this.saveData(event)}
-                    name=" wean_chest_head_ratio"
+                    name="wean_chest_head_ratio"
                     required
                     type="text"
                     placeholder="กรุณากรอกขนาดรอบอกหลังอย่านม (ซม.)"
