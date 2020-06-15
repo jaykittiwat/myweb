@@ -90,12 +90,20 @@ export default function TableBreed({ posts, loading }) {
   // headCells คอลัม หัวตาราง
   const headCells = [
     { id: "1", numeric: false, disablePadding: true, label: "เลือก" },
-    { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
-    { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
-    { id: "4", numeric: true, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
-    { id: "6", numeric: true, disablePadding: false, label: "น้ำหนัก วันเกิด เพศ พ่อ แม่ (แทนโรงเรือนคอกฝูง)" },
-    { id: "7", numeric: true, disablePadding: false, label: "ฝูง" },
+    { id: "2", numeric: true, disablePadding: false, label: "น้ำหนัก" },
+    { id: "3", numeric: true, disablePadding: false, label: "วันเกิด" },
+    { id: "4", numeric: true, disablePadding: false, label: "เพศ" },
+    { id: "5", numeric: true, disablePadding: false, label: "พ่อ" },
+    { id: "6", numeric: true, disablePadding: false, label: "แม่" },
+    { id: "7", numeric: true, disablePadding: false, label: "วันสักหู" },
+    { id: "8", numeric: true, disablePadding: false, label: "วันสูญเขา" },
+    { id: "9", numeric: true, disablePadding: false, label: "วันหย่านม" },
+    { id: "10", numeric: true, disablePadding: false, label: "ADG" },
+    { id: "11", numeric: true, disablePadding: false, label: "วันตีเบอร์" },
+    { id: "12", numeric: true, disablePadding: false, label: "สายพันธุ์" },
+    { id: "13", numeric: true, disablePadding: false, label: "หมายเลขโค" },
+    { id: "14", numeric: true, disablePadding: false, label: "หมายเหตุ" },
+    { id: "15", numeric: true, disablePadding: false, label: "บันทึก" },
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {

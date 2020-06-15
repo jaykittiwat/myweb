@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from "react";
 import axios from 'axios';
-import Table from './tablecalf';
+import Table from './tablecalfnew';
 import HeaderLogin from '../../../HeaderLogin';
 import NavbarLogin from "../../../Navbar";
 //import { Form, Col, Button } from "react-bootstrap";
@@ -30,7 +30,7 @@ useEffect(()=>{
 
   return (
     <div className="container-fluid">
-      <div className="row ">
+      <div className="row">
         <HeaderLogin />
       </div>
       <div className="row Nav-shadow">
