@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "./../../backEnd/firebase";
 import { Form, Col } from "react-bootstrap";
-import FormImg from "../Login/FormImg";
+import PeddigreeImg from "./pedigreeImg";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -11,6 +11,7 @@ class FormRegiscow extends Component {
   constructor(props) {
     super(props);
     this.state = {
+     UID:"",
       currentUser: "",
       data: {
         name_cow: "", //ชื่อ
@@ -52,6 +53,8 @@ class FormRegiscow extends Component {
   }
 
   saveData(e) {
+
+    
     const { name, value } = e.target;
 
     this.setState(prestate => ({
@@ -66,18 +69,10 @@ class FormRegiscow extends Component {
 
   saveDataCowTodatabase() {
 const x=(Object.values(this.state.data).includes(""));
-console.log(x);
-console.log(this.state.data);
-    if(x!==true){
-      alert("legiH");
 
-    }
-    else{
-      alert("no value")
-    }
-  
-//set time of process_dare:""
-   /*let date=new Date()
+    if(x!==true){
+      //set time of process_dare:""
+   let date=new Date()
    let dd=date.getDay();
    let mm=date.getMonth()+1;
    let yyyy=date.getFullYear();
@@ -88,13 +83,16 @@ if (dd < 10) {
   dd = '0' + dd; 
 } 
 let today = yyyy + '-' + mm + '-' + dd; 
-
+//ร้องขอมูลuser
      axios
       .get(
         "http://localhost:4000/user/logIn/" + this.state.currentUser
       )
       .then(res=>{
+
       this.setState(prevstate=>({
+        //get data user json form firebase
+        UID:res.data[0].user,
         currentUser:prevstate.currentUser,
         data:{
           ...prevstate.data,owner:res.data[0].fname+" "+res.data[0].lname, process_date:today
@@ -105,18 +103,26 @@ let today = yyyy + '-' + mm + '-' + dd;
       
         const sentData = this.state.data;
      
-       
+
         axios.post("http://localhost:4000/user/cow/registor/" + res.data[0].user,
         sentData
        ).then(res=>{
          alert("ลงทะเบียนโคสำเร็จ");
        }).catch(err=>{
          alert("เกิดข้อผิดพลาดกับระบบ")
+         
        })
-      });*/
+      });
+
+    }
+    else{
+      alert("no value")
+    }
+  
+
   }
   render() {
-    console.log(this.state.currentUser);
+    
     return (
       <div>
         <div style={{ paddingTop: "40px" }}>
@@ -332,7 +338,7 @@ let today = yyyy + '-' + mm + '-' + dd;
 
               <Col md={{ span: 4, offset: 1 }} className="text-center ">
                 <div>
-                  <FormImg />
+                  <PeddigreeImg user={this.state.UID}/>
                 </div>
               </Col>
             </Form.Row>
