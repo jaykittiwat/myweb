@@ -5,6 +5,7 @@ import FormImg from "../Login/FormImg";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import { isSameHour } from "date-fns/esm";
 //ลงทะเบียนโค เข้้าฟาร์ม
 class FormRegiscow extends Component {
   constructor(props) {
@@ -25,12 +26,12 @@ class FormRegiscow extends Component {
         corral: "", //คอก*
         dam_id: "", //id แม่*
         herd_no: "", //ฝูง*
-        number_of_breeding: "", //จำนวนการผสมพันธุ์*
+        number_of_breeding:0, //จำนวนการผสมพันธุ์*
         owner: "", //เจ้าของ//เซดเอง//ชื่อนามกสุลของUID--
         process_date: null, //น่าจะวันที่บีันทึก--
         sex: "", //เพศ//BULLผู้/MISSเมีย*
         sire_id: "", //id พ่อ*
-        status: "", //สถานะ//ระบบเซต--
+        status: "ท้องว่าง", //สถานะ//ระบบเซต--
         waen_weight: "", //น้ำหนักล่าสุดsหลังอย่านม*
         wean_chest_head_ratio: "", //รอบออกล่าสุดหลังอย่านม
         wean_date: "", //วันอย่านม
@@ -64,16 +65,38 @@ class FormRegiscow extends Component {
   }
 
   saveDataCowTodatabase() {
-    
+
+//set time of process_dare:""
+   let date=new Date()
+   let dd=date.getDay();
+   let mm=date.getMonth()+1;
+   let yyyy=date.getFullYear();
+if (mm < 10) { 
+    mm = '0' + mm; 
+} 
+if (dd < 10) { 
+  dd = '0' + dd; 
+} 
+let today = yyyy + '-' + mm + '-' + dd; 
+
      axios
       .get(
         "http://localhost:4000/user/logIn/" + this.state.currentUser
       )
-      .then((res) => {
-       
+      .then(res=>{
+      this.setState(prevstate=>({
+        currentUser:prevstate.currentUser,
+        data:{
+          ...prevstate.data,owner:res.data[0].fname+" "+res.data[0].lname, process_date:today
+        }
+      }))
+        return res;
+      }).then((res) => {
+      
         const sentData = this.state.data;
+     
        
-       axios.post("http://localhost:4000/user/cow/registor/" + res.data[0].user,
+        axios.post("http://localhost:4000/user/cow/registor/" + res.data[0].user,
         sentData
        ).then(res=>{
          alert("ลงทะเบียนโคสำเร็จ");
