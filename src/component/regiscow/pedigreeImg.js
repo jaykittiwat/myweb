@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebaseStorage from './../../backEnd/firebase';
 import Button from '@material-ui/core/Button'
-import axios from "axios";
+//import axios from "axios";
  //หน้าComponent อัพโหลดรูป
 class PeddigreeImg extends Component {
     constructor(props){
