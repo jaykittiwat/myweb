@@ -5,7 +5,7 @@ import HeaderLogin from "./../../HeaderLogin";
 import "./styh.css";
 import NavbarLogin from "./../../Navbar";
 import thor from "../Img/thor.jpg";
-import {  Card, Form } from "react-bootstrap";
+import { Card, Form } from "react-bootstrap";
 import axios from "axios";
 
 // หน้า login แล้ว
@@ -14,7 +14,7 @@ class Home extends Component {
     super(props);
     this.state = {
       user: {},
-      param: this.props,
+      param: this.props
     };
   }
 
@@ -23,7 +23,7 @@ class Home extends Component {
       .get(
         "http://localhost:4000/user/logIn/" + this.state.param.currentUser.email
       )
-      .then((res) => {
+      .then(res => {
         const getUser = res.data[0];
         this.setState({ user: getUser });
       });

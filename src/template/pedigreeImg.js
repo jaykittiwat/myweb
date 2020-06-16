@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebaseStorage from './../../backEnd/firebase';
+import firebaseStorage from '../backEnd/firebase';
 import Button from '@material-ui/core/Button'
 import axios from "axios";
  //หน้าComponent อัพโหลดรูป
@@ -8,6 +8,7 @@ class PeddigreeImg extends Component {
         super(props);
 
         this.state =  {
+            UID:"",
             selectedFile: null,
             imagePreviewUrl: "https://mdbootstrap.com/img/Photos/Others/placeholder.jpg",
             
@@ -16,7 +17,7 @@ class PeddigreeImg extends Component {
 
  
   fileChangedHandler = (event) => {
-      console.log(event.target.files[0])
+    
     this.setState({
       selectedFile: event.target.files[0]
     })
@@ -35,10 +36,8 @@ class PeddigreeImg extends Component {
  
 
 
-componentWillReceiveProps(nextporps){
-
-console.log('123'+this.props);
-
+componentDidMount(){
+  
 }
 
   savePeddigreeImage =()=>{
@@ -62,7 +61,7 @@ console.log('123'+this.props);
       
         { $imagePreview }
         <hr/>
-         <input type="file" name="avatar" onChange={this.fileChangedHandler} />
+         <input type="file" name="avatar" onChange={this.fileChangedHandler} ></input>
         
          <Button type="button" style={{outline:"none" }} variant="outlined" color="primary" onClick={()=>this.savePeddigreeImage()}>บันทึกภาพ</Button>
          

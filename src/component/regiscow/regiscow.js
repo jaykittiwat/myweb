@@ -5,11 +5,15 @@ import FromRegiscow from "./FormRegiscow";
 class Header extends Component {
   render() {
     return (
-      <div>
+      <div className="container-fluid">
+      <div className="row ">
         <HeaderLogin />
-        <NavbarLogin />
-        <FromRegiscow />
       </div>
+      <div className="row Nav-shadow posi">
+        <NavbarLogin />
+      </div >
+      <FromRegiscow />
+    </div>
     );
   }
 }

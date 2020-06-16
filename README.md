@@ -103,7 +103,7 @@ npm install @material-ui/core
 npm i --save date-fns@next @date-io/date-fns
 npm i @material-ui/pickers
 npm i --save date-fns@next @date-io/date-fns@1.x
-
+npm install chart.js --save
 npm insta//
 npm install axios
 react-bootstrap

@@ -1,15 +1,20 @@
 import React,{Component} from 'react';
 import HeaderLogin from './../../HeaderLogin';
 import NavbarLogin from './../../Navbar';
-class Header extends Component{
+import Chardata from './ChartData';
+class CheckingInformation extends Component{
   render(){
       return(
           <div >
             <HeaderLogin/>
             <NavbarLogin/>
+            
+            <Chardata/>
+            
+            
         </div>
       
       )
   }
 }
-export default Header;
+export default CheckingInformation;

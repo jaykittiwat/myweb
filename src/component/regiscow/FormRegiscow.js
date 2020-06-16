@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "./../../backEnd/firebase";
 import { Form, Col } from "react-bootstrap";
-import PeddigreeImg from "./pedigreeImg";
+
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -11,7 +11,7 @@ class FormRegiscow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     UID:"",
+      UID: "",
       currentUser: "",
       data: {
         name_cow: "", //ชื่อ
@@ -27,7 +27,7 @@ class FormRegiscow extends Component {
         corral: "", //คอก*
         dam_id: "", //id แม่*
         herd_no: "", //ฝูง*
-        number_of_breeding:0, //จำนวนการผสมพันธุ์*
+        number_of_breeding: 0, //จำนวนการผสมพันธุ์*
         owner: "-", //เจ้าของ//เซดเอง//ชื่อนามกสุลของUID--
         process_date: "-", //น่าจะวันที่บีันทึก--
         sex: "", //เพศ//BULLผู้/MISSเมีย*
@@ -38,7 +38,9 @@ class FormRegiscow extends Component {
         wean_date: "", //วันอย่านม
         year_hip_hight: "", //ความสูงสะโพก1ปี
         year_weight: "" //น้ำหนักอายุ1ปี
-      }
+      },
+      selectedFile:null,
+      imagePreviewUrl:"https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
     };
   }
 
@@ -53,8 +55,6 @@ class FormRegiscow extends Component {
   }
 
   saveData(e) {
-
-    
     const { name, value } = e.target;
 
     this.setState(prestate => ({
@@ -66,63 +66,124 @@ class FormRegiscow extends Component {
       }
     }));
   }
-
+//กดปุ่มเซฟข้อมูลลงดาต้าเบส
   saveDataCowTodatabase() {
-const x=(Object.values(this.state.data).includes(""));
+    const x = Object.values(this.state.data).includes("");
 
-    if(x!==true){
+    if (x !== true) {
       //set time of process_dare:""
-   let date=new Date()
-   let dd=date.getDay();
-   let mm=date.getMonth()+1;
-   let yyyy=date.getFullYear();
-if (mm < 10) { 
-    mm = '0' + mm; 
-} 
-if (dd < 10) { 
-  dd = '0' + dd; 
-} 
-let today = yyyy + '-' + mm + '-' + dd; 
-//ร้องขอมูลuser
-     axios
-      .get(
-        "http://localhost:4000/user/logIn/" + this.state.currentUser
-      )
-      .then(res=>{
+      let date = new Date();
+      let dd = date.getDay();
+      let mm = date.getMonth() + 1;
+      let yyyy = date.getFullYear();
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+      let today = yyyy + "-" + mm + "-" + dd;
+      //ร้องขอมูลuser
+      axios
+        .get("http://localhost:4000/user/logIn/" + this.state.currentUser)
+        .then(res => {
+          this.setState(prevstate => ({
+            //get data user json form firebase
 
-      this.setState(prevstate=>({
-        //get data user json form firebase
-        UID:res.data[0].user,
-        currentUser:prevstate.currentUser,
-        data:{
-          ...prevstate.data,owner:res.data[0].fname+" "+res.data[0].lname, process_date:today
-        }
-      }))
-        return res;
-      }).then((res) => {
-      
-        const sentData = this.state.data;
-     
-
-        axios.post("http://localhost:4000/user/cow/registor/" + res.data[0].user,
-        sentData
-       ).then(res=>{
-         alert("ลงทะเบียนโคสำเร็จ");
-       }).catch(err=>{
-         alert("เกิดข้อผิดพลาดกับระบบ")
+            UID: res.data[0].user,
+            currentUser: prevstate.currentUser,
+            data: {
+              ...prevstate.data,
+              owner: res.data[0].fname + " " + res.data[0].lname,
+              process_date: today
+            },
+            selectedFile: prevstate.selectedFile,
+            imagePreviewUrl: prevstate.imagePreviewUrl
+          }));
+          return res;
+        })
+        .then( (res) => {
          
-       })
-      });
+          const sentData = this.state.data;
+          firebase
+          .storage()
+          .ref("Photo/" + this.state.UID + "/pedigree/")
+          .child(this.state.data.dam_id)
+          .put(this.state.selectedFile)
+          .then(res => {
+            //Photo/ชื่อid/ชื่อไฟร์
+          });
+          axios
+            .post(
+              "http://localhost:4000/user/cow/registor/" + res.data[0].user,
+              sentData
+            )
+            .then(res => {
+              alert("ลงทะเบียนโคสำเร็จ");
+            })
+            .catch(err => {
+              alert("เกิดข้อผิดพลาดกับระบบ");
+            });
+        });
+    } else {
+      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 
     }
-    else{
-      alert("no value")
-    }
-  
-
   }
+//เมื่อรูปเข้ามา
+  fileChangedHandler = event => {
+  const nameImge=event.target.files[0];
+    this.setState(prestate => ({
+      UID: prestate.UID,
+      currentUser: prestate.currentUser,
+      data: { ...prestate.data },
+      selectedFile:nameImge ,
+      imagePreviewUrl: prestate.imagePreviewUrl
+    }));
+
+
+    let reader = new FileReader();
+
+    reader.onloadend = () => {
+      this.setState(prestate=>({
+        UID:prestate.UID,
+        currentUser:prestate.currentUser,
+        data:{...prestate.data},
+        selectedFile:prestate.selectedFile,
+        imagePreviewUrl: reader.result
+      }));
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
+
+
+
+
+
+
+
+
   render() {
-    
+    let $imagePreview = (
+      <div className="previewText image-container">
+        Please select an Image for Preview
+      </div>
+    );
+    if (this.state.imagePreviewUrl) {
+      $imagePreview = (
+        <div className="image-container" style={{backgroundColor:"#A9A9A9",width:"400px",height:"400px",paddingTop:"3%"}}>
+          <img
+            src={this.state.imagePreviewUrl}
+            alt="icon"
+            width="95%"
+            height="95%"
+          />{" "}
+        </div>
+      );
+    }
+
     return (
       <div>
         <div style={{ paddingTop: "40px" }}>
@@ -139,7 +200,6 @@ let today = yyyy + '-' + mm + '-' + dd;
                 <Form.Group>
                   <Form.Label>ชื่อโค</Form.Label>
                   <Form.Control
-            
                     name="name_cow"
                     type="text"
                     placeholder="กรุณากรอกชื่อโค"
@@ -338,7 +398,17 @@ let today = yyyy + '-' + mm + '-' + dd;
 
               <Col md={{ span: 4, offset: 1 }} className="text-center ">
                 <div>
-                  <PeddigreeImg user={this.state.UID}/>
+                  <div className="container-fluid boxImgFrom  ">
+                    {$imagePreview}
+                    <hr />
+                    <input
+                      type="file"
+                      name="avatar"
+                      onChange={(event)=>this.fileChangedHandler(event)}
+                    />
+
+             
+                  </div>
                 </div>
               </Col>
             </Form.Row>

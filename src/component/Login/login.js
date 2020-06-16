@@ -42,9 +42,7 @@ class Login extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(response => {
-      
-      })
+      .then(response => {})
       .catch(error => {
         this.setState({
           message: error.message
@@ -60,12 +58,9 @@ class Login extends Component {
         this.setState({
           currentUser: user
         });
-       
       }
     });
-
   }
- 
 
   showpageLogin = () => {
     return (
@@ -104,13 +99,15 @@ class Login extends Component {
                       placeholder="Password"
                       onChange={this.onChange}
                     />
-                  </Form.Group >
-                  <div className="row">
-                  <Form.Group controlId="formBasicCheckbox" className="col-6">
-                    <Form.Check type="checkbox" label="จำรหัสผ่าน" />
                   </Form.Group>
-                  <div className="col-6 text-right"><a href="#restpassword">ลืมรหัสผ่าน</a></div>
-</div>
+                  <div className="row">
+                    <Form.Group controlId="formBasicCheckbox" className="col-6">
+                      <Form.Check type="checkbox" label="จำรหัสผ่าน" />
+                    </Form.Group>
+                    <div className="col-6 text-right">
+                      <a href="#restpassword">ลืมรหัสผ่าน</a>
+                    </div>
+                  </div>
                   <Button
                     className="container-fluid bt "
                     aria-disabled="true"
@@ -151,10 +148,8 @@ class Login extends Component {
   };
 
   render() {
-   
     if (this.state.currentUser) {
-      
-      return <Home currentUser={this.state.currentUser}/>;
+      return <Home currentUser={this.state.currentUser} />;
     }
     //if user haven't id and password  return -->
     return <div className="container-fluid ">{this.showpageLogin()}</div>;
