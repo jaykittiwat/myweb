@@ -17,10 +17,10 @@ import treatment from "./component/treatment/treatment";
 import notification from "./component/notification/notification";
 import checkinformation from "./component/checkinformationandreport/checkinformation/checkinformation";
 import report from "./component/checkinformationandreport/report/report";
-import brandsetting from "./component/setting/brandsetting";
-import drugsetting from "./component/setting/drugsetting";
-import farmsetting from "./component/setting/farmsetting";
-import usersetting from "./component/setting/usersetting";
+import brandsetting from "./component/setting/brand/brandsetting";
+import drugsetting from "./component/setting/drug/drugsetting";
+import farmsetting from "./component/setting/farm/farmsetting";
+import usersetting from "./component/setting/user/usersetting";
 import instructionmanual from "./component/instructionmanual/instructionmanual";
 
 // Router to path component
