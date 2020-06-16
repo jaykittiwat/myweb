@@ -8,7 +8,6 @@ class CheckingInformation extends Component{
           <div >
             <HeaderLogin/>
             <NavbarLogin/>
-            
             <Chardata/>
             
             

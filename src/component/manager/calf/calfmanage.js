@@ -1,10 +1,8 @@
 import React,{useEffect,useState} from "react";
 import axios from 'axios';
-import Table from './tablecalf';
-import HeaderLogin from '../../../HeaderLogin';
-import NavbarLogin from "../../../Navbar";
-//import { Form, Col, Button } from "react-bootstrap";
-import "./../calf/CalfStyle.css";
+import TableCalve from './tablecalf';
+import HeaderLogin from './../../../HeaderLogin';
+import NavbarLogin from "./../../../Navbar";
 
 export default function Induction() {
 
@@ -33,12 +31,12 @@ useEffect(()=>{
       <div className="row ">
         <HeaderLogin />
       </div>
-      <div className="row Nav-shadow">
+      <div className="row Nav-shadow posi">
         <NavbarLogin />
       </div>
      
            
-<Table posts={posts} loading={loading}/>
+<TableCalve  posts={posts} loading={loading}/>
       <div className="row mar"></div>
     </div>
   );
