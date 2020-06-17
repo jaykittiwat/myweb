@@ -32,15 +32,17 @@ class FormRegiscow extends Component {
         process_date: "-", //น่าจะวันที่บีันทึก--
         sex: "", //เพศ//BULLผู้/MISSเมีย*
         sire_id: "", //id พ่อ*
-        status: "ท้องว่าง", //สถานะ//ระบบเซต--
-        waen_weight: "-", //น้ำหนักล่าสุดsหลังอย่านม*
+        status: " ", //สถานะ//ระบบเซต--
+        wean_weight: "-", //น้ำหนักล่าสุดsหลังอย่านม*
         wean_chest_head_ratio: "", //รอบออกล่าสุดหลังอย่านม
         wean_date: "", //วันอย่านม
         year_hip_hight: "", //ความสูงสะโพก1ปี
         year_weight: "" //น้ำหนักอายุ1ปี
       },
-      selectedFile:null,
-      imagePreviewUrl:"https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+      category: "",
+      selectedFile: null,
+      imagePreviewUrl:
+        "https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
     };
   }
 
@@ -58,15 +60,18 @@ class FormRegiscow extends Component {
     const { name, value } = e.target;
 
     this.setState(prestate => ({
+      UID: prestate.UID,
       currentUser: prestate.currentUser,
-
       data: {
         ...prestate.data,
         [name]: value
-      }
+      },
+      category: prestate.category,
+      selectedFile: prestate.selectedFile,
+      imagePreviewUrl: prestate.imagePreviewUrl
     }));
   }
-//กดปุ่มเซฟข้อมูลลงดาต้าเบส
+  //กดปุ่มเซฟข้อมูลลงดาต้าเบส
   saveDataCowTodatabase() {
     const x = Object.values(this.state.data).includes("");
 
@@ -94,62 +99,82 @@ class FormRegiscow extends Component {
             currentUser: prevstate.currentUser,
             data: {
               ...prevstate.data,
-              owner: res.data[0].fname + " " + res.data[0].lname,
+              owner: res.data[0].fname + " " + res.data[0].lname, //ต้องเซตเป็นชื่องเจ้าของฟาร์ม
               process_date: today
             },
+            category: prevstate.category,
             selectedFile: prevstate.selectedFile,
             imagePreviewUrl: prevstate.imagePreviewUrl
           }));
           return res;
         })
-        .then( (res) => {
-         
-          const sentData = this.state.data;
+        .then(res => {
+          const sentDataCow = this.state.data; //ส่งข้อมูลไปถ้าเป็นแม่โค
+
           firebase
-          .storage()
-          .ref("Photo/" + this.state.UID + "/pedigree/")
-          .child(this.state.data.dam_id)
-          .put(this.state.selectedFile)
-          .then(res => {
-            //Photo/ชื่อid/ชื่อไฟร์
-          });
-          axios
-            .post(
-              "http://localhost:4000/user/cow/registor/" + res.data[0].user,
-              sentData
-            )
+            .storage()
+            .ref("Photo/" + this.state.UID + "/pedigree/")
+            .child(this.state.data.cattle_id)
+            .put(this.state.selectedFile)
             .then(res => {
-              alert("ลงทะเบียนโคสำเร็จ");
-            })
-            .catch(err => {
-              alert("เกิดข้อผิดพลาดกับระบบ");
+              //Photo/ชื่อid/ชื่อไฟร์
             });
+          //ของแม่โค
+          const check = this.state.category;
+          //ถ้าเป็นแม่โค
+          if (check === "cow") {
+            axios
+              .post(
+                "http://localhost:4000/user/cow/registor/" + res.data[0].user,
+                sentDataCow
+              )
+              .then(res => {
+                alert("ลงทะเบียนโคสำเร็จ");
+              })
+              .catch(err => {
+                alert("เกิดข้อผิดพลาดกับระบบ");
+              });
+          }
+          //ถ้าเป็นลูกโค
+          else {
+
+            axios
+              .post(
+                "http://localhost:4000/user/calf/registor/" + res.data[0].user,
+                sentDataCow
+              )
+              .then(res => {
+                alert("ลงทะเบียนโคสำเร็จ");
+              })
+              .catch(err => {
+                alert("เกิดข้อผิดพลาดกับระบบ");
+              });
+          }
         });
     } else {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-
     }
   }
-//เมื่อรูปเข้ามา
+  //เมื่อรูปเข้ามา
   fileChangedHandler = event => {
-  const nameImge=event.target.files[0];
+    const nameImge = event.target.files[0];
     this.setState(prestate => ({
       UID: prestate.UID,
       currentUser: prestate.currentUser,
       data: { ...prestate.data },
-      selectedFile:nameImge ,
+      selectedFile: nameImge,
       imagePreviewUrl: prestate.imagePreviewUrl
     }));
-
 
     let reader = new FileReader();
 
     reader.onloadend = () => {
-      this.setState(prestate=>({
-        UID:prestate.UID,
-        currentUser:prestate.currentUser,
-        data:{...prestate.data},
-        selectedFile:prestate.selectedFile,
+      this.setState(prestate => ({
+        UID: prestate.UID,
+        currentUser: prestate.currentUser,
+        data: { ...prestate.data },
+        category: prestate.category,
+        selectedFile: prestate.selectedFile,
         imagePreviewUrl: reader.result
       }));
     };
@@ -157,12 +182,18 @@ class FormRegiscow extends Component {
     reader.readAsDataURL(event.target.files[0]);
   };
 
+  saveDataCowOrCalf = event => {
+    const get = event.target.value;
 
-
-
-
-
-
+    this.setState(prestate => ({
+      UID: prestate.UID,
+      currentUser: prestate.currentUser,
+      data: { ...prestate.data },
+      category: get,
+      selectedFile: prestate.selectedFile,
+      imagePreviewUrl: prestate.imagePreviewUrl
+    }));
+  };
 
   render() {
     let $imagePreview = (
@@ -172,8 +203,17 @@ class FormRegiscow extends Component {
     );
     if (this.state.imagePreviewUrl) {
       $imagePreview = (
-        <div className="image-container text-center" style={{marginLeft:"22%",border:" 1px solid #ddd",borderRadius:"4px",width:"300px",height:"300px",paddingTop:"1%"}}>
-         
+        <div
+          className="image-container text-center"
+          style={{
+            marginLeft: "22%",
+            border: " 1px solid #ddd",
+            borderRadius: "4px",
+            width: "300px",
+            height: "300px",
+            paddingTop: "1%"
+          }}
+        >
           <img
             src={this.state.imagePreviewUrl}
             alt="icon"
@@ -218,7 +258,18 @@ class FormRegiscow extends Component {
                     onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
-
+                <Form.Group>
+                  <Form.Label>ประเภทโค</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="CowCalf"
+                    onChange={event => this.saveDataCowOrCalf(event)}
+                  >
+                    <option value="">เลือก</option>
+                    <option value="cow">โค</option>
+                    <option value="calf">ลูกโค</option>
+                  </Form.Control>
+                </Form.Group>
                 <Form.Group>
                   <Form.Label>เพศ</Form.Label>
                   <Form.Control
@@ -297,7 +348,7 @@ class FormRegiscow extends Component {
 
                 <Form.Group //ต้องไปดูในแอพอีกที
                 >
-                  <Form.Label>ชื่อ breeder</Form.Label>
+                  <Form.Label>ชื่อผู้ผสมพันธุ์</Form.Label>
                   <Form.Control
                     name="breeder"
                     type="text"
@@ -310,6 +361,15 @@ class FormRegiscow extends Component {
                   <Form.Label>น้ำหนักตอนเกิด (กก.)</Form.Label>
                   <Form.Control
                     name="birth_weight"
+                    type="text"
+                    placeholder="กรุณากรอกน้ำหนักตอนเกิด (กก.)"
+                    onChange={event => this.saveData(event)}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formwight">
+                  <Form.Label>น้ำหนักอย่านม (กก.)</Form.Label>
+                  <Form.Control
+                    name="wean_weight"
                     type="text"
                     placeholder="กรุณากรอกน้ำหนักตอนเกิด (กก.)"
                     onChange={event => this.saveData(event)}
@@ -399,17 +459,13 @@ class FormRegiscow extends Component {
               <Col md={{ span: 4, offset: 1 }} className="text-center ">
                 <div>
                   <div className="container-fluid boxImgFrom  ">
-                    
                     {$imagePreview}
                     <hr />
                     <input
-                    
                       type="file"
                       name="avatar"
-                      onChange={(event)=>this.fileChangedHandler(event)}
+                      onChange={event => this.fileChangedHandler(event)}
                     />
-
-             
                   </div>
                 </div>
               </Col>
@@ -424,6 +480,15 @@ class FormRegiscow extends Component {
                     className="button-w2"
                     style={{ outline: "none" }}
                     onClick={() => this.saveDataCowTodatabase()}
+                  >
+                    ตกลง
+                  </Button>{" "}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="button-w2"
+                    style={{ outline: "none" }}
+                    onClick={() => console.log(this.state.selectedFile)}
                   >
                     ตกลง
                   </Button>{" "}
@@ -448,21 +513,3 @@ class FormRegiscow extends Component {
   }
 }
 export default FormRegiscow;
-/*<Form.Group controlId="formgender">
-<Form.Label>เพศ</Form.Label>
-<Form.Control as="select" onChange="">
-  <option>เพศผู้</option>
-  <option>เพศเมีย</option>
-</Form.Control>
-</Form.Group>*/
-
-//จัดการอายุวัว
-/*  <Form.Group controlId="age">
-                  <Form.Label>อายุ (ปี)</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="กรุณากรอกอายุ (ปี)"
-                 
-                  />
-                </Form.Group> */

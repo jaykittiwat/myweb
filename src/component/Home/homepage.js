@@ -65,7 +65,7 @@ class Home extends Component {
                   <Form.Label className="title2">เจ้าของฟาร์ม</Form.Label>
                   <Form.Control disabled value={this.state.user.fname || ""} />
                 </Form.Group>
-                <Form.Group conolId="formGridEmail">
+                <Form.Group controlId="formGridEmail">
                   <Form.Label className="title2">ตำแหน่ง</Form.Label>
                   <Form.Control
                     disabled

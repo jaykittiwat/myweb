@@ -3,20 +3,14 @@ import "./../styleSetting.css";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
+
 
 
 export default function PaperBrand() {
-  const [age, setAge] = React.useState("");
 
-  const handleChange = event => {
-    setAge(event.target.value);
-  };
   return (
     <div className="container martop-10">
       <Paper elevation={3} >
