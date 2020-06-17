@@ -173,12 +173,13 @@ class FormRegiscow extends Component {
     );
     if (this.state.imagePreviewUrl) {
       $imagePreview = (
-        <div className="image-container" style={{backgroundColor:"#A9A9A9",width:"400px",height:"400px",paddingTop:"3%"}}>
+        <div className="image-container text-center" style={{marginLeft:"22%",borderColor:"#A9A9A9",borderStyle:"solid",width:"300px",height:"300px",paddingTop:"1%"}}>
+         
           <img
             src={this.state.imagePreviewUrl}
             alt="icon"
-            width="95%"
-            height="95%"
+            width="98%"
+            height="98%"
           />{" "}
         </div>
       );
@@ -399,9 +400,11 @@ class FormRegiscow extends Component {
               <Col md={{ span: 4, offset: 1 }} className="text-center ">
                 <div>
                   <div className="container-fluid boxImgFrom  ">
+                    
                     {$imagePreview}
                     <hr />
                     <input
+                    
                       type="file"
                       name="avatar"
                       onChange={(event)=>this.fileChangedHandler(event)}

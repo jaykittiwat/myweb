@@ -30,8 +30,8 @@
 
 .dropbtn1 {
     font-family: 'Kanit-Regular';
-    background-color: rgb(247, 78, 0);
-    color: white;
+    
+    color:#3f3f3f;
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -68,5 +68,6 @@
   }
   
   .dropdown:hover .dropbtn1 {
-    background-color: #ff6d18;
+    background-color: #0011ffa6;
+    color: #f1f1f1;
   }

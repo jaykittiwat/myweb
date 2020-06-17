@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import firebaseStorage from '../backEnd/firebase';
+import firebaseStorage from './../../backEnd/firebase';
 import Button from '@material-ui/core/Button'
-//import axios from "axios";
+import axios from "axios";
  //หน้าComponent อัพโหลดรูป
 class PeddigreeImg extends Component {
     constructor(props){
@@ -17,7 +17,7 @@ class PeddigreeImg extends Component {
 
  
   fileChangedHandler = (event) => {
-    
+      console.log(event.target.files[0])
     this.setState({
       selectedFile: event.target.files[0]
     })
@@ -57,7 +57,7 @@ componentDidMount(){
     }
  
     return (
-        <div className="container-fluid boxImgFrom  " >
+        <div className="container-fluid   " >
       
         { $imagePreview }
         <hr/>

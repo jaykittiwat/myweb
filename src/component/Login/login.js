@@ -122,23 +122,31 @@ class Login extends Component {
         </div>
         <div className="footer-style2 row ">
           <div className="row footer-padding container-fluid">
-            <div className="col-md-4">
-              <h3>ผู้พัฒนา</h3>
+            <div className="col-md-3">
+              <li>ผู้พัฒนา</li>
               <ul>
                 <li>นายกิตติวัฒน์ ศรีชัยพล</li>
                 <li>นายไชยวัฒน์ อธิกรม</li>
               </ul>
             </div>
-            <div className="col-md-4">
-              <h3>ที่ปรึกษา</h3>
+            <div className="col-md-3">
+              <li>ที่ปรึกษา</li>
               <ul>
                 <li>ดร.ภูวิศสรณ์ ภูมิสรณคมณ์</li>
               </ul>
             </div>
-            <div className="col-md-4">
-              <h3>ติดต่อได้ที่</h3>
+            <div className="col-md-3">
+              <li>ติดต่อได้ที่</li>
               <ul>
                 <li>0928412006</li>
+                <li>jaykittiwat2542@gmail.com</li>
+              </ul>
+            </div>
+            <div className="col-md-3">
+              <li>หมายเหตุ</li>
+              <ul>
+                <li>version 0.1(Beta)</li>
+              
               </ul>
             </div>
           </div>

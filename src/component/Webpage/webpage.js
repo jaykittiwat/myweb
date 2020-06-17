@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import "../styleWebpage.css";
 //ยังไม่ได้ชื่อมภาพกับserver
-import imgcow1 from "../Img/imgcow1.jpg";
+import imgcow1 from "../Img/cowWave.jpg";
 import cow from "../Img/cow.png";
+
 import cow2 from "../Img/cow2.png";
 import cow3 from "../Img/cow3.png";
 import cow4 from "../Img/cow4.png";
@@ -24,11 +25,57 @@ class Webpage extends Component{
 
         <Header/>
             
-        <div className="row">
+        <div className="row" >
      
-       <img className="bg-img" src={imgcow1} alt="asd" style={{boxShadow:"0px 5px 5px #000000",}}/>
+       <img className="bg-img" src={imgcow1} alt="asd" />
+       
        <div className="title-onimg"></div>
         </div>
+
+ 
+
+      
+        <div className="footer-style2 row ">
+          <div className="row footer-padding container-fluid">
+            <div className="col-md-3">
+              <li>ผู้พัฒนา</li>
+              <ul>
+                <li>นายกิตติวัฒน์ ศรีชัยพล</li>
+                <li>นายไชยวัฒน์ อธิกรม</li>
+              </ul>
+            </div>
+            <div className="col-md-3">
+              <li>ที่ปรึกษา</li>
+              <ul>
+                <li>ดร.ภูวิศสรณ์ ภูมิสรณคมณ์</li>
+              </ul>
+            </div>
+            <div className="col-md-3">
+              <li>ติดต่อได้ที่</li>
+              <ul>
+                <li>0928412006</li>
+                <li>jaykittiwat2542@gmail.com</li>
+              </ul>
+            </div>
+            <div className="col-md-3">
+              <li>หมายเหตุ</li>
+              <ul>
+                <li>version 0.1(Beta)</li>
+              
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div>
+    )
+  }
+}
+
+export default Webpage;
+
+/*
 <div className="r4-pad container-fluid" >
 <div className="row">
     <div className="col-md box-bg"><img src={cow} alt="cow" className="img1-box" ></img> <p className="box-style1">ระบบบันทึกพันธุ์ประวัติโค</p>   <p className="box-style2">สามารถบันทึกสายพันธุ์ประวัติโคได้ </p></div>
@@ -41,21 +88,14 @@ class Webpage extends Component{
     <div className="col-md box-bg"><img src={cow6} alt="cow6" className="img6-box" ></img> <p  className="box-style1">ออกรายงาน</p>                <p className="box-style2">ออกรายงาน และแสดงข้อมูลสถิติ </p></div>
 </div>
 </div>
- 
 
-        <div className="footer-style row ">
-          <div className="row footer-padding container-fluid">
+
+
+
+
+    <div className="row footer-padding container-fluid">
             <div className="col-md-4"><h3>ผู้พัฒนา</h3><ul><li>นายกิตติวัฒน์ ศรีชัยพล</li><li>นายไชยวัฒน์  อธิกรม</li></ul></div> 
             <div className="col-md-4"><h3>ที่ปรึกษา</h3><ul><li>ดร.ภูวิศสรณ์ ภูมิสรณคมณ์</li></ul></div> 
             <div className="col-md-4"><h3>ติดต่อได้ที่</h3><ul><li>0928412006</li></ul></div>
           </div>
-        </div>
-        
-      </div>
-    )
-  }
-}
-
-export default Webpage;
-
-/**/
+*/
