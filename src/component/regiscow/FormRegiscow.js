@@ -164,7 +164,6 @@ class FormRegiscow extends Component {
 
 
 
-
   render() {
     let $imagePreview = (
       <div className="previewText image-container">
@@ -173,7 +172,7 @@ class FormRegiscow extends Component {
     );
     if (this.state.imagePreviewUrl) {
       $imagePreview = (
-        <div className="image-container text-center" style={{marginLeft:"22%",borderColor:"#A9A9A9",borderStyle:"solid",width:"300px",height:"300px",paddingTop:"1%"}}>
+        <div className="image-container text-center" style={{marginLeft:"22%",border:" 1px solid #ddd",borderRadius:"4px",width:"300px",height:"300px",paddingTop:"1%"}}>
          
           <img
             src={this.state.imagePreviewUrl}
