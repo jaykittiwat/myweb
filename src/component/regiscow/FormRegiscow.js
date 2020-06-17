@@ -483,15 +483,7 @@ class FormRegiscow extends Component {
                   >
                     ตกลง
                   </Button>{" "}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="button-w2"
-                    style={{ outline: "none" }}
-                    onClick={() => console.log(this.state.selectedFile)}
-                  >
-                    ตกลง
-                  </Button>{" "}
+                 
                   <Link to="/login">
                     <Button
                       variant="contained"
