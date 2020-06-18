@@ -28,7 +28,7 @@ class Webpage extends Component{
      
        <img className="bg-img" src={imgcow1} alt="asd" />
        
-       <div className="title-onimg"></div>
+       <div className="slide-right"><h1>ยินดีต้อนรับเข้าสู่</h1><h2>เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</h2><h3>Webapplication Dam Management System </h3></div>
         </div>
 
  

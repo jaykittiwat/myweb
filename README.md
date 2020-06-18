@@ -113,6 +113,7 @@ npm install firebase react-router-dom axios react-bootstrap
 npm i mdbootstrap
 npm install simple-react-calendar
 npm install bulma --save
+npm install react-bootstrap-table-next --save
 
 npm update http-proxy --depth 4
 
