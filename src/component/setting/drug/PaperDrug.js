@@ -85,7 +85,7 @@ export default function PaperDrug() {
                   id="outlined0"
                   label="ชื่อยา"
                   size="small"
-                />
+                />{" "}
                 <TextField
                   className="textField-width300px"
                   id="outlined1"
@@ -128,14 +128,13 @@ export default function PaperDrug() {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Paper elevation={0}>
-
-            <Grid className="mar pad10">
+              <Grid className="mar pad10">
                 <TextField
                   className="textField-width300px"
                   id="outlined2"
                   label="ชื่อวัคซีน"
                   size="small"
-                />
+                />{" "}
                 <TextField
                   className="textField-width300px"
                   id="outlined3"
