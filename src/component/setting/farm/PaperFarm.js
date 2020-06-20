@@ -2,187 +2,280 @@ import React from "react";
 import "./../styleSetting.css";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
+import { makeStyles } from "@material-ui/core/styles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-export default function PaperFarm() {
-  const [age, setAge] = React.useState("");
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-  const handleChange = event => {
-    setAge(event.target.value);
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <div>{children}</div>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
   };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    display: "flex",
+    height: 224,
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+  },
+}));
+
+  
+export default function PaperFarm() {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+  const [lock, setLock] = React.useState(true);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const hadelDisable =(event)=>{
+    setLock(false);
+  }
   return (
     <div className="container martop-10">
-      <Paper elevation={3} >
-        <div className="text-header-treat">บันทึกการรักษา</div>
+      <Paper elevation={3}>
+        <div className="text-header">ตั้งค่าระบบฟาร์ม</div>
+        <div className={classes.root}>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            className={classes.tabs}
+          >
+            <Tab
+              label="โรงเรือน"
+              {...a11yProps(0)}
+              style={{ outline: "none" }}
+            />
+            <Tab label="คอก" {...a11yProps(1)} style={{ outline: "none" }} />
+            <Tab label="ฝูก" {...a11yProps(2)} style={{ outline: "none" }} />
+            <Tab
+              label="สายพันธุ์"
+              {...a11yProps(3)}
+              style={{ outline: "none" }}
+            />
+          </Tabs>
+          <TabPanel value={value} index={0}>
+            <Paper elevation={0}>
+              <Grid className="mar pad10">
+                <TextField
+                type="text"
+                  disabled = {(lock)?  true : ""}
+                  className="textField-width600px"
+                  id="outlined0"
+                  label="โรงเรือน"
+                  size="small"
+                />
+                <Fab color="primary" aria-label="add" size="small">
+                  <AddIcon />
+                </Fab>
+                <IconButton aria-label="delete" color="secondary">
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
 
-        <Grid container spacing={3} className="pad-10-treat">
-         
-          <Grid item xs={6} spacing={3} container /*1*/>
-            {" "}
-            <Grid item xs={12}>
-              <FormControl
-                variant="outlined"
-                className="textField-w-treat"
-                size="small"
-              >
-                <InputLabel id="demo-simple-select-outlined-label">
-                  ประเภทโค
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={age}
-                  onChange={handleChange}
-                  label="Age"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>พ่อ</MenuItem>
-                  <MenuItem value={20}>แม่</MenuItem>
-                  <MenuItem value={30}>ลูก</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined3"
-                label="หมายเลขโค"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined5"
-                label="ประเภทการรักษา"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>{" "}
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined7"
-                label="ชื่อโรค"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>{" "}
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined9"
-                label="วันที่"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>{" "}
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined11"
-                label="เวลา"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={6} spacing={3} container /*2*/>
-            {" "}
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined80"
-                label="ระบุอาการ"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl
-                variant="outlined"
-                className="textField-w-treat"
-                size="small"
-              >
-                <InputLabel id="demo-simple-select-outlined-label">
-                  รายการยา
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined2"
-                  value={age}
-                  onChange={handleChange}
-                  label="รายการยา"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>{" "}
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined6"
-                label="ติดตามอาการ(วัน)"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined8"
-                label="ผู้บันทึก"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined81"
-                label="ผู้ปฏิบัติ"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                className="textField-w-treat"
-                id="outlined82"
-                label="หมายเหตุ"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-          </Grid>
-       
+              <Grid container>
+                <Grid>
+                  <Button
+                  id="b1"
+                  onClick={()=>hadelDisable()}
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    แก้ไข
+                  </Button>{" "}
+                </Grid>
+                <Grid>
+                  <Button
+                    id="b2"
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    บันทึก
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Paper elevation={0}>
+              <Grid className="mar pad10">
+                <TextField
+                  className="textField-width600px"
+                  id="outlined1"
+                  label="คอก"
+                  size="small"
+                />
+                <Fab color="primary" aria-label="add" size="small">
+                  <AddIcon />
+                </Fab>
+                <IconButton aria-label="delete" color="secondary">
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
 
-          <Grid item xs={4}>
-            <Button
-              style={{ outline: "none", marginLeft: "98%" }}
-              variant="contained"
-              color="primary"
-              className="textField-w-treat "
-              startIcon={<SaveIcon />}
-            >
-              บันทึก
-            </Button>
-          </Grid>  
-        </Grid>
+              <Grid container>
+                <Grid>
+                  <Button
+                    id="b3"
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    แก้ไข
+                  </Button>{" "}
+                </Grid>
+                <Grid>
+                  <Button
+                    id="b4"
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    บันทึก
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <Paper elevation={0}>
+              <Grid className="mar pad10">
+                <TextField
+                  className="textField-width600px"
+                  id="outlined2"
+                  label="ฝูง"
+                  size="small"
+                />
+                <Fab color="primary" aria-label="add" size="small">
+                  <AddIcon />
+                </Fab>
+                <IconButton aria-label="delete" color="secondary">
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+
+              <Grid container>
+                <Grid>
+                  <Button
+                    id="b5"
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    แก้ไข
+                  </Button>{" "}
+                </Grid>
+                <Grid>
+                  <Button
+                    id="b6"
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    บันทึก
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <Paper elevation={0}>
+              <Grid className="mar pad10">
+                <TextField
+                  className="textField-width600px"
+                  id="outlined3"
+                  label="สายพันธุ์"
+                  size="small"
+                />
+                <Fab color="primary" aria-label="add" size="small">
+                  <AddIcon />
+                </Fab>
+                <IconButton aria-label="delete" color="secondary">
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+
+              <Grid container>
+                <Grid>
+                  <Button
+                    id="b7"
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    แก้ไข
+                  </Button>{" "}
+                </Grid>
+                <Grid>
+                  <Button
+                    id="b8"
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    บันทึก
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </TabPanel>
+        </div>
       </Paper>
     </div>
   );
