@@ -11,7 +11,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -31,18 +30,18 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Fab from "@material-ui/core/Fab";
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
-export default function TableIduction({ posts, loading }) {
+export default function TableFatter({ posts, loading }) {
   const rows = posts;
   /*-----------------------------------------------------------------------------*/
 
-  
+
   //ฟังก์ชั่นเรียกวันที่
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
@@ -79,28 +78,24 @@ export default function TableIduction({ posts, loading }) {
   // headCells คอลัม หัวตาราง
   const headCells = [
     { id: "1", numeric: false, disablePadding: true, label: "เลือก" },
-    { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
-    { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
-    { id: "4", numeric: true, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" }
+    { id: "2", numeric: false, disablePadding: false, label: "หมายเลข" },
+    { id: "3", numeric: false, disablePadding: false, label: "โรงเรือน" },
+    { id: "4", numeric: false, disablePadding: false, label: "คอก" },
+    { id: "5", numeric: false, disablePadding: false, label: "ฝูง" }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
     const {
-      classes,
+      
       onSelectAllClick,
       order,
       orderBy,
       numSelected,
       rowCount,
-      onRequestSort
     } = props;
 
-    //รับheadCell.id  สำหรับปุ่ม เรียงค่า
-    const createSortHandler = property => event => {
-      //calback
-      onRequestSort(event, property);
-    };
+    
+  
 
     //return นี้ทำ หัวตาราง
     return (
@@ -129,26 +124,11 @@ export default function TableIduction({ posts, loading }) {
               //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
               sortDirection={orderBy === headCell.id ? order : false}
             >
-              <TableSortLabel
-                //น่าจะเรียงตาราง ลูกศรละมั้ง
-                //ปุ่มจะแสดงเมื่อ  orderBy === headCell.id   ของเราไม่เหมือนเลยไม่ออก แต่เอาไปชี้ก็แสดง
-                /*********************ลูกศร จัดค่า*************************** */
-                active={orderBy === headCell.id}
-                //กดปุ่ม  orderBy === headCell.id  จริง  เรียงมากไปน้อย เท็จ น้อยไปมาก
-                direction={orderBy === headCell.id ? order : "asc"}
-                //เมื่อ คลิิก
-                onClick={createSortHandler(headCell.id)}
-              >
+             
                 {headCell.label /* ชื่อตาราง */}
 
-                {orderBy === headCell.id ? (
-                  <span className={classes.visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </span>
-                ) : null}
-              </TableSortLabel>
+              
+            
             </TableCell>
           ))}
         </TableRow>
@@ -174,13 +154,13 @@ export default function TableIduction({ posts, loading }) {
     highlight:
       theme.palette.type === "light"
         ? {
-            color: theme.palette.primary.main,
-            backgroundColor: lighten(theme.palette.primary.light, 0.85)
-          }
+          color: theme.palette.primary.main,
+          backgroundColor: lighten(theme.palette.primary.light, 0.85)
+        }
         : {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.primary.dark
-          },
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.primary.dark
+        },
     title: {
       flex: "1 1 100%"
     }
@@ -201,15 +181,15 @@ export default function TableIduction({ posts, loading }) {
             {numSelected} selected
           </Typography>
         ) : (
-          <Typography
-            className={classes.title}
-            variant="h6"
-            id="tableTitle"
-            component="div"
-          >
-            รายการ
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
+              รายการ
           </Typography>
-        )}
+          )}
       </Toolbar>
     );
   };
@@ -306,7 +286,6 @@ export default function TableIduction({ posts, loading }) {
   const handleChangeDense = event => {
     setDense(event.target.checked);
   };
-
   const isSelected = id => selected.indexOf(id) !== -1;
 
   const emptyRows =
@@ -316,46 +295,39 @@ export default function TableIduction({ posts, loading }) {
   const [medic, setMedic] = useState([
     {
       item: "",
-      
+
     }
   ]);
- 
   const addtable = event => {
     setMedic([
       ...medic,
       {
         item: "",
-      
+
       }
     ]);
   };
-
-
-
-
   const handleChange = (event, index) => {
-
-  medic.splice(index,1,{item:event.target.value})
+    medic.splice(index, 1, { item: event.target.value })
   };
+  const deleteItem = (index) => {
+    const result = medic.filter(results => results !== medic[index]);
+    console.log(result);
+    setMedic(result);
 
-  const deleteItem=(index)=>{
-   const result = medic.filter(results=>results!==medic[index]);
-console.log(result);
-setMedic(result);
-           
   }
 
   /*------------------------------------------------------------------------------*/
 
   const showTable = () => {
-    return medic.map((medics,index) => (
+    return medic.map((medics, index) => (
       <form className={classes.root} key={index}>
         <FormControl style={{ width: "45%", margin: "10px" }}>
           <InputLabel htmlFor="age-native-simple">รายการยา</InputLabel>
           <Select
             native
             value={medic.item}
-            onChange={event => handleChange(event,index)}
+            onChange={event => handleChange(event, index)}
           >
             <option aria-label="None" value="" />
             <option>Ten</option>
@@ -363,12 +335,12 @@ setMedic(result);
             <option>Thirty</option>
           </Select>
         </FormControl>
-      
+
         <IconButton
           aria-label="delete"
           color="secondary"
           style={{ marginTop: "15px", outline: "none" }}
-          onClick={()=>deleteItem(index)}
+          onClick={() => deleteItem(index)}
         >
           <DeleteIcon />
         </IconButton>
@@ -386,7 +358,7 @@ setMedic(result);
   return (
     <div className="container">
       <div className={classes.root}>
-        <Paper className={classes.paper} elevation={3}  style={{marginTop:"20px"}}>
+        <Paper className={classes.paper} elevation={3} style={{ marginTop: "20px" }} >
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table
@@ -416,49 +388,51 @@ setMedic(result);
               /* ----------------------------ตัวตาราง--------------------------- */
               >
                 {//ส่ง Array Rows กับ call back getComparator()
-                //แสดงข้อมูลและการจัดการต่างๆทีละแถว
-                stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.id);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+                  //แสดงข้อมูลและการจัดการต่างๆทีละแถว
+                  stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.id);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                        onClick={event => handleClick(event, row.id)}
-                        role="checkbox"
-                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
-                        tabIndex={-1}
-                        key={row.id /*keyyyyyyyyyyyyy*/}
-                      >
-                        <TableCell
-                          padding="checkbox"
+                      return (
+                        <TableRow
+                          hover
+                          //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
+                          onClick={event => handleClick(event, row.id)}
+                          role="checkbox"
+                          aria-checked={isItemSelected} //คลิกเลืองตรงตารา
+                          tabIndex={-1}
+                          key={row.id /*keyyyyyyyyyyyyy*/}
+                        >
+                          <TableCell
+                            padding="checkbox"
                           /*ส่วนของcheckBox แต่ละแถว*/
-                        >
-                          <Checkbox
-                            checked={isItemSelected}
-                            inputProps={{ "aria-labelledby": labelId }}
-                            color="primary"
-                          />
-                        </TableCell>
+                          >
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ "aria-labelledby": labelId }}
+                              color="primary"
+                            />
+                          </TableCell>
 
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        >
-                          {row.id}
-                        </TableCell>
-                        <TableCell align="right">{row.userId}</TableCell>
-                        <TableCell align="right">{row.title}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
+                            {row.id}
+                          </TableCell>
+                          <TableCell align="left">{row.userId}</TableCell>
+                          <TableCell align="left">{row.userId}</TableCell>
+                          <TableCell align="left">{row.userId}</TableCell>
+                          <TableCell align="left">{row.userId}</TableCell>
+
+
+                        </TableRow>
+                      );
+                    })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                     <TableCell colSpan={6} />
@@ -467,8 +441,9 @@ setMedic(result);
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
+          <div ><TablePagination
             //ปุ่มเปลี่ยนห้นา
+
             rowsPerPageOptions={[5, 10, 15, 20]}
             component="div"
             count={rows.length}
@@ -476,7 +451,8 @@ setMedic(result);
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+          /></div>
+
         </Paper >
         <FormControlLabel
           control={
@@ -491,11 +467,11 @@ setMedic(result);
       </div>
 
       <Paper
-      elevation={3} 
+        elevation={3}
         //ตัวบันทึก
         style={{ textAlign: "center" }}
       >
-      <h4 style={{paddingTop:"15px"}}>บันทึกการจัดการ</h4>
+        <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการ</h4>
         <form
           className={classes.root}
           noValidate
@@ -519,7 +495,7 @@ setMedic(result);
         </form>
 
         <form className={classes.root} style={{ padding: "0.3%" }}>
-        
+
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid>
               <KeyboardDatePicker
@@ -551,28 +527,28 @@ setMedic(result);
           </MuiPickersUtilsProvider>
         </form>
 
-       
-          {showTable()}
 
-          <Fab
-            color="primary"
-            aria-label="add"
-            size="small"
-            style={{ margin: "10px", outline: "none" }}
-          >
-            <AddIcon onClick={addtable} />
-          </Fab>
-     
-        
-        <Paper elevation={3} style={{  marginLeft: "300px", marginRight: "300px",height:"70px",marginTop:"10px",paddingTop:"20px",fontSize:"20px",color:"#1d1499"}}  >
-                    เริ่มการผสมพันธุ์ วันที่ dd/mm/yy
+        {showTable()}
+
+        <Fab
+          color="primary"
+          aria-label="add"
+          size="small"
+          style={{ margin: "10px", outline: "none" }}
+        >
+          <AddIcon onClick={addtable} />
+        </Fab>
+
+
+        <Paper elevation={3} style={{ marginLeft: "300px", marginRight: "300px", height: "70px", marginTop: "10px", paddingTop: "20px", fontSize: "20px", color: "#1d1499" }}  >
+          เริ่มการผสสพันธุ์ วันที่ dd/mm/yy
         </Paper>
         <Button
           variant="contained"
           color="primary"
           size="large"
           style={{ width: "250px", margin: "10px", outline: "none" }}
-          onClick={() => console.log(medic)}
+          onClick={() => console.log(selected)}
         >
           บันทึก
         </Button>
