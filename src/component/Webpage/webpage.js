@@ -28,12 +28,8 @@ class Webpage extends Component{
      
        <img className="bg-img" src={imgcow1} alt="asd" />
        
-       <div className="slide-right "><h1>ยินดีต้อนรับเข้าสู่</h1><h2>เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</h2><h3>Webapplication Dam Management System </h3></div>
+       <div className="slide-right "><div style={{fontSize:"3vw"}} className="slide-right-text01">ยินดีต้อนรับเข้าสู่</div><div style={{fontSize:"2vw"}} className="slide-right-text01">เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</div><div style={{fontSize:"1vw"}} className="slide-right-text01">Webapplication Dam Management System </div></div>
         </div>
-
- 
-
-      
         <div className="footer-style2 row ">
           <div className="row footer-padding container-fluid">
             <div className="col-md-3">

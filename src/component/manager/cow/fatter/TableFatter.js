@@ -17,22 +17,20 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import Grid from "@material-ui/core/Grid";
+
 import TextField from "@material-ui/core/TextField";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+
 import "date-fns";
-import InputLabel from "@material-ui/core/InputLabel";
+
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import FormGroup from '@material-ui/core/FormGroup';
+import FormLabel from '@material-ui/core/FormLabel';
+import { Grid } from "@material-ui/core";
 
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
@@ -42,12 +40,6 @@ export default function TableFatter({ posts, loading }) {
   /*-----------------------------------------------------------------------------*/
 
 
-  //ฟังก์ชั่นเรียกวันที่
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
 
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -86,7 +78,7 @@ export default function TableFatter({ posts, loading }) {
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
     const {
-      
+
       onSelectAllClick,
       order,
       orderBy,
@@ -94,8 +86,8 @@ export default function TableFatter({ posts, loading }) {
       rowCount,
     } = props;
 
-    
-  
+
+
 
     //return นี้ทำ หัวตาราง
     return (
@@ -124,11 +116,11 @@ export default function TableFatter({ posts, loading }) {
               //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
               sortDirection={orderBy === headCell.id ? order : false}
             >
-             
-                {headCell.label /* ชื่อตาราง */}
 
-              
-            
+              {headCell.label /* ชื่อตาราง */}
+
+
+
             </TableCell>
           ))}
         </TableRow>
@@ -187,7 +179,7 @@ export default function TableFatter({ posts, loading }) {
               id="tableTitle"
               component="div"
             >
-              รายการ
+             <h4> รายการ</h4>
           </Typography>
           )}
       </Toolbar>
@@ -219,7 +211,28 @@ export default function TableFatter({ posts, loading }) {
       position: "absolute",
       top: 20,
       width: 1
-    }
+    },
+    FormWidth: {
+      width: "100%"
+    },
+    paperNoti: {
+      textAlign: "center",
+      width: "100%",
+      fontSize: "20px",
+      padding: "10px",
+      color: "5f5f5f",
+    },
+    pad:{
+       paddingLeft:"2%",
+       paddingRight:"2%",
+       paddingTop:"2%",
+    },
+    marForm:{
+      marginTop:"4%"
+    },
+    marTextField:{
+      marginTop:"2%"
+    },
   }));
 
   const classes = useStyles();
@@ -319,17 +332,21 @@ export default function TableFatter({ posts, loading }) {
 
   /*------------------------------------------------------------------------------*/
 
+
   const showTable = () => {
     return medic.map((medics, index) => (
-      <form className={classes.root} key={index}>
-        <FormControl style={{ width: "45%", margin: "10px" }}>
-          <InputLabel htmlFor="age-native-simple">รายการยา</InputLabel>
+      <form className={classes.marTextField} key={index}  >
+        
+        <FormControl size="small" style={{ width: "95%" }} >
+          <FormLabel >รายการยา</FormLabel>
           <Select
+
+            variant="outlined"
             native
             value={medic.item}
             onChange={event => handleChange(event, index)}
           >
-            <option aria-label="None" value="" />
+            <option value=" " >เลือก</option>
             <option>Ten</option>
             <option>Twenty</option>
             <option>Thirty</option>
@@ -466,92 +483,55 @@ export default function TableFatter({ posts, loading }) {
         />
       </div>
 
-      <Paper
-        elevation={3}
-        //ตัวบันทึก
-        style={{ textAlign: "center" }}
-      >
-        <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการ</h4>
-        <form
-          className={classes.root}
-          noValidate
-          autoComplete="off"
-          style={{ padding: "0.3%" }}
-        >
-          <TextField
-            id="outlined-basic"
-            label="ผู้บันทึก"
-            variant="outlined"
-            style={{ width: "400px", margin: "10px" }}
-            size="small"
-          />{" "}
-          <TextField
-            id="outlined-basic2"
-            label="ผู้ปฏิบัติการ"
-            variant="outlined"
-            style={{ width: "400px", margin: "10px" }}
-            size="small"
-          />
-        </form>
-
-        <form className={classes.root} style={{ padding: "0.3%" }}>
-
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid>
-              <KeyboardDatePicker
-                style={{ width: "400px", margin: "10px" }}
-                size="small"
-                margin="normal"
-                id="date-picker-dialog"
-                label="วันที่"
-                format="MM/dd/yyyy"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
-              />{" "}
-              <KeyboardTimePicker
-                style={{ width: "400px", margin: "10px" }}
-                size="small"
-                margin="normal"
-                id="time-picker"
-                label="เวลา"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change time"
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
-        </form>
-
-
+      <Paper elevation={3} className={classes.pad}>
+        <h4  style={{ paddingTop: "15px" }}>บันทึกการจัดการ</h4>
+        <FormGroup className={classes.marForm}>
+          <FormLabel >ชื่อผู้บันทึก</FormLabel>
+          <TextField id="input1" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" />
+        </FormGroup>
+        <FormGroup className={classes.marTextField}>
+          <FormLabel >ผู้ปฏิบัติการ</FormLabel>
+          <TextField id="input2" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" />
+        </FormGroup>
+        <FormGroup className={classes.marTextField}>
+          <FormLabel >วันที่</FormLabel>
+          <TextField id="input3" variant="outlined" type="date" size="small" />
+        </FormGroup>
+        <FormGroup className={classes.marTextField}>
+          <FormLabel >เวลา</FormLabel>
+          <TextField id="input4" variant="outlined" type="time" size="small" defaultValue="00:00" />
+        </FormGroup>
         {showTable()}
+<div className={classes.marTextField}>
+        <div className="container-fluid text-center" >
+          <Fab
+            color="primary"
+            aria-label="add"
+            size="small"
+            style={{ margin: "10px", outline: "none" }}
+          >
+            <AddIcon onClick={addtable} />
+          </Fab>
+        </div></div>
+        <Grid container className={classes.marTextField}>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={8}><Paper elevation={3} className={classes.paperNoti}>
+            เริ่มการเหนี่ยวนำ วันที่ dd/mm/yy
+        </Paper></Grid>
+          <Grid item xs={2}></Grid></Grid>
 
-        <Fab
-          color="primary"
-          aria-label="add"
-          size="small"
-          style={{ margin: "10px", outline: "none" }}
-        >
-          <AddIcon onClick={addtable} />
-        </Fab>
-
-
-        <Paper elevation={3} style={{ marginLeft: "300px", marginRight: "300px", height: "70px", marginTop: "10px", paddingTop: "20px", fontSize: "20px", color: "#1d1499" }}  >
-          เริ่มการเหนี่ยวนำ วันที่ dd/mm/yy
-        </Paper>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          style={{ width: "250px", margin: "10px", outline: "none" }}
-          onClick={() => console.log(selected)}
-        >
-          บันทึก
+        <div className="container-fluid text-center">
+          <div className={classes.marTextField}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ width: "250px", margin: "10px", outline: "none" }}
+            onClick={() => console.log(medic)}
+          >
+            บันทึก
         </Button>
+      </div>  </div>
       </Paper>
     </div>
   );

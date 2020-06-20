@@ -104,7 +104,8 @@
   width:90%;
   overflow:hidden;
 }
-.slide-right h1 ,h2 ,h3 {
+
+.slide-right .slide-right-text01  {
   animation: 2s slide-right;
 }
 

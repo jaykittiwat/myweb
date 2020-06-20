@@ -23,7 +23,7 @@ import farmsetting from "./component/setting/farm/farmsetting";
 import usersetting from "./component/setting/user/usersetting";
 import instructionmanual from "./component/instructionmanual/instructionmanual";
 
-// Router to path component
+// Router to path componen
 class App extends Component{
   
   renderRouter(){
