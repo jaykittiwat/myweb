@@ -4,18 +4,16 @@ import "./styleAbor.css";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
+import { FormGroup, FormLabel } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import {
-  MuiPickersUtilsProvider,
 
-  KeyboardDatePicker
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+
+
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -27,15 +25,13 @@ const useStyles = makeStyles(theme => ({
 export default function TableAbortion() {
   const classes = useStyles();
   const [item, setItem] = React.useState("");
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  
   const handleChange = event => {
+
     setItem(event.target.value);
   };
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
-
+ 
   return (
     <div className="container" style={{ marginTop: "20px" }}>
       {" "}
@@ -43,57 +39,68 @@ export default function TableAbortion() {
         <div className="text-header-ab">บันทึกโคแท้ง</div>
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
+            <FormGroup><FormLabel>หมายเลขโค</FormLabel></FormGroup>
             <TextField
+            placeholder="กรอกหมายเลขโค"
+            variant="outlined"
               className="textField-width"
-              id="outlined1"
-              label="หมายเลขโค"
-            
+           
               size="small"
             />
           </Grid>
           <Grid item xs={6}>
+        
+             <FormGroup><FormLabel>ท้องครั้งที่</FormLabel></FormGroup>
             <TextField
+           disabled
+           value="0"
+            variant="outlined"
               className="textField-width"
-              id="outlined2"
-              label="วันที่ผสม"
              
               size="small"
             />
           </Grid>
           <Grid item xs={6}>
+          <FormGroup><FormLabel>วันที่ผสม</FormLabel></FormGroup>
             <TextField
+          type="date"
+          disabled
+            variant="outlined"
               className="textField-width"
-              id="outlined3"
-              label="ท้องครั้งที่"
-          
-          
+        
               size="small"
             />
           </Grid>
           <Grid item xs={6}>
+          <FormGroup><FormLabel>วิธีผสม</FormLabel></FormGroup>
             <TextField
+         disabled
+         value="-"
+            variant="outlined"
               className="textField-width"
-              id="outlined4"
-              label="วันที่ผสม"
-             
+         
               size="small"
             />
           </Grid>
           <Grid item xs={6}>
+        
+              <FormGroup><FormLabel>หมายเลขน่ำเชื้อ</FormLabel></FormGroup>
             <TextField
+         disabled
+         value="-"
+            variant="outlined"
               className="textField-width"
-              id="outlined5"
-              label="จำนวนการแท้ง"
-          
+    
               size="small"
             />
           </Grid>
           <Grid item xs={6}>
+          <FormGroup><FormLabel>จำนวนการแท้ง</FormLabel></FormGroup>
             <TextField
+        disabled
+        value="0"
+            variant="outlined"
               className="textField-width"
-              id="outlined6"
-              label="หมายเลขน้ำเชื้อ/พ่อพันธ์ุ"
-      
             
               size="small"
             />
@@ -107,47 +114,43 @@ export default function TableAbortion() {
         </div>
         <Grid container spacing={3} className="pad-10">
         <Grid item xs={6}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <FormGroup><FormLabel>วันที่แท้ง</FormLabel></FormGroup>
+            <TextField
+       
+       type="date"
+            variant="outlined"
+              className="textField-width"
         
+              size="small"
+            />
+            
+          </Grid>
+          <Grid item xs={6}>
+          <FormGroup><FormLabel>ผู้บันทึก</FormLabel></FormGroup>
+            <TextField
+     
+            variant="outlined"
+              className="textField-width"
+          
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+          <FormGroup><FormLabel>สาเหตุ</FormLabel></FormGroup>
+            <TextField
+     
+            variant="outlined"
+              className="textField-width"
+           
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+          <FormGroup><FormLabel>หมายเหตุ</FormLabel></FormGroup>
+            <TextField
+            variant="outlined"
+              className="textField-width"
          
-            <KeyboardDatePicker
-            style={{outline:"none"}}
-              className="textField-width"
-              id="outlined1"
-              label="วันที่แท้ง"
-              format="MM/dd/yyyy"
-            
-              value={selectedDate}
-              onChange={handleDateChange}
-              
-              size="small"
-            />
-        
-          </MuiPickersUtilsProvider>  </Grid>
-          <Grid item xs={6}>
-            <TextField
-              className="textField-width"
-              id="outlined2"
-              label="ผู้บันทึก"
-             
-              size="small"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              className="textField-width"
-              id="outlined3"
-              label="สาเหตุ"
-            
-              size="small"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              className="textField-width"
-              id="outlined4"
-              label="หมายเหตุ"
-            
               size="small"
             />
           </Grid>
@@ -160,37 +163,41 @@ export default function TableAbortion() {
         </div>
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
+          <FormGroup><FormLabel>ติดตามการรักษา (วัน)</FormLabel></FormGroup>
             <TextField
+     
+            variant="outlined"
               className="textField-width"
-              id="outlined1"
-              label="ติดตามผลการรักษา (วัน)"
+          
               size="small"
-                
             />
           </Grid>
           <Grid item xs={6}>
+          <FormGroup><FormLabel>ผู้ปฏิบัติการ</FormLabel></FormGroup>
             <TextField
+            variant="outlined"
               className="textField-width"
-              id="outlined2"
-              label="Outlined"
-           
+              id="outlined1"
               size="small"
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">รายการายา</InputLabel>
+            <FormGroup>
+              <FormLabel>ยาที่ใช้</FormLabel>
+            <FormControl className={classes.formControl} size="small">
               <Select
+           
+              variant="outlined"
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={item}
                 onChange={handleChange}
               >
-                <MenuItem value="10">A</MenuItem>
-                <MenuItem value="20">B</MenuItem>
-                <MenuItem value="30">C</MenuItem>
+                <MenuItem value="A">A</MenuItem>
+                <MenuItem value="B">B</MenuItem>
+                <MenuItem value="C">C</MenuItem>
               </Select>
-            </FormControl>
+            </FormControl></FormGroup>
           </Grid>
         </Grid>
         <hr />
@@ -203,6 +210,7 @@ export default function TableAbortion() {
           <Grid item xs={4}></Grid>
           <Grid item xs={4}>
             <Button
+            onClick={()=>console.log(item)}
               style={{ outline: "none" }}
               variant="contained"
               color="primary"

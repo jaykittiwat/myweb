@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Spinner } from "react-bootstrap";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -179,8 +179,8 @@ export default function TableFatter({ posts, loading }) {
               id="tableTitle"
               component="div"
             >
-             <h4> รายการ</h4>
-          </Typography>
+              <h4> รายการ</h4>
+            </Typography>
           )}
       </Toolbar>
     );
@@ -222,16 +222,16 @@ export default function TableFatter({ posts, loading }) {
       padding: "10px",
       color: "5f5f5f",
     },
-    pad:{
-       paddingLeft:"2%",
-       paddingRight:"2%",
-       paddingTop:"2%",
+    pad: {
+      paddingLeft: "2%",
+      paddingRight: "2%",
+      paddingTop: "2%",
     },
-    marForm:{
-      marginTop:"4%"
+    marForm: {
+      marginTop: "4%"
     },
-    marTextField:{
-      marginTop:"2%"
+    marTextField: {
+      marginTop: "2%"
     },
   }));
 
@@ -336,7 +336,7 @@ export default function TableFatter({ posts, loading }) {
   const showTable = () => {
     return medic.map((medics, index) => (
       <form className={classes.marTextField} key={index}  >
-        
+
         <FormControl size="small" style={{ width: "95%" }} >
           <FormLabel >รายการยา</FormLabel>
           <Select
@@ -366,9 +366,11 @@ export default function TableFatter({ posts, loading }) {
   };
   if (loading) {
     return (
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
+      <div className="container-fluid text-center" style={{marginTop:"17%"}}>
+      <CircularProgress size={40}/><h3>
+        Loading.....</h3>
+        </div>
+      
     );
   }
 
@@ -460,7 +462,6 @@ export default function TableFatter({ posts, loading }) {
           </TableContainer>
           <div ><TablePagination
             //ปุ่มเปลี่ยนห้นา
-
             rowsPerPageOptions={[5, 10, 15, 20]}
             component="div"
             count={rows.length}
@@ -484,7 +485,7 @@ export default function TableFatter({ posts, loading }) {
       </div>
 
       <Paper elevation={3} className={classes.pad}>
-        <h4  style={{ paddingTop: "15px" }}>บันทึกการจัดการ</h4>
+        <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการบำรุง</h4>
         <FormGroup className={classes.marForm}>
           <FormLabel >ชื่อผู้บันทึก</FormLabel>
           <TextField id="input1" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" />
@@ -502,17 +503,17 @@ export default function TableFatter({ posts, loading }) {
           <TextField id="input4" variant="outlined" type="time" size="small" defaultValue="00:00" />
         </FormGroup>
         {showTable()}
-<div className={classes.marTextField}>
-        <div className="container-fluid text-center" >
-          <Fab
-            color="primary"
-            aria-label="add"
-            size="small"
-            style={{ margin: "10px", outline: "none" }}
-          >
-            <AddIcon onClick={addtable} />
-          </Fab>
-        </div></div>
+        <div className={classes.marTextField}>
+          <div className="container-fluid text-center" >
+            <Fab
+              color="primary"
+              aria-label="add"
+              size="small"
+              style={{ margin: "10px", outline: "none" }}
+            >
+              <AddIcon onClick={addtable} />
+            </Fab>
+          </div></div>
         <Grid container className={classes.marTextField}>
           <Grid item xs={2}></Grid>
           <Grid item xs={8}><Paper elevation={3} className={classes.paperNoti}>
@@ -522,16 +523,16 @@ export default function TableFatter({ posts, loading }) {
 
         <div className="container-fluid text-center">
           <div className={classes.marTextField}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: "250px", margin: "10px", outline: "none" }}
-            onClick={() => console.log(medic)}
-          >
-            บันทึก
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ width: "250px", margin: "10px", outline: "none" }}
+              onClick={() => console.log(medic)}
+            >
+              บันทึก
         </Button>
-      </div>  </div>
+          </div>  </div>
       </Paper>
     </div>
   );
