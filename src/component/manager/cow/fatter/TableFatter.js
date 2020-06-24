@@ -17,11 +17,8 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-
 import TextField from "@material-ui/core/TextField";
-
 import "date-fns";
-
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Fab from "@material-ui/core/Fab";
@@ -31,17 +28,87 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Grid } from "@material-ui/core";
-
+import firebase from './../../../../backEnd/firebase';
+import axios from 'axios';
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
-export default function TableFatter({ posts, loading }) {
-  const rows = posts;
+export default function TableFatter(props) {
+let posts=props.posts.post;
+let loading=props.posts.loading;
+const [UID,setUID]=useState("")
+const [currentUser,setCurrentUser]=useState("")
+const [recoder,setRecoder]=useState("");
+const [operator,setOperator]=useState("");
+const [selectedDate,setSelectedDate]=useState("");
+const [dateInduction,setDateInduction]=useState("");
+const [time,setTime]=useState("");
+
+
+const current = () => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+     setCurrentUser(user.email);
+    }
+  });
+}
+current();
+
+
+const manageDate = (e)=>{
+  //ยังไม่ได้ดึงsetting มา
+  var date = new Date(e.target.value);
+  var newdate = new Date(date);
+  newdate.setDate(newdate.getDate() + 18);
+  var dd = newdate.getDate();
+  var mm = newdate.getMonth() + 1;
+  var yyyy = newdate.getFullYear();
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+  var nextmissionday=dd+"-"+mm+"-"+yyyy
+  setSelectedDate(e.target.value)
+  setDateInduction(nextmissionday)
+
+    }
+
   /*-----------------------------------------------------------------------------*/
+let rows=[];
+let key=Object.keys(posts);
+  var values = Object.keys(posts).map(key=>posts[key]);
+  for(let i = 0; i<values.length; i++){
+    if((values[i].status===" "||values[i].status==="คลอดแล้ว"||values[i].status==="โคแท้ง"||values[i].status==="ไม่ท้อง")){
+      rows.push(values[i]);
+    }
+
+  }
+
+async function saveDataToInduction  () {
 
 
 
-  function descendingComparator(a, b, orderBy) {
+  await axios.get("http://localhost:4000/user/logIn/" +currentUser).then(res=>
+ console.log(res.data[0].user))
+
+
+
+
+  /*await axios.post(
+    "http://localhost:4000/user/cow/fatten/Usertest01",
+      {status:" "}
+  ).then(res=>{
+    alert(res.data)
+  })*/
+ 
+ 
+}
+
+
+
+const descendingComparator=(a, b, orderBy) =>{
     if (b[orderBy] < a[orderBy]) {
       return -1;
     }
@@ -51,14 +118,14 @@ export default function TableFatter({ posts, loading }) {
     return 0;
   }
 
-  function getComparator(order, orderBy) {
+  const getComparator=(order, orderBy) =>{
     return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
   //เรรียงค่าอะไรสักอย่าง
-  function stableSort(array, comparator) {
+ const stableSort=(array, comparator) => {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
       const order = comparator(a[0], b[0]);
@@ -78,16 +145,12 @@ export default function TableFatter({ posts, loading }) {
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
     const {
-
       onSelectAllClick,
       order,
       orderBy,
       numSelected,
       rowCount,
     } = props;
-
-
-
 
     //return นี้ทำ หัวตาราง
     return (
@@ -116,18 +179,13 @@ export default function TableFatter({ posts, loading }) {
               //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
               sortDirection={orderBy === headCell.id ? order : false}
             >
-
               {headCell.label /* ชื่อตาราง */}
-
-
-
             </TableCell>
           ))}
         </TableRow>
       </TableHead>
     );
   }
-
   EnhancedTableHead.propTypes = {
     classes: PropTypes.object.isRequired,
     numSelected: PropTypes.number.isRequired,
@@ -137,7 +195,7 @@ export default function TableFatter({ posts, loading }) {
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired
   };
-
+  
   const useToolbarStyles = makeStyles(theme => ({
     root: {
       paddingLeft: theme.spacing(2),
@@ -220,7 +278,8 @@ export default function TableFatter({ posts, loading }) {
       width: "100%",
       fontSize: "20px",
       padding: "10px",
-      color: "5f5f5f",
+      color: "#fff",
+      backgroundColor:"#3b4fff"
     },
     pad: {
       paddingLeft: "2%",
@@ -238,7 +297,7 @@ export default function TableFatter({ posts, loading }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  //เก็บ row.id เมื่อ กดคลิก เลือกรายการทั้งหมด
+  //เก็บ row.cattle_id เมื่อ กดคลิก เลือกรายการทั้งหมด
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -256,7 +315,7 @@ export default function TableFatter({ posts, loading }) {
     if (event.target.checked) {
       //map row    idเก็บ ไว้ใน newSelecteds
 
-      const newSelecteds = rows.map(n => n.id);
+      const newSelecteds = key.map(n => n);
       //console.log(newSelecteds) ;
       setSelected(newSelecteds);
       return;
@@ -411,18 +470,18 @@ export default function TableFatter({ posts, loading }) {
                   stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.id);
+                      const isItemSelected = isSelected(key[index]);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
                         <TableRow
                           hover
                           //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                          onClick={event => handleClick(event, row.id)}
+                          onClick={event => handleClick(event, key[index])}
                           role="checkbox"
                           aria-checked={isItemSelected} //คลิกเลืองตรงตารา
                           tabIndex={-1}
-                          key={row.id /*keyyyyyyyyyyyyy*/}
+                          key={row.cattle_id} /*keyyyyyyyyyyyyy*/
                         >
                           <TableCell
                             padding="checkbox"
@@ -434,7 +493,6 @@ export default function TableFatter({ posts, loading }) {
                               color="primary"
                             />
                           </TableCell>
-
                           <TableCell
                             component="th"
                             id={labelId}
@@ -443,12 +501,10 @@ export default function TableFatter({ posts, loading }) {
                           >
                             {row.id}
                           </TableCell>
-                          <TableCell align="left">{row.userId}</TableCell>
-                          <TableCell align="left">{row.userId}</TableCell>
-                          <TableCell align="left">{row.userId}</TableCell>
-                          <TableCell align="left">{row.userId}</TableCell>
-
-
+                          <TableCell align="left">{row.cattle_id }</TableCell>
+                          <TableCell align="left">{row.bigcorral}</TableCell>
+                          <TableCell align="left">{row.corral}</TableCell>
+                          <TableCell align="left">{row.herd_no}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -488,19 +544,19 @@ export default function TableFatter({ posts, loading }) {
         <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการบำรุง</h4>
         <FormGroup className={classes.marForm}>
           <FormLabel >ชื่อผู้บันทึก</FormLabel>
-          <TextField id="input1" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" />
+          <TextField id="input1" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" onChange={(e)=>setRecoder(e.target.value)}/>
         </FormGroup>
         <FormGroup className={classes.marTextField}>
           <FormLabel >ผู้ปฏิบัติการ</FormLabel>
-          <TextField id="input2" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" />
+          <TextField id="input2" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" onChange={(e)=>setOperator(e.target.value)} />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
           <FormLabel >วันที่</FormLabel>
-          <TextField id="input3" variant="outlined" type="date" size="small" />
+          <TextField id="input3" variant="outlined" type="date" size="small"  onChange={(e)=>manageDate(e)}/>
         </FormGroup>
         <FormGroup className={classes.marTextField}>
           <FormLabel >เวลา</FormLabel>
-          <TextField id="input4" variant="outlined" type="time" size="small" defaultValue="00:00" />
+          <TextField id="input4" variant="outlined" type="time" size="small" defaultValue="00:00" onChange={(e)=>setTime(e.target.value)} />
         </FormGroup>
         {showTable()}
         <div className={classes.marTextField}>
@@ -517,10 +573,9 @@ export default function TableFatter({ posts, loading }) {
         <Grid container className={classes.marTextField}>
           <Grid item xs={2}></Grid>
           <Grid item xs={8}><Paper elevation={3} className={classes.paperNoti}>
-            เริ่มการเหนี่ยวนำ วันที่ dd/mm/yy
+            เริ่มการเหนี่ยวนำ วันที่ {dateInduction}
         </Paper></Grid>
           <Grid item xs={2}></Grid></Grid>
-
         <div className="container-fluid text-center">
           <div className={classes.marTextField}>
             <Button
@@ -528,8 +583,7 @@ export default function TableFatter({ posts, loading }) {
               color="primary"
               size="large"
               style={{ width: "250px", margin: "10px", outline: "none" }}
-              onClick={() => console.log(medic)}
-            >
+              onClick={()=>saveDataToInduction()} >
               บันทึก
         </Button>
           </div>  </div>

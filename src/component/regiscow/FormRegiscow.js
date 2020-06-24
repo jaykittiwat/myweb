@@ -483,7 +483,7 @@ class FormRegiscow extends Component {
                   >
                     ตกลง
                   </Button>{" "}
-                 
+
                   <Link to="/login">
                     <Button
                       variant="contained"
