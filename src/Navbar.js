@@ -126,7 +126,7 @@ render(){
         </div>
 
         <div className="dropdown">
-          <Link to="/instructionmanualn">
+          <Link to="/instructionmanual">
             <div className="dropbtn">คู่มือการใช้งาน</div>
           </Link>
         </div>

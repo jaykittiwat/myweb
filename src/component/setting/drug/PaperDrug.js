@@ -57,9 +57,16 @@ const useStyles = makeStyles((theme) => ({
 export default function PaperDrug() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [lock, setLock] = React.useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+  const hadelDisable = (event) => {
+    setLock(false);
+  };
+  const hadelEable = (event) => {
+    setLock(true);
   };
   return (
     <div className="container martop-10">
@@ -81,12 +88,16 @@ export default function PaperDrug() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                  type="text"
+                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined0"
                   label="ชื่อยา"
                   size="small"
                 />{" "}
                 <TextField
+                  type="text"
+                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined1"
                   label="ปริมาณยา(มิลลิลิตร)"
@@ -103,6 +114,7 @@ export default function PaperDrug() {
               <Grid container>
                 <Grid>
                   <Button
+                    onClick={() => hadelDisable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -114,6 +126,7 @@ export default function PaperDrug() {
                 </Grid>
                 <Grid>
                   <Button
+                    onClick={() => hadelEable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -130,12 +143,16 @@ export default function PaperDrug() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                  type="text"
+                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined2"
                   label="ชื่อวัคซีน"
                   size="small"
                 />{" "}
                 <TextField
+                  type="text"
+                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined3"
                   label="ปริมาณวัคซีน(มิลลิลิตร)"
@@ -152,6 +169,7 @@ export default function PaperDrug() {
               <Grid container>
                 <Grid>
                   <Button
+                    onClick={() => hadelDisable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -163,6 +181,7 @@ export default function PaperDrug() {
                 </Grid>
                 <Grid>
                   <Button
+                    onClick={() => hadelEable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -180,30 +199,3 @@ export default function PaperDrug() {
     </div>
   );
 }
-
-/*<Paper elevation={0} >
-        <Grid container spacing={3} className="pad30">
-           <Grid item xs={2}>
-            <Button
-              style={{ outline: "none", marginLeft: "220%" }}
-              variant="contained"
-              color="secondary"
-              className="textField-width"
-              startIcon={<SaveIcon />}
-            >
-              แก้ไข
-            </Button>{" "}
-          </Grid>
-          <Grid  item xs={2}>
-          <Button
-              style={{ outline: "none", marginLeft: "220%" }}
-              variant="contained"
-              color="primary"
-              className="textField-width"
-              startIcon={<SaveIcon />}
-            >
-              บันทึก
-            </Button>
-            </Grid>
-        </Grid>
-        </Paper>*/

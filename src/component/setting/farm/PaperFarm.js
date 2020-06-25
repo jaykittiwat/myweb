@@ -58,12 +58,15 @@ export default function PaperFarm() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [lock, setLock] = React.useState(true);
-
+  const [Unlock, setUnLock] = React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const hadelDisable =(event)=>{
     setLock(false);
+  }
+  const hadelEable =(event)=>{
+    setLock(true);
   }
   return (
     <div className="container martop-10">
@@ -95,7 +98,7 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
-                type="text"
+                  type="text"
                   disabled = {(lock)?  true : ""}
                   className="textField-width600px"
                   id="outlined0"
@@ -113,8 +116,8 @@ export default function PaperFarm() {
               <Grid container>
                 <Grid>
                   <Button
-                  id="b1"
-                  onClick={()=>hadelDisable()}
+                    id="b1"
+                    onClick={()=>hadelDisable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -127,6 +130,7 @@ export default function PaperFarm() {
                 <Grid>
                   <Button
                     id="b2"
+                    onClick={() => hadelEable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -143,6 +147,8 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                  type="text"
+                  disabled = {(lock)?  true : ""}
                   className="textField-width600px"
                   id="outlined1"
                   label="คอก"
@@ -160,6 +166,7 @@ export default function PaperFarm() {
                 <Grid>
                   <Button
                     id="b3"
+                    onClick={()=>hadelDisable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -172,6 +179,7 @@ export default function PaperFarm() {
                 <Grid>
                   <Button
                     id="b4"
+                    onClick={() => hadelEable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -188,6 +196,8 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                  type="text"
+                  disabled = {(lock)?  true : ""}
                   className="textField-width600px"
                   id="outlined2"
                   label="ฝูง"
@@ -205,6 +215,7 @@ export default function PaperFarm() {
                 <Grid>
                   <Button
                     id="b5"
+                    onClick={()=>hadelDisable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -217,6 +228,7 @@ export default function PaperFarm() {
                 <Grid>
                   <Button
                     id="b6"
+                    onClick={() => hadelEable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -233,6 +245,8 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                  type="text"
+                  disabled = {(lock)?  true : ""}                
                   className="textField-width600px"
                   id="outlined3"
                   label="สายพันธุ์"
@@ -250,6 +264,7 @@ export default function PaperFarm() {
                 <Grid>
                   <Button
                     id="b7"
+                    onClick={()=>hadelDisable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -262,6 +277,7 @@ export default function PaperFarm() {
                 <Grid>
                   <Button
                     id="b8"
+                    onClick={() => hadelEable()}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"

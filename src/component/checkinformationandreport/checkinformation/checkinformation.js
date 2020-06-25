@@ -2,14 +2,14 @@ import React,{Component} from 'react';
 import HeaderLogin from '../../../HeaderLogin';
 import NavbarLogin from '../../../Navbar';
 import Chardata from './ChartData';
+import TableCheckinfo from './tablecheckinfo';
 class CheckingInformation extends Component{
   render(){
       return(
           <div >
             <HeaderLogin/>
             <NavbarLogin/>
-            <Chardata/>
-            
+            <TableCheckinfo/>
             
         </div>
       
@@ -17,3 +17,4 @@ class CheckingInformation extends Component{
   }
 }
 export default CheckingInformation;
+//<TableCheckinfo/>

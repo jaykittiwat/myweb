@@ -8,6 +8,8 @@ import Box from '@material-ui/core/Box';
 import Paper from "@material-ui/core/Paper"
 import Button from "@material-ui/core/Button"
 import "./styleReport.css"
+import Grid from "@material-ui/core/Grid";
+import SaveIcon from "@material-ui/icons/Save";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -58,8 +60,8 @@ export default function TableReport() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-
   };
+  
 
   return (
     <div className="container">
@@ -75,35 +77,128 @@ export default function TableReport() {
         onChange={handleChange}
         aria-label="Vertical tabs example"
         className={classes.tabs}
+        className="width"
       >
-        <Tab label="Item One" {...a11yProps(0)} style={{outline:"none"}}/>
-        <Tab label="Item Two" {...a11yProps(1)} style={{outline:"none"}}/>
-        <Tab label="Item Three" {...a11yProps(2)} style={{outline:"none"}}/>
-        <Tab label="Item Four" {...a11yProps(3)} style={{outline:"none"}}/>
-        <Tab label="Item Five" {...a11yProps(4)} style={{outline:"none"}}/>
-        <Tab label="Item Six" {...a11yProps(5)} style={{outline:"none"}}/>
-        <Tab label="Item Seven" {...a11yProps(6)} style={{outline:"none"}}/>
+        <Tab label="จำนวนโคภายในฟาร์ม" {...a11yProps(0)} style={{outline:"none"}} />
+        <Tab label="จำนวนโคแต่ละสายพันธุ์" {...a11yProps(1)} style={{outline:"none"}} />
+        <Tab label="จำนวนการเกิดและการแท้ง" {...a11yProps(2)} style={{outline:"none"}} />
+        <Tab label="จำนวนการเกิดโรค" {...a11yProps(3)} style={{outline:"none"}} />
       </Tabs>
       <TabPanel value={value} index={0}   className="container-fluid text-center  " >
-       <Button id="bt1" color="primary" variant="contained" style={{outline:"none",marginTop:"15%"}} >ออกรายงาน</Button>
+      <Grid container>
+                <Grid className="pad">
+                  <Button
+                    id="b1"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px"}}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                
+                  >
+                    PDF
+                  </Button>{" "}
+                </Grid>
+                <Grid className="pad">
+                  <Button
+                    id="b2"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                  
+                  >
+                    EXCEL
+                  </Button>
+                </Grid>
+              </Grid>
+       <Button id="bt1" color="primary" variant="contained" style={{outline:"none",marginTop:"5%"}} >ออกรายงาน</Button>
       </TabPanel>
       <TabPanel value={value} index={1}   className="container-fluid text-center  " >
-       <Button id="bt2" color="primary" variant="contained" style={{outline:"none",marginTop:"15%"}} >ออกรายงาน</Button>
+      <Grid container>
+                <Grid className="pad">
+                  <Button
+                    id="b1"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px"}}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                
+                  >
+                    PDF
+                  </Button>{" "}
+                </Grid>
+                <Grid className="pad">
+                  <Button
+                    id="b2"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                  
+                  >
+                    EXCEL
+                  </Button>
+                </Grid>
+              </Grid>
+       <Button id="bt1" color="primary" variant="contained" style={{outline:"none",marginTop:"5%"}} >ออกรายงาน</Button>
       </TabPanel>
       <TabPanel value={value} index={2}   className="container-fluid text-center  " >
-       <Button id="bt3" color="primary" variant="contained" style={{outline:"none",marginTop:"15%"}} >ออกรายงาน</Button>
+      <Grid container>
+                <Grid className="pad">
+                  <Button
+                    id="b1"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px"}}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                
+                  >
+                    PDF
+                  </Button>{" "}
+                </Grid>
+                <Grid className="pad">
+                  <Button
+                    id="b2"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                  
+                  >
+                    EXCEL
+                  </Button>
+                </Grid>
+              </Grid>
+       <Button id="bt1" color="primary" variant="contained" style={{outline:"none",marginTop:"5%"}} >ออกรายงาน</Button>
       </TabPanel>
       <TabPanel value={value} index={3}   className="container-fluid text-center  " >
-       <Button id="bt4" color="primary" variant="contained" style={{outline:"none",marginTop:"15%"}} >ออกรายงาน</Button>
-      </TabPanel>
-      <TabPanel value={value} index={4}   className="container-fluid text-center  " >
-       <Button id="bt5" color="primary" variant="contained" style={{outline:"none",marginTop:"15%"}} >ออกรายงาน</Button>
-      </TabPanel>
-      <TabPanel value={value} index={5}   className="container-fluid text-center  " >
-       <Button id="bt6" color="primary" variant="contained" style={{outline:"none",marginTop:"15%"}} >ออกรายงาน</Button>
-      </TabPanel>
-      <TabPanel value={value} index={6}   className="container-fluid text-center  " >
-       <Button id="bt7" color="primary" variant="contained" style={{outline:"none",marginTop:"15%"}} >ออกรายงาน</Button>
+      <Grid container>
+                <Grid className="pad">
+                  <Button
+                    id="b1"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px"}}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                
+                  >
+                    PDF
+                  </Button>{" "}
+                </Grid>
+                <Grid className="pad">
+                  <Button
+                    id="b2"
+                    style={{ outline: "none", marginLeft: "320%", width:"100px" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                  
+                  >
+                    EXCEL
+                  </Button>
+                </Grid>
+              </Grid>
+       <Button id="bt1" color="primary" variant="contained" style={{outline:"none",marginTop:"5%"}} >ออกรายงาน</Button>
       </TabPanel>
     </div> </Paper></div>
   );
