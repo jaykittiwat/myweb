@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { useState,useEffect } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -25,90 +25,132 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import FormGroup from '@material-ui/core/FormGroup';
-import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from "@material-ui/core/FormGroup";
+import FormLabel from "@material-ui/core/FormLabel";
 import { Grid } from "@material-ui/core";
-import firebase from './../../../../backEnd/firebase';
-import axios from 'axios';
+import firebase from "./../../../../backEnd/firebase";
+import axios from "axios";
+
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableFatter(props) {
-let posts=props.posts.post;
-let loading=props.posts.loading;
-const [UID,setUID]=useState("")
-const [currentUser,setCurrentUser]=useState("")
-const [recoder,setRecoder]=useState("");
-const [operator,setOperator]=useState("");
-const [selectedDate,setSelectedDate]=useState("");
-const [dateInduction,setDateInduction]=useState("");
-const [time,setTime]=useState("");
+  let posts = props.posts.posts;
+  let loading = props.posts.loading;
+  const [typeModule]=useState({status:"บำรุงแล้ว"})
+  const [UID, setUID] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
+  const [recoder, setRecoder] = useState("");
+  const [operator, setOperator] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [dateInduction, setDateInduction] = useState("");
+  const [time, setTime] = useState("");
+const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
 
-
-const current = () => {
+const current = () =>{
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-     setCurrentUser(user.email);
+      setCurrentUser(user.email);
     }
   });
 }
-current();
+  current();
 
-
-const manageDate = (e)=>{
-  //ยังไม่ได้ดึงsetting มา
-  var date = new Date(e.target.value);
-  var newdate = new Date(date);
-  newdate.setDate(newdate.getDate() + 18);
-  var dd = newdate.getDate();
-  var mm = newdate.getMonth() + 1;
-  var yyyy = newdate.getFullYear();
-  if (mm < 10) {
-    mm = "0" + mm;
-  }
-  if (dd < 10) {
-    dd = "0" + dd;
-  }
-  var nextmissionday=dd+"-"+mm+"-"+yyyy
-  setSelectedDate(e.target.value)
-  setDateInduction(nextmissionday)
-
+  const manageDate = e => {
+    //ยังไม่ได้ดึงsetting มา
+    var date = new Date(e.target.value);
+    var newdate = new Date(date);
+    newdate.setDate(newdate.getDate() + 18);
+    var dd = newdate.getDate();
+    var mm = newdate.getMonth() + 1;
+    var yyyy = newdate.getFullYear();
+    if (mm < 10) {
+      mm = "0" + mm;
     }
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    var nextmissionday = yyyy + "-" + mm + "-" + dd;
+    var setnextmissionday = dd+ "-" + mm + "-" + yyyy;
+    setSelectedDate(e.target.value);
+setShowDateInduction(setnextmissionday)
+    setDateInduction(nextmissionday);
+  };
 
   /*-----------------------------------------------------------------------------*/
-let rows=[];
-let key=Object.keys(posts);
-  var values = Object.keys(posts).map(key=>posts[key]);
-  for(let i = 0; i<values.length; i++){
-    if((values[i].status===" "||values[i].status==="คลอดแล้ว"||values[i].status==="โคแท้ง"||values[i].status==="ไม่ท้อง")){
+  let rows = [];
+  let key = Object.keys(posts);
+  var values = Object.keys(posts).map(key => posts[key]);
+  for (let i = 0; i < values.length; i++) {
+    if (
+      values[i].status === " " ||
+      values[i].status === "คลอดแล้ว" ||
+      values[i].status === "โคแท้ง" ||
+      values[i].status === "ไม่ท้อง"
+    ) {
       rows.push(values[i]);
     }
+  }
+ 
 
+
+  useEffect(() => {
+  const FectData=async ()=>{
+    if(currentUser!==""){
+      const res =await  axios.get("http://localhost:4000/user/logIn/" + currentUser)
+      setUID(res.data[0].user)
+  }}
+
+  FectData();
+  }, [currentUser]);
+
+ const saveDataToInduction= ()=>{
+   
+   const x = selected.length
+    for(let a=0;a<x;a++){
+       axios.post("http://localhost:4000/cattle/status/"+UID+"/"+selected[a],typeModule)
+      
+    }
+    for(let b=0;b<x;b++){
+     axios.post("http://localhost:4000/history/"+UID,
+     {
+             dam_id:selectedDamId[b],
+             date:selectedDate,
+             type:"บำรุงแม่พันธุ์"
+     }
+     )
+   }
+   for(let c=0;c<x;c++){
+    axios.post("http://localhost:4000/maintain/"+UID,
+    {
+            dam_id:selectedDamId[c],
+            date:selectedDate,
+            type:"บำรุงก่อนคลอด",
+            recorder:recoder,
+            operator:operator,
+            time:time,
+    }
+    )
+  }
+  for(let d=0;d<x;d++){
+    axios.post("http://localhost:4000/notification/"+UID+"/"+dateInduction,
+    {
+      date:dateInduction ,
+      id_cattle:selectedDamId[d] ,
+      type:"เหนี่ยวนำกลับสัด" ,
+    }
+    ).then(res=>{
+      if(res.status===201){
+        
+        window.location.reload(false);
+      }
+    })
   }
 
-async function saveDataToInduction  () {
+ }
 
 
-
-  await axios.get("http://localhost:4000/user/logIn/" +currentUser).then(res=>
- console.log(res.data[0].user))
-
-
-
-
-  /*await axios.post(
-    "http://localhost:4000/user/cow/fatten/Usertest01",
-      {status:" "}
-  ).then(res=>{
-    alert(res.data)
-  })*/
- 
- 
-}
-
-
-
-const descendingComparator=(a, b, orderBy) =>{
+  const descendingComparator = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
       return -1;
     }
@@ -116,16 +158,16 @@ const descendingComparator=(a, b, orderBy) =>{
       return 1;
     }
     return 0;
-  }
+  };
 
-  const getComparator=(order, orderBy) =>{
+  const getComparator = (order, orderBy) => {
     return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
-  }
+  };
 
   //เรรียงค่าอะไรสักอย่าง
- const stableSort=(array, comparator) => {
+  const stableSort = (array, comparator) => {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
       const order = comparator(a[0], b[0]);
@@ -133,7 +175,7 @@ const descendingComparator=(a, b, orderBy) =>{
       return a[1] - b[1];
     });
     return stabilizedThis.map(el => el[0]);
-  }
+  };
   // headCells คอลัม หัวตาราง
   const headCells = [
     { id: "1", numeric: false, disablePadding: true, label: "เลือก" },
@@ -144,13 +186,7 @@ const descendingComparator=(a, b, orderBy) =>{
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
-    const {
-      onSelectAllClick,
-      order,
-      orderBy,
-      numSelected,
-      rowCount,
-    } = props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
 
     //return นี้ทำ หัวตาราง
     return (
@@ -195,7 +231,7 @@ const descendingComparator=(a, b, orderBy) =>{
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired
   };
-  
+
   const useToolbarStyles = makeStyles(theme => ({
     root: {
       paddingLeft: theme.spacing(2),
@@ -204,13 +240,13 @@ const descendingComparator=(a, b, orderBy) =>{
     highlight:
       theme.palette.type === "light"
         ? {
-          color: theme.palette.primary.main,
-          backgroundColor: lighten(theme.palette.primary.light, 0.85)
-        }
+            color: theme.palette.primary.main,
+            backgroundColor: lighten(theme.palette.primary.light, 0.85)
+          }
         : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.primary.dark
-        },
+            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.primary.dark
+          },
     title: {
       flex: "1 1 100%"
     }
@@ -231,15 +267,15 @@ const descendingComparator=(a, b, orderBy) =>{
             {numSelected} selected
           </Typography>
         ) : (
-            <Typography
-              className={classes.title}
-              variant="h6"
-              id="tableTitle"
-              component="div"
-            >
-              <h4> รายการ</h4>
-            </Typography>
-          )}
+          <Typography
+            className={classes.title}
+            variant="h6"
+            id="tableTitle"
+            component="div"
+          >
+            <h4> รายการ</h4>
+          </Typography>
+        )}
       </Toolbar>
     );
   };
@@ -279,19 +315,19 @@ const descendingComparator=(a, b, orderBy) =>{
       fontSize: "20px",
       padding: "10px",
       color: "#fff",
-      backgroundColor:"#3b4fff"
+      backgroundColor: "#3b4fff"
     },
     pad: {
       paddingLeft: "2%",
       paddingRight: "2%",
-      paddingTop: "2%",
+      paddingTop: "2%"
     },
     marForm: {
       marginTop: "4%"
     },
     marTextField: {
       marginTop: "2%"
-    },
+    }
   }));
 
   const classes = useStyles();
@@ -299,6 +335,7 @@ const descendingComparator=(a, b, orderBy) =>{
   const [orderBy, setOrderBy] = React.useState("calories");
   //เก็บ row.cattle_id เมื่อ กดคลิก เลือกรายการทั้งหมด
   const [selected, setSelected] = React.useState([]);
+  const [selectedDamId, setSelectedDamId] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -316,19 +353,24 @@ const descendingComparator=(a, b, orderBy) =>{
       //map row    idเก็บ ไว้ใน newSelecteds
 
       const newSelecteds = key.map(n => n);
+      const newSelectedsDamId = rows.map(n => n.cattle_id);
       //console.log(newSelecteds) ;
       setSelected(newSelecteds);
+      setSelectedDamId(newSelectedsDamId)
       return;
     }
 
     //ถ้าไปก็ set array is empty
     setSelected([]);
+    setSelectedDamId([]);
   };
 
-  const handleClick = (event, id) => {
+  const handleClick = (event, id,cattle_id) => {
     //หา ค่าที่เข้ามาว่าอยู่ในindex ไหน
     const selectedIndex = selected.indexOf(id);
+    const selectedIndexCattle = selectedDamId.indexOf(cattle_id);
     let newSelected = [];
+    let newSelectedDamId = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
@@ -342,8 +384,21 @@ const descendingComparator=(a, b, orderBy) =>{
         selected.slice(selectedIndex + 1)
       );
     }
-
     setSelected(newSelected);
+    if (selectedIndexCattle === -1) { 
+      newSelectedDamId = newSelectedDamId.concat(selectedDamId,cattle_id);
+    } else if (selectedIndexCattle === 0) {   
+      newSelectedDamId = newSelectedDamId.concat(selectedDamId.slice(1));
+    } else if (selectedIndexCattle === selectedDamId.length - 1) {     
+      newSelectedDamId = newSelectedDamId.concat(selectedDamId.slice(0, -1));
+    } else if (selectedIndexCattle > 0) {
+      newSelectedDamId = newSelectedDamId.concat(
+       selectedDamId.slice(0,selectedIndexCattle),
+       selectedDamId.slice(selectedIndexCattle + 1)
+      );
+    }
+    
+    setSelectedDamId(newSelectedDamId)
   };
 
   const handleChangePage = (event, newPage) => {
@@ -359,53 +414,47 @@ const descendingComparator=(a, b, orderBy) =>{
     setDense(event.target.checked);
   };
   const isSelected = id => selected.indexOf(id) !== -1;
-
+ 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
   const [medic, setMedic] = useState([
     {
-      item: "",
-
+      item: ""
     }
   ]);
   const addtable = event => {
     setMedic([
       ...medic,
       {
-        item: "",
-
+        item: ""
       }
     ]);
   };
   const handleChange = (event, index) => {
-    medic.splice(index, 1, { item: event.target.value })
+    medic.splice(index, 1, { item: event.target.value });
   };
-  const deleteItem = (index) => {
+  const deleteItem = index => {
     const result = medic.filter(results => results !== medic[index]);
     console.log(result);
     setMedic(result);
-
-  }
+  };
 
   /*------------------------------------------------------------------------------*/
 
-
   const showTable = () => {
     return medic.map((medics, index) => (
-      <form className={classes.marTextField} key={index}  >
-
-        <FormControl size="small" style={{ width: "95%" }} >
-          <FormLabel >รายการยา</FormLabel>
+      <form className={classes.marTextField} key={index}>
+        <FormControl size="small" style={{ width: "95%" }}>
+          <FormLabel>รายการยา</FormLabel>
           <Select
-
             variant="outlined"
             native
             value={medic.item}
             onChange={event => handleChange(event, index)}
           >
-            <option value=" " >เลือก</option>
+            <option value=" ">เลือก</option>
             <option>Ten</option>
             <option>Twenty</option>
             <option>Thirty</option>
@@ -425,18 +474,21 @@ const descendingComparator=(a, b, orderBy) =>{
   };
   if (loading) {
     return (
-      <div className="container-fluid text-center" style={{marginTop:"17%"}}>
-      <CircularProgress size={40}/><h3>
-        Loading.....</h3>
-        </div>
-      
+      <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
+        <CircularProgress size={40} />
+        <h3>Loading.....</h3>
+      </div>
     );
   }
 
   return (
     <div className="container">
       <div className={classes.root}>
-        <Paper className={classes.paper} elevation={3} style={{ marginTop: "20px" }} >
+        <Paper
+          className={classes.paper}
+          elevation={3}
+          style={{ marginTop: "20px" }}
+        >
           <EnhancedTableToolbar numSelected={selected.length} />
           <TableContainer>
             <Table
@@ -466,48 +518,48 @@ const descendingComparator=(a, b, orderBy) =>{
               /* ----------------------------ตัวตาราง--------------------------- */
               >
                 {//ส่ง Array Rows กับ call back getComparator()
-                  //แสดงข้อมูลและการจัดการต่างๆทีละแถว
-                  stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(key[index]);
-                      const labelId = `enhanced-table-checkbox-${index}`;
+                //แสดงข้อมูลและการจัดการต่างๆทีละแถว
+                stableSort(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(key[index],row.cattle_id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                      return (
-                        <TableRow
-                          hover
-                          //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                          onClick={event => handleClick(event, key[index])}
-                          role="checkbox"
-                          aria-checked={isItemSelected} //คลิกเลืองตรงตารา
-                          tabIndex={-1}
-                          key={row.cattle_id} /*keyyyyyyyyyyyyy*/
-                        >
-                          <TableCell
-                            padding="checkbox"
+                    return (
+                      <TableRow
+                        hover
+                        //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
+                        onClick={event => handleClick(event, key[index],row.cattle_id)}
+                        role="checkbox"
+                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
+                        tabIndex={-1}
+                        key={row.cattle_id} /*keyyyyyyyyyyyyy*/
+                      >
+                        <TableCell
+                          padding="checkbox"
                           /*ส่วนของcheckBox แต่ละแถว*/
-                          >
-                            <Checkbox
-                              checked={isItemSelected}
-                              inputProps={{ "aria-labelledby": labelId }}
-                              color="primary"
-                            />
-                          </TableCell>
-                          <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                          >
-                            {row.id}
-                          </TableCell>
-                          <TableCell align="left">{row.cattle_id }</TableCell>
-                          <TableCell align="left">{row.bigcorral}</TableCell>
-                          <TableCell align="left">{row.corral}</TableCell>
-                          <TableCell align="left">{row.herd_no}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                        >
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ "aria-labelledby": labelId }}
+                            color="primary"
+                          />
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          
+                        </TableCell>
+                        <TableCell align="left">{row.cattle_id}</TableCell>
+                        <TableCell align="left">{row.bigcorral}</TableCell>
+                        <TableCell align="left">{row.corral}</TableCell>
+                        <TableCell align="left">{row.herd_no}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                     <TableCell colSpan={6} />
@@ -516,18 +568,19 @@ const descendingComparator=(a, b, orderBy) =>{
               </TableBody>
             </Table>
           </TableContainer>
-          <div ><TablePagination
-            //ปุ่มเปลี่ยนห้นา
-            rowsPerPageOptions={[5, 10, 15, 20]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          /></div>
-
-        </Paper >
+          <div>
+            <TablePagination
+              //ปุ่มเปลี่ยนห้นา
+              rowsPerPageOptions={[5, 10, 15, 20]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </div>
+        </Paper>
         <FormControlLabel
           control={
             <Switch
@@ -543,24 +596,49 @@ const descendingComparator=(a, b, orderBy) =>{
       <Paper elevation={3} className={classes.pad}>
         <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการบำรุง</h4>
         <FormGroup className={classes.marForm}>
-          <FormLabel >ชื่อผู้บันทึก</FormLabel>
-          <TextField id="input1" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" onChange={(e)=>setRecoder(e.target.value)}/>
+          <FormLabel>ชื่อผู้บันทึก</FormLabel>
+          <TextField
+            id="input1"
+            variant="outlined"
+            placeholder="กรอกหมายเลขโค"
+            size="small"
+            onChange={e => setRecoder(e.target.value)}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
-          <FormLabel >ผู้ปฏิบัติการ</FormLabel>
-          <TextField id="input2" variant="outlined" placeholder="กรอกหมายเลขโค" size="small" onChange={(e)=>setOperator(e.target.value)} />
+          <FormLabel>ผู้ปฏิบัติการ</FormLabel>
+          <TextField
+            id="input2"
+            variant="outlined"
+            placeholder="กรอกหมายเลขโค"
+            size="small"
+            onChange={e => setOperator(e.target.value)}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
-          <FormLabel >วันที่</FormLabel>
-          <TextField id="input3" variant="outlined" type="date" size="small"  onChange={(e)=>manageDate(e)}/>
+          <FormLabel>วันที่</FormLabel>
+          <TextField
+            id="input3"
+            variant="outlined"
+            type="date"
+            size="small"
+            onChange={e => manageDate(e)}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
-          <FormLabel >เวลา</FormLabel>
-          <TextField id="input4" variant="outlined" type="time" size="small" defaultValue="00:00" onChange={(e)=>setTime(e.target.value)} />
+          <FormLabel>เวลา</FormLabel>
+          <TextField
+            id="input4"
+            variant="outlined"
+            type="time"
+            size="small"
+            defaultValue="00:00"
+            onChange={e => setTime(e.target.value)}
+          />
         </FormGroup>
         {showTable()}
         <div className={classes.marTextField}>
-          <div className="container-fluid text-center" >
+          <div className="container-fluid text-center">
             <Fab
               color="primary"
               aria-label="add"
@@ -569,13 +647,17 @@ const descendingComparator=(a, b, orderBy) =>{
             >
               <AddIcon onClick={addtable} />
             </Fab>
-          </div></div>
+          </div>
+        </div>
         <Grid container className={classes.marTextField}>
           <Grid item xs={2}></Grid>
-          <Grid item xs={8}><Paper elevation={3} className={classes.paperNoti}>
-            เริ่มการเหนี่ยวนำ วันที่ {dateInduction}
-        </Paper></Grid>
-          <Grid item xs={2}></Grid></Grid>
+          <Grid item xs={8}>
+            <Paper elevation={3} className={classes.paperNoti}>
+              เริ่มการเหนี่ยวนำ วันที่ {showDateInduction}
+            </Paper>
+          </Grid>
+          <Grid item xs={2}></Grid>
+        </Grid>
         <div className="container-fluid text-center">
           <div className={classes.marTextField}>
             <Button
@@ -583,10 +665,21 @@ const descendingComparator=(a, b, orderBy) =>{
               color="primary"
               size="large"
               style={{ width: "250px", margin: "10px", outline: "none" }}
-              onClick={()=>saveDataToInduction()} >
+              onClick={() => saveDataToInduction()}
+            >
               บันทึก
-        </Button>
-          </div>  </div>
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ width: "250px", margin: "10px", outline: "none" }}
+              onClick={()=>console.log("["+selectedDamId+"] [ "+selected+"]")}
+            >
+              แสดง
+            </Button>
+          </div>{" "}
+        </div>
       </Paper>
     </div>
   );

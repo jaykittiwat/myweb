@@ -3,7 +3,7 @@ import axios from "axios";
 import TableFatter from "./TableFatter";
 import HeaderLogin from "./../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
-
+import firebase from "./../../../../backEnd/firebase";
 import "./../CowStyle.css";
 
 
@@ -12,23 +12,27 @@ class Fatten extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      post: [],
-      loading: false
+      posts: [],
+      loading: false,
     };
   }
 
-  async componentDidMount () {
-    this.setState({ posts: [], loading: true });
-    await axios.get(
-      "http://localhost:4000/user/cow/fatten/Usertest01"
-    ).then(res=>{
-      this.setState({ post:res.data, loading: false });
-       console.log(res);
-    })
-    
+  componentDidMount () {
+    this.setState({...this.state,loading:true})
+  firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        axios.get("http://localhost:4000/user/logIn/" + user.email).then(res=>{
+            return res.data[0].user
+        }).then(resEmail=>{
+          axios.get(
+              "http://localhost:4000/cattle/show/"+resEmail
+            ).then(res=>{this.setState({posts:res.data,loading:false})}).then(()=>console.log(this.state))
+        })
+      }
+    });
+   
   }
-
-  
+   
 
   render() {
  

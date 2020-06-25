@@ -238,7 +238,7 @@ export default function TableInduction({ posts, loading }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
-  //เก็บ row.id เมื่อ กดคลิก เลือกรายการทั้งหมด
+  
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
