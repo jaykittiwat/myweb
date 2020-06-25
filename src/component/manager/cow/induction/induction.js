@@ -1,51 +1,56 @@
-import React,{useEffect,useState} from "react";
-import axios from 'axios';
-import Table from './tableintrution';
-import HeaderLogin from './../../../../HeaderLogin';
+import React, { Component } from "react";
+import axios from "axios";
+//import TableInduction from "./tableintrution";
+import HeaderLogin from "./../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
-//import { Form, Col, Button } from "react-bootstrap";
+import firebase from "./../../../../backEnd/firebase";
 import "./../CowStyle.css";
 
-export default function Induction() {
-
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
 
 
-
-
-
-useEffect(()=>{
-  const fetchPost=async()=>{
-    setLoading(true);
-    //set เป็น true เพื่อเข้าสู่สถานะโหลดข้อมูล
-    const res = await axios.get('https://jsonplaceholder.typicode.com/todos');
-    //await บรรทัดอยู้ข้างล่าง นี้   รอไปก่อน จนกว่าจะโลหดเสร็จ
-    setPosts(res.data);
-    setLoading(false);
+class Induction extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+      loading: false,
+    };
   }
-  fetchPost();
-},[]);
 
+  componentDidMount () {
+    this.setState({...this.state,loading:true})
+  firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        axios.get("http://localhost:4000/user/logIn/" + user.email).then(res=>{
+            return res.data[0].user
+        }).then(resEmail=>{
+          axios.get(
+              "http://localhost:4000/notification/"+resEmail
+            ).then(res=>{this.setState({posts:res.data,loading:false})}).then(()=>console.log(this.state))
+        })
+      }
+    });
+   
+  }
+   
 
-  return (
-    <div className="container-fluid">
-      <div className="row ">
-        <HeaderLogin />
+  render() {
+ 
+    return (
+      <div className="container-fluid">
+        <div className="row ">
+          <HeaderLogin />
+        </div>
+        <div className="row Nav-shadow posi">
+          <NavbarLogin />
+        </div>
+    
+        <div className="row mar"></div>
       </div>
-      <div className="row Nav-shadow posi">
-        <NavbarLogin />
-      </div>
-     
-           
-<Table posts={posts} loading={loading}/>
-      <div className="row mar"></div>
-    </div>
-  );
+    );
+  }
 }
-/*
- https://mdbootstrap.com/docs/react/tables/datatables/
 
-//npm install  mdbreact
-//น่าจะเอาไว้รับผลมั้ง <Result> {checkbox1 && <p>{JSON.stringify(delete checkbox1.checkbox && checkbox1)}</p>}</Result>
- */
+export default Induction;
+
+// <TableInduction posts={this.state}/>
