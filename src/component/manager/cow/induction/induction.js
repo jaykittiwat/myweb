@@ -26,7 +26,7 @@ class Induction extends Component {
         }).then(resEmail=>{
           axios.get(
               "http://localhost:4000/notification/"+resEmail
-            ).then(res=>{this.setState({posts:res.data,loading:false})}).then(()=>console.log(this.state))
+            ).then(res=>{this.setState({posts:res.data,loading:false})}).then(()=>console.log(Object.keys(this.state.posts)))
         })
       }
     });
