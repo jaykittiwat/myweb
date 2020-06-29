@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper"
 import Button from "@material-ui/core/Button"
 import "./styleReport.css"
 import Grid from "@material-ui/core/Grid";
-import SaveIcon from "@material-ui/icons/Save";
+//import SaveIcon from "@material-ui/icons/Save";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -77,7 +77,7 @@ export default function TableReport() {
         onChange={handleChange}
         aria-label="Vertical tabs example"
         className={classes.tabs}
-        className="width"
+    
       >
         <Tab label="จำนวนโคภายในฟาร์ม" {...a11yProps(0)} style={{outline:"none"}} />
         <Tab label="จำนวนโคแต่ละสายพันธุ์" {...a11yProps(1)} style={{outline:"none"}} />

@@ -108,7 +108,7 @@ export default function TableBreed({ posts, loading }) {
               sortDirection={orderBy === headCell.id ? order : false}
             >
 
-              {headCell.label /* ชื่อตาราง */}
+             <h5> {headCell.label /* ชื่อตาราง */}</h5>
 
 
 

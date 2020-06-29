@@ -58,7 +58,7 @@ export default function PaperFarm() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [lock, setLock] = React.useState(true);
-  const [Unlock, setUnLock] = React.useState(false);
+  //const [Unlock, setUnLock] = React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

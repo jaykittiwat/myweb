@@ -215,7 +215,7 @@ setShowDateInduction(setnextmissionday)
               //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
               sortDirection={orderBy === headCell.id ? order : false}
             >
-              {headCell.label /* ชื่อตาราง */}
+              <h5>{headCell.label /* ชื่อตาราง */}</h5>
             </TableCell>
           ))}
         </TableRow>
