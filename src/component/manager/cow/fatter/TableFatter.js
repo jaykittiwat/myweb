@@ -437,7 +437,7 @@ setShowDateInduction(setnextmissionday)
   };
   const deleteItem = index => {
     const result = medic.filter(results => results !== medic[index]);
-    console.log(result);
+    //console.log(result);
     setMedic(result);
   };
 
