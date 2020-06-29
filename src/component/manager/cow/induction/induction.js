@@ -49,7 +49,7 @@ class Induction extends Component {
               .then(res => {
                 const listInduction = [];
                res.data.map(list => {
-                  if (list.type === "เหนี่ยวนำกลับสัด") {
+                  if (list.type==="เหนี่ยวนำกลับสัด") {
                     listInduction.push(list);
                   }
                   return null;

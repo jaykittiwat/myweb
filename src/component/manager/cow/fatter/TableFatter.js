@@ -141,7 +141,6 @@ setShowDateInduction(setnextmissionday)
     }
     ).then(res=>{
       if(res.status===201){
-        
         window.location.reload(false);
       }
     })

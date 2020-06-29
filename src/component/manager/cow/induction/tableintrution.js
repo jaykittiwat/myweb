@@ -75,9 +75,7 @@ setShowDateInduction(setnextmissionday)
   let key = Object.keys(posts);
   var values = Object.keys(posts).map(key => posts[key]);
   for (let i = 0; i < values.length; i++) {
-    if (
-      values[i].status === "บำรุงแล้ว"
-    ) {
+    if (values[i].status === "บำรุงแล้ว") {
       rows.push(values[i]);
     }
   }
