@@ -130,6 +130,7 @@ class FormRegiscow extends Component {
               )
               .then(res => {
                 alert("ลงทะเบียนโคสำเร็จ");
+                window.location.reload(false);
               })
               .catch(err => {
                 alert("เกิดข้อผิดพลาดกับระบบ");
@@ -145,6 +146,7 @@ class FormRegiscow extends Component {
               )
               .then(res => {
                 alert("ลงทะเบียนโคสำเร็จ");
+                window.location.reload(false);
               })
               .catch(err => {
                 alert("เกิดข้อผิดพลาดกับระบบ");
@@ -154,6 +156,7 @@ class FormRegiscow extends Component {
     } else {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     }
+
   }
   //เมื่อรูปเข้ามา
   fileChangedHandler = event => {

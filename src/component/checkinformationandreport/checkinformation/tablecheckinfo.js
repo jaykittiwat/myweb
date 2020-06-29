@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import "./styleCheckinfo.css";
 import { Doughnut, Bar } from "react-chartjs-2";
 import Grid from "@material-ui/core/Grid";
@@ -75,7 +75,7 @@ export default function TableReport() {
             onChange={handleChange}
             aria-label="Vertical tabs example"
             className={classes.tabs}
-            className="width"
+            //className="width"
           >
             <Tab
               label="จำนวนโคภายในฟาร์ม"
