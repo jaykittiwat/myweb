@@ -47,12 +47,13 @@ class Induction extends Component {
                 fullToday
               )
               .then(res => {
+                
                 const listInduction = [];
                res.data.map(list => {
                   if (list.type === "เหนี่ยวนำกลับสัด") {
                     listInduction.push(list);
                   }
-                  return null;
+                
                 });
                 return listInduction;
               })
@@ -63,16 +64,15 @@ class Induction extends Component {
                 )
                 return id_cattle;
               }).then(idCattle => {
+              //console.log(idCattle)
+                let list=[];
+              for(let i=0;i<idCattle.length;i++){
+               axios.get("http://localhost:4000/cattle/show/" + this.state.UID + "/"+idCattle[i].id_cattle).then(res=>{
+                console.log(res.data)
+              })
 
-
-                return idCattle.map(n => (axios.get("http://localhost:4000/cattle/show/" + this.state.UID + "/"+n)
-                .then(res => { 
-                  this.setState({ ...this.state, posts: res.data,loading:false }) 
+              }
               
-                })))
-
-
-
                })
              
           });
@@ -106,4 +106,4 @@ export default Induction;
 res.json(list) /*/
 
 
-//axios.get("http://localhost:4000/cattle/show/"+resEmail+"/pc 01").then(res=>{ })
+//axios.get("http://localhost:4000/cattle/show/" + this.state.UID + "/"+n.id_cattle)

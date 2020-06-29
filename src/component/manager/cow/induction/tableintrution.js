@@ -38,7 +38,7 @@ export default function TableInduction(props) {
 
   let posts = props.posts.posts;
   let loading = props.posts.loading;
-  let UID= props.posts.UID;
+  
   const [typeModule]=useState({status:"เหนี่ยวนำแล้ว"})
   
   const [recoder, setRecoder] = useState("");
@@ -46,7 +46,7 @@ export default function TableInduction(props) {
   const [selectedDate, setSelectedDate] = useState("");
   const [dateBreed, setDateBreed] = useState("");
   const [time, setTime] = useState("");
-const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
+  const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
 
 
   const manageDate = e => {
