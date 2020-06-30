@@ -72,7 +72,7 @@ export default function TableCalve() {
               <TableCell align="center"><TextField   variant="outlined" size="small" /></TableCell>
               <TableCell align="center"><TextField   variant="outlined" size="small" /></TableCell>
               <TableCell align="center"><TextField   variant="outlined" size="small" /></TableCell>
-              <TableCell align="center"><TextField id="outlined-basic"  variant="outlined" size="small" /></TableCell>
+              <TableCell align="center"><TextField   variant="outlined" size="small" /></TableCell>
               <TableCell align="center"> <Button
         variant="contained"
         color="primary"

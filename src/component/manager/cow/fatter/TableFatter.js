@@ -46,7 +46,7 @@ export default function TableFatter(props) {
   const [dateInduction, setDateInduction] = useState("");
   const [time, setTime] = useState("");
 const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
-
+//console.log(props)
 const current = () =>{
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
@@ -79,7 +79,8 @@ setShowDateInduction(setnextmissionday)
 
   /*-----------------------------------------------------------------------------*/
   let rows = [];
-  let key = Object.keys(posts);
+  let Key = Object.keys(posts);
+  let key=[]
   var values = Object.keys(posts).map(key => posts[key]);
   for (let i = 0; i < values.length; i++) {
     if (
@@ -88,6 +89,7 @@ setShowDateInduction(setnextmissionday)
       values[i].status === "โคแท้ง" ||
       values[i].status === "ไม่ท้อง"
     ) {
+      key.push(Key[i])
       rows.push(values[i]);
     }
   }
@@ -141,7 +143,7 @@ setShowDateInduction(setnextmissionday)
     }
     ).then(res=>{
       if(res.status===201){
-        window.location.reload(false);
+        window.location.reload();
       }
     })
   }

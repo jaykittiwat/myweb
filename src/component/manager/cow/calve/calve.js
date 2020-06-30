@@ -41,9 +41,5 @@ useEffect(()=>{
     </div>
   );
 }
-/*
- https://mdbootstrap.com/docs/react/tables/datatables/
 
-//npm install  mdbreact
-//น่าจะเอาไว้รับผลมั้ง <Result> {checkbox1 && <p>{JSON.stringify(delete checkbox1.checkbox && checkbox1)}</p>}</Result>
- */
+

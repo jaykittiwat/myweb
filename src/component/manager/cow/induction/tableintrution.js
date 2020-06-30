@@ -28,7 +28,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Grid } from "@material-ui/core";
-import firebase from "./../../../../backEnd/firebase";
+
 import axios from "axios";
 
 
@@ -39,6 +39,7 @@ export default function TableInduction(props) {
   let posts = props.posts.posts;
   let loading = props.posts.loading;
   let UID= props.posts.UID;
+  let idInduction= props.posts.idCowInduc;
   const [typeModule]=useState({status:"เหนี่ยวนำแล้ว"})
   
   const [recoder, setRecoder] = useState("");
@@ -72,10 +73,14 @@ setShowDateInduction(setnextmissionday)
 
   /*-----------------------------------------------------------------------------*/
   let rows = [];
-  let key = Object.keys(posts);
+  let Key = Object.keys(posts);
+  let key=[]
   var values = Object.keys(posts).map(key => posts[key]);
   for (let i = 0; i < values.length; i++) {
-    if (values[i].status === "บำรุงแล้ว") {
+    if (
+      values[i].status === "บำรุงแล้ว"
+    ) {
+      key.push(Key[i])
       rows.push(values[i]);
     }
   }
@@ -85,13 +90,16 @@ setShowDateInduction(setnextmissionday)
 
 
  const saveDataToInduction= ()=>{
-   console.log(selected)
-  /* const x = selected.length
+console.log(selected)
+ // window.location.reload();
+ //console.log(selectedDamId)
+  // console.log(selected)
+   /*const x = selected.length
     for(let a=0;a<x;a++){
        axios.post("http://localhost:4000/cattle/status/"+UID+"/"+selected[a],typeModule)
       
     }
-    for(let b=0;b<x;b++){
+   for(let b=0;b<x;b++){
      axios.post("http://localhost:4000/history/"+UID,
      {
              dam_id:selectedDamId[b],
@@ -617,10 +625,7 @@ setShowDateInduction(setnextmissionday)
             color="primary"
             size="large"
             style={{ width: "250px", margin: "10px", outline: "none" }}
-            onClick={() => {
-         saveDataToInduction()
-           
-            }}
+            onClick={() => saveDataToInduction() }
           >
             บันทึก
         </Button>

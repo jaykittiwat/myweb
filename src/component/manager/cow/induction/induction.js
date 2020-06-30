@@ -23,7 +23,7 @@ class Induction extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user })
+            this.setState({ ...this.state, UID: res.data[0].user });
             return res.data[0].user;
           })
           .then(resEmail => {
@@ -42,39 +42,29 @@ class Induction extends Component {
             axios
               .get(
                 "http://localhost:4000/notification/" +
-                resEmail +
-                "/" +
-                fullToday
+                  resEmail +
+                  "/" +
+                  fullToday
               )
               .then(res => {
-                const listInduction = [];
-               res.data.map(list => {
-                  if (list.type==="เหนี่ยวนำกลับสัด") {
-                    listInduction.push(list);
-                  }
-                  return null;
-                });
-                return listInduction;
+                
+                //โคที่ต้องมี่การแจ้งเตือน
+                const list = Object.values(res.data);
+                return list;
+              }).then(list=>{
+        const cattleListData=[]
+                for(let i=0;i<list.length;i++){
+                axios.get("http://localhost:4000/cattle/show/"+this.state.UID+"/"+list[i].id_cattle).then(res=>{
+                  cattleListData.push(res.data)
+                }).then(()=>{
+                  const setPost = Object.assign.apply({}, cattleListData)
+                  this.setState({...this.state,posts:setPost,loading:false})
+                }).then(()=>{
+                  console.log(this.state.posts)
+                })
+               
+                }
               })
-              .then(lists => {
-                const id_cattle = []
-                lists.map(n =>
-                  id_cattle.push(n)
-                )
-                return id_cattle;
-              }).then(idCattle => {
-
-
-                return idCattle.map(n => (axios.get("http://localhost:4000/cattle/show/" + this.state.UID + "/"+n)
-                .then(res => { 
-                  this.setState({ ...this.state, posts: res.data,loading:false }) 
-              
-                })))
-
-
-
-               })
-             
           });
       }
     });
@@ -89,7 +79,7 @@ class Induction extends Component {
         <div className="row Nav-shadow posi">
           <NavbarLogin />
         </div>
-      <TableInduction posts={this.state}/>
+        <TableInduction posts={this.state} />
         <div className="row mar"></div>
       </div>
     );
@@ -104,6 +94,5 @@ export default Induction;
   list.push(elem.val());
 });
 res.json(list) /*/
-
 
 //axios.get("http://localhost:4000/cattle/show/"+resEmail+"/pc 01").then(res=>{ })

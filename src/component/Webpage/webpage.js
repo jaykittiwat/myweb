@@ -30,32 +30,32 @@ class Webpage extends Component{
        
        <div className="slide-right "><div style={{fontSize:"3vw"}} className="slide-right-text01">ยินดีต้อนรับเข้าสู่</div><div style={{fontSize:"2vw"}} className="slide-right-text01">เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</div><div style={{fontSize:"1vw"}} className="slide-right-text01">Webapplication Dam Management System </div></div>
         </div>
-        <div className="footer-style2 row ">
-          <div className="row footer-padding container-fluid">
-            <div className="col-md-3">
-              <li>ผู้พัฒนา</li>
+        <div className=" row ">
+          <div className="row footer-padding container-fluid" >
+            <div className="col-md-3" >
+              <li className="footer-style2">ผู้พัฒนา</li>
               <ul>
-                <li>นายกิตติวัฒน์ ศรีชัยพล</li>
-                <li>นายไชยวัฒน์ อธิกรม</li>
+                <li className="footer-style3">นายกิตติวัฒน์ ศรีชัยพล</li>
+                <li className="footer-style3">นายไชยวัฒน์ อธิกรม</li>
               </ul>
             </div>
             <div className="col-md-3">
-              <li>ที่ปรึกษา</li>
+              <li className="footer-style2">ที่ปรึกษา</li>
               <ul>
-                <li>ดร.ภูวิศสรณ์ ภูมิสรณคมณ์</li>
+                <li className="footer-style3">ดร.ภูวิศสรณ์ ภูมิสรณคมณ์</li>
               </ul>
             </div>
             <div className="col-md-3">
-              <li>ติดต่อได้ที่</li>
+              <li className="footer-style2">ติดต่อได้ที่</li>
               <ul>
-                <li>0928412006</li>
-                <li>jaykittiwat2542@gmail.com</li>
+                <li className="footer-style3">0928412006</li>
+                <li className="footer-style3">jaykittiwat2542@gmail.com</li>
               </ul>
             </div>
             <div className="col-md-3">
-              <li>หมายเหตุ</li>
+              <li className="footer-style2">หมายเหตุ</li>
               <ul>
-                <li>version 0.1(Beta)</li>
+                <li className="footer-style3">version 0.1(alpha)</li>
               
               </ul>
             </div>

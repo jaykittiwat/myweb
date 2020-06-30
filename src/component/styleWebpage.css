@@ -77,12 +77,20 @@
   font-size: 20px;
 }
 .footer-style2 {
-  color: #4f4f4f;
+  color: #222222;
   background-color: #ffffff;
   
-  font-family: "Kanit-ExtraLight";
+  font-family: "Kanit-Regular";
   font-size: 20px;
 }
+.footer-style3 {
+  color: #444444;
+  background-color: #ffffff;
+  
+  font-family: "Kanit-Regular";
+  font-size: 18px;
+}
+
 .footer-padding {
   padding: 10px;
   
