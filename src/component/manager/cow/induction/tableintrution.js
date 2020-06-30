@@ -47,7 +47,7 @@ export default function TableInduction(props) {
   const [selectedDate, setSelectedDate] = useState("");
   const [dateBreed, setDateBreed] = useState("");
   const [time, setTime] = useState("");
-const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
+  const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
 
 
   const manageDate = e => {
