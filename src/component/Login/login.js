@@ -25,7 +25,9 @@ class Login extends Component {
     const { name, value } = e.target;
     //console.log(name + ":" + value);
     this.setState({
-      [name]: value
+      ...this.state,
+      [name]: value,
+      
     });
   };
 
@@ -45,6 +47,7 @@ class Login extends Component {
       .then(response => {})
       .catch(error => {
         this.setState({
+          ...this.state,
           message: error.message
         });
         alert("ไอดี หรือ  รหัสผ่าน ของท่านไม่ถูกต้อง");
@@ -56,6 +59,14 @@ class Login extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
+          ...this.state,
+          login:"login",
+          currentUser: user
+        });
+      }else{
+        this.setState({
+          ...this.state,
+          login:"noLogin",
           currentUser: user
         });
       }
@@ -156,11 +167,14 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.currentUser) {
+    if (this.state.login==="login") {
       return <Home currentUser={this.state.currentUser} />;
     }
+    if (this.state.login==="noLogin") {
+      return <div className="container-fluid ">{this.showpageLogin()}</div>;
+    }
     //if user haven't id and password  return -->
-    return <div className="container-fluid ">{this.showpageLogin()}</div>;
+    return <div className="container-fluid "></div>;
   }
 }
 export default Login;
