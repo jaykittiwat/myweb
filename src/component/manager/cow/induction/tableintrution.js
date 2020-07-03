@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState} from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -21,10 +21,10 @@ import TextField from "@material-ui/core/TextField";
 import "date-fns";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Fab from "@material-ui/core/Fab";
+/*import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from "@material-ui/icons/Delete";*/
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Grid } from "@material-ui/core";
@@ -35,19 +35,20 @@ import axios from "axios";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableInduction(props) {
-
+  let date=props.posts.dataNoti;
   let posts = props.posts.posts;
   let loading = props.posts.loading;
+  let keysDateNotiCattle=props.posts.keysDate;
   let UID= props.posts.UID;
-  let idInduction= props.posts.idCowInduc;
+  //let idInduction= props.posts.idCowInduc;
   const [typeModule]=useState({status:"เหนี่ยวนำแล้ว"})
-  
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [dateBreed, setDateBreed] = useState("");
   const [time, setTime] = useState("");
   const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
+
 
 
   const manageDate = e => {
@@ -90,13 +91,32 @@ setShowDateInduction(setnextmissionday)
 
 
  const saveDataToInduction= ()=>{
+/*console.log("---------------ข้อมูลโคที่ต้องทำการบันทึก----------------")
+console.log(rows)
+console.log("---------------คีย์ สำหรับquery ของ cattle child---------------")
 console.log(selected)
- // window.location.reload();
+console.log("--------------id ที่เลือก----------------")
+console.log(selectedDamId)
+console.log("--------------วันที่----------------")
+console.log(dateNoti)
+console.log("----------------คีย์ สำหรับquery ของ ืนะรดรแฟะรนื child---------------")
+console.log(keyDateNoti)*/
+
+
+
+
+ 
  //console.log(selectedDamId)
   // console.log(selected)
-   /*const x = selected.length
+   const x = selected.length
+   for(let e=0;e<x;e++){
+    axios.delete("http://localhost:4000/notification/delete/"+UID+"/"+dateNoti[e].date+"/"+keyDateNoti[e])
+}
+
     for(let a=0;a<x;a++){
-       axios.post("http://localhost:4000/cattle/status/"+UID+"/"+selected[a],typeModule)
+       axios.post("http://localhost:4000/cattle/status/"+UID+"/"+selected[a],typeModule).then(res=>{
+        //console.log(res.data)
+       })
       
     }
    for(let b=0;b<x;b++){
@@ -104,19 +124,19 @@ console.log(selected)
      {
              dam_id:selectedDamId[b],
              date:selectedDate,
-             type:"บำรุงแม่พันธุ์"
+             type:"เหนี่ยวนำกลับสัด"
      }
      )
    }
    for(let c=0;c<x;c++){
-    axios.post("http://localhost:4000/maintain/"+UID,
+    axios.post("http://localhost:4000/synchronize/"+UID,
     {
             dam_id:selectedDamId[c],
-            date:selectedDate,
-            type:"บำรุงก่อนคลอด",
+            datepro:selectedDate,
+            program_sync:programSync,
             recorder:recoder,
             operator:operator,
-            time:time,
+           // time:time,
     }
     )
   }
@@ -125,15 +145,15 @@ console.log(selected)
     {
       date:dateBreed ,
       id_cattle:selectedDamId[d] ,
-      type:"เหนี่ยวนำกลับสัด" ,
+      type:"ผสมพันธุ์" ,
     }
     ).then(res=>{
       if(res.status===201){
-        
-        window.location.reload(false);
+        window.location.reload();
       }
     })
-  }*/
+  }
+  
 
  }
 
@@ -170,7 +190,8 @@ console.log(selected)
     { id: "2", numeric: false, disablePadding: false, label: "หมายเลข" },
     { id: "3", numeric: false, disablePadding: false, label: "โรงเรือน" },
     { id: "4", numeric: false, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: false, disablePadding: false, label: "ฝูง" }
+    { id: "5", numeric: false, disablePadding: false, label: "ฝูง" },
+    { id: "6", numeric: false, disablePadding: false, label: "วันที่" },
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -324,6 +345,8 @@ console.log(selected)
   //เก็บ row.cattle_id เมื่อ กดคลิก เลือกรายการทั้งหมด
   const [selected, setSelected] = React.useState([]);
   const [selectedDamId, setSelectedDamId] = React.useState([]);
+  const [dateNoti,setDateNoti]=useState([]);
+  const [keyDateNoti,setKeyDateNoti]=useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -334,31 +357,44 @@ console.log(selected)
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-  //checkBox  ทั้งหมด
+  //checkBox  ทั้งหมด-----------------------------------------------------------------------------------
   const handleSelectAllClick = event => {
     //ถ้ามีการ คลิกเชค
     if (event.target.checked) {
       //map row    idเก็บ ไว้ใน newSelecteds
-
       const newSelecteds = key.map(n => n);
       const newSelectedsDamId = rows.map(n => n.cattle_id);
-      //console.log(newSelecteds) ;
+      const newSelectedsDate = date.map(n => n);
+      const newSelectedsKeysDate = keysDateNotiCattle.map(n => n);
+     
+      //console.log(newDateNoti) ;
+     
       setSelected(newSelecteds);
       setSelectedDamId(newSelectedsDamId)
+      setDateNoti(newSelectedsDate)
+      setKeyDateNoti(newSelectedsKeysDate)
       return;
     }
 
     //ถ้าไปก็ set array is empty
+    setDateNoti([])
     setSelected([]);
     setSelectedDamId([]);
   };
-
-  const handleClick = (event, id,cattle_id) => {
+//----------------------------------------------------------------------------เฉพาะแถว----------------------------
+  const handleClick = (event, id,cattle_id,dateIndex,key) => {
     //หา ค่าที่เข้ามาว่าอยู่ในindex ไหน
     const selectedIndex = selected.indexOf(id);
     const selectedIndexCattle = selectedDamId.indexOf(cattle_id);
+    const selectedIndexDate = dateNoti.indexOf(dateIndex);
+    const selectedIndexKey = keyDateNoti.indexOf(key);
+    
     let newSelected = [];
     let newSelectedDamId = [];
+    let newSelectedDate = [];
+    let newSelectedDateKey = [];
+
+    
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
@@ -385,8 +421,38 @@ console.log(selected)
        selectedDamId.slice(selectedIndexCattle + 1)
       );
     }
-    
     setSelectedDamId(newSelectedDamId)
+
+    if (selectedIndexDate === -1) { 
+      newSelectedDate = newSelectedDate.concat(dateNoti,dateIndex);
+    } else if (selectedIndexDate === 0) {   
+      newSelectedDate = newSelectedDate.concat(dateNoti.slice(1));
+    } else if (selectedIndexDate === dateNoti.length - 1) {     
+      newSelectedDate = newSelectedDate.concat(dateNoti.slice(0, -1));
+    } else if (selectedIndexDate > 0) {
+      newSelectedDate = newSelectedDate.concat(
+        dateNoti.slice(0, selectedIndexDate),
+        dateNoti.slice( selectedIndexDate + 1)
+      );
+    }
+    setDateNoti(newSelectedDate)
+
+    if (selectedIndexKey === -1) { 
+      newSelectedDateKey = newSelectedDateKey.concat(keyDateNoti,key);
+    } else if (selectedIndexKey === 0) {   
+      newSelectedDateKey =  newSelectedDateKey.concat(keyDateNoti.slice(1));
+    } else if (selectedIndexKey  === keyDateNoti.length - 1) {     
+      newSelectedDateKey = newSelectedDateKey.concat(keyDateNoti.slice(0, -1));
+    } else if (selectedIndexKey  > 0) {
+      newSelectedDateKey =  newSelectedDateKey.concat(
+        keyDateNoti.slice(0,selectedIndexKey),
+        keyDateNoti.slice(selectedIndexKey + 1)
+      );
+    }
+    setKeyDateNoti(newSelectedDateKey)
+
+
+ 
   };
 
   const handleChangePage = (event, newPage) => {
@@ -407,9 +473,9 @@ console.log(selected)
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
-  const [medic, setMedic] = useState([
+  /*const [medic, setMedic] = useState([
     {
-      item: ""
+      program: ""
     }
   ]);
   const addtable = event => {
@@ -425,13 +491,16 @@ console.log(selected)
   };
   const deleteItem = index => {
     const result = medic.filter(results => results !== medic[index]);
-    console.log(result);
+    //console.log(result);
     setMedic(result);
+  };*/
+  const [programSync,setPrigramSync]=useState("")
+  const handleChange = (event) => {
+    setPrigramSync(event.target.value)
   };
-
   /*------------------------------------------------------------------------------*/
 
-  const showTable = () => {
+  /*const showTable = () => {
     return medic.map((medics, index) => (
       <form className={classes.marTextField} key={index}>
         <FormControl size="small" style={{ width: "95%" }}>
@@ -442,10 +511,10 @@ console.log(selected)
             value={medic.item}
             onChange={event => handleChange(event, index)}
           >
-            <option value=" ">เลือก</option>
-            <option>Ten</option>
-            <option>Twenty</option>
-            <option>Thirty</option>
+            <option value=" "></option>
+            <option>Program A</option>
+            <option>Program B</option>
+            <option>Program C</option>
           </Select>
         </FormControl>
 
@@ -459,7 +528,30 @@ console.log(selected)
         </IconButton>
       </form>
     ));
+  };*/
+
+  const showTable = () => {
+    return(
+      <form className={classes.marTextField}>
+        <FormControl size="small" style={{ width: "95%" }}>
+          <FormLabel>รายการยา</FormLabel>
+          <Select
+            variant="outlined"
+            native
+            value={programSync} 
+            onChange={event => handleChange(event)}
+            >
+            <option value=" "></option>
+            <option>Program A</option>
+            <option>Program B</option>
+            <option>Program C</option>
+          </Select>
+        </FormControl>
+
+      </form>
+   )
   };
+
   if (loading) {
     return (
       <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
@@ -517,7 +609,7 @@ console.log(selected)
                       <TableRow
                         hover
                         //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                        onClick={event => handleClick(event, key[index],row.cattle_id)}
+                        onClick={event => handleClick(event, key[index],row.cattle_id,date[index],keysDateNotiCattle[index])}
                         role="checkbox"
                         aria-checked={isItemSelected} //คลิกเลืองตรงตารา
                         tabIndex={-1}
@@ -545,12 +637,13 @@ console.log(selected)
                         <TableCell align="left">{row.bigcorral}</TableCell>
                         <TableCell align="left">{row.corral}</TableCell>
                         <TableCell align="left">{row.herd_no}</TableCell>
+                        <TableCell align="left">{date[index].date}</TableCell>
                       </TableRow>
                     );
                   })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                    <TableCell colSpan={6} />
+                    <TableCell colSpan={7} />
                   </TableRow>
                 )}
               </TableBody>
@@ -600,17 +693,7 @@ console.log(selected)
           <TextField id="input4" variant="outlined" type="time" size="small" defaultValue="00:00"  onChange={e => setTime(e.target.value)}/>
         </FormGroup>
         {showTable()}
-<div className={classes.marTextField}>
-        <div className="container-fluid text-center" >
-          <Fab
-            color="primary"
-            aria-label="add"
-            size="small"
-            style={{ margin: "10px", outline: "none" }}
-          >
-            <AddIcon onClick={addtable} />
-          </Fab>
-        </div></div>
+
         <Grid container className={classes.marTextField}>
           <Grid item xs={2}></Grid>
           <Grid item xs={8}><Paper elevation={3} className={classes.paperNoti}>
@@ -629,8 +712,23 @@ console.log(selected)
           >
             บันทึก
         </Button>
+        
       </div>  </div>
       </Paper>
     </div>
   );
 }
+
+
+/*<div className={classes.marTextField}>
+        <div className="container-fluid text-center" >
+          <Fab
+            color="primary"
+            aria-label="add"
+            size="small"
+            style={{ margin: "10px", outline: "none" }}
+          >
+            <AddIcon onClick={addtable} />
+          </Fab>
+        </div></div>
+ */

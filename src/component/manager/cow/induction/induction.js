@@ -12,6 +12,8 @@ class Induction extends Component {
     this.state = {
       posts: [],
       loading: false,
+      keysDate:[],
+      dataNoti:[],
       UID: ""
     };
   }
@@ -47,24 +49,38 @@ class Induction extends Component {
                   fullToday
               )
               .then(res => {
+               /* console.log("---------------โคที่ยังไม่ได้บันทึกข้อมูลตามกำหนด-----------------")
                 
-                //โคที่ต้องมี่การแจ้งเตือน
-                const list = Object.values(res.data);
+                console.log("---------------คีย์ ของnotification ของโคแต่ละตัว-----------------")    
+                console.log(Object.keys(res.data))  
+                console.log(Object.values(res.data))  */
+              
+
+                let key=Object.keys(res.data);
+                let list = Object.values(res.data);
+                this.setState({...this.state,dataNoti:list,keysDate:key})
                 return list;
-              }).then(list=>{
-        const cattleListData=[]
+                
+              }).then(async (list)=>{
+                /*console.log("---------------values การแจ้งเตือนแต่ละตัว(เอาไปดึงข้อมูลในcattle)-----------------")   */ 
+                console.log(list)               
+                //ดึงข้อมูลโค
+                const cattleListData=[]
                 for(let i=0;i<list.length;i++){
-                axios.get("http://localhost:4000/cattle/show/"+this.state.UID+"/"+list[i].id_cattle).then(res=>{
-                  cattleListData.push(res.data)
-                }).then(()=>{
-                  const setPost = Object.assign.apply({}, cattleListData)
-                  this.setState({...this.state,posts:setPost,loading:false})
-                }).then(()=>{
-                  console.log(this.state.posts)
-                })
-               
+                let res= await axios.get("http://localhost:4000/cattle/show/"+this.state.UID+"/"+list[i].id_cattle)
+                cattleListData.push(res.data)
                 }
-              })
+               return cattleListData
+              }).then(cattleListData=>{
+                console.log(cattleListData)
+                const setPost = Object.assign.apply({}, cattleListData)
+                this.setState({...this.state,posts:setPost,loading:false})
+              }).then(()=>{
+                //console.log(this.state.posts)
+                //console.log(this.state.keysDate)
+                //console.log(this.state.dataNoti)
+              }
+              )
           });
       }
     });
@@ -96,3 +112,26 @@ export default Induction;
 res.json(list) /*/
 
 //axios.get("http://localhost:4000/cattle/show/"+resEmail+"/pc 01").then(res=>{ })
+
+
+/*  if(cattleListData.length===list.length){
+
+                } */
+                
+
+
+                /*
+                
+                
+                .then(()=>{
+                  console.log("---------------ดึงข้อมูลจาก cattle-----------------")  
+                  console.log(cattleListData)
+                  const setPost = Object.assign.apply({}, cattleListData)
+                  this.setState({...this.state,posts:setPost,loading:false})
+                }).then(()=>{
+                  //console.log(this.state.posts)
+                })
+                
+                
+                
+                */
