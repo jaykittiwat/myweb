@@ -57,11 +57,16 @@ const useStyles = makeStyles((theme) => ({
 export default function PaperDrug() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const [disabled, setEnabled] = React.useState(true);
+  const handleClickfalse = (event) => {
+    setEnabled(false);
+  };
+  const handleClicktrue = (event) => {
+    setEnabled(true);
+  };
   return (
     <div className="container martop-10">
       <Paper elevation={3}>
@@ -84,9 +89,10 @@ export default function PaperDrug() {
             />
           </Tabs>
           <TabPanel value={value} index={0}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
+            <Paper elevation={0} >
+              <Grid className="mar pad10" >
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width300px"
                   id="outlined0"
@@ -94,6 +100,7 @@ export default function PaperDrug() {
                   size="small"
                 />{" "}
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width300px"
                   id="outlined1"
@@ -111,6 +118,7 @@ export default function PaperDrug() {
               <Grid container>
                 <Grid>
                   <Button
+                  onClick={handleClickfalse}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -122,6 +130,7 @@ export default function PaperDrug() {
                 </Grid>
                 <Grid>
                   <Button
+                  onClick={handleClicktrue}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -138,6 +147,7 @@ export default function PaperDrug() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width300px"
                   id="outlined2"
@@ -145,6 +155,7 @@ export default function PaperDrug() {
                   size="small"
                 />{" "}
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width300px"
                   id="outlined3"
@@ -162,6 +173,7 @@ export default function PaperDrug() {
               <Grid container>
                 <Grid>
                   <Button
+                  onClick={handleClickfalse}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -173,6 +185,7 @@ export default function PaperDrug() {
                 </Grid>
                 <Grid>
                   <Button
+                  onClick={handleClicktrue}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -189,6 +202,7 @@ export default function PaperDrug() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width600px"
                   id="outlined0"
@@ -197,6 +211,7 @@ export default function PaperDrug() {
                 />
                 <Grid>
                   <TextField
+                  disabled={disabled}
                     type="text"
                     className="textField-width300px"
                     id="outlined1"
@@ -204,6 +219,7 @@ export default function PaperDrug() {
                     size="small"
                   />{" "}
                   <TextField
+                  disabled={disabled}
                     type="text"
                     className="textField-width300px"
                     id="outlined1"
@@ -222,6 +238,7 @@ export default function PaperDrug() {
               <Grid container>
                 <Grid>
                   <Button
+                  onClick={handleClickfalse}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -233,6 +250,7 @@ export default function PaperDrug() {
                 </Grid>
                 <Grid>
                   <Button
+                  onClick={handleClicktrue}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"

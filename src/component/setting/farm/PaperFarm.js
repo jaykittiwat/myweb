@@ -56,10 +56,15 @@ const useStyles = makeStyles((theme) => ({
 export default function PaperFarm() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
-  //const [Unlock, setUnLock] = React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+  const [disabled, setEnabled] = React.useState(true);
+  const handleClickfalse = (event) => {
+    setEnabled(false);
+  };
+  const handleClicktrue = (event) => {
+    setEnabled(true);
   };
 
   return (
@@ -92,6 +97,7 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width600px"
                   id="outlined0"
@@ -109,6 +115,7 @@ export default function PaperFarm() {
               <Grid container>
                 <Grid>
                   <Button
+                  onClick={handleClickfalse}
                     id="b1"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
@@ -121,6 +128,7 @@ export default function PaperFarm() {
                 </Grid>
                 <Grid>
                   <Button
+                  onClick={handleClicktrue}
                     id="b2"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
@@ -138,6 +146,7 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width600px"
                   id="outlined1"
@@ -155,6 +164,7 @@ export default function PaperFarm() {
               <Grid container>
                 <Grid>
                   <Button
+                  onClick={handleClickfalse}
                     id="b3"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
@@ -167,6 +177,7 @@ export default function PaperFarm() {
                 </Grid>
                 <Grid>
                   <Button
+                  onClick={handleClicktrue}
                     id="b4"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
@@ -184,6 +195,7 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width600px"
                   id="outlined2"
@@ -201,6 +213,7 @@ export default function PaperFarm() {
               <Grid container>
                 <Grid>
                   <Button
+                  onClick={handleClickfalse}
                     id="b5"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
@@ -213,6 +226,7 @@ export default function PaperFarm() {
                 </Grid>
                 <Grid>
                   <Button
+                  onClick={handleClicktrue}
                     id="b6"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
@@ -230,6 +244,7 @@ export default function PaperFarm() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                disabled={disabled}
                   type="text"
                   className="textField-width600px"
                   id="outlined3"
@@ -247,6 +262,7 @@ export default function PaperFarm() {
               <Grid container>
                 <Grid>
                   <Button
+                  onClick={handleClickfalse}
                     id="b7"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
@@ -259,6 +275,7 @@ export default function PaperFarm() {
                 </Grid>
                 <Grid>
                   <Button
+                  onClick={handleClicktrue}
                     id="b8"
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
