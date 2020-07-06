@@ -23,7 +23,7 @@ export default function PaperUser() {
         <Grid container spacing={3} className="pad30">
           <Grid item xs={12}>
             <TextField
-            disabled={disabled}
+              disabled={disabled}
               type="text"
               className="textField-width"
               id="outlined1"
@@ -33,7 +33,7 @@ export default function PaperUser() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-            disabled={disabled}
+              disabled={disabled}
               type="text"
               className="textField-width"
               id="outlined2"
@@ -43,7 +43,7 @@ export default function PaperUser() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-            disabled={disabled}
+              disabled={disabled}
               type="text"
               className="textField-width"
               id="outlined3"
@@ -53,7 +53,7 @@ export default function PaperUser() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-            disabled={disabled}
+              disabled={disabled}
               type="text"
               className="textField-width"
               id="outlined4"
@@ -63,7 +63,7 @@ export default function PaperUser() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-            disabled={disabled}
+              disabled={disabled}
               type="text"
               className="textField-width"
               id="outlined5"
@@ -73,7 +73,7 @@ export default function PaperUser() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-            disabled={disabled}
+              disabled={disabled}
               type="text"
               className="textField-width"
               id="outlined6"
@@ -83,7 +83,7 @@ export default function PaperUser() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-            disabled={disabled}
+              disabled={disabled}
               type="text"
               className="textField-width"
               id="outlined6"
@@ -94,7 +94,7 @@ export default function PaperUser() {
 
           <Grid item xs={2}>
             <Button
-            onClick={handleClickfalse}
+              onClick={handleClickfalse}
               style={{ outline: "none", marginLeft: "220%" }}
               variant="contained"
               color="secondary"
@@ -106,7 +106,7 @@ export default function PaperUser() {
           </Grid>
           <Grid item xs={2}>
             <Button
-            onClick={handleClicktrue}
+              onClick={handleClicktrue}
               style={{ outline: "none", marginLeft: "220%" }}
               variant="contained"
               color="primary"
