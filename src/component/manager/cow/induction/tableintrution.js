@@ -110,7 +110,10 @@ console.log(keyDateNoti)*/
   // console.log(selected)
    const x = selected.length
    for(let e=0;e<x;e++){
-    axios.delete("http://localhost:4000/notification/delete/"+UID+"/"+dateNoti[e].date+"/"+keyDateNoti[e])
+    axios.delete("http://localhost:4000/notification/delete/"+UID+"/"+dateNoti[e].date+"/"+keyDateNoti[e]).then(res=>{
+      console.log(res.status)
+
+    })
 }
 
     for(let a=0;a<x;a++){
@@ -147,11 +150,7 @@ console.log(keyDateNoti)*/
       id_cattle:selectedDamId[d] ,
       type:"ผสมพันธุ์" ,
     }
-    ).then(res=>{
-      if(res.status===201){
-        window.location.reload();
-      }
-    })
+    )
   }
   
 

@@ -7,12 +7,12 @@ import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 
 export default function PaperBrand() {
-  const [lock, setLock] = React.useState(true);
-  const hadelDisable = (event) => {
-    setLock(false);
+  const [disabled, setEnabled] = React.useState(true);
+  const handleClickfalse = (event) => {
+    setEnabled(false);
   };
-  const hadelEable = (event) => {
-    setLock(true);
+  const handleClicktrue = (event) => {
+    setEnabled(true);
   };
   return (
     <div className="container martop-10">
@@ -22,8 +22,8 @@ export default function PaperBrand() {
         <Grid container spacing={3} className="pad30">
           <Grid item xs={12}>
             <TextField
+              disabled={disabled}
               type="text"
-              disabled={lock ? true : ""}
               className="textField-width"
               id="outlined1"
               label="ชื่อฟาร์ม(ภาษาไทย)"
@@ -32,8 +32,8 @@ export default function PaperBrand() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={disabled}
               type="text"
-              disabled={lock ? true : ""}
               className="textField-width"
               id="outlined2"
               label="ชื่อฟาร์ม(ภาษาอังกฤษ)"
@@ -42,8 +42,8 @@ export default function PaperBrand() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={disabled}
               type="text"
-              disabled={lock ? true : ""}
               className="textField-width"
               id="outlined3"
               label="ชื่อ-นามสกุล(เจ้าของฟาร์ม)"
@@ -52,8 +52,8 @@ export default function PaperBrand() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={disabled}
               type="text"
-              disabled={lock ? true : ""}
               className="textField-width"
               id="outlined4"
               label="Facebook"
@@ -62,8 +62,8 @@ export default function PaperBrand() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={disabled}
               type="text"
-              disabled={lock ? true : ""}
               className="textField-width"
               id="outlined5"
               label="ที่อยู่ฟาร์ม"
@@ -72,8 +72,8 @@ export default function PaperBrand() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={disabled}
               type="text"
-              disabled={lock ? true : ""}
               className="textField-width"
               id="outlined6"
               label="เบอร์โทรติดต่อ"
@@ -82,8 +82,8 @@ export default function PaperBrand() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={disabled}
               type="text"
-              disabled={lock ? true : ""}
               className="textField-width"
               id="outlined6"
               label="อีเมล์ติดต่อ"
@@ -93,7 +93,7 @@ export default function PaperBrand() {
 
           <Grid item xs={2}>
             <Button
-              onClick={() => hadelDisable()}
+              onClick={handleClickfalse}
               style={{ outline: "none", marginLeft: "220%" }}
               variant="contained"
               color="secondary"
@@ -105,7 +105,7 @@ export default function PaperBrand() {
           </Grid>
           <Grid item xs={2}>
             <Button
-              onClick={() => hadelEable()}
+              onClick={handleClicktrue}
               style={{ outline: "none", marginLeft: "220%" }}
               variant="contained"
               color="primary"

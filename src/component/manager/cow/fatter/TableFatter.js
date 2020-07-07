@@ -106,7 +106,7 @@ setShowDateInduction(setnextmissionday)
   FectData();
   }, [currentUser]);
 
- const saveDataToInduction= ()=>{
+ const saveDataToInduction= async ()=>{
    
    const x = selected.length
     for(let a=0;a<x;a++){
@@ -141,11 +141,7 @@ setShowDateInduction(setnextmissionday)
       id_cattle:selectedDamId[d] ,
       type:"เหนี่ยวนำกลับสัด" ,
     }
-    ).then(res=>{
-      if(res.status===201){
-        window.location.reload();
-      }
-    })
+    )
   }
 
  }

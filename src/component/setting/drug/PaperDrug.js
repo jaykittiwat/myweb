@@ -57,16 +57,15 @@ const useStyles = makeStyles((theme) => ({
 export default function PaperDrug() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [lock, setLock] = React.useState(true);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const hadelDisable = (event) => {
-    setLock(false);
+  const [disabled, setEnabled] = React.useState(true);
+  const handleClickfalse = (event) => {
+    setEnabled(false);
   };
-  const hadelEable = (event) => {
-    setLock(true);
+  const handleClicktrue = (event) => {
+    setEnabled(true);
   };
   return (
     <div className="container martop-10">
@@ -83,26 +82,31 @@ export default function PaperDrug() {
           >
             <Tab label="ยา" {...a11yProps(0)} style={{ outline: "none" }} />
             <Tab label="วัคซีน" {...a11yProps(1)} style={{ outline: "none" }} />
+            <Tab
+              label="โปรแกรมยา"
+              {...a11yProps(2)}
+              style={{ outline: "none" }}
+            />
           </Tabs>
           <TabPanel value={value} index={0}>
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                  disabled={disabled}
                   type="text"
-                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined0"
                   label="ชื่อยา"
                   size="small"
                 />{" "}
                 <TextField
+                  disabled={disabled}
                   type="text"
-                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined1"
                   label="ปริมาณยา(มิลลิลิตร)"
                   size="small"
-                />
+                />{" "}
                 <Fab color="primary" aria-label="add" size="small">
                   <AddIcon />
                 </Fab>
@@ -114,7 +118,7 @@ export default function PaperDrug() {
               <Grid container>
                 <Grid>
                   <Button
-                    onClick={() => hadelDisable()}
+                    onClick={handleClickfalse}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -126,7 +130,7 @@ export default function PaperDrug() {
                 </Grid>
                 <Grid>
                   <Button
-                    onClick={() => hadelEable()}
+                    onClick={handleClicktrue}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
@@ -143,21 +147,21 @@ export default function PaperDrug() {
             <Paper elevation={0}>
               <Grid className="mar pad10">
                 <TextField
+                  disabled={disabled}
                   type="text"
-                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined2"
                   label="ชื่อวัคซีน"
                   size="small"
                 />{" "}
                 <TextField
+                  disabled={disabled}
                   type="text"
-                  disabled={lock ? true : ""}
                   className="textField-width300px"
                   id="outlined3"
                   label="ปริมาณวัคซีน(มิลลิลิตร)"
                   size="small"
-                />
+                />{" "}
                 <Fab color="primary" aria-label="add" size="small">
                   <AddIcon />
                 </Fab>
@@ -169,7 +173,7 @@ export default function PaperDrug() {
               <Grid container>
                 <Grid>
                   <Button
-                    onClick={() => hadelDisable()}
+                    onClick={handleClickfalse}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="secondary"
@@ -181,7 +185,72 @@ export default function PaperDrug() {
                 </Grid>
                 <Grid>
                   <Button
-                    onClick={() => hadelEable()}
+                    onClick={handleClicktrue}
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="primary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    บันทึก
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <Paper elevation={0}>
+              <Grid className="mar pad10">
+                <TextField
+                  disabled={disabled}
+                  type="text"
+                  className="textField-width600px"
+                  id="outlined0"
+                  label="ชื่อโปรแกรมยา"
+                  size="small"
+                />
+                <Grid>
+                  <TextField
+                    disabled={disabled}
+                    type="text"
+                    className="textField-width300px"
+                    id="outlined1"
+                    label="ชื่อยา/วัคซีน"
+                    size="small"
+                  />{" "}
+                  <TextField
+                    disabled={disabled}
+                    type="text"
+                    className="textField-width300px"
+                    id="outlined1"
+                    label="ปริมาณยา/วัคซีน(มิลลิลิตร)"
+                    size="small"
+                  />{" "}
+                  <Fab color="primary" aria-label="add" size="small">
+                    <AddIcon />
+                  </Fab>
+                  <IconButton aria-label="delete" color="secondary">
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+
+              <Grid container>
+                <Grid>
+                  <Button
+                    onClick={handleClickfalse}
+                    style={{ outline: "none", marginLeft: "350%" }}
+                    variant="contained"
+                    color="secondary"
+                    className="textField-width"
+                    startIcon={<SaveIcon />}
+                  >
+                    แก้ไข
+                  </Button>{" "}
+                </Grid>
+                <Grid>
+                  <Button
+                    onClick={handleClicktrue}
                     style={{ outline: "none", marginLeft: "350%" }}
                     variant="contained"
                     color="primary"
