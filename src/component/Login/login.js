@@ -6,7 +6,7 @@ import { Form, Button } from "react-bootstrap";
 import Header from "../../Header";
 import firebase from "./../../backEnd/firebase/index";
 import Home from "./../Home/homepage";
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 //import { BrowserRouter, Route, Switch, Router,Redirect,Link } from "react-router-dom";
 class Login extends Component {
   constructor(props) {
@@ -174,7 +174,7 @@ class Login extends Component {
       return <div className="container-fluid ">{this.showpageLogin()}</div>;
     }
     //if user haven't id and password  return -->
-    return <div className="container-fluid "></div>;
+    return <div className="container-fluid "><LinearProgress /></div>;
   }
 }
 export default Login;

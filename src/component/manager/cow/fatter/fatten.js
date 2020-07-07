@@ -27,6 +27,7 @@ class Fatten extends Component {
           axios.get(
               "http://localhost:4000/cattle/show/"+resEmail
             ).then(res=>{
+             // console.log(res.data)
           
               this.setState({posts:res.data,loading:false})}).then(()=>console.log(this.state.posts))
         })

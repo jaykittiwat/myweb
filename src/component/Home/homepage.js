@@ -97,11 +97,4 @@ class Home extends Component {
 }
 export default Home;
 
-/*<Card style={{ width: "100%" }}>
-                <Card.Header style={{ backgroundColor: "#0044ffde",color:"#ffffff" }}>สมาชิก</Card.Header>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>Mr.hunk</ListGroup.Item>
-                  <ListGroup.Item>Mr.Captain Americar</ListGroup.Item>
-                  <ListGroup.Item>Mr. iron man</ListGroup.Item>
-                </ListGroup>
-              </Card>*/
+
