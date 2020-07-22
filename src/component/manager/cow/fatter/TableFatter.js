@@ -60,7 +60,7 @@ const current = () =>{
     //ยังไม่ได้ดึงsetting มา
     var date = new Date(e.target.value);
     var newdate = new Date(date);
-    newdate.setDate(newdate.getDate() + 18);
+    newdate.setDate(newdate.getDate() + 20);
     var dd = newdate.getDate();
     var mm = newdate.getMonth() + 1;
     var yyyy = newdate.getFullYear();
@@ -142,6 +142,8 @@ setShowDateInduction(setnextmissionday)
       type:"เหนี่ยวนำกลับสัด" ,
     }
     )
+    alert("success");
+    window.location.reload()
   }
 
  }
@@ -324,6 +326,9 @@ setShowDateInduction(setnextmissionday)
     },
     marTextField: {
       marginTop: "2%"
+    },
+    textRow:{
+      fontSize:"16px"
     }
   }));
 
@@ -550,10 +555,10 @@ setShowDateInduction(setnextmissionday)
                         >
                           
                         </TableCell>
-                        <TableCell align="left">{row.cattle_id}</TableCell>
-                        <TableCell align="left">{row.bigcorral}</TableCell>
-                        <TableCell align="left">{row.corral}</TableCell>
-                        <TableCell align="left">{row.herd_no}</TableCell>
+                        <TableCell align="left" className={classes.textRow}>{row.cattle_id}</TableCell>
+                        <TableCell align="left"  className={classes.textRow}>{row.bigcorral}</TableCell>
+                        <TableCell align="left"  className={classes.textRow}>{row.corral}</TableCell>
+                        <TableCell align="left"  className={classes.textRow}>{row.herd_no}</TableCell>
                       </TableRow>
                     );
                   })}
@@ -666,15 +671,7 @@ setShowDateInduction(setnextmissionday)
             >
               บันทึก
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              style={{ width: "250px", margin: "10px", outline: "none" }}
-              onClick={()=>console.log("["+selectedDamId+"] [ "+selected+"]")}
-            >
-              แสดง
-            </Button>
+           
           </div>{" "}
         </div>
       </Paper>

@@ -168,7 +168,7 @@ class Login extends Component {
 
   render() {
     if (this.state.login==="login") {
-      return <Home currentUser={this.state.currentUser} />;
+      return (<Home currentUser={this.state.currentUser} />);
     }
     if (this.state.login==="noLogin") {
       return <div className="container-fluid ">{this.showpageLogin()}</div>;

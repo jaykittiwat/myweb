@@ -10,10 +10,11 @@ class Induction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [],
+      keydata:[],
+      data: [],
       loading: false,
-      keysDate:[],
-      dataNoti:[],
+      keysDate: [],
+      dataNoti: [],
       UID: ""
     };
   }
@@ -49,38 +50,59 @@ class Induction extends Component {
                   fullToday
               )
               .then(res => {
-               /* console.log("---------------โคที่ยังไม่ได้บันทึกข้อมูลตามกำหนด-----------------")
-                
-                console.log("---------------คีย์ ของnotification ของโคแต่ละตัว-----------------")    
-                console.log(Object.keys(res.data))  
-                console.log(Object.values(res.data))  */
-              
-
-                let key=Object.keys(res.data);
-                let list = Object.values(res.data);
-                this.setState({...this.state,dataNoti:list,keysDate:key})
-                return list;
-                
-              }).then(async (list)=>{
-                /*console.log("---------------values การแจ้งเตือนแต่ละตัว(เอาไปดึงข้อมูลในcattle)-----------------")   */ 
-                console.log(list)               
-                //ดึงข้อมูลโค
-                const cattleListData=[]
-                for(let i=0;i<list.length;i++){
-                let res= await axios.get("http://localhost:4000/cattle/show/"+this.state.UID+"/"+list[i].id_cattle)
-                cattleListData.push(res.data)
+              //  console.log(res.data);
+                const key = Object.keys(res.data);
+                const data = Object.values(res.data);
+              //  console.log(key);
+              //  console.log(data);
+                const keyInduction = [];
+                const dataInduction = [];
+                const array = [keyInduction, dataInduction];
+                for (let i = 0; i < data.length; i++) {
+                  if (data[i].type === "เหนี่ยวนำกลับสัด") {
+                   // console.log(key[i]);
+                    //console.log(data[i]);
+                    keyInduction.push(key[i]);
+                    dataInduction.push(data[i]);
+                  }
                 }
-               return cattleListData
-              }).then(cattleListData=>{
-                console.log(cattleListData)
-                const setPost = Object.assign.apply({}, cattleListData)
-                this.setState({...this.state,posts:setPost,loading:false})
+                return array;
+              })
+              .then(array => {
+                this.setState({
+                  ...this.state,
+                  keysDate: array[0],
+                  dataNoti: array[1]
+                });
+              })
+              .then(async () => {
+               // console.log(this.state.dataNoti);
+                const cattleListData = [];
+                for (let i = 0; i < this.state.keysDate.length; i++) {
+                  let res = await axios.get(
+                    "http://localhost:4000/cattle/show/" +
+                      this.state.UID +
+                      "/" +
+                      this.state.dataNoti[i].id_cattle
+                  );
+                  cattleListData.push(res.data);
+                }
+                return cattleListData;
+              })
+              .then(data => {
+                const setdata = [];
+                const setKeyCattle = [];
+                for (let i = 0; i < data.length; i++) {
+                  const values = Object.keys(data[i]);
+                  const dataOneCatle = Object.values(data[i]);
+                  const set = Object.assign.apply({}, dataOneCatle);
+                  setdata.push(set);
+                  setKeyCattle.push(values[0]);
+                }
+              this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
               }).then(()=>{
-                //console.log(this.state.posts)
-                //console.log(this.state.keysDate)
-                //console.log(this.state.dataNoti)
-              }
-              )
+             console.log(this.state)
+              })
           });
       }
     });
@@ -103,35 +125,3 @@ class Induction extends Component {
 }
 
 export default Induction;
-
-//<TableInduction posts={this.state}/>
-// var list = [];
-/*snapshot.forEach(elem => {
-  list.push(elem.val());
-});
-res.json(list) /*/
-
-//axios.get("http://localhost:4000/cattle/show/"+resEmail+"/pc 01").then(res=>{ })
-
-
-/*  if(cattleListData.length===list.length){
-
-                } */
-                
-
-
-                /*
-                
-                
-                .then(()=>{
-                  console.log("---------------ดึงข้อมูลจาก cattle-----------------")  
-                  console.log(cattleListData)
-                  const setPost = Object.assign.apply({}, cattleListData)
-                  this.setState({...this.state,posts:setPost,loading:false})
-                }).then(()=>{
-                  //console.log(this.state.posts)
-                })
-                
-                
-                
-                */

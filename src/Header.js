@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-
+import Logo from "./component/Img/logofarm.png";
 import { Link } from "react-router-dom";
 import "./HeaderStyle.css";
+
 class Header extends Component {
   render() {
     return (
+
       <div>
         <div className="row">
+          <img alt="logo" src={Logo} width="75px" height="75px" />
           <div className="col-md-5">
             <Link to="/" style={{ textDecoration: "none" }}>
               <div className="row container-fluid r2-c1 ">
@@ -17,23 +20,26 @@ class Header extends Component {
               </div>
             </Link>
           </div>
-          <div className="col-md-5 "></div>
-          <div className="col-md-2 ">
-        <div className="row float-right">
-        
-             <div className="dropdown" style={{textAlign:"center"}} >
-            <Link to="/login"  style={{textDecorationLine:"none"}}><div className="dropbtn1" style={{paddingTop:"20px"}}>เข้าสู่ระบบ</div></Link> 
-            </div>
-            
-            <div className="dropdown" style={{textAlign:"center"}}>
-              <div className="dropbtn1" style={{paddingTop:"20px"}}>ลงทะเบียน  <i className="fa fa-caret-down"></i></div>
-              <div className="dropdown-content" style={{textAlign:"left"}}>
-                <Link to="/registor">เจ้าของฟาร์ม</Link>
-                <Link to="/registor2">พนักงาน</Link>
+          <div className="col-md-4 "></div>
+          <div className="col-md ">
+            <div className="row float-right">
+              <div className="dropdown" style={{ textAlign: "center" }}>
+                <Link to="/login" style={{ textDecorationLine: "none" }}>
+                  <div className="dropbtn1" style={{ paddingTop: "20px" }}>
+                    เข้าสู่ระบบ
+                  </div>
+                </Link>
               </div>
-            </div>
 
-           
+              <div className="dropdown" style={{ textAlign: "center" }}>
+                <div className="dropbtn1" style={{ paddingTop: "20px" }}>
+                  ลงทะเบียน <i className="fa fa-caret-down"></i>
+                </div>
+                <div className="dropdown-content" style={{ textAlign: "left" }}>
+                  <Link to="/registor">เจ้าของฟาร์ม</Link>
+                  <Link to="/registor2">พนักงาน</Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ nav .dropdown {
   background-color: none;
   color: white;
   padding: 16px;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
   cursor: pointer;
 }
@@ -56,9 +56,14 @@ nav .dropdown {
 }
 
 .sigOut-color {
+  font-size: 18px;
   color: #f1f1f1;
+ 
 }
-
+.sigout-div{
+  background-color: #493ee6;
+}
 .sigout-div:hover {
+  
   background-color: #3b30d6;
 }

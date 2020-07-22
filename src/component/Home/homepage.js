@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-//import firebase from "./../../backEnd/firebase/index";
-//import { Button, Navbar, Nav, NavDropdown,Dropdown } from "react-bootstrap";
+import { FormGroup, FormLabel } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import HeaderLogin from "./../../HeaderLogin";
 import "./styh.css";
 import NavbarLogin from "./../../Navbar";
-import thor from "../Img/thor.jpg";
-import { Card, Form } from "react-bootstrap";
+//import thor from "../Img/2.jpg";
 import axios from "axios";
+import { Paper, Grid, Avatar } from "@material-ui/core";
+import firebase from "./../../backEnd/firebase";
 
 // หน้า login แล้ว
 class Home extends Component {
@@ -14,7 +15,8 @@ class Home extends Component {
     super(props);
     this.state = {
       user: {},
-      param: this.props
+      param: this.props,
+      imgeUser: ""
     };
   }
 
@@ -25,9 +27,23 @@ class Home extends Component {
       )
       .then(res => {
         const getUser = res.data[0];
-        this.setState({ user: getUser });
+        this.setState({ ...this.state, user: getUser });
+      })
+      .then(() => {
+        firebase
+          .storage()
+          .ref(
+            "/Photo/" +
+              this.state.user.user +
+              "/photoUser/" +
+              this.state.user.user +
+              ".jpg"
+          )
+          .getDownloadURL()
+          .then(url => {
+            this.setState({ ...this.state, imgeUser: url });
+          });
       });
-    //await console.log(this.state.user.email)
   }
 
   render() {
@@ -36,59 +52,114 @@ class Home extends Component {
         <div className="row ">
           <HeaderLogin />
         </div>
-        <div className="row">
+        <div className="row Nav-shadow posi">
           <NavbarLogin />
         </div>
-        <div className="row ">
-          <div className="row container-fluid bg-boxbox">
-            <div className="col-md-3">
-              <Card style={{ width: "99%", height: "546px" }}>
-                <Card.Img variant="top" src={thor} />
-                <Card.Body>
-                  <Card.Title className="title">ยีนดีต้อนรับ!!</Card.Title>
-                  <Card.Text>คูณ : {this.state.user.fname || ""}</Card.Text>
-                </Card.Body>
-              </Card>
-            </div>
-            <div className="col-md-7">
-              <Card.Header
-                style={{ backgroundColor: "#0044ffde", color: "#ffffff" }}
-              >
-                ข้อมูลฟาร์ม
-              </Card.Header>
-              <Form className="col-border">
-                <Form.Group controlId="formGridEmail">
-                  <Form.Label className="title2">ชื่อฟาร์ม</Form.Label>
-                  <Form.Control disabled value={this.state.user.user || ""} />
-                </Form.Group>
-                <Form.Group controlId="formGridEmail">
-                  <Form.Label className="title2">เจ้าของฟาร์ม</Form.Label>
-                  <Form.Control disabled value={this.state.user.fname || ""} />
-                </Form.Group>
-                <Form.Group controlId="formGridEmail">
-                  <Form.Label className="title2">ตำแหน่ง</Form.Label>
-                  <Form.Control
-                    disabled
-                    value={this.state.user.privilege || ""}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGridEmail">
-                  <Form.Label className="title2">ที่อยู่</Form.Label>
-                  <Form.Control
-                    disabled
-                    value={this.state.user.address || ""}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGridEmail">
-                  <Form.Label className="title2">ข้อมูลติดต่อ</Form.Label>
-                  <Form.Control
-                    disabled
-                    value={this.state.user.phone_num || ""}
-                  />
-                </Form.Group>
-              </Form>
-            </div>
-            <div className="col-md-2"></div>
+
+        <div className="row " style={{ marginTop: "30px" }}>
+          <div className="container">
+            <Paper elevation={2}>
+              <div className="container-fluid">
+                <Grid container spacing={3}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    style={{ backgroundColor: "#f5f5f5" }}
+                  >
+                    <div style={{ fontSize: "30px" }}>ทดลองฟาร์ม</div>
+                  </Grid>
+                  <Grid item xs={12} md={2}>
+                    <Avatar
+                      src={this.state.imgeUser}
+                      alt="UserPhoto"
+                      style={{ width: "120px", height: "120px" }}
+                    ></Avatar>
+                  </Grid>
+                  <Grid item xs={12} md={10}>
+                    <div style={{ fontSize: "25px", marginTop: "2%" }}>
+                      ยินดีต้อนรับ
+                    </div>
+                    <div style={{ fontSize: "30px", color: "#651fff" }}>
+                      Usertest01
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <div>
+                      <hr />
+                    </div>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6} sm={6}>
+                        <FormGroup>
+                          <FormLabel>ชื่อ</FormLabel>
+                        </FormGroup>
+                        <TextField
+                          className="container-fluid"
+                          value={this.state.user.fname || ""}
+                          variant="outlined"
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid item xs={6} sm={6}>
+                        <FormGroup>
+                          <FormLabel>นามสกุล</FormLabel>
+                        </FormGroup>
+                        <TextField
+                          className="container-fluid"
+                          value={this.state.user.lname || ""}
+                          variant="outlined"
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <FormGroup>
+                          <FormLabel>Email</FormLabel>
+                        </FormGroup>
+                        <TextField
+                          className="container-fluid"
+                          value={this.state.user.email || ""}
+                          variant="outlined"
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <FormGroup>
+                          <FormLabel>ตำแหน่ง</FormLabel>
+                        </FormGroup>
+                        <TextField
+                          className="container-fluid"
+                          value={this.state.user.privilege || ""}
+                          variant="outlined"
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <FormGroup>
+                          <FormLabel>ที่อยู่</FormLabel>
+                        </FormGroup>
+                        <TextField
+                          className="container-fluid"
+                          value={this.state.user.address || ""}
+                          variant="outlined"
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <FormGroup>
+                          <FormLabel>เบอร์โทร</FormLabel>
+                        </FormGroup>
+                        <TextField
+                          className="container-fluid"
+                          value={this.state.user.phone_num || ""}
+                          variant="outlined"
+                          size="small"
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </div>
+            </Paper>
           </div>
         </div>
       </div>
@@ -96,5 +167,3 @@ class Home extends Component {
   }
 }
 export default Home;
-
-

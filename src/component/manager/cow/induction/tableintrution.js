@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -31,31 +31,32 @@ import { Grid } from "@material-ui/core";
 
 import axios from "axios";
 
-
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableInduction(props) {
-  let date=props.posts.dataNoti;
-  let posts = props.posts.posts;
+  let key = props.posts.keydata; 
+  let rows =  props.posts.data;
   let loading = props.posts.loading;
-  let keysDateNotiCattle=props.posts.keysDate;
-  let UID= props.posts.UID;
+  let keysDateNotiCattle = props.posts.keysDate;
+  let date=props.posts.dataNoti;
+  let UID = props.posts.UID;
+  
+  //console.log(props.posts.keyDate);
+ 
   //let idInduction= props.posts.idCowInduc;
-  const [typeModule]=useState({status:"เหนี่ยวนำแล้ว"})
+  const [typeModule] = useState({ status: "เหนี่ยวนำแล้ว" });
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [dateBreed, setDateBreed] = useState("");
   const [time, setTime] = useState("");
-  const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
-
-
+  const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
 
   const manageDate = e => {
     //ยังไม่ได้ดึงsetting มา
     var date = new Date(e.target.value);
     var newdate = new Date(date);
-    newdate.setDate(newdate.getDate() + 18);
+    newdate.setDate(newdate.getDate() + 21);
     var dd = newdate.getDate();
     var mm = newdate.getMonth() + 1;
     var yyyy = newdate.getFullYear();
@@ -66,96 +67,76 @@ export default function TableInduction(props) {
       dd = "0" + dd;
     }
     var nextmissionday = yyyy + "-" + mm + "-" + dd;
-    var setnextmissionday = dd+ "-" + mm + "-" + yyyy;
+    var setnextmissionday = dd + "-" + mm + "-" + yyyy;
     setSelectedDate(e.target.value);
-setShowDateInduction(setnextmissionday)
+    setShowDateInduction(setnextmissionday);
     setDateBreed(nextmissionday);
   };
 
   /*-----------------------------------------------------------------------------*/
-  let rows = [];
-  let Key = Object.keys(posts);
-  let key=[]
-  var values = Object.keys(posts).map(key => posts[key]);
+ 
+   /* var values = Object.keys(posts).map(key => posts[key]);
   for (let i = 0; i < values.length; i++) {
-    if (
-      values[i].status === "บำรุงแล้ว"
-    ) {
-      key.push(Key[i])
+    if (values[i].status === "บำรุงแล้ว") {
+      key.push(Key[i]);
       rows.push(values[i]);
     }
-  }
- 
+  }*/
 
+  const saveDataToInduction = () => {
 
+    
+    
+    const x = selected.length;
+   
 
-
- const saveDataToInduction= ()=>{
-/*console.log("---------------ข้อมูลโคที่ต้องทำการบันทึก----------------")
-console.log(rows)
-console.log("---------------คีย์ สำหรับquery ของ cattle child---------------")
-console.log(selected)
-console.log("--------------id ที่เลือก----------------")
-console.log(selectedDamId)
-console.log("--------------วันที่----------------")
-console.log(dateNoti)
-console.log("----------------คีย์ สำหรับquery ของ ืนะรดรแฟะรนื child---------------")
-console.log(keyDateNoti)*/
-
-
-
-
- 
- //console.log(selectedDamId)
-  // console.log(selected)
-   const x = selected.length
-   for(let e=0;e<x;e++){
-    axios.delete("http://localhost:4000/notification/delete/"+UID+"/"+dateNoti[e].date+"/"+keyDateNoti[e]).then(res=>{
-      console.log(res.status)
-
-    })
-}
-
-    for(let a=0;a<x;a++){
-       axios.post("http://localhost:4000/cattle/status/"+UID+"/"+selected[a],typeModule).then(res=>{
-        //console.log(res.data)
-       })
-      
+    for (let a = 0; a < x; a++) {
+      axios
+        .post(
+          "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+          typeModule
+        )
+       
     }
-   for(let b=0;b<x;b++){
-     axios.post("http://localhost:4000/history/"+UID,
-     {
-             dam_id:selectedDamId[b],
-             date:selectedDate,
-             type:"เหนี่ยวนำกลับสัด"
-     }
-     )
-   }
-   for(let c=0;c<x;c++){
-    axios.post("http://localhost:4000/synchronize/"+UID,
-    {
-            dam_id:selectedDamId[c],
-            datepro:selectedDate,
-            program_sync:programSync,
-            recorder:recoder,
-            operator:operator,
-           // time:time,
+    for (let b = 0; b < x; b++) {
+      axios.post("http://localhost:4000/history/" + UID, {
+        dam_id: selectedDamId[b],
+        date: selectedDate,
+        time:time,
+        type: "เหนี่ยวนำกลับสัด"
+      });
     }
-    )
-  }
-  for(let d=0;d<x;d++){
-    axios.post("http://localhost:4000/notification/"+UID+"/"+dateBreed,
-    {
-      date:dateBreed ,
-      id_cattle:selectedDamId[d] ,
-      type:"ผสมพันธุ์" ,
+    for (let c = 0; c < x; c++) {
+      axios.post("http://localhost:4000/synchronize/" + UID, {
+        dam_id: selectedDamId[c],
+        datepro: selectedDate,
+        program_sync: programSync,
+        recorder: recoder,
+        operator: operator
+
+      })
     }
-    )
-  }
-  
-
- }
-
+    for (let d = 0; d < x; d++) {
+      axios
+        .post("http://localhost:4000/notification/" + UID + "/" + dateBreed, {
+          date: dateBreed,
+          id_cattle: selectedDamId[d],
+          type: "ผสมพันธุ์"
+        }).then(()=>{
+          axios
+        .delete(
+          "http://localhost:4000/notification/delete/" +
+            UID +
+            "/" +
+            dateNoti[d].date +
+            "/" +
+            keyDateNoti[d])
+        })
+   
+    }
+    alert("success");
+    window.location.reload()
+  };
 
   const descendingComparator = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
@@ -190,7 +171,7 @@ console.log(keyDateNoti)*/
     { id: "3", numeric: false, disablePadding: false, label: "โรงเรือน" },
     { id: "4", numeric: false, disablePadding: false, label: "คอก" },
     { id: "5", numeric: false, disablePadding: false, label: "ฝูง" },
-    { id: "6", numeric: false, disablePadding: false, label: "วันที่" },
+    { id: "6", numeric: false, disablePadding: false, label: "วันที่เหนี่ยวนำ" }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -335,6 +316,9 @@ console.log(keyDateNoti)*/
     },
     marTextField: {
       marginTop: "2%"
+    },
+    textRow: {
+      fontSize: "16px"
     }
   }));
 
@@ -344,8 +328,8 @@ console.log(keyDateNoti)*/
   //เก็บ row.cattle_id เมื่อ กดคลิก เลือกรายการทั้งหมด
   const [selected, setSelected] = React.useState([]);
   const [selectedDamId, setSelectedDamId] = React.useState([]);
-  const [dateNoti,setDateNoti]=useState([]);
-  const [keyDateNoti,setKeyDateNoti]=useState([]);
+  const [dateNoti, setDateNoti] = useState([]);
+  const [keyDateNoti, setKeyDateNoti] = useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -365,35 +349,33 @@ console.log(keyDateNoti)*/
       const newSelectedsDamId = rows.map(n => n.cattle_id);
       const newSelectedsDate = date.map(n => n);
       const newSelectedsKeysDate = keysDateNotiCattle.map(n => n);
-     
+
       //console.log(newDateNoti) ;
-     
+
       setSelected(newSelecteds);
-      setSelectedDamId(newSelectedsDamId)
-      setDateNoti(newSelectedsDate)
-      setKeyDateNoti(newSelectedsKeysDate)
+      setSelectedDamId(newSelectedsDamId);
+      setDateNoti(newSelectedsDate);
+      setKeyDateNoti(newSelectedsKeysDate);
       return;
     }
 
     //ถ้าไปก็ set array is empty
-    setDateNoti([])
+    setDateNoti([]);
     setSelected([]);
     setSelectedDamId([]);
   };
-//----------------------------------------------------------------------------เฉพาะแถว----------------------------
-  const handleClick = (event, id,cattle_id,dateIndex,key) => {
+  //----------------------------------------------------------------------------เฉพาะแถว----------------------------
+  const handleClick = (event, id, cattle_id, dateIndex, key) => {
     //หา ค่าที่เข้ามาว่าอยู่ในindex ไหน
     const selectedIndex = selected.indexOf(id);
     const selectedIndexCattle = selectedDamId.indexOf(cattle_id);
     const selectedIndexDate = dateNoti.indexOf(dateIndex);
     const selectedIndexKey = keyDateNoti.indexOf(key);
-    
+
     let newSelected = [];
     let newSelectedDamId = [];
     let newSelectedDate = [];
     let newSelectedDateKey = [];
-
-    
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
@@ -408,50 +390,47 @@ console.log(keyDateNoti)*/
       );
     }
     setSelected(newSelected);
-    if (selectedIndexCattle === -1) { 
-      newSelectedDamId = newSelectedDamId.concat(selectedDamId,cattle_id);
-    } else if (selectedIndexCattle === 0) {   
+    if (selectedIndexCattle === -1) {
+      newSelectedDamId = newSelectedDamId.concat(selectedDamId, cattle_id);
+    } else if (selectedIndexCattle === 0) {
       newSelectedDamId = newSelectedDamId.concat(selectedDamId.slice(1));
-    } else if (selectedIndexCattle === selectedDamId.length - 1) {     
+    } else if (selectedIndexCattle === selectedDamId.length - 1) {
       newSelectedDamId = newSelectedDamId.concat(selectedDamId.slice(0, -1));
     } else if (selectedIndexCattle > 0) {
       newSelectedDamId = newSelectedDamId.concat(
-       selectedDamId.slice(0,selectedIndexCattle),
-       selectedDamId.slice(selectedIndexCattle + 1)
+        selectedDamId.slice(0, selectedIndexCattle),
+        selectedDamId.slice(selectedIndexCattle + 1)
       );
     }
-    setSelectedDamId(newSelectedDamId)
+    setSelectedDamId(newSelectedDamId);
 
-    if (selectedIndexDate === -1) { 
-      newSelectedDate = newSelectedDate.concat(dateNoti,dateIndex);
-    } else if (selectedIndexDate === 0) {   
+    if (selectedIndexDate === -1) {
+      newSelectedDate = newSelectedDate.concat(dateNoti, dateIndex);
+    } else if (selectedIndexDate === 0) {
       newSelectedDate = newSelectedDate.concat(dateNoti.slice(1));
-    } else if (selectedIndexDate === dateNoti.length - 1) {     
+    } else if (selectedIndexDate === dateNoti.length - 1) {
       newSelectedDate = newSelectedDate.concat(dateNoti.slice(0, -1));
     } else if (selectedIndexDate > 0) {
       newSelectedDate = newSelectedDate.concat(
         dateNoti.slice(0, selectedIndexDate),
-        dateNoti.slice( selectedIndexDate + 1)
+        dateNoti.slice(selectedIndexDate + 1)
       );
     }
-    setDateNoti(newSelectedDate)
+    setDateNoti(newSelectedDate);
 
-    if (selectedIndexKey === -1) { 
-      newSelectedDateKey = newSelectedDateKey.concat(keyDateNoti,key);
-    } else if (selectedIndexKey === 0) {   
-      newSelectedDateKey =  newSelectedDateKey.concat(keyDateNoti.slice(1));
-    } else if (selectedIndexKey  === keyDateNoti.length - 1) {     
+    if (selectedIndexKey === -1) {
+      newSelectedDateKey = newSelectedDateKey.concat(keyDateNoti, key);
+    } else if (selectedIndexKey === 0) {
+      newSelectedDateKey = newSelectedDateKey.concat(keyDateNoti.slice(1));
+    } else if (selectedIndexKey === keyDateNoti.length - 1) {
       newSelectedDateKey = newSelectedDateKey.concat(keyDateNoti.slice(0, -1));
-    } else if (selectedIndexKey  > 0) {
-      newSelectedDateKey =  newSelectedDateKey.concat(
-        keyDateNoti.slice(0,selectedIndexKey),
+    } else if (selectedIndexKey > 0) {
+      newSelectedDateKey = newSelectedDateKey.concat(
+        keyDateNoti.slice(0, selectedIndexKey),
         keyDateNoti.slice(selectedIndexKey + 1)
       );
     }
-    setKeyDateNoti(newSelectedDateKey)
-
-
- 
+    setKeyDateNoti(newSelectedDateKey);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -467,7 +446,7 @@ console.log(keyDateNoti)*/
     setDense(event.target.checked);
   };
   const isSelected = id => selected.indexOf(id) !== -1;
- 
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -493,9 +472,9 @@ console.log(keyDateNoti)*/
     //console.log(result);
     setMedic(result);
   };*/
-  const [programSync,setPrigramSync]=useState("")
-  const handleChange = (event) => {
-    setPrigramSync(event.target.value)
+  const [programSync, setPrigramSync] = useState("");
+  const handleChange = event => {
+    setPrigramSync(event.target.value);
   };
   /*------------------------------------------------------------------------------*/
 
@@ -530,25 +509,24 @@ console.log(keyDateNoti)*/
   };*/
 
   const showTable = () => {
-    return(
+    return (
       <form className={classes.marTextField}>
         <FormControl size="small" style={{ width: "95%" }}>
           <FormLabel>รายการยา</FormLabel>
           <Select
             variant="outlined"
             native
-            value={programSync} 
+            value={programSync}
             onChange={event => handleChange(event)}
-            >
+          >
             <option value=" "></option>
             <option>Program A</option>
             <option>Program B</option>
             <option>Program C</option>
           </Select>
         </FormControl>
-
       </form>
-   )
+    );
   };
 
   if (loading) {
@@ -601,14 +579,25 @@ console.log(keyDateNoti)*/
                 stableSort(rows, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(key[index],row.cattle_id);
+                    const isItemSelected = isSelected(
+                      key[index],
+                      row.cattle_id
+                    );
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
                       <TableRow
                         hover
                         //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                        onClick={event => handleClick(event, key[index],row.cattle_id,date[index],keysDateNotiCattle[index])}
+                        onClick={event =>
+                          handleClick(
+                            event,
+                            key[index],
+                            row.cattle_id,
+                            date[index],
+                            keysDateNotiCattle[index]
+                          )
+                        }
                         role="checkbox"
                         aria-checked={isItemSelected} //คลิกเลืองตรงตารา
                         tabIndex={-1}
@@ -629,14 +618,22 @@ console.log(keyDateNoti)*/
                           id={labelId}
                           scope="row"
                           padding="none"
-                        >
-                          
+                        ></TableCell>
+                        <TableCell align="left" className={classes.textRow}>
+                          {row.cattle_id}
                         </TableCell>
-                        <TableCell align="left">{row.cattle_id}</TableCell>
-                        <TableCell align="left">{row.bigcorral}</TableCell>
-                        <TableCell align="left">{row.corral}</TableCell>
-                        <TableCell align="left">{row.herd_no}</TableCell>
-                        <TableCell align="left">{date[index].date}</TableCell>
+                        <TableCell align="left" className={classes.textRow}>
+                          {row.bigcorral}
+                        </TableCell>
+                        <TableCell align="left" className={classes.textRow}>
+                          {row.corral}
+                        </TableCell>
+                        <TableCell align="left" className={classes.textRow}>
+                          {row.herd_no}
+                        </TableCell>
+                        <TableCell align="left" className={classes.textRow}>
+                          {date[index].date}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -674,50 +671,77 @@ console.log(keyDateNoti)*/
       </div>
 
       <Paper elevation={3} className={classes.pad}>
-        <h4  style={{ paddingTop: "15px" }}>บันทึกการจัดการเหนี่ยวนำ</h4>
+        <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการเหนี่ยวนำ</h4>
         <FormGroup className={classes.marForm}>
-          <FormLabel >ชื่อผู้บันทึก</FormLabel>
-          <TextField id="input1" variant="outlined" placeholder="กรอกหมายเลขโค" size="small"  onChange={e => setRecoder(e.target.value)}/>
+          <FormLabel>ชื่อผู้บันทึก</FormLabel>
+          <TextField
+            id="input1"
+            variant="outlined"
+            placeholder="กรอกหมายเลขโค"
+            size="small"
+            onChange={e => setRecoder(e.target.value)}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
-          <FormLabel >ผู้ปฏิบัติการ</FormLabel>
-          <TextField id="input2" variant="outlined" placeholder="กรอกหมายเลขโค" size="small"    onChange={e => setOperator(e.target.value)}/>
+          <FormLabel>ผู้ปฏิบัติการ</FormLabel>
+          <TextField
+            id="input2"
+            variant="outlined"
+            placeholder="กรอกหมายเลขโค"
+            size="small"
+            onChange={e => setOperator(e.target.value)}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
-          <FormLabel >วันที่</FormLabel>
-          <TextField id="input3" variant="outlined" type="date" size="small" onChange={e => manageDate(e)}/>
+          <FormLabel>วันที่</FormLabel>
+          <TextField
+            id="input3"
+            variant="outlined"
+            type="date"
+            size="small"
+            onChange={e => manageDate(e)}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
-          <FormLabel >เวลา</FormLabel>
-          <TextField id="input4" variant="outlined" type="time" size="small" defaultValue="00:00"  onChange={e => setTime(e.target.value)}/>
+          <FormLabel>เวลา</FormLabel>
+          <TextField
+            id="input4"
+            variant="outlined"
+            type="time"
+            size="small"
+            defaultValue="00:00"
+            onChange={e => setTime(e.target.value)}
+          />
         </FormGroup>
         {showTable()}
 
         <Grid container className={classes.marTextField}>
           <Grid item xs={2}></Grid>
-          <Grid item xs={8}><Paper elevation={3} className={classes.paperNoti}>
-            เริ่มการผสมพันธุ์ วันที่ {showDateInduction}
-        </Paper></Grid>
-          <Grid item xs={2}></Grid></Grid>
+          <Grid item xs={8}>
+            <Paper elevation={3} className={classes.paperNoti}>
+              เริ่มการผสมพันธุ์ วันที่ {showDateInduction}
+            </Paper>
+          </Grid>
+          <Grid item xs={2}></Grid>
+        </Grid>
 
         <div className="container-fluid text-center">
           <div className={classes.marTextField}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: "250px", margin: "10px", outline: "none" }}
-            onClick={() => saveDataToInduction() }
-          >
-            บันทึก
-        </Button>
-        
-      </div>  </div>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ width: "250px", margin: "10px", outline: "none" }}
+              onClick={() => saveDataToInduction()}
+            >
+              บันทึก
+            </Button>
+          </div>{" "}
+        </div>
       </Paper>
     </div>
   );
 }
-
 
 /*<div className={classes.marTextField}>
         <div className="container-fluid text-center" >

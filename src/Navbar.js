@@ -4,7 +4,7 @@ import "./styleNavbar.css";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import firebase from "./backEnd/firebase"
-
+//import thor from './component/Img/2.jpg';
 //import axios from "axios";
 //react------ HOOK
 
@@ -40,7 +40,7 @@ render(){
   return (
     <div className="container-fluid posi">
       <nav className="row">
-        <div className="dropdown">
+        <div className="dropdown ">
           <Link to="/login">
             {" "}
             <div className="dropbtn">หน้าหลัก</div>
@@ -91,12 +91,13 @@ render(){
 
         <div className="dropdown">
           <Link to="/notification">
+            
             <div className="dropbtn">การแจ้งเตือน</div>
           </Link>
         </div>
 
         <div className="dropdown">
-          <div className="dropbtn">ตรวจสอบข้อมูลและออกรายงาน</div>
+          <div className="dropbtn">ออกรายงาน</div>
           <div className="dropdown-content">
             <Link to="/checkinformation">
               <div>ตรวจสอบข้อมูล</div>
@@ -133,10 +134,10 @@ render(){
 
         <div className="col-md-1"></div>
         <div className="col-md">
-          <div className="row" style={{ float: "right", marginTop: "8px" ,marginRight:"5%"}}>
+          <div className="row" style={{  marginTop: "8px" ,marginRight:"5%"}}>
          
-  <Avatar style={{ backgroundColor: "#ff5722" }}>{this.state.currentUser.substring(0,1)}</Avatar>
-  <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%"}}>{this.state.currentUser}</div>
+          <Avatar style={{backgroundColor:"#ff5722"}}>{this.state.currentUser.substring(0,1)}</Avatar>
+  <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%",fontSize:"18px"}}>{this.state.currentUser}</div>
          
           </div>
         </div>

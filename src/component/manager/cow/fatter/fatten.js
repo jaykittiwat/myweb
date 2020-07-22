@@ -29,7 +29,7 @@ class Fatten extends Component {
             ).then(res=>{
              // console.log(res.data)
           
-              this.setState({posts:res.data,loading:false})}).then(()=>console.log(this.state.posts))
+              this.setState({posts:res.data,loading:false})})
         })
       }
     });

@@ -44,7 +44,7 @@ class FormImg extends Component {
         <hr/>
          <input type="file" name="avatar" onChange={this.fileChangedHandler} />
          
-         
+        
       </div>
     );
   }
