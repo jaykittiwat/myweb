@@ -34,15 +34,15 @@ import axios from "axios";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableInduction(props) {
-  let key = props.posts.keydata; 
-  let rows =  props.posts.data;
+  let key = props.posts.keydata;
+  let rows = props.posts.data;
   let loading = props.posts.loading;
   let keysDateNotiCattle = props.posts.keysDate;
-  let date=props.posts.dataNoti;
+  let date = props.posts.dataNoti;
   let UID = props.posts.UID;
-  
+
   //console.log(props.posts.keyDate);
- 
+
   //let idInduction= props.posts.idCowInduc;
   const [typeModule] = useState({ status: "เหนี่ยวนำแล้ว" });
   const [recoder, setRecoder] = useState("");
@@ -74,8 +74,8 @@ export default function TableInduction(props) {
   };
 
   /*-----------------------------------------------------------------------------*/
- 
-   /* var values = Object.keys(posts).map(key => posts[key]);
+
+  /* var values = Object.keys(posts).map(key => posts[key]);
   for (let i = 0; i < values.length; i++) {
     if (values[i].status === "บำรุงแล้ว") {
       key.push(Key[i]);
@@ -84,25 +84,19 @@ export default function TableInduction(props) {
   }*/
 
   const saveDataToInduction = () => {
-
-    
-    
     const x = selected.length;
-   
 
     for (let a = 0; a < x; a++) {
-      axios
-        .post(
-          "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-          typeModule
-        )
-       
+      axios.post(
+        "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+        typeModule
+      );
     }
     for (let b = 0; b < x; b++) {
       axios.post("http://localhost:4000/history/" + UID, {
         dam_id: selectedDamId[b],
         date: selectedDate,
-        time:time,
+        time: time,
         type: "เหนี่ยวนำกลับสัด"
       });
     }
@@ -113,8 +107,7 @@ export default function TableInduction(props) {
         program_sync: programSync,
         recorder: recoder,
         operator: operator
-
-      })
+      });
     }
     for (let d = 0; d < x; d++) {
       axios
@@ -122,20 +115,20 @@ export default function TableInduction(props) {
           date: dateBreed,
           id_cattle: selectedDamId[d],
           type: "ผสมพันธุ์"
-        }).then(()=>{
-          axios
-        .delete(
-          "http://localhost:4000/notification/delete/" +
-            UID +
-            "/" +
-            dateNoti[d].date +
-            "/" +
-            keyDateNoti[d])
         })
-   
+        .then(() => {
+          axios.delete(
+            "http://localhost:4000/notification/delete/" +
+              UID +
+              "/" +
+              dateNoti[d].date +
+              "/" +
+              keyDateNoti[d]
+          );
+        });
     }
     alert("success");
-    window.location.reload()
+    window.location.reload();
   };
 
   const descendingComparator = (a, b, orderBy) => {
@@ -167,11 +160,16 @@ export default function TableInduction(props) {
   // headCells คอลัม หัวตาราง
   const headCells = [
     { id: "1", numeric: false, disablePadding: true, label: "เลือก" },
-    { id: "2", numeric: false, disablePadding: false, label: "หมายเลข" },
-    { id: "3", numeric: false, disablePadding: false, label: "โรงเรือน" },
-    { id: "4", numeric: false, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: false, disablePadding: false, label: "ฝูง" },
-    { id: "6", numeric: false, disablePadding: false, label: "วันที่เหนี่ยวนำ" }
+    { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
+    { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
+    { id: "4", numeric: true, disablePadding: false, label: "คอก" },
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
+    {
+      id: "6",
+      numeric: true,
+      disablePadding: false,
+      label: "วันที่กำหนดเหนี่ยวนำ"
+    }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -198,9 +196,10 @@ export default function TableInduction(props) {
             <TableCell
               key={headCell.id}
               //numeric จริง ชิดขวา เท็จ ชิดซ้าย
-              align={headCell.numeric ? "right" : "left"}
-              //disablePadding จิง เท็จ
-              padding={headCell.disablePadding ? "none" : "default"}
+              style={{
+                minWidth: 100,
+                textAlign: headCell.numeric ? "right" : "left"
+              }}
               //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
               sortDirection={orderBy === headCell.id ? order : false}
             >
@@ -619,19 +618,19 @@ export default function TableInduction(props) {
                           scope="row"
                           padding="none"
                         ></TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.cattle_id}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.bigcorral}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.corral}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.herd_no}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {date[index].date}
                         </TableCell>
                       </TableRow>

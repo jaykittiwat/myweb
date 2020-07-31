@@ -101,7 +101,7 @@ class CheckUp extends Component {
                   }
                 this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
                 }).then(()=>{
-               console.log(this.state)
+              //console.log(this.state)
                 })
           });
       }

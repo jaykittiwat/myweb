@@ -134,7 +134,7 @@ render(){
 
         <div className="col-md-1"></div>
         <div className="col-md">
-          <div className="row" style={{  marginTop: "8px" ,marginRight:"5%"}}>
+          <div className="row" style={{marginTop: "8px" ,marginRight:"5%"}}>
          
           <Avatar style={{backgroundColor:"#ff5722"}}>{this.state.currentUser.substring(0,1)}</Avatar>
   <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%",fontSize:"18px"}}>{this.state.currentUser}</div>

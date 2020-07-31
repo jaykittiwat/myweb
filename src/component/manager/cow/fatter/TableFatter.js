@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -31,13 +31,12 @@ import { Grid } from "@material-ui/core";
 import firebase from "./../../../../backEnd/firebase";
 import axios from "axios";
 
-
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableFatter(props) {
   let posts = props.posts.posts;
   let loading = props.posts.loading;
-  const [typeModule]=useState({status:"บำรุงแล้ว"})
+  const [typeModule] = useState({ status: "บำรุงแล้ว" });
   const [UID, setUID] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [recoder, setRecoder] = useState("");
@@ -45,15 +44,15 @@ export default function TableFatter(props) {
   const [selectedDate, setSelectedDate] = useState("");
   const [dateInduction, setDateInduction] = useState("");
   const [time, setTime] = useState("");
-const [showDateInduction,setShowDateInduction]=useState("-- -- ----")
-//console.log(props)
-const current = () =>{
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      setCurrentUser(user.email);
-    }
-  });
-}
+  const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
+  //console.log(props)
+  const current = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user.email);
+      }
+    });
+  };
   current();
 
   const manageDate = e => {
@@ -71,16 +70,16 @@ const current = () =>{
       dd = "0" + dd;
     }
     var nextmissionday = yyyy + "-" + mm + "-" + dd;
-    var setnextmissionday = dd+ "-" + mm + "-" + yyyy;
+    var setnextmissionday = dd + "-" + mm + "-" + yyyy;
     setSelectedDate(e.target.value);
-setShowDateInduction(setnextmissionday)
+    setShowDateInduction(setnextmissionday);
     setDateInduction(nextmissionday);
   };
 
   /*-----------------------------------------------------------------------------*/
   let rows = [];
   let Key = Object.keys(posts);
-  let key=[]
+  let key = [];
   var values = Object.keys(posts).map(key => posts[key]);
   for (let i = 0; i < values.length; i++) {
     if (
@@ -89,65 +88,62 @@ setShowDateInduction(setnextmissionday)
       values[i].status === "โคแท้ง" ||
       values[i].status === "ไม่ท้อง"
     ) {
-      key.push(Key[i])
+      key.push(Key[i]);
       rows.push(values[i]);
     }
   }
- 
-
 
   useEffect(() => {
-  const FectData=async ()=>{
-    if(currentUser!==""){
-      const res =await  axios.get("http://localhost:4000/user/logIn/" + currentUser)
-      setUID(res.data[0].user)
-  }}
+    const FectData = async () => {
+      if (currentUser !== "") {
+        const res = await axios.get(
+          "http://localhost:4000/user/logIn/" + currentUser
+        );
+        setUID(res.data[0].user);
+      }
+    };
 
-  FectData();
+    FectData();
   }, [currentUser]);
 
- const saveDataToInduction= async ()=>{
-   
-   const x = selected.length
-    for(let a=0;a<x;a++){
-       axios.post("http://localhost:4000/cattle/status/"+UID+"/"+selected[a],typeModule)
-      
+  const saveDataToInduction = async () => {
+    const x = selected.length;
+    for (let a = 0; a < x; a++) {
+      axios.post(
+        "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+        typeModule
+      );
     }
-    for(let b=0;b<x;b++){
-     axios.post("http://localhost:4000/history/"+UID,
-     {
-             dam_id:selectedDamId[b],
-             date:selectedDate,
-             type:"บำรุงแม่พันธุ์"
-     }
-     )
-   }
-   for(let c=0;c<x;c++){
-    axios.post("http://localhost:4000/maintain/"+UID,
-    {
-            dam_id:selectedDamId[c],
-            date:selectedDate,
-            type:"บำรุงก่อนคลอด",
-            recorder:recoder,
-            operator:operator,
-            time:time,
+    for (let b = 0; b < x; b++) {
+      axios.post("http://localhost:4000/history/" + UID, {
+        dam_id: selectedDamId[b],
+        date: selectedDate,
+        type: "บำรุงแม่พันธุ์"
+      });
     }
-    )
-  }
-  for(let d=0;d<x;d++){
-    axios.post("http://localhost:4000/notification/"+UID+"/"+dateInduction,
-    {
-      date:dateInduction ,
-      id_cattle:selectedDamId[d] ,
-      type:"เหนี่ยวนำกลับสัด" ,
+    for (let c = 0; c < x; c++) {
+      axios.post("http://localhost:4000/maintain/" + UID, {
+        dam_id: selectedDamId[c],
+        date: selectedDate,
+        type: "บำรุงก่อนคลอด",
+        recorder: recoder,
+        operator: operator,
+        time: time
+      });
     }
-    )
-    alert("success");
-    window.location.reload()
-  }
-
- }
-
+    for (let d = 0; d < x; d++) {
+      axios.post(
+        "http://localhost:4000/notification/" + UID + "/" + dateInduction,
+        {
+          date: dateInduction,
+          id_cattle: selectedDamId[d],
+          type: "เหนี่ยวนำกลับสัด"
+        }
+      );
+      alert("success");
+      window.location.reload();
+    }
+  };
 
   const descendingComparator = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
@@ -178,10 +174,10 @@ setShowDateInduction(setnextmissionday)
   // headCells คอลัม หัวตาราง
   const headCells = [
     { id: "1", numeric: false, disablePadding: true, label: "เลือก" },
-    { id: "2", numeric: false, disablePadding: false, label: "หมายเลข" },
-    { id: "3", numeric: false, disablePadding: false, label: "โรงเรือน" },
-    { id: "4", numeric: false, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: false, disablePadding: false, label: "ฝูง" }
+    { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
+    { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
+    { id: "4", numeric: true, disablePadding: false, label: "คอก" },
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -208,10 +204,10 @@ setShowDateInduction(setnextmissionday)
             <TableCell
               key={headCell.id}
               //numeric จริง ชิดขวา เท็จ ชิดซ้าย
-              align={headCell.numeric ? "right" : "left"}
-              //disablePadding จิง เท็จ
-              padding={headCell.disablePadding ? "none" : "default"}
-              //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
+              style={{
+                minWidth: 100,
+                textAlign: headCell.numeric ? "right" : "left"
+              }}
               sortDirection={orderBy === headCell.id ? order : false}
             >
               <h5>{headCell.label /* ชื่อตาราง */}</h5>
@@ -327,8 +323,8 @@ setShowDateInduction(setnextmissionday)
     marTextField: {
       marginTop: "2%"
     },
-    textRow:{
-      fontSize:"16px"
+    textRow: {
+      fontSize: "16px"
     }
   }));
 
@@ -358,7 +354,7 @@ setShowDateInduction(setnextmissionday)
       const newSelectedsDamId = rows.map(n => n.cattle_id);
       //console.log(newSelecteds) ;
       setSelected(newSelecteds);
-      setSelectedDamId(newSelectedsDamId)
+      setSelectedDamId(newSelectedsDamId);
       return;
     }
 
@@ -367,7 +363,7 @@ setShowDateInduction(setnextmissionday)
     setSelectedDamId([]);
   };
 
-  const handleClick = (event, id,cattle_id) => {
+  const handleClick = (event, id, cattle_id) => {
     //หา ค่าที่เข้ามาว่าอยู่ในindex ไหน
     const selectedIndex = selected.indexOf(id);
     const selectedIndexCattle = selectedDamId.indexOf(cattle_id);
@@ -387,20 +383,20 @@ setShowDateInduction(setnextmissionday)
       );
     }
     setSelected(newSelected);
-    if (selectedIndexCattle === -1) { 
-      newSelectedDamId = newSelectedDamId.concat(selectedDamId,cattle_id);
-    } else if (selectedIndexCattle === 0) {   
+    if (selectedIndexCattle === -1) {
+      newSelectedDamId = newSelectedDamId.concat(selectedDamId, cattle_id);
+    } else if (selectedIndexCattle === 0) {
       newSelectedDamId = newSelectedDamId.concat(selectedDamId.slice(1));
-    } else if (selectedIndexCattle === selectedDamId.length - 1) {     
+    } else if (selectedIndexCattle === selectedDamId.length - 1) {
       newSelectedDamId = newSelectedDamId.concat(selectedDamId.slice(0, -1));
     } else if (selectedIndexCattle > 0) {
       newSelectedDamId = newSelectedDamId.concat(
-       selectedDamId.slice(0,selectedIndexCattle),
-       selectedDamId.slice(selectedIndexCattle + 1)
+        selectedDamId.slice(0, selectedIndexCattle),
+        selectedDamId.slice(selectedIndexCattle + 1)
       );
     }
-    
-    setSelectedDamId(newSelectedDamId)
+
+    setSelectedDamId(newSelectedDamId);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -416,7 +412,7 @@ setShowDateInduction(setnextmissionday)
     setDense(event.target.checked);
   };
   const isSelected = id => selected.indexOf(id) !== -1;
- 
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -524,14 +520,19 @@ setShowDateInduction(setnextmissionday)
                 stableSort(rows, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(key[index],row.cattle_id);
+                    const isItemSelected = isSelected(
+                      key[index],
+                      row.cattle_id
+                    );
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
                       <TableRow
                         hover
                         //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                        onClick={event => handleClick(event, key[index],row.cattle_id)}
+                        onClick={event =>
+                          handleClick(event, key[index], row.cattle_id)
+                        }
                         role="checkbox"
                         aria-checked={isItemSelected} //คลิกเลืองตรงตารา
                         tabIndex={-1}
@@ -552,13 +553,19 @@ setShowDateInduction(setnextmissionday)
                           id={labelId}
                           scope="row"
                           padding="none"
-                        >
-                          
+                        ></TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.cattle_id}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>{row.cattle_id}</TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{row.bigcorral}</TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{row.corral}</TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{row.herd_no}</TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.bigcorral}
+                        </TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.corral}
+                        </TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.herd_no}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -671,7 +678,6 @@ setShowDateInduction(setnextmissionday)
             >
               บันทึก
             </Button>
-           
           </div>{" "}
         </div>
       </Paper>

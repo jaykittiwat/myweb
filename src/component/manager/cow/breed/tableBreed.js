@@ -29,11 +29,11 @@ import axios from "axios";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableBreed(props) {
-  let key = props.posts.keydata; 
-  let rows =  props.posts.data;
+  let key = props.posts.keydata;
+  let rows = props.posts.data;
   let loading = props.posts.loading;
   let keysDateNotiCattle = props.posts.keysDate;
-  let date=props.posts.dataNoti;
+  let date = props.posts.dataNoti;
   let UID = props.posts.UID;
   //let idInduction= props.posts.idCowInduc;
   const [typeModule] = useState({ status: "ผสมพันธุ์แล้ว" });
@@ -48,7 +48,7 @@ export default function TableBreed(props) {
   const [HowTobreed, setHowTobreed] = useState("");
   const [HowIdTobreed, setHowIdTobreed] = useState("");
   const [showDateCheckUp, setShowDateCheckUp] = useState("-- -- ----");
-  const [theNote,setNote]=useState("")
+  const [theNote, setNote] = useState("");
 
   const manageDate = e => {
     //ยังไม่ได้ดึงsetting มา
@@ -86,17 +86,14 @@ export default function TableBreed(props) {
     setDateBeforeCheckup(nextmissionday2);
   };
 
-
-
   const saveDataToInduction = () => {
     //console.log(selected);
-   // console.log(selectedDamId);
-
+    // console.log(selectedDamId);
 
     const x = selected.length;
 
     //delete notification
-   
+
     //เปลี่ยนสถานะโค
     for (let a = 0; a < x; a++) {
       axios.post(
@@ -126,7 +123,7 @@ export default function TableBreed(props) {
           time_breeding: time3, //เวลาผสม
           time2: time2, //เวลานิ่ง
           time3: time //เวลาเป็นสัด
-        })
+        });
       }
     }
     if (HowTobreed === "น้ำเชื้อ") {
@@ -134,7 +131,7 @@ export default function TableBreed(props) {
         axios.post("http://localhost:4000/breed/" + UID, {
           dam_id: selectedDamId[c],
           date_breeding: selectedDate,
-          note:theNote,
+          note: theNote,
           noti_oestrus: "19",
           noti_pregnant: "90",
           recorder: recoder,
@@ -143,7 +140,7 @@ export default function TableBreed(props) {
           time_breeding: time3, //เวลาผสม
           time2: time2, //เวลานิ่ง
           time3: time //เวลาเป็นสัด
-        })
+        });
       }
     }
 
@@ -155,7 +152,7 @@ export default function TableBreed(props) {
           id_cattle: selectedDamId[d],
           type: "ตรวจท้อง"
         }
-      )
+      );
       axios.delete(
         "http://localhost:4000/notification/delete/" +
           UID +
@@ -163,10 +160,10 @@ export default function TableBreed(props) {
           dateNoti[d].date +
           "/" +
           keyDateNoti[d]
-      )
+      );
     }
     alert("success");
-    window.location.reload()
+    window.location.reload();
   };
 
   const descendingComparator = (a, b, orderBy) => {
@@ -198,11 +195,16 @@ export default function TableBreed(props) {
   // headCells คอลัม หัวตาราง
   const headCells = [
     { id: "1", numeric: false, disablePadding: true, label: "เลือก" },
-    { id: "2", numeric: false, disablePadding: false, label: "หมายเลข" },
-    { id: "3", numeric: false, disablePadding: false, label: "โรงเรือน" },
-    { id: "4", numeric: false, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: false, disablePadding: false, label: "ฝูง" },
-    { id: "6", numeric: false, disablePadding: false, label: "วันที่ผสมพันธุ์" }
+    { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
+    { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
+    { id: "4", numeric: true, disablePadding: false, label: "คอก" },
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
+    {
+      id: "6",
+      numeric: true,
+      disablePadding: false,
+      label: "วันที่กำหนดผสมพันธุ์"
+    }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -229,9 +231,10 @@ export default function TableBreed(props) {
             <TableCell
               key={headCell.id}
               //numeric จริง ชิดขวา เท็จ ชิดซ้าย
-              align={headCell.numeric ? "right" : "left"}
-              //disablePadding จิง เท็จ
-              padding={headCell.disablePadding ? "none" : "default"}
+              style={{
+                minWidth: 100,
+                textAlign: headCell.numeric ? "right" : "left"
+              }}
               //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
               sortDirection={orderBy === headCell.id ? order : false}
             >
@@ -329,8 +332,9 @@ export default function TableBreed(props) {
     },
     FormWidth: {
       width: "100%"
-    },  paperNoti: {
-      backgroundColor:"#fb8c00",
+    },
+    paperNoti: {
+      backgroundColor: "#fb8c00",
       textAlign: "center",
       width: "100%",
       fontSize: "20px",
@@ -338,7 +342,7 @@ export default function TableBreed(props) {
       color: "white"
     },
     paperNoti1: {
-      backgroundColor:"#304ffe",
+      backgroundColor: "#304ffe",
       textAlign: "center",
       width: "100%",
       fontSize: "20px",
@@ -488,7 +492,7 @@ export default function TableBreed(props) {
   const isSelected = id => selected.indexOf(id) !== -1;
 
   const emptyRows =
-  rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   if (loading) {
     return (
@@ -560,7 +564,7 @@ export default function TableBreed(props) {
                           )
                         }
                         role="checkbox"
-                        aria-checked={isItemSelected}//คลิกเลืองตรงตารา
+                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
                         tabIndex={-1}
                         key={row.cattle_id}
                       >
@@ -581,11 +585,21 @@ export default function TableBreed(props) {
                           scope="row"
                           padding="none"
                         ></TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{row.cattle_id}</TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{row.bigcorral}</TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{row.corral}</TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{row.herd_no}</TableCell>
-                        <TableCell align="left"  className={classes.textRow}>{date[index].date}</TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.cattle_id}
+                        </TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.bigcorral}
+                        </TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.corral}
+                        </TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.herd_no}
+                        </TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {date[index].date}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -737,11 +751,10 @@ export default function TableBreed(props) {
             aria-label="minimum height"
             rowsMin={3}
             value={theNote}
-            onChange={(e)=>setNote(e.target.value)}
+            onChange={e => setNote(e.target.value)}
           />
         </FormGroup>
         <Grid container spacing={2} className={classes.marTextField}>
-         
           <Grid item xs={12} sm={12}>
             <Paper elevation={3} className={classes.paperNoti}>
               ตรวจวันกลับสัด วันที่ {dateBeforeCheckup}
@@ -752,7 +765,6 @@ export default function TableBreed(props) {
               ตรวจท้อง วันที่ {showDateCheckUp}
             </Paper>
           </Grid>
-        
         </Grid>
 
         <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -25,6 +25,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Grid } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import TableClaves from "./table";
 //import axios from "axios";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
@@ -35,27 +36,59 @@ export default function TableCheckUp(props) {
   let keysDateNotiCattle = props.posts.keysDate;
   let date = props.posts.dataNoti;
   //let UID = props.posts.UID;
-
+  const inntialDate = () => {
+    var date = new Date();
+    var newdate = new Date(date);
+    newdate.setDate(newdate.getDate() + parseInt(Number_daySync));
+    var dd = newdate.getDate();
+    var mm = newdate.getMonth() + 1;
+    var yyyy = newdate.getFullYear();
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    return dd + "-" + mm + "-" + yyyy;
+  };
+  const inntialDate2 = () => {
+    var date = new Date();
+    var newdate = new Date(date);
+    newdate.setDate(newdate.getDate());
+    var dd = newdate.getDate();
+    var mm = newdate.getMonth() + 1;
+    var yyyy = newdate.getFullYear();
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    return yyyy + "-" + mm + "-" + dd;
+  };
   //let idInduction= props.posts.idCowInduc;
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   //const [selectedDate, setSelectedDate] = useState("");
-  const [dateCheckup, setDateCheckup] = useState(" ");
+  const [dateCheckup, setDateCheckup] = useState(inntialDate2);
   const [theCheckUp, setThecheckUp] = useState("");
-  const [note,setNote] = useState("");
-  const [time, setTime] = useState("");
-  const [Number_dayClave,setNumber_dayclave]=useState(198)
-  const [Number_daySync,setNumber_daySync]=useState(7)
-  const [show_Syncday, set_Show_Syncday] = useState();
+  const [note, setNote] = useState("");
+  const [time, setTime] = useState(" ");
+  const [Number_dayClave, setNumber_dayclave] = useState("198");
+  const [Number_daySync, setNumber_daySync] = useState("7");
+  const [show_Syncday, set_Show_Syncday] = useState(inntialDate);
   const [show_Before_7Day, set_Show_Before_7Day] = useState();
-  const [show_Claveday,set_show_clavedate] = useState();
+  const [show_Claveday, set_show_clavedate] = useState();
   const [show_Affter_7Day, set_Show_Affter_7Day] = useState();
   const [dateNoti, setDateNoti] = useState([]); //เก็บข้อมูลในnoti ที่เลือก
-  const setDateSync=(e)=>{
- 
-    var newdate = new Date(e.target.value);
 
-    newdate.setDate(newdate.getDate()+parseInt(Number_daySync));//-------------------------------------------------------->ตามจำนวนที่ต้องการ
+  const manageDateSync = e => {
+    //ยังไม่ได้ดึงsetting มา
+    setDateCheckup(e.target.value);
+    var date = new Date(e.target.value);
+    var newdate = new Date(date); //วันที่สำหรับตรวจท้อง
+
+    newdate.setDate(newdate.getDate() + parseInt(Number_daySync));
     var dd = newdate.getDate();
     var mm = newdate.getMonth() + 1;
     var yyyy = newdate.getFullYear();
@@ -66,20 +99,21 @@ export default function TableCheckUp(props) {
       dd = "0" + dd;
     }
 
-    var dateSync = dd + "-" + mm + "-" + yyyy
-    setTime(e.target.value)
-    set_Show_Syncday(dateSync)
-    
-  }
+    var setnextmissionday = dd + "-" + mm + "-" + yyyy;
 
-  const setDateClave = (NotiDate) => {
-   // console.log(NotiDate)
-   const dayClave = [];
-    for (let i = 0; i < NotiDate.length; i++) {
-      var date = new Date(NotiDate[i].date);
+    set_Show_Syncday(setnextmissionday); //แสดงวันที่ตรวจท้อง
+  };
+
+  const setDateClave = () => {
+    // console.log(NotiDate)
+    const dayClave = [];
+    const dayClaveB7 = [];
+    const dayClaveA7 = [];
+
+    for (let i = 0; i < dateNoti.length; i++) {
+      var date = new Date(dateNoti[i].date);
       var newdate = new Date(date);
-
-      newdate.setDate(newdate.getDate() +193);//-------------------------------------------------------->ตามจำนวนที่ต้องการ
+      newdate.setDate(newdate.getDate() + parseInt(Number_dayClave)); //-------------------------------------------------------->ตามจำนวนที่ต้องการ
       var dd = newdate.getDate();
       var mm = newdate.getMonth() + 1;
       var yyyy = newdate.getFullYear();
@@ -91,84 +125,53 @@ export default function TableCheckUp(props) {
       }
 
       dayClave.push(yyyy + "-" + mm + "-" + dd);
+
+      //-------------------------------------------------------------------------------------
+
+      var newdateB7 = new Date(date);
+      newdateB7.setDate(newdateB7.getDate() + parseInt(Number_dayClave) - 7); //-------------------------------------------------------->ตามจำนวนที่ต้องการ
+      var ddB7 = newdateB7.getDate();
+      var mmB7 = newdateB7.getMonth() + 1;
+      var yyyyB7 = newdateB7.getFullYear();
+      if (mmB7 < 10) {
+        mmB7 = "0" + mmB7;
+      }
+      if (ddB7 < 10) {
+        ddB7 = "0" + ddB7;
+      }
+
+      dayClaveB7.push(yyyyB7 + "-" + mmB7 + "-" + ddB7);
+
+      //-------------------------------------------------------------------------------------
+
+      var newdateA7 = new Date(date);
+      newdateA7.setDate(newdateA7.getDate() + parseInt(Number_dayClave) + 7); //-------------------------------------------------------->ตามจำนวนที่ต้องการ
+      var ddA7 = newdateA7.getDate();
+      var mmA7 = newdateA7.getMonth() + 1;
+      var yyyyA7 = newdateA7.getFullYear();
+      if (mmA7 < 10) {
+        mmA7 = "0" + mmA7;
+      }
+      if (ddA7 < 10) {
+        ddA7 = "0" + ddA7;
+      }
+
+      dayClaveA7.push(yyyyA7 + "-" + mmA7 + "-" + ddA7);
     }
-  
-    return dayClave;
-  };
-  const setBefore7Day = (NotiDate) => {
-    //console.log(NotiDate)
-    const dayClaveBefore7Day = [];
-    for (let i = 0; i < NotiDate.length; i++) {
-      var date = new Date(NotiDate[i]);
-      var newdate = new Date(date);
+    set_show_clavedate(dayClave);
+    set_Show_Before_7Day(dayClaveB7);
+    set_Show_Affter_7Day(dayClaveA7);
 
-      newdate.setDate(newdate.getDate() - 7);
-      var dd = newdate.getDate();
-      var mm = newdate.getMonth() + 1;
-      var yyyy = newdate.getFullYear();
-      if (mm < 10) {
-        mm = "0" + mm;
-      }
-      if (dd < 10) {
-        dd = "0" + dd;
-      }
-
-      dayClaveBefore7Day.push(yyyy + "-" + mm + "-" + dd);
-    }
-    return dayClaveBefore7Day;
-  };
-  const setAfter7Day = (NotiDate) => {
-    //console.log(NotiDate)
-   const dayClaveAfter7Day = [];
-    for (let i = 0; i < NotiDate.length; i++) {
-      var date = new Date(NotiDate[i]);
-      var newdate = new Date(date);
-
-      newdate.setDate(newdate.getDate() + 7);
-      var dd = newdate.getDate();
-      var mm = newdate.getMonth() + 1;
-      var yyyy = newdate.getFullYear();
-      if (mm < 10) {
-        mm = "0" + mm;
-      }
-      if (dd < 10) {
-        dd = "0" + dd;
-      }
-
-      dayClaveAfter7Day.push(yyyy + "-" + mm + "-" + dd);
-    }
-    return dayClaveAfter7Day;
+    //console.log(dayClaveB7)
   };
 
- useEffect(() => {
+  useEffect(() => {
+    setDateClave();
+  }, [dateNoti]);
 
-  const CD=setDateClave(dateNoti);
-  const B7D=setBefore7Day(CD);
-  const A7D=setAfter7Day(CD);
-
-  set_Show_Before_7Day(B7D)
-  set_show_clavedate(CD)
-  set_Show_Affter_7Day(A7D)
-  
- },[dateNoti]);
-
-
-  const saveData = ()=>{
-  console.log(selected)
-  console.log(selectedDamId)
-  console.log(dateNoti)
-  console.log(keyDateNoti)
-  console.log(recoder)
-  console.log(operator)
-  console.log(dateCheckup)
-  console.log(time)
-  console.log(theCheckUp)
-  console.log(Number_dayClave)
-  console.log(Number_daySync)
-  console.log(note)
-}
-  
-
+  const saveData = () => {
+    console.log(dateCheckup);
+  };
 
   const descendingComparator = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
@@ -196,14 +199,98 @@ export default function TableCheckUp(props) {
     return stabilizedThis.map(el => el[0]);
   };
 
+  const CalculateDateSync = e => {
+    const numberdate = e.target.value;
+    var date = new Date(dateCheckup);
+    var newdate = new Date(date); //วันที่สำหรับตรวจท้อง
+    setNumber_daySync(numberdate);
+    newdate.setDate(newdate.getDate() + parseInt(numberdate));
+    var dd = newdate.getDate();
+    var mm = newdate.getMonth() + 1;
+    var yyyy = newdate.getFullYear();
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+
+    var setnextmissionday = dd + "-" + mm + "-" + yyyy;
+    set_Show_Syncday(setnextmissionday);
+  };
+
+  const CalculateDateClave = e => {
+    const number = e.target.value;
+    setNumber_dayclave(number);
+    const dayClave = [];
+    const dayClaveB7 = [];
+    const dayClaveA7 = [];
+
+    for (let i = 0; i < dateNoti.length; i++) {
+      var date = new Date(dateNoti[i].date);
+      var newdate = new Date(date);
+      newdate.setDate(newdate.getDate() + parseInt(number));
+      var dd = newdate.getDate();
+      var mm = newdate.getMonth() + 1;
+      var yyyy = newdate.getFullYear();
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+
+      dayClave.push(yyyy + "-" + mm + "-" + dd);
+
+      //-------------------------------------------------------------------------------------
+
+      var newdateB7 = new Date(date);
+      newdateB7.setDate(newdateB7.getDate() + parseInt(number) - 7);
+      var ddB7 = newdateB7.getDate();
+      var mmB7 = newdateB7.getMonth() + 1;
+      var yyyyB7 = newdateB7.getFullYear();
+      if (mmB7 < 10) {
+        mmB7 = "0" + mmB7;
+      }
+      if (ddB7 < 10) {
+        ddB7 = "0" + ddB7;
+      }
+
+      dayClaveB7.push(yyyyB7 + "-" + mmB7 + "-" + ddB7);
+
+      //-------------------------------------------------------------------------------------
+
+      var newdateA7 = new Date(date);
+      newdateA7.setDate(newdateA7.getDate() + parseInt(number) + 7);
+      var ddA7 = newdateA7.getDate();
+      var mmA7 = newdateA7.getMonth() + 1;
+      var yyyyA7 = newdateA7.getFullYear();
+      if (mmA7 < 10) {
+        mmA7 = "0" + mmA7;
+      }
+      if (ddA7 < 10) {
+        ddA7 = "0" + ddA7;
+      }
+
+      dayClaveA7.push(yyyyA7 + "-" + mmA7 + "-" + ddA7);
+    }
+    set_show_clavedate(dayClave);
+    set_Show_Before_7Day(dayClaveB7);
+    set_Show_Affter_7Day(dayClaveA7);
+  };
   // headCells คอลัม หัวตาราง
   const headCells = [
     { id: "1", numeric: false, disablePadding: true, label: "เลือก" },
-    { id: "2", numeric: false, disablePadding: false, label: "หมายเลข" },
-    { id: "3", numeric: false, disablePadding: false, label: "โรงเรือน" },
-    { id: "4", numeric: false, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: false, disablePadding: false, label: "ฝูง" },
-    { id: "6", numeric: false, disablePadding: false, label: "วันที่ตรวจท้อง" }
+    { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
+    { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
+    { id: "4", numeric: true, disablePadding: false, label: "คอก" },
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
+    {
+      id: "6",
+      numeric: true,
+      disablePadding: false,
+      label: "สิ้นสุดวันที่ตรวจท้อง"
+    }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -224,9 +311,11 @@ export default function TableCheckUp(props) {
           </TableCell>
           {headCells.map(headCell => (
             <TableCell
+              style={{
+                minWidth: 100,
+                textAlign: headCell.numeric ? "right" : "left"
+              }}
               key={headCell.id}
-              align={headCell.numeric ? "right" : "left"}
-              padding={headCell.disablePadding ? "none" : "default"}
               sortDirection={orderBy === headCell.id ? order : false}
             >
               <h5> {headCell.label}</h5>
@@ -377,7 +466,6 @@ export default function TableCheckUp(props) {
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [selectedDamId, setSelectedDamId] = React.useState([]); //cattle_idโคที่เลือก
-  
   const [keyDateNoti, setKeyDateNoti] = useState([]); //key child  in --cattle child database  from selected table row
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -574,19 +662,19 @@ export default function TableCheckUp(props) {
                           scope="row"
                           padding="none"
                         ></TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.cattle_id}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.bigcorral}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.corral}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {row.herd_no}
                         </TableCell>
-                        <TableCell align="left" className={classes.textRow}>
+                        <TableCell align="right" className={classes.textRow}>
                           {date[index].date}
                         </TableCell>
                       </TableRow>
@@ -625,10 +713,7 @@ export default function TableCheckUp(props) {
         />
       </div>
 
-      <Paper
-        elevation={3}
-        className={classes.pad}
-      >
+      <Paper elevation={3} className={classes.pad}>
         <h4 style={{ paddingTop: "15px" }}>บันทึกการตรวจท้อง</h4>
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
@@ -656,9 +741,8 @@ export default function TableCheckUp(props) {
             variant="outlined"
             type="date"
             size="small"
-            value={time}
-  
-            onChange={(e)=>setDateSync(e)}
+            value={dateCheckup}
+            onChange={manageDateSync}
           />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
@@ -667,8 +751,6 @@ export default function TableCheckUp(props) {
             variant="outlined"
             type="time"
             size="small"
-            value={show_Syncday}
-           
             onChange={e => setTime(e.target.value)}
           />
         </FormGroup>
@@ -679,8 +761,7 @@ export default function TableCheckUp(props) {
               variant="outlined"
               native
               value={theCheckUp}
-              onChange={(e)=>setThecheckUp(e.target.value)}
-             
+              onChange={e => setThecheckUp(e.target.value)}
             >
               <option value=" ">เลือก</option>
               <option>ท้อง</option>
@@ -690,11 +771,21 @@ export default function TableCheckUp(props) {
         </FormGroup>
         <FormGroup className={classes.marTextField}>
           <FormLabel>จำนวนวันแจ้งคลอด(วัน)</FormLabel>
-          <TextField variant="outlined"  size="small"  value={Number_dayClave}  onChange={e=>setNumber_dayclave(e.target.value)}/>
+          <TextField
+            variant="outlined"
+            size="small"
+            value={Number_dayClave}
+            onChange={CalculateDateClave}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
           <FormLabel>จำนวนกลับสัด(วัน)</FormLabel>
-          <TextField variant="outlined"  size="small" value={Number_daySync} onChange={e=>setNumber_daySync(e.target.value)}/>
+          <TextField
+            variant="outlined"
+            size="small"
+            value={Number_daySync}
+            onChange={CalculateDateSync}
+          />
         </FormGroup>
         <FormGroup className={classes.marTextField}>
           <FormLabel>หมายเหตุ(หากมี)</FormLabel>
@@ -703,38 +794,28 @@ export default function TableCheckUp(props) {
             rowsMin={3}
             placeholder=" "
             value={note}
-            onChange={(e)=>setNote(e.target.value)}
+            onChange={e => setNote(e.target.value)}
           />
         </FormGroup>
-        <Grid container spacing={2} className={classes.marTextField}>
-          <Grid item xs={12} sm={12}>
-            <Paper elevation={3} className={classes.paperNoti0}>
-              (หากไม่ท้อง) วันที่คาดการวันกลับสัด วันที่ {show_Syncday}
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Paper elevation={3} className={classes.paperNoti1}>
-              วันคลอด ก่อน -7 วัน วันที่ {show_Before_7Day}
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Paper elevation={3} className={classes.paperNoti2}>
-              วันคลอด วันที่ {show_Claveday}
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Paper elevation={3} className={classes.paperNoti3}>
-              วันคลอด หลังวันคลอด +7 วัน วันที่ {show_Affter_7Day}
-            </Paper>
-          </Grid>
-        </Grid>
+
+       
+       
+          <TableClaves
+            id={selectedDamId}
+            clavedate={show_Claveday}
+            B7={show_Before_7Day}
+            A7={show_Affter_7Day}
+            sync={show_Syncday}
+          />
+    
+
         <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>
           <Button
             variant="contained"
             color="primary"
             size="large"
             style={{ width: "250px", margin: "10px", outline: "none" }}
-          onClick={saveData}
+            onClick={saveData}
           >
             บันทึก
           </Button>
