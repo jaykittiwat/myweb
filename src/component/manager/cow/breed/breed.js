@@ -10,7 +10,7 @@ class Breed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      keydata:[],
+      keydata: [],
       data: [],
       loading: false,
       keysDate: [],
@@ -48,43 +48,47 @@ class Breed extends Component {
                   resEmail +
                   "/" +
                   fullToday
-              ).then(async(res)=>{
+              )
+              .then(async res => {
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
-              //  console.log(key);
-              //  console.log(data);
+                //  console.log(key);
+                //  console.log(data);
                 const keyฺBreed = [];
                 const dataBreed = [];
                 const array = [keyฺBreed, dataBreed];
                 for (let i = 0; i < data.length; i++) {
                   if (data[i].type === "ผสมพันธุ์") {
-                   // console.log(key[i]);
+                    // console.log(key[i]);
                     //console.log(data[i]);
                     keyฺBreed.push(key[i]);
                     dataBreed.push(data[i]);
                   }
                 }
                 return array;
-              }).then(array => {
+              })
+              .then(array => {
                 this.setState({
                   ...this.state,
                   keysDate: array[0],
                   dataNoti: array[1]
                 });
-              }).then(async () => {
+              })
+              .then(async () => {
                 // console.log(this.state.dataNoti);
-                 const cattleListData = [];
-                 for (let i = 0; i < this.state.keysDate.length; i++) {
-                   let res = await axios.get(
-                     "http://localhost:4000/cattle/show/" +
-                       this.state.UID +
-                       "/" +
-                       this.state.dataNoti[i].id_cattle
-                   );
-                   cattleListData.push(res.data);
-                 }
-                 return cattleListData;
-               }).then(data => {
+                const cattleListData = [];
+                for (let i = 0; i < this.state.keysDate.length; i++) {
+                  let res = await axios.get(
+                    "http://localhost:4000/cattle/show/" +
+                      this.state.UID +
+                      "/" +
+                      this.state.dataNoti[i].id_cattle
+                  );
+                  cattleListData.push(res.data);
+                }
+                return cattleListData;
+              })
+              .then(data => {
                 const setdata = [];
                 const setKeyCattle = [];
                 for (let i = 0; i < data.length; i++) {
@@ -94,11 +98,13 @@ class Breed extends Component {
                   setdata.push(set);
                   setKeyCattle.push(values[0]);
                 }
-              this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
-              }).then(()=>{
-                console.log(this.state)
-                 })
-
+                this.setState({
+                  ...this.state,
+                  keydata: setKeyCattle,
+                  data: setdata,
+                  loading: false
+                });
+              });
           });
       }
     });
@@ -113,7 +119,7 @@ class Breed extends Component {
         <div className="row Nav-shadow posi">
           <NavbarLogin />
         </div>
-     <TableBreed  posts={this.state} />
+        <TableBreed posts={this.state} />
         <div className="row mar"></div>
       </div>
     );
@@ -123,8 +129,3 @@ class Breed extends Component {
 export default Breed;
 
 //<TableBreed  />
-
-
-               
-                
-    

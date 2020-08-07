@@ -44,7 +44,7 @@ export default function TableInduction(props) {
   //console.log(props.posts.keyDate);
 
   //let idInduction= props.posts.idCowInduc;
-  const [typeModule] = useState({ status: "เหนี่ยวนำแล้ว" });
+  //const [typeModule] = useState({ status: "เหนี่ยวนำแล้ว" });
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -89,7 +89,7 @@ export default function TableInduction(props) {
     for (let a = 0; a < x; a++) {
       axios.post(
         "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-        typeModule
+        { status: "เหนี่ยวนำแล้ว", process_date: selectedDate }
       );
     }
     for (let b = 0; b < x; b++) {

@@ -23,13 +23,14 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
-import { Grid } from "@material-ui/core";
+//import { Grid } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import TableClaves from "./table";
-//import axios from "axios";
+import axios from "axios";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableCheckUp(props) {
+  let UID = props.posts.UID;
   let key = props.posts.keydata;
   let rows = props.posts.data;
   let loading = props.posts.loading;
@@ -99,7 +100,7 @@ export default function TableCheckUp(props) {
       dd = "0" + dd;
     }
 
-    var setnextmissionday = dd + "-" + mm + "-" + yyyy;
+    var setnextmissionday = yyyy + "-" + mm + "-" + dd;
 
     set_Show_Syncday(setnextmissionday); //แสดงวันที่ตรวจท้อง
   };
@@ -170,7 +171,113 @@ export default function TableCheckUp(props) {
   }, [dateNoti]);
 
   const saveData = () => {
-    console.log(dateCheckup);
+ 
+    if (theCheckUp === "ท้อง") {
+      saveClave();
+    }
+    if (theCheckUp === "ไม่ท้อง") {
+      saveSync();
+    }
+  };
+  const saveClave = () => {
+    const x = selected.length;
+    for (let i = 0; i < x; i++) {
+      axios.post(
+        "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
+        { status: "ตรวจท้องแล้ว", process_date: dateCheckup }
+      ).then(()=>{
+        axios.post(
+          "http://localhost:4000/notification/" + UID + "/" +show_Before_7Day[i],
+          {
+            date: show_Before_7Day[i],
+            id_cattle:selectedDamId[i],
+            type: "วันคลอด"
+          }
+        );
+      }).then(()=>{
+        axios.delete(
+          "http://localhost:4000/notification/delete/" +
+            UID +
+            "/" +
+            dateNoti[i].date +
+            "/" +
+            keyDateNoti[i])
+      }).then(()=>{
+        axios.post("http://localhost:4000/history/" + UID, {
+          dam_id: selectedDamId[i],
+          date: dateCheckup,
+          type: "ตรวจท้อง"
+        });
+      }).then(()=>{
+        axios.post("http://localhost:4000/abdominal/" + UID, {
+              alert_after_7D: show_Affter_7Day[i] ,
+              alert_befor_7D:show_Before_7Day[i] ,
+              alert_sync:show_Syncday,   
+              calve_date:show_Claveday[i] ,  
+              dam_id: selectedDamId[i],   
+              dateabd: dateNoti[i].date ,      //วันที่ท้อง
+              not_pregnant_noti:Number_daySync ,  //18วันถ้าไม่ท้อง         
+              note:note ,           
+              operator:operator ,             
+              pregnant_noti:Number_dayClave ,  //198วันคลอด          
+              recoder:recoder ,            
+              result:theCheckUp ,
+              timeabd: time,
+            })
+      })
+      alert("success");
+    window.location.reload();
+    }
+  };
+  const saveSync = () => {
+    const x = selected.length;
+    for (let i = 0; i < x; i++) {
+      axios.post(
+        "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
+        { status: "ไม่ท้อง", process_date: dateCheckup }
+      ).then(()=>{
+        axios.post(
+          "http://localhost:4000/notification/" + UID + "/" +show_Syncday,
+          {
+            date: show_Syncday,
+            id_cattle:selectedDamId[i],
+            type: "บำรุงแม่พันธุ์"
+          }
+        );
+      }).then(()=>{
+        axios.delete(
+          "http://localhost:4000/notification/delete/" +
+            UID +
+            "/" +
+            dateNoti[i].date +
+            "/" +
+            keyDateNoti[i])
+      }).then(()=>{
+        axios.post("http://localhost:4000/history/" + UID, {
+          dam_id: selectedDamId[i],
+          date: dateCheckup,
+          type: "ตรวจท้อง"
+        });
+      }).then(()=>{
+        axios.post("http://localhost:4000/abdominal/" + UID, {
+          alert_after_7D: show_Affter_7Day[i] ,
+          alert_befor_7D:show_Before_7Day[i] ,
+          alert_sync:show_Syncday,   
+          calve_date:show_Claveday[i] ,  
+          dam_id: selectedDamId[i],   
+          dateabd: dateNoti[i].date ,      //วันที่ท้อง
+          not_pregnant_noti:Number_daySync ,  //18วันถ้าไม่ท้อง         
+          note:note ,           
+          operator:operator ,             
+          pregnant_noti:Number_dayClave ,  //198วันคลอด          
+          recoder:recoder ,            
+          result:theCheckUp ,
+          timeabd: time,
+        })
+      })
+    }
+    alert("success");
+    window.location.reload();
   };
 
   const descendingComparator = (a, b, orderBy) => {
@@ -215,7 +322,7 @@ export default function TableCheckUp(props) {
       dd = "0" + dd;
     }
 
-    var setnextmissionday = dd + "-" + mm + "-" + yyyy;
+    var setnextmissionday = yyyy + "-" + mm + "-" + dd;
     set_Show_Syncday(setnextmissionday);
   };
 
@@ -798,16 +905,13 @@ export default function TableCheckUp(props) {
           />
         </FormGroup>
 
-       
-       
-          <TableClaves
-            id={selectedDamId}
-            clavedate={show_Claveday}
-            B7={show_Before_7Day}
-            A7={show_Affter_7Day}
-            sync={show_Syncday}
-          />
-    
+        <TableClaves
+          id={selectedDamId}
+          clavedate={show_Claveday}
+          B7={show_Before_7Day}
+          A7={show_Affter_7Day}
+          sync={show_Syncday}
+        />
 
         <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>
           <Button

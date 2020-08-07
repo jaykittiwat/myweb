@@ -36,7 +36,7 @@ import axios from "axios";
 export default function TableFatter(props) {
   let posts = props.posts.posts;
   let loading = props.posts.loading;
-  const [typeModule] = useState({ status: "บำรุงแล้ว" });
+  
   const [UID, setUID] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [recoder, setRecoder] = useState("");
@@ -111,7 +111,7 @@ export default function TableFatter(props) {
     for (let a = 0; a < x; a++) {
       axios.post(
         "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-        typeModule
+        { status: "บำรุงแล้ว", process_date: selectedDate }
       );
     }
     for (let b = 0; b < x; b++) {

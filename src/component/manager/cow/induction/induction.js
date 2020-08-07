@@ -50,7 +50,7 @@ class Induction extends Component {
                   fullToday
               )
               .then(res => {
-              //  console.log(res.data);
+                //console.log(res.data);
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
               //  console.log(key);
@@ -101,7 +101,7 @@ class Induction extends Component {
                 }
               this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
               }).then(()=>{
-             console.log(this.state)
+             //console.log(this.state)
               })
           });
       }

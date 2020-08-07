@@ -36,7 +36,7 @@ export default function TableBreed(props) {
   let date = props.posts.dataNoti;
   let UID = props.posts.UID;
   //let idInduction= props.posts.idCowInduc;
-  const [typeModule] = useState({ status: "ผสมพันธุ์แล้ว" });
+  //const [typeModule] = useState({ status: "ผสมพันธุ์แล้ว" });
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -98,7 +98,7 @@ export default function TableBreed(props) {
     for (let a = 0; a < x; a++) {
       axios.post(
         "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-        typeModule
+        { status: "ผสมพันธุ์แล้ว" , process_date: selectedDate }
       );
     }
     //hisstory

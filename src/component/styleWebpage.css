@@ -173,38 +173,7 @@
   padding-top: 15px;
 }
 
-/*.bt {
-  background-color: #f14000;
-  border-color: #f14000;
-}
 
-.bt:visited {
-  background-color: #f14000;
-  border-color: #f14000;
-}
-
-.bt:hover {
-  background-color: #ff4b09;
-  border-color: #f14000;
-}
-
-.bt:active {
-  background-color: #f14000;
-  border-color: #f14000;
-}
-
-.bt:focus {
-  background-color: #f14000;
-  border-color: #f14000;
-}
-
-.bt:not(:disabled):not(.disabled):active,
-.bt:not(:disabled):not(.disabled).active,
-.show > .bt.dropdown-toggle {
-  background-color: #f14000;
-  border-color: #f14000;
-}
-*/
 .title1 {
   font-size: 40px;
   font-family: "Kanit-ExtraLight";

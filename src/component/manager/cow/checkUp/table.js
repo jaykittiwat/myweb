@@ -71,7 +71,7 @@ const dateSync=props.sync;
                   align={column.align}
                   style={{ minWidth: column.minWidth,zIndex:"0" }}
                 >
-                  {column.label}
+                <h6>  {column.label}</h6>
                 </TableCell>
               ))}
             </TableRow>
