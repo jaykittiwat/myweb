@@ -87,48 +87,55 @@ export default function TableInduction(props) {
     const x = selected.length;
 
     for (let a = 0; a < x; a++) {
-      axios.post(
-        "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-        { status: "เหนี่ยวนำแล้ว", process_date: selectedDate }
-      );
-    }
-    for (let b = 0; b < x; b++) {
-      axios.post("http://localhost:4000/history/" + UID, {
-        dam_id: selectedDamId[b],
-        date: selectedDate,
-        time: time,
-        type: "เหนี่ยวนำกลับสัด"
-      });
-    }
-    for (let c = 0; c < x; c++) {
-      axios.post("http://localhost:4000/synchronize/" + UID, {
-        dam_id: selectedDamId[c],
-        datepro: selectedDate,
-        program_sync: programSync,
-        recorder: recoder,
-        operator: operator
-      });
-    }
-    for (let d = 0; d < x; d++) {
       axios
-        .post("http://localhost:4000/notification/" + UID + "/" + dateBreed, {
-          date: dateBreed,
-          id_cattle: selectedDamId[d],
-          type: "ผสมพันธุ์"
+        .post(
+          "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+          { status: "เหนี่ยวนำแล้ว", process_date: selectedDate }
+        )
+        .then(() => {
+          axios.post("http://localhost:4000/history/" + UID, {
+            dam_id: selectedDamId[a],
+            date: selectedDate,
+            time: time,
+            type: "เหนี่ยวนำกลับสัด"
+          });
         })
         .then(() => {
-          axios.delete(
+          axios.post("http://localhost:4000/synchronize/" + UID, {
+            dam_id: selectedDamId[a],
+            datepro: selectedDate,
+            program_sync: programSync,
+            recorder: recoder,
+            operator: operator
+          });
+        })
+        .then(() => {
+          axios.post(
+            "http://localhost:4000/notification/" + UID + "/" + dateBreed,
+            {
+              date: dateBreed,
+              id_cattle: selectedDamId[a],
+              type: "ผสมพันธุ์"
+            }
+          );
+        })
+        .then(async () => {
+          await axios.delete(
             "http://localhost:4000/notification/delete/" +
               UID +
               "/" +
-              dateNoti[d].date +
+              dateNoti[a].date +
               "/" +
-              keyDateNoti[d]
+              keyDateNoti[a]
           );
+        })
+        .then(() => {
+          if (a + 1 === selected.length) {
+            alert("บันทึกสำเร็จ");
+            window.location.reload();
+          }
         });
     }
-    alert("success");
-    window.location.reload();
   };
 
   const descendingComparator = (a, b, orderBy) => {

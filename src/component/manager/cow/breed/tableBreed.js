@@ -96,74 +96,78 @@ export default function TableBreed(props) {
 
     //เปลี่ยนสถานะโค
     for (let a = 0; a < x; a++) {
-      axios.post(
-        "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-        { status: "ผสมพันธุ์แล้ว" , process_date: selectedDate }
-      );
+      axios
+        .post(
+          "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+          { status: "ผสมพันธุ์แล้ว", process_date: selectedDate }
+        )
+        .then(() => {
+          axios.post("http://localhost:4000/history/" + UID, {
+            dam_id: selectedDamId[a],
+            date: selectedDate,
+            type: "ผสมพันธุ์"
+          });
+        })
+        .then(() => {
+          if (HowTobreed === "พ่อพันธุ์") {
+            axios.post("http://localhost:4000/breed/" + UID, {
+              dam_id: selectedDamId[a],
+              date_breeding: selectedDate,
+              note: "",
+              noti_oestrus: "19",
+              noti_pregnant: "90",
+              recorder: recoder,
+              operator: operator,
+              sire_id: HowIdTobreed,
+              time_breeding: time3, //เวลาผสม
+              time2: time2, //เวลานิ่ง
+              time3: time //เวลาเป็นสัด
+            });
+          }
+          if (HowTobreed === "น้ำเชื้อ") {
+            axios.post("http://localhost:4000/breed/" + UID, {
+              dam_id: selectedDamId[a],
+              date_breeding: selectedDate,
+              note: theNote,
+              noti_oestrus: "19",
+              noti_pregnant: "90",
+              recorder: recoder,
+              operator: operator,
+              semen: HowIdTobreed,
+              time_breeding: time3, //เวลาผสม
+              time2: time2, //เวลานิ่ง
+              time3: time //เวลาเป็นสัด
+            });
+          }
+        })
+        .then(() => {
+          axios.post(
+            "http://localhost:4000/notification/" + UID + "/" + dateCheckup,
+            {
+              date: dateCheckup,
+              id_cattle: selectedDamId[a],
+              type: "ตรวจท้อง"
+            }
+          );
+        })
+        .then(async () => {
+          await axios.delete(
+            "http://localhost:4000/notification/delete/" +
+              UID +
+              "/" +
+              dateNoti[a].date +
+              "/" +
+              keyDateNoti[a]
+          );
+        })
+        .then(() => {
+          if (a + 1 === selected.length) {
+            alert("บันทึกสำเร็จ");
+            window.location.reload();
+          }
+        });
     }
     //hisstory
-    for (let b = 0; b < x; b++) {
-      axios.post("http://localhost:4000/history/" + UID, {
-        dam_id: selectedDamId[b],
-        date: selectedDate,
-        type: "ผสมพันธุ์"
-      });
-    }
-    if (HowTobreed === "พ่อพันธุ์") {
-      for (let c = 0; c < x; c++) {
-        axios.post("http://localhost:4000/breed/" + UID, {
-          dam_id: selectedDamId[c],
-          date_breeding: selectedDate,
-          note: "",
-          noti_oestrus: "19",
-          noti_pregnant: "90",
-          recorder: recoder,
-          operator: operator,
-          sire_id: HowIdTobreed,
-          time_breeding: time3, //เวลาผสม
-          time2: time2, //เวลานิ่ง
-          time3: time //เวลาเป็นสัด
-        });
-      }
-    }
-    if (HowTobreed === "น้ำเชื้อ") {
-      for (let c = 0; c < x; c++) {
-        axios.post("http://localhost:4000/breed/" + UID, {
-          dam_id: selectedDamId[c],
-          date_breeding: selectedDate,
-          note: theNote,
-          noti_oestrus: "19",
-          noti_pregnant: "90",
-          recorder: recoder,
-          operator: operator,
-          semen: HowIdTobreed,
-          time_breeding: time3, //เวลาผสม
-          time2: time2, //เวลานิ่ง
-          time3: time //เวลาเป็นสัด
-        });
-      }
-    }
-
-    for (let d = 0; d < x; d++) {
-      axios.post(
-        "http://localhost:4000/notification/" + UID + "/" + dateCheckup,
-        {
-          date: dateCheckup,
-          id_cattle: selectedDamId[d],
-          type: "ตรวจท้อง"
-        }
-      );
-      axios.delete(
-        "http://localhost:4000/notification/delete/" +
-          UID +
-          "/" +
-          dateNoti[d].date +
-          "/" +
-          keyDateNoti[d]
-      );
-    }
-    alert("success");
-    window.location.reload();
   };
 
   const descendingComparator = (a, b, orderBy) => {

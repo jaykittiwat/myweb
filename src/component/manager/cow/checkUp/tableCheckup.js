@@ -171,7 +171,6 @@ export default function TableCheckUp(props) {
   }, [dateNoti]);
 
   const saveData = () => {
- 
     if (theCheckUp === "ท้อง") {
       saveClave();
     }
@@ -182,102 +181,125 @@ export default function TableCheckUp(props) {
   const saveClave = () => {
     const x = selected.length;
     for (let i = 0; i < x; i++) {
-      axios.post(
-        "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
-        { status: "ตรวจท้องแล้ว", process_date: dateCheckup }
-      ).then(()=>{
-        axios.post(
-          "http://localhost:4000/notification/" + UID + "/" +show_Before_7Day[i],
-          {
-            date: show_Before_7Day[i],
-            id_cattle:selectedDamId[i],
-            type: "วันคลอด"
+      axios
+        .post(
+          "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
+          { status: "ตรวจท้องแล้ว", process_date: dateCheckup }
+        )
+        .then(() => {
+          axios.post(
+            "http://localhost:4000/notification/" +
+              UID +
+              "/" +
+              show_Before_7Day[i],
+            {
+              date: show_Before_7Day[i],
+              id_cattle: selectedDamId[i],
+              type: "วันคลอด"
+            }
+          );
+        })
+        .then(() => {
+          axios.delete(
+            "http://localhost:4000/notification/delete/" +
+              UID +
+              "/" +
+              dateNoti[i].date +
+              "/" +
+              keyDateNoti[i]
+          );
+        })
+        .then(() => {
+          axios.post("http://localhost:4000/history/" + UID, {
+            dam_id: selectedDamId[i],
+            date: dateCheckup,
+            type: "ตรวจท้อง"
+          });
+        })
+        .then(async () => {
+           await axios.post("http://localhost:4000/abdominal/" + UID, {
+            alert_after_7D: show_Affter_7Day[i],
+            alert_befor_7D: show_Before_7Day[i],
+            alert_sync: show_Syncday,
+            calve_date: show_Claveday[i],
+            dam_id: selectedDamId[i],
+            dateabd: dateNoti[i].date, //วันที่ท้อง
+            not_pregnant_noti: Number_daySync, //18วันถ้าไม่ท้อง
+            note: note,
+            operator: operator,
+            pregnant_noti: Number_dayClave, //198วันคลอด
+            recoder: recoder,
+            result: theCheckUp,
+            timeabd: time
+          });
+        }).then(() => {
+          if (i + 1 === selected.length) {
+            alert("บันทึกสำเร็จ");
+            window.location.reload();
           }
-        );
-      }).then(()=>{
-        axios.delete(
-          "http://localhost:4000/notification/delete/" +
-            UID +
-            "/" +
-            dateNoti[i].date +
-            "/" +
-            keyDateNoti[i])
-      }).then(()=>{
-        axios.post("http://localhost:4000/history/" + UID, {
-          dam_id: selectedDamId[i],
-          date: dateCheckup,
-          type: "ตรวจท้อง"
-        });
-      }).then(()=>{
-        axios.post("http://localhost:4000/abdominal/" + UID, {
-              alert_after_7D: show_Affter_7Day[i] ,
-              alert_befor_7D:show_Before_7Day[i] ,
-              alert_sync:show_Syncday,   
-              calve_date:show_Claveday[i] ,  
-              dam_id: selectedDamId[i],   
-              dateabd: dateNoti[i].date ,      //วันที่ท้อง
-              not_pregnant_noti:Number_daySync ,  //18วันถ้าไม่ท้อง         
-              note:note ,           
-              operator:operator ,             
-              pregnant_noti:Number_dayClave ,  //198วันคลอด          
-              recoder:recoder ,            
-              result:theCheckUp ,
-              timeabd: time,
-            })
-      })
-      alert("success");
-    window.location.reload();
+        })
+    
     }
   };
   const saveSync = () => {
     const x = selected.length;
     for (let i = 0; i < x; i++) {
-      axios.post(
-        "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
-        { status: "ไม่ท้อง", process_date: dateCheckup }
-      ).then(()=>{
-        axios.post(
-          "http://localhost:4000/notification/" + UID + "/" +show_Syncday,
-          {
-            date: show_Syncday,
-            id_cattle:selectedDamId[i],
-            type: "บำรุงแม่พันธุ์"
-          }
-        );
-      }).then(()=>{
-        axios.delete(
-          "http://localhost:4000/notification/delete/" +
-            UID +
-            "/" +
-            dateNoti[i].date +
-            "/" +
-            keyDateNoti[i])
-      }).then(()=>{
-        axios.post("http://localhost:4000/history/" + UID, {
-          dam_id: selectedDamId[i],
-          date: dateCheckup,
-          type: "ตรวจท้อง"
-        });
-      }).then(()=>{
-        axios.post("http://localhost:4000/abdominal/" + UID, {
-          alert_after_7D: show_Affter_7Day[i] ,
-          alert_befor_7D:show_Before_7Day[i] ,
-          alert_sync:show_Syncday,   
-          calve_date:show_Claveday[i] ,  
-          dam_id: selectedDamId[i],   
-          dateabd: dateNoti[i].date ,      //วันที่ท้อง
-          not_pregnant_noti:Number_daySync ,  //18วันถ้าไม่ท้อง         
-          note:note ,           
-          operator:operator ,             
-          pregnant_noti:Number_dayClave ,  //198วันคลอด          
-          recoder:recoder ,            
-          result:theCheckUp ,
-          timeabd: time,
+      axios
+        .post(
+          "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
+          { status: "ไม่ท้อง", process_date: dateCheckup }
+        )
+        .then(() => {
+          axios.post(
+            "http://localhost:4000/notification/" + UID + "/" + show_Syncday,
+            {
+              date: show_Syncday,
+              id_cattle: selectedDamId[i],
+              type: "บำรุงแม่พันธุ์"
+            }
+          );
         })
-      })
+        .then(() => {
+          axios.delete(
+            "http://localhost:4000/notification/delete/" +
+              UID +
+              "/" +
+              dateNoti[i].date +
+              "/" +
+              keyDateNoti[i]
+          );
+        })
+        .then(() => {
+          axios.post("http://localhost:4000/history/" + UID, {
+            dam_id: selectedDamId[i],
+            date: dateCheckup,
+            type: "ตรวจท้อง"
+          });
+        })
+        .then(() => {
+          axios.post("http://localhost:4000/abdominal/" + UID, {
+            alert_after_7D: show_Affter_7Day[i],
+            alert_befor_7D: show_Before_7Day[i],
+            alert_sync: show_Syncday,
+            calve_date: show_Claveday[i],
+            dam_id: selectedDamId[i],
+            dateabd: dateNoti[i].date, //วันที่ท้อง
+            not_pregnant_noti: Number_daySync, //18วันถ้าไม่ท้อง
+            note: note,
+            operator: operator,
+            pregnant_noti: Number_dayClave, //198วันคลอด
+            recoder: recoder,
+            result: theCheckUp,
+            timeabd: time
+          });
+        }).then(() => {
+          if (i + 1 === selected.length) {
+            alert("บันทึกสำเร็จ");
+            window.location.reload();
+          }
+        })
     }
-    alert("success");
-    window.location.reload();
+  
   };
 
   const descendingComparator = (a, b, orderBy) => {

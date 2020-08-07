@@ -58,9 +58,7 @@ class CheckUp extends Component {
                 const array = [keyInduction, dataInduction];
                 for (let i = 0; i < data.length; i++) {
                   if (data[i].type === "วันคลอด") {
-                    // console.log(key[i]);
-                    
-                    console.log(data[i]);
+                   
                     keyInduction.push(key[i]);
                     dataInduction.push(data[i]);
                   }
@@ -85,7 +83,7 @@ class CheckUp extends Component {
                 }
                 return cattleListData;
               }).then((data)=>{
-                console.log(data)
+                
                 const setdata = [];
                 const setKeyCattle = [];
                 for (let i = 0; i < data.length; i++) {
@@ -97,7 +95,7 @@ class CheckUp extends Component {
                 }
               this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
               }).then( () => {
-                      //console.log(this.state.dataNoti)
+                      console.log(this.state)
               });
           });
       }

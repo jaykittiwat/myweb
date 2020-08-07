@@ -36,7 +36,7 @@ import axios from "axios";
 export default function TableFatter(props) {
   let posts = props.posts.posts;
   let loading = props.posts.loading;
-  
+
   const [UID, setUID] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [recoder, setRecoder] = useState("");
@@ -45,7 +45,7 @@ export default function TableFatter(props) {
   const [dateInduction, setDateInduction] = useState("");
   const [time, setTime] = useState("");
   const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
-  //console.log(props)
+  const [stateStatck, setStateStatck] = useState("1");
   const current = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -108,40 +108,46 @@ export default function TableFatter(props) {
 
   const saveDataToInduction = async () => {
     const x = selected.length;
+
     for (let a = 0; a < x; a++) {
-      axios.post(
-        "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-        { status: "บำรุงแล้ว", process_date: selectedDate }
-      );
-    }
-    for (let b = 0; b < x; b++) {
-      axios.post("http://localhost:4000/history/" + UID, {
-        dam_id: selectedDamId[b],
-        date: selectedDate,
-        type: "บำรุงแม่พันธุ์"
-      });
-    }
-    for (let c = 0; c < x; c++) {
-      axios.post("http://localhost:4000/maintain/" + UID, {
-        dam_id: selectedDamId[c],
-        date: selectedDate,
-        type: "บำรุงก่อนคลอด",
-        recorder: recoder,
-        operator: operator,
-        time: time
-      });
-    }
-    for (let d = 0; d < x; d++) {
-      axios.post(
-        "http://localhost:4000/notification/" + UID + "/" + dateInduction,
-        {
-          date: dateInduction,
-          id_cattle: selectedDamId[d],
-          type: "เหนี่ยวนำกลับสัด"
-        }
-      );
-      alert("success");
-      window.location.reload();
+      axios
+        .post(
+          "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+          { status: "บำรุงแล้ว", process_date: selectedDate }
+        )
+        .then(() => {
+          axios.post("http://localhost:4000/history/" + UID, {
+            dam_id: selectedDamId[a],
+            date: selectedDate,
+            type: "บำรุงแม่พันธุ์"
+          });
+        })
+        .then(() => {
+          axios.post("http://localhost:4000/maintain/" + UID, {
+            dam_id: selectedDamId[a],
+            date: selectedDate,
+            type: "บำรุงก่อนคลอด",
+            recorder: recoder,
+            operator: operator,
+            time: time
+          });
+        })
+        .then(async () => {
+          axios.post(
+            "http://localhost:4000/notification/" + UID + "/" + dateInduction,
+            {
+              date: dateInduction,
+              id_cattle: selectedDamId[a],
+              type: "เหนี่ยวนำกลับสัด"
+            }
+          );
+        })
+        .then(() => {
+          if (a + 1 === selected.length) {
+            alert("บันทึกสำเร็จ");
+            window.location.reload();
+          }
+        });
     }
   };
 
