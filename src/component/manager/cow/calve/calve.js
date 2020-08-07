@@ -40,7 +40,7 @@ class CheckUp extends Component {
             if (dd < 10) {
               dd = "0" + dd;
             }
-            var fullToday = "2019-05-08";
+            var fullToday = "2021-05-08";
             axios
               .get(
                 "http://localhost:4000/notification/" +
@@ -51,15 +51,16 @@ class CheckUp extends Component {
               .then(res => {
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
-                //  console.log(key);
-                //  console.log(data);
+                  //console.log(key);
+                  //console.log(data);
                 const keyInduction = [];
                 const dataInduction = [];
                 const array = [keyInduction, dataInduction];
                 for (let i = 0; i < data.length; i++) {
-                  if (data[i].type === "บำรุงแม่พันธุ์") {
+                  if (data[i].type === "วันคลอด") {
                     // console.log(key[i]);
-                    //console.log(data[i]);
+                    
+                    console.log(data[i]);
                     keyInduction.push(key[i]);
                     dataInduction.push(data[i]);
                   }
@@ -84,6 +85,7 @@ class CheckUp extends Component {
                 }
                 return cattleListData;
               }).then((data)=>{
+                console.log(data)
                 const setdata = [];
                 const setKeyCattle = [];
                 for (let i = 0; i < data.length; i++) {

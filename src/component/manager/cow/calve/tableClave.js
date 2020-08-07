@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "#000",
-    backgroundColor:"#f5f5f51e"
+    backgroundColor: "#f5f5f51e"
   }
 }));
 
@@ -89,12 +89,13 @@ export default function TableClaves() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = React.useState(false);
-  const [dateOfClave,setDateOfClave] = React.useState([])
-  const [timeClave,setTimeClave] = React.useState([])
-  const [dateHeal,setDateHeal] = React.useState([])
-  const [dateFatten,setDateFatten] = React.useState([])
-  const [openBox,setOpenBox]=React.useState(false)
-  const [indexRow,setIndexRow]= React.useState(null)
+  const [dateOfClave, setDateOfClave] = React.useState("");
+  const [timeClave, setTimeClave] = React.useState("");
+  const [dateHeal, setDateHeal] = React.useState("");
+  const [dateFatten, setDateFatten] = React.useState("");
+  const [node, setNode] = React.useState("");
+  const [openBox, setOpenBox] = React.useState(false);
+  const [indexRow, setIndexRow] = React.useState(null);
   //const [stactSuccess, setStackSucess] = React.useState([]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -109,30 +110,25 @@ export default function TableClaves() {
   };
 
   const manageData = (index, row) => {
-  oo(callAPI)
+    oo(callAPI);
   };
-  const oo=(callback)=>{
-   
+  const oo = callback => {
     setOpen(!open);
-    callback()
-}
-//connect to database Back-end
-const callAPI =()=>{
-  console.log("Disable Row aftter SaveData")
-  setTimeout(() => {
-    setIndexRow(null)
-    setOpenBox(false)
-    setOpen(false)
-  }, 1000);
-}
-const openInput = (i,r) =>{
-  console.log("RowIndex"+i+"open")
-setOpenBox(true)
-setIndexRow(i)
-}
-const setDataToArray = (event,index) =>{
+    callback();
+  };
+  //connect to database Back-end
+  const callAPI = () => {
+    setTimeout(() => {
+      setIndexRow(null);
+      setOpenBox(false);
+      setOpen(false);
+    }, 1000);
+  };
+  const openInput = (i, r) => {
+    setOpenBox(true);
+    setIndexRow(i);
+  };
 
-}
   return (
     <Paper className={classes.root}>
       <div className={classes.headerClave}>บันทึกการอคลอด</div>
@@ -158,7 +154,7 @@ const setDataToArray = (event,index) =>{
               .map((row, index) => {
                 return (
                   <TableRow
-              
+                    onClick={() => openInput(index, rows)}
                     hover
                     tabIndex={-1}
                     key={index}
@@ -168,33 +164,70 @@ const setDataToArray = (event,index) =>{
                     <TableCell align="center">{row.date}</TableCell>
                     <TableCell align="center">
                       {" "}
-                      <TextField  variant="outlined" size="small" type="date" onChange={(event)=>setDataToArray(event,index)} disabled={index===indexRow?false:true} />
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        type="date"
+                        onChange={event => setDateOfClave(event.target.value)}
+                        disabled={index === indexRow ? false : true}
+                      />
                     </TableCell>
                     <TableCell align="center">
                       {" "}
-                      <TextField variant="outlined" size="small" type="time" onChange={(event)=>setDataToArray(event,index)} disabled={index===indexRow?false:true} />
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        type="time"
+                        onChange={event => setTimeClave(event.target.value)}
+                        disabled={index === indexRow ? false : true}
+                      />
                     </TableCell>
                     <TableCell align="center">
                       {" "}
-                      <TextField variant="outlined" size="small" type="date" onChange={(event)=>setDataToArray(event,index)} disabled={index===indexRow?false:true} />
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        type="date"
+                        onChange={event => setDateHeal(event.target.value)}
+                        disabled={index === indexRow ? false : true}
+                      />
                     </TableCell>
                     <TableCell align="center">
                       {" "}
-                      <TextField variant="outlined" size="small" type="date" onChange={(event)=>setDataToArray(event,index)} disabled={index===indexRow?false:true} />
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        type="date"
+                        onChange={event => setDateFatten(event.target.value)}
+                        disabled={index === indexRow ? false : true}
+                      />
                     </TableCell>
                     <TableCell align="center">
                       {" "}
-                      <TextField variant="outlined" size="small" onChange={(event)=>setDataToArray(event,index)} disabled={index===indexRow?false:true} />
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                        onChange={event => setNode(event.target.value)}
+                        disabled={index === indexRow ? false : true}
+                      />
                     </TableCell>
                     <TableCell align="center">
                       {" "}
                       <Button
                         variant="contained"
-                       style={index===indexRow?{backgroundColor:"#3f51b5",color:"#fff"}:{backgroundColor:"#ef6c00",color:"#fff"}}
+                        style={
+                          index === indexRow
+                            ? { backgroundColor: "#3f51b5", color: "#fff" }
+                            : { backgroundColor: "#ef6c00", color: "#fff" }
+                        }
                         size="large"
-                        onClick={openBox&&index===indexRow?()=>manageData():() =>openInput(index, rows)}
+                        onClick={
+                          openBox && index === indexRow
+                            ? () => manageData()
+                            : () => openInput(index, rows)
+                        }
                       >
-                      {index===indexRow?"บันทึก":"แก้ไข"}
+                        {index === indexRow ? "บันทึก" : "แก้ไข"}
                       </Button>
                       <Backdrop
                         className={classes.backdrop}
