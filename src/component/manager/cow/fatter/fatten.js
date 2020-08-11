@@ -14,6 +14,7 @@ class Fatten extends Component {
     this.state = {
       posts: [],
       loading: false,
+      datauser:[],
     };
   }
 
@@ -22,7 +23,10 @@ class Fatten extends Component {
   firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios.get("http://localhost:4000/user/logIn/" + user.email).then(res=>{
+    
+          this.setState({...this.state,datauser:res.data[0]})
             return res.data[0].user
+             
         }).then(resEmail=>{
           axios.get(
               "http://localhost:4000/cattle/show/"+resEmail

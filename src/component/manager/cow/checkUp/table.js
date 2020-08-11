@@ -36,6 +36,14 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: 440,
+  }, 
+  headerClave: {
+    margin: "0",
+    padding: "10px",
+    fontSize: "18px",
+    color: "#fff",
+    backgroundColor: "#304ffe",
+    borderRadius: "5px 5px 0 0"
   },
 });
 
@@ -61,6 +69,7 @@ const dateSync=props.sync;
 
   return (
     <Paper className={classes.root} >
+       <div className={classes.headerClave}>วันแจ้งเตือน</div>
       <TableContainer className={classes.container} >
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

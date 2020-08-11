@@ -580,14 +580,22 @@ export default function TableCheckUp(props) {
       paddingTop: "2%"
     },
     marForm: {
-      marginTop: "4%"
+      marginTop: "1%"
     },
     marTextField: {
       marginTop: "2%"
     },
     textRow: {
       fontSize: "16px"
-    }
+    },
+     headerClave: {
+      margin: "0",
+      padding: "10px",
+      fontSize: "20px",
+      color:"#fff",
+      backgroundColor: "#304ffe",
+      borderRadius: "5px 5px 0 0"
+    },
   }));
 
   const classes = useStyles();
@@ -841,9 +849,9 @@ export default function TableCheckUp(props) {
           label="ย่อตาราง"
         />
       </div>
-
+      <div className={classes.headerClave}>บันทึกการตรวจท้อง</div>
       <Paper elevation={3} className={classes.pad}>
-        <h4 style={{ paddingTop: "15px" }}>บันทึกการตรวจท้อง</h4>
+     
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField

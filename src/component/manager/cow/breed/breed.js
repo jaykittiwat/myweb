@@ -52,8 +52,6 @@ class Breed extends Component {
               .then(async res => {
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
-                //  console.log(key);
-                //  console.log(data);
                 const keyฺBreed = [];
                 const dataBreed = [];
                 const array = [keyฺBreed, dataBreed];

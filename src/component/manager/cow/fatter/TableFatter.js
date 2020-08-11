@@ -34,9 +34,9 @@ import axios from "axios";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableFatter(props) {
-  let posts = props.posts.posts;
-  let loading = props.posts.loading;
-
+  const posts = props.posts.posts;
+  const loading = props.posts.loading;
+  const UserData =props;
   const [UID, setUID] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [recoder, setRecoder] = useState("");
@@ -45,7 +45,8 @@ export default function TableFatter(props) {
   const [dateInduction, setDateInduction] = useState("");
   const [time, setTime] = useState("");
   const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
-  const [stateStatck, setStateStatck] = useState("1");
+ // const [stateStatck, setStateStatck] = useState("1");
+
   const current = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -54,7 +55,11 @@ export default function TableFatter(props) {
     });
   };
   current();
+const settingState = ()=>{
+ 
+ 
 
+}
   const manageDate = e => {
     //ยังไม่ได้ดึงsetting มา
     var date = new Date(e.target.value);
@@ -94,6 +99,8 @@ export default function TableFatter(props) {
   }
 
   useEffect(() => {
+    settingState()
+  
     const FectData = async () => {
       if (currentUser !== "") {
         const res = await axios.get(
@@ -324,14 +331,22 @@ export default function TableFatter(props) {
       paddingTop: "2%"
     },
     marForm: {
-      marginTop: "4%"
+      marginTop: "2%"
     },
     marTextField: {
       marginTop: "2%"
     },
     textRow: {
       fontSize: "16px"
-    }
+    },
+    headerClave: {
+      margin: "0",
+      padding: "10px",
+      fontSize: "20px",
+      color:"#fff",
+      backgroundColor: "#304ffe",
+      borderRadius: "5px 5px 0 0"
+    },
   }));
 
   const classes = useStyles();
@@ -484,6 +499,7 @@ export default function TableFatter(props) {
       </div>
     );
   }
+  
 
   return (
     <div className="container">
@@ -607,15 +623,17 @@ export default function TableFatter(props) {
           label="ย่อตาราง"
         />
       </div>
+      <div className={classes.headerClave}>บันทึกการเหนี่ยวนำ</div>
 
       <Paper elevation={3} className={classes.pad}>
-        <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการบำรุง</h4>
+        
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
+         
             id="input1"
             variant="outlined"
-            placeholder="กรอกหมายเลขโค"
+            placeholder="ชื่อ"
             size="small"
             onChange={e => setRecoder(e.target.value)}
           />
@@ -623,9 +641,10 @@ export default function TableFatter(props) {
         <FormGroup className={classes.marTextField}>
           <FormLabel>ผู้ปฏิบัติการ</FormLabel>
           <TextField
+           
             id="input2"
             variant="outlined"
-            placeholder="กรอกหมายเลขโค"
+            placeholder="ชื่อ"
             size="small"
             onChange={e => setOperator(e.target.value)}
           />
@@ -687,6 +706,7 @@ export default function TableFatter(props) {
           </div>{" "}
         </div>
       </Paper>
+     
     </div>
   );
 }

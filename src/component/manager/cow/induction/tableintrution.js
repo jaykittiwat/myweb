@@ -318,14 +318,22 @@ export default function TableInduction(props) {
       paddingTop: "2%"
     },
     marForm: {
-      marginTop: "4%"
+      marginTop: "1%"
     },
     marTextField: {
       marginTop: "2%"
     },
     textRow: {
       fontSize: "16px"
-    }
+    }, 
+    headerClave: {
+      margin: "0",
+      padding: "10px",
+      fontSize: "20px",
+      color:"#fff",
+      backgroundColor: "#304ffe",
+      borderRadius: "5px 5px 0 0"
+    },
   }));
 
   const classes = useStyles();
@@ -675,9 +683,9 @@ export default function TableInduction(props) {
           label="ย่อตาราง"
         />
       </div>
-
+      <div className={classes.headerClave}>บันทึกการเหนี่ยวนำ</div>
       <Paper elevation={3} className={classes.pad}>
-        <h4 style={{ paddingTop: "15px" }}>บันทึกการจัดการเหนี่ยวนำ</h4>
+       
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
@@ -749,15 +757,4 @@ export default function TableInduction(props) {
   );
 }
 
-/*<div className={classes.marTextField}>
-        <div className="container-fluid text-center" >
-          <Fab
-            color="primary"
-            aria-label="add"
-            size="small"
-            style={{ margin: "10px", outline: "none" }}
-          >
-            <AddIcon onClick={addtable} />
-          </Fab>
-        </div></div>
- */
+

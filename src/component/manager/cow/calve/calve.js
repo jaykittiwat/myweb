@@ -15,7 +15,9 @@ class CheckUp extends Component {
       loading: false,
       keysDate: [],
       dataNoti: [],
-      UID: ""
+      UID: "",
+      databreed:[],
+      fname:""
     };
   }
 
@@ -26,10 +28,12 @@ class CheckUp extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user });
+            
+            this.setState({ ...this.state, UID: res.data[0].user,fname:res.data[0].fname });
             return res.data[0].user;
           })
           .then(resEmail => {
+            
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth() + 1;
@@ -83,7 +87,7 @@ class CheckUp extends Component {
                 }
                 return cattleListData;
               }).then((data)=>{
-                
+                //console.log(data)
                 const setdata = [];
                 const setKeyCattle = [];
                 for (let i = 0; i < data.length; i++) {
@@ -93,10 +97,28 @@ class CheckUp extends Component {
                   setdata.push(set);
                   setKeyCattle.push(values[0]);
                 }
-              this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
-              }).then( () => {
-                      console.log(this.state)
-              });
+              this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:true})
+              }).then( async() => {
+                const databreed=[]
+                for(let i=0;i<this.state.dataNoti.length;i++){
+                  const id_cattle=this.state.dataNoti[i].id_cattle
+                  const result = await axios.get("http://localhost:4000/breed/" + this.state.UID + "/" + id_cattle)
+            databreed.push(result.data)
+                }
+              return databreed
+              }).then((data)=>{
+         
+                const setdata = [];
+                for (let i = 0; i < data.length; i++) {
+                  const dataOneCatle = Object.values(data[i]);
+                  const set = Object.assign.apply({}, dataOneCatle);
+                  setdata.push(set);
+                
+                }
+                return setdata
+              }).then((setdata)=>{
+                this.setState({...this.state,databreed:setdata,loading:false})
+              })
           });
       }
     });
@@ -111,7 +133,7 @@ class CheckUp extends Component {
         <div className="row Nav-shadow posi">
           <NavbarLogin />
         </div>
-        <TableClave />
+        <TableClave  posts={this.state}/>
         <div className="row mar"></div>
       </div>
     );

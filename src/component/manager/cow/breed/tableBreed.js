@@ -132,6 +132,7 @@ export default function TableBreed(props) {
               noti_oestrus: "19",
               noti_pregnant: "90",
               recorder: recoder,
+              number_of_breeding:"1",//<<<----------------ต้องเอามาคำนวณ---------------<<
               operator: operator,
               semen: HowIdTobreed,
               time_breeding: time3, //เวลาผสม
@@ -359,14 +360,22 @@ export default function TableBreed(props) {
       paddingTop: "2%"
     },
     marForm: {
-      marginTop: "4%"
+      marginTop: "1%"
     },
     marTextField: {
       marginTop: "2%"
     },
     textRow: {
       fontSize: "16px"
-    }
+    }, 
+    headerClave: {
+      margin: "0",
+      padding: "10px",
+      fontSize: "20px",
+      color:"#fff",
+      backgroundColor: "#304ffe",
+      borderRadius: "5px 5px 0 0"
+    },
   }));
 
   const classes = useStyles();
@@ -639,13 +648,13 @@ export default function TableBreed(props) {
           label="ย่อตาราง"
         />
       </div>
-
+      <div className={classes.headerClave}>บันทึกการผสมพันธุ์</div>
       <Paper
         elevation={3}
         //ตัวบันทึก///////////////////////////////////
         className={classes.pad}
       >
-        <h4 style={{ paddingTop: "15px" }}>บันทึกการผสมพันธุ์</h4>
+        
 
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>

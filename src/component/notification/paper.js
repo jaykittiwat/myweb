@@ -1,134 +1,166 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Paper } from "@material-ui/core";
-import NotificationIcaon1 from './../Img/notification_Icon1.png';
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { useHistory } from "react-router-dom";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%"
+const columns = [
+  { id: "Q", label: "ลำดับ", minWidth: 5, align: "center" },
+  { id: "date", label: "วันที่", minWidth: 100, align: "center" },
+  { id: "id", label: "หมายเลขโค", minWidth: 100, align: "center" },
+  {
+    id: "detail",
+    label: "ข้อมูล",
+    minWidth: 100,
+    align: "center"
   },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: "33.33%",
-    flexShrink: 0
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary
-  },
-  mar: {
-    marginTop: "30px"
-  },
-  titlehead: {
-    fontSize:"22px",
-    padding:"10px",
-    backgroundColor:"#304ffe",
-    color:"#ffffff"
- 
+  {
+    id: "size",
+    label: "จัดการ",
+    minWidth: 100,
+    align: "center"
   }
-}));
+];
 
-export default function PaperNotificaion() {
+const useStyles = makeStyles({
+  headerClave: {
+    margin: "0",
+    padding: "10px",
+    fontSize: "22px",
+    color: "#fff",
+    backgroundColor: "#304ffe",
+    borderRadius: "5px 5px 0 0"
+  },
+  root: {
+    width: "100%",
+    marginTop: "20px",
+    zIndex: "-1"
+  },
+  container: {
+    maxHeight: "100%"
+  },
+  text:{
+    fontSize:"18px"
+  }
+});
+
+export default function PaperNotificaion(props) {
+  const loading = props.posts.loading;
+  const rows = props.posts.dataNoti;
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChange = panel => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  return (
-    <div className={classes.mar}>
-      <div className="container">
-        <div className={classes.root}>
-          <Paper className={classes.titlehead}>
-              การเเจ้งเตือน <img src={NotificationIcaon1} width="30px"  height="30px" alt="notification"></img>
-          </Paper>
-
-          <ExpansionPanel
-            expanded={expanded === "panel1"}
-            onChange={handleChange("panel1")}
-          >
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
-            >
-              <Typography className={classes.heading}>
-                วันที่ 01/01/2020
-              </Typography>
-              <Typography className={classes.heading}>
-              โคหมายเลข: PC 255/1
-              </Typography>
-              <Typography className={classes.secondaryHeading}>
-             เพศ: เมีย
-              </Typography>
-
-              
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>
-                   : ทำการบำรุง
-              </Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-
-          <ExpansionPanel
-            expanded={expanded === "panel2"}
-            onChange={handleChange("panel2")}
-          >
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2bh-content"
-              id="panel2bh-header"
-            >
-                <Typography className={classes.heading}>
-                วันที่ 01/01/2020
-              </Typography>
-              <Typography className={classes.heading}>
-              โคหมายเลข: PC 256/1
-              </Typography>
-              <Typography className={classes.secondaryHeading}>
-             เพศ: เมีย
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>
-              : ทำการผสมพันธุ์
-              </Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel
-            expanded={expanded === "panel3"}
-            onChange={handleChange("panel3")}
-          >
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3bh-content"
-              id="panel3bh-header"
-            >
-              <Typography className={classes.heading}>
-                วันที่ 01/01/2020
-              </Typography>
-              <Typography className={classes.heading}>
-              โคหมายเลข: PC 257/1
-              </Typography>
-              <Typography className={classes.secondaryHeading}>
-             เพศ: เมีย
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>
-              : ทำการเหนี่ยวนำ
-              </Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        </div>
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+  const history = useHistory();
+  const RouterTopage = type => {
+    if (type === "บำรุงแม่พันธุ์") {
+      history.push("/fatten");
+    }
+    if (type === "เหนี่ยวนำกลับสัด") {
+      history.push("/induction");
+    }
+    if (type === "ผสมพันธุ์") {
+      history.push("/breed");
+    }
+    if (type === "ตรวจท้อง") {
+      history.push("/checkup");
+    }
+    if (type === "วันคลอด") {
+      history.push("/calve");
+    }
+    if (type === "สัญเขา") {
+      history.push("/calve");
+    }
+    if (type === "อย่านม") {
+      history.push("/calfmanage");
+    }
+    if (type === "ตีเบอร์") {
+      history.push("/calfmanage");
+    }
+    if (type === "รักษา") {
+      history.push("/calfmanage");
+    }
+  };
+  if (loading) {
+    return (
+      <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
+        <CircularProgress size={40} />
+        <h3>Loading.....</h3>
       </div>
+    );
+  }
+
+  return (
+    <div className="container">
+      <Paper className={classes.root}>
+        <div className={classes.headerClave}>แจ้งเตือนการจัดการ</div>
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map(column => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth, zIndex: "0" }}
+                  >
+                    <h5> {column.label}</h5>
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      <TableCell align="center" style={{fontSize:"16px"}}>{index + 1} </TableCell>
+                      <TableCell align="center" style={{fontSize:"16px"}}>{row.date} </TableCell>
+                      <TableCell align="center" style={{fontSize:"16px"}}>{row.id_cattle} </TableCell>
+                      <TableCell align="center" style={{fontSize:"16px"}}>{row.type} </TableCell>
+                      <TableCell align="center" >
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          onClick={() => RouterTopage(row.type)}
+                        >
+                          เลือก
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+      <div style={{ marginTop: "50px" }}></div>
     </div>
   );
 }
