@@ -10,7 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-
+import "./../CowStyle.css";
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),

@@ -10,13 +10,8 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormLabel from "@material-ui/core/FormLabel";
-import { FormControl, Select } from "@material-ui/core";
-import PropTypes from "prop-types";
+import Dialogpopup from "./dialogpopup";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import axios from "axios";
 const columns = [
   { id: "ID", label: "หมายเลข", minWidth: 100, align: "center" },
   {
@@ -103,39 +98,39 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function TableClaves(props) {
-  const breed = props.posts.databreed;//ข้อมูลการผสม
-  const UID = props.posts.UID;//user ID
+  const breed = props.posts.databreed; //ข้อมูลการผสม
+  const UID = props.posts.UID; //user ID
   const key = props.posts.keydata; //--------------key ข้อมูลแม่วัว
-  const Rows = props.posts.data;//ข้อมูลการแจ้งเตือน
-  const loading = props.posts.loading;//สถานะ แบบajax
-  const nameReacorder = props.posts.fname
-  
+  const Rows = props.posts.data; //ข้อมูลการแจ้งเตือน
+  const loading = props.posts.loading; //สถานะ แบบajax
   const keysDateNotiCattle = props.posts.keysDate;
   const rows = props.posts.dataNoti;
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = React.useState(false);
+  //***********************state og mom ***************************** */
   const [dateOfClave, setDateOfClave] = React.useState("");
   const [timeClave, setTimeClave] = React.useState("");
   const [dateHeal, setDateHeal] = React.useState("");
   const [dateFatten, setDateFatten] = React.useState("");
+  const [recorder, setRecorder] = React.useState("");
+  const [oparator, setOparator] = React.useState("");
   const [node, setNode] = React.useState("");
+  const [numberRowcalf, setNumberRowcalf] = React.useState(1);
+  //**************************************************** */
   const [damOfclaf, setDamOfclaf] = React.useState("");
   const [sirOfclaf, setsirOfclaf] = React.useState("");
   const [openBox, setOpenBox] = React.useState(false);
   const [indexRow, setIndexRow] = React.useState(null);
-  //const [selectedId, setSelextedId] = React.useState("");
+
   const [numberCalf, setNumberClaf] = React.useState([]);
-  const [recorder, setRecorder] = React.useState("");
-  const [oparator, setOparator] = React.useState("");
-  const [numberRowcalf,setNumberRowcalf]= React.useState(1);
-  const [oldIndex,setOldindex]= React.useState(null);
- 
-React.useEffect(()=>{
-setRecorder(nameReacorder)
-setOparator(nameReacorder)
-},[props])
+  const [oldIndex, setOldindex] = React.useState(null);
+
+  React.useEffect(() => {
+    setRecorder(props.posts.fname);
+    setOparator(props.posts.fname);
+  }, [props]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -146,174 +141,51 @@ setOparator(nameReacorder)
     setPage(0);
   };
 
-  const handleClose = value => {
-    setOpen(false);
-  };
-
   const ShowBox = (index, row) => {
-   
-    creatTableSon()
+    //console.log(numberCalf)
+    creatTableSon();
     setOpen(true);
   };
-/*----------------------------Open Row---------------------------------- */
+  /*----------------------------Open Row---------------------------------- */
   const openInput = (i, r, breed) => {
-   
- if(oldIndex!==i){
-   setNumberRowcalf(1)
-   setOldindex(i)
- }
+    if (oldIndex !== i) {
+      setNumberRowcalf(1);
+      setOldindex(i);
+    }
     setsirOfclaf(breed.sire_id || breed.semen);
     setDamOfclaf(breed.dam_id);
     setOpenBox(true);
     setIndexRow(i);
   };
-  SimpleDialog.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired
-  };
 
-/*-----------------------------Arrayแถว ตามจำนวนลูกโค----------------------------- */
+  /*-----------------------------Arrayแถว ตามจำนวนลูกโค----------------------------- */
   const creatTableSon = () => {
-    const objectData = {
+    const data = {
       birth_id: "",
       birth_weight: "",
       branding: false,
       breed: "",
       color: "",
-      dam_id: "",
+      dam_id: damOfclaf,
       horndetering: false,
       name_cattle: "",
       sex: "",
-      sire_id: "",
+      sire_id: sirOfclaf,
       wean: false
     };
-    const arraySon = [];
+    const stack = [];
+    const array = [];
     for (let i = 1; i <= numberRowcalf; i++) {
-      arraySon.push(objectData);
+      array.push(data);
+      stack.push(i);
     }
-    setNumberClaf(arraySon);
+
+    setNumberClaf(array);
   };
-  
-  const connectBackEnd = () => {};
-  /************************************************************************************** */
-  function SimpleDialog(props) {
-    const { onClose, open } = props;
 
-    const handleClose = () => {
-      onClose();
-    };
+  const backFormdialog = prop => setOpen(prop);
 
-    return (
-      <Dialog onClose={handleClose} open={open} maxWidth="xl">
-        <div className={classes.headerClave}>บันทึกลูกโคเกิดใหม่</div>
-        <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center">ตัวที่</TableCell>
-                  <TableCell align="center">หมายเลขโคแรกเกิด</TableCell>
-                  <TableCell align="center">เพศ</TableCell>
-                  <TableCell align="center">สายพันธุ์</TableCell>
-                  <TableCell align="center">สี</TableCell>
-                  <TableCell align="center">น้ำหนักแรกเกิด(Kg.)</TableCell>
-                  <TableCell align="center">แม่พันธุ์</TableCell>
-                  <TableCell align="center">พ่อพันธุ์</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {numberCalf.map((number, index) => {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell align="center">{index + 1}</TableCell>
-                      <TableCell align="center">
-                        <TextField
-                          variant="outlined"
-                          size="small"
-                          style={{ width: "170px" }}
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <FormGroup className={classes.marTextField}>
-                          <FormControl size="small">
-                            <Select variant="outlined" native>
-                              <option value="BULL">ผู้</option>
-                              <option value="MISS">เมีย</option>
-                            </Select>
-                          </FormControl>
-                        </FormGroup>
-                      </TableCell>
-                      <TableCell align="center">
-                        <TextField
-                          variant="outlined"
-                          size="small"
-                          style={{ width: "170px" }}
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                      <FormGroup className={classes.marTextField}>
-                          <FormControl size="small">
-                            <Select variant="outlined" native>
-                              <option value="ดำ">ดำ</option>
-                              <option value="ขาว">ขาว</option>
-                            </Select>
-                          </FormControl>
-                        </FormGroup>
-                      </TableCell>
-                      <TableCell align="center">
-                        <TextField
-                        
-                          variant="outlined"
-                          size="small"
-                          style={{ width: "170px" }}
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <TextField
-                           value={damOfclaf}
-                          variant="outlined"
-                          size="small"
-                          style={{ width: "170px" }}
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        <TextField
-                         value={sirOfclaf}
-                          variant="outlined"
-                          size="small"
-                          style={{ width: "170px" }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: "150px", outline: "none",margin:"10px" }}
-            onClick={connectBackEnd}
-          >
-            บันทึก
-          </Button>{" "}
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            style={{ width: "150px", outline: "none" ,margin:"10px"}}
-            onClick={() => handleClose()}
-          >
-            ยกเลิก
-          </Button>
-        </Paper>
-      </Dialog>
-    );
-  }
-  /************************************************************************************** */
+  /*******************************************************************/
   if (loading) {
     return (
       <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
@@ -369,7 +241,6 @@ setOparator(nameReacorder)
                     <TableCell align="center">
                       {" "}
                       <TextField
-                    
                         variant="outlined"
                         size="small"
                         type="time"
@@ -381,7 +252,7 @@ setOparator(nameReacorder)
                     <TableCell align="center">
                       {" "}
                       <TextField
-                      value={index === indexRow ?numberRowcalf:1}
+                        value={index === indexRow ? numberRowcalf : 1}
                         variant="outlined"
                         size="small"
                         style={{ width: "100px" }}
@@ -414,7 +285,7 @@ setOparator(nameReacorder)
                     <TableCell align="center">
                       {" "}
                       <TextField
-                    value={recorder||" "}
+                        value={recorder || " "}
                         variant="outlined"
                         size="small"
                         onChange={event => setRecorder(event.target.value)}
@@ -424,7 +295,7 @@ setOparator(nameReacorder)
                     <TableCell align="center">
                       {" "}
                       <TextField
-                      value={oparator||" "}
+                        value={oparator || " "}
                         variant="outlined"
                         size="small"
                         onChange={event => setOparator(event.target.value)}
@@ -482,7 +353,26 @@ setOparator(nameReacorder)
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <SimpleDialog open={open} onClose={handleClose} />
+      <Dialogpopup
+        OPEN={open}
+        NUMBERCALF={numberCalf}
+        BackFormdialog={backFormdialog}
+        dateOfClave={dateOfClave}
+        timeClave={timeClave}
+        dateHeal={dateHeal}
+        dateFatten={dateFatten}
+        recorder={recorder}
+        oparator={oparator}
+        node={node}
+        keysDateNotiCattle={keysDateNotiCattle}
+        Rows={Rows}
+        keycattle={key}
+        UID={UID}
+        indexOfmom={indexRow}
+        countCalf={numberRowcalf}
+        damOfclaf={damOfclaf}
+        sirOfclaf={sirOfclaf}
+      />
     </Paper>
   );
 }

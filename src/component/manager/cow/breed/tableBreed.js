@@ -99,7 +99,7 @@ export default function TableBreed(props) {
       axios
         .post(
           "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-          { status: "ผสมพันธุ์แล้ว", process_date: selectedDate }
+          { status: "ผสมพันธุ์แล้ว", process_date: selectedDate ,number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1}
         )
         .then(() => {
           axios.post("http://localhost:4000/history/" + UID, {
@@ -113,10 +113,11 @@ export default function TableBreed(props) {
             axios.post("http://localhost:4000/breed/" + UID, {
               dam_id: selectedDamId[a],
               date_breeding: selectedDate,
-              note: "",
+              note:theNote,
               noti_oestrus: "19",
               noti_pregnant: "90",
               recorder: recoder,
+              number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1,
               operator: operator,
               sire_id: HowIdTobreed,
               time_breeding: time3, //เวลาผสม
@@ -132,7 +133,7 @@ export default function TableBreed(props) {
               noti_oestrus: "19",
               noti_pregnant: "90",
               recorder: recoder,
-              number_of_breeding:"1",//<<<----------------ต้องเอามาคำนวณ---------------<<
+              number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1,//<<<----------------ต้องเอามาคำนวณ---------------<<
               operator: operator,
               semen: HowIdTobreed,
               time_breeding: time3, //เวลาผสม

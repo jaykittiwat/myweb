@@ -138,11 +138,22 @@ class FormRegiscow extends Component {
           }
           //ถ้าเป็นลูกโค
           else {
-
             axios
               .post(
-                "http://localhost:4000/user/calf/registor/" + res.data[0].user,
-                sentDataCow
+                "http://localhost:4000/user/calf/registorCalf/" + res.data[0].user,
+                {
+                  birth_id:" ",
+                  birth_weight:this.state.birth_weight,
+                  branding:false,
+                  breed:this.state.breed,
+                  color:this.state.color,
+                  dam_id:this.state.dam_id,
+                  horndetering: false,
+                  name_cattle:this.state.cattle_id,
+                  sex: this.state.sex,
+                  sire_id:this.state.sire_id,
+                  wean: false
+                }
               )
               .then(res => {
                 alert("ลงทะเบียนโคสำเร็จ");
@@ -156,7 +167,6 @@ class FormRegiscow extends Component {
     } else {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     }
-
   }
   //เมื่อรูปเข้ามา
   fileChangedHandler = event => {
@@ -486,7 +496,6 @@ class FormRegiscow extends Component {
                   >
                     ตกลง
                   </Button>{" "}
-
                   <Link to="/login">
                     <Button
                       variant="contained"

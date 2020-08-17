@@ -1,14 +1,34 @@
-import React from "react";
+import React,{Component} from "react";
 import TableAbor from "./tableAbortion";
-
 import HeaderLogin from "../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
 
-import "./../CowStyle.css";
 
-//import { Next } from "react-bootstrap/PageItem";
+class Abortion extends Component{
+constructor(props){
+  super(props)
+  this.state={
+    
+  }
+}
+render(){
+  return(
+    <div className="container-fluid">
+    <div className="row ">
+      <HeaderLogin />
+    </div>
+    <div className="row Nav-shadow posi">
+      <NavbarLogin />
+    </div>
+    <TableAbor />
+  </div>
+  )
+}
+}
+export default Abortion
 
-export default function Abortion() {
+
+/*export default function Abortion() {
   return (
     <div className="container-fluid">
       <div className="row ">
@@ -21,9 +41,4 @@ export default function Abortion() {
     </div>
   );
 }
-/*
- https://mdbootstrap.com/docs/react/tables/datatables/
-
-//npm install  mdbreact
-//น่าจะเอาไว้รับผลมั้ง <Result> {checkbox1 && <p>{JSON.stringify(delete checkbox1.checkbox && checkbox1)}</p>}</Result>
- */
+*/
