@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import "../styleWebpage.css";
-//ยังไม่ได้ชื่อมภาพกับserver
 import imgcow1 from "../Img/cowWave.jpg";
-/*import cow from "../Img/cow.png";
-import cow2 from "../Img/cow2.png";
-import cow3 from "../Img/cow3.png";
-import cow4 from "../Img/cow4.png";
-import cow5 from "../Img/cow5.png";
-import cow6 from "../Img/cow6.png";*/
 import Header from '../../Header';
 
 

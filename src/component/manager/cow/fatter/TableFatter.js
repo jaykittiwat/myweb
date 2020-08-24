@@ -34,9 +34,9 @@ import axios from "axios";
 //เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableFatter(props) {
-  const posts = props.posts.posts;
+  
   const loading = props.posts.loading;
-  const UserData =props;
+ 
   const [UID, setUID] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [recoder, setRecoder] = useState("");
@@ -45,6 +45,7 @@ export default function TableFatter(props) {
   const [dateInduction, setDateInduction] = useState("");
   const [time, setTime] = useState("");
   const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
+ 
  // const [stateStatck, setStateStatck] = useState("1");
 
   const current = () => {
@@ -55,11 +56,7 @@ export default function TableFatter(props) {
     });
   };
   current();
-const settingState = ()=>{
- 
- 
 
-}
   const manageDate = e => {
     //ยังไม่ได้ดึงsetting มา
     var date = new Date(e.target.value);
@@ -82,40 +79,20 @@ const settingState = ()=>{
   };
 
   /*-----------------------------------------------------------------------------*/
-  let rows = [];
-  let Key = Object.keys(posts);
-  let key = [];
-  var values = Object.keys(posts).map(key => posts[key]);
-  for (let i = 0; i < values.length; i++) {
-    if (
-      values[i].status === " " ||
-      values[i].status === "คลอดแล้ว" ||
-      values[i].status === "โคแท้ง" ||
-      values[i].status === "ไม่ท้อง"
-    ) {
-      key.push(Key[i]);
-      rows.push(values[i]);
-    }
-  }
+  let rows = props.posts.data;
+  let key = props.posts.keydata;
+  let keyDate=props.posts.keysDate;
+  let dataNoti = props.posts.dataNoti;
 
   useEffect(() => {
-    settingState()
-  
-    const FectData = async () => {
-      if (currentUser !== "") {
-        const res = await axios.get(
-          "http://localhost:4000/user/logIn/" + currentUser
-        );
-        setUID(res.data[0].user);
-      }
-    };
-
-    FectData();
-  }, [currentUser]);
+   setRecoder(props.posts.fname)
+   setOperator(props.posts.fname)
+   setUID(props.posts.UID)
+  }, [props]);
 
   const saveDataToInduction = async () => {
-    const x = selected.length;
 
+    const x = selected.length;
     for (let a = 0; a < x; a++) {
       axios
         .post(
@@ -148,6 +125,12 @@ const settingState = ()=>{
               type: "เหนี่ยวนำกลับสัด"
             }
           );
+        }).then(()=>{
+          for(let i = 0 ; i<keyDate.length;i++){
+            if(selectedDamId[a]===dataNoti[i].id_cattle){
+              axios.delete("http://localhost:4000/notification/delete/"+UID+"/"+dataNoti[i].date+"/"+keyDate[i])
+            }
+          }
         })
         .then(() => {
           if (a + 1 === selected.length) {
@@ -190,7 +173,8 @@ const settingState = ()=>{
     { id: "2", numeric: true, disablePadding: false, label: "หมายเลข" },
     { id: "3", numeric: true, disablePadding: false, label: "โรงเรือน" },
     { id: "4", numeric: true, disablePadding: false, label: "คอก" },
-    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" }
+    { id: "5", numeric: true, disablePadding: false, label: "ฝูง" },
+    { id: "6", numeric: true, disablePadding: false, label: "จำนวนครั้งผสม" }
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -580,13 +564,16 @@ const settingState = ()=>{
                           {row.cattle_id}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.bigcorral}
+                          {row.bigcorral||"ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.corral}
+                          {row.corral||"ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
                           {row.herd_no}
+                        </TableCell>
+                        <TableCell align="right" className={classes.textRow}>
+                          {row.number_of_breeding}
                         </TableCell>
                       </TableRow>
                     );
@@ -630,7 +617,7 @@ const settingState = ()=>{
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
-         
+         value={recoder}
             id="input1"
             variant="outlined"
             placeholder="ชื่อ"
@@ -641,7 +628,7 @@ const settingState = ()=>{
         <FormGroup className={classes.marTextField}>
           <FormLabel>ผู้ปฏิบัติการ</FormLabel>
           <TextField
-           
+           value={operator}
             id="input2"
             variant="outlined"
             placeholder="ชื่อ"

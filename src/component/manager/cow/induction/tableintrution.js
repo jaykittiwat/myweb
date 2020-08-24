@@ -464,63 +464,12 @@ export default function TableInduction(props) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  /*-----------------------------------รายการยา(ยังไม่ได้แก้)-------------------------------------------*/
-  /*const [medic, setMedic] = useState([
-    {
-      program: ""
-    }
-  ]);
-  const addtable = event => {
-    setMedic([
-      ...medic,
-      {
-        item: ""
-      }
-    ]);
-  };
-  const handleChange = (event, index) => {
-    medic.splice(index, 1, { item: event.target.value });
-  };
-  const deleteItem = index => {
-    const result = medic.filter(results => results !== medic[index]);
-    //console.log(result);
-    setMedic(result);
-  };*/
+
   const [programSync, setPrigramSync] = useState("");
   const handleChange = event => {
     setPrigramSync(event.target.value);
   };
-  /*------------------------------------------------------------------------------*/
-
-  /*const showTable = () => {
-    return medic.map((medics, index) => (
-      <form className={classes.marTextField} key={index}>
-        <FormControl size="small" style={{ width: "95%" }}>
-          <FormLabel>รายการยา</FormLabel>
-          <Select
-            variant="outlined"
-            native
-            value={medic.item}
-            onChange={event => handleChange(event, index)}
-          >
-            <option value=" "></option>
-            <option>Program A</option>
-            <option>Program B</option>
-            <option>Program C</option>
-          </Select>
-        </FormControl>
-
-        <IconButton
-          aria-label="delete"
-          color="secondary"
-          style={{ marginTop: "15px", outline: "none" }}
-          onClick={() => deleteItem(index)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </form>
-    ));
-  };*/
+ 
 
   const showTable = () => {
     return (
@@ -637,10 +586,10 @@ export default function TableInduction(props) {
                           {row.cattle_id}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.bigcorral}
+                          {row.bigcorral||"ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.corral}
+                          {row.corral||"ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
                           {row.herd_no}

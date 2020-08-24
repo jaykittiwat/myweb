@@ -54,11 +54,14 @@ const useStyles = makeStyles({
 
 export default function PaperNotificaion(props) {
   const loading = props.posts.loading;
-  const rows = props.posts.dataNoti;
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rows,setRows] = React.useState([]);
+React.useEffect(() => {
+setRows(props.posts.dataNoti[0]==='No'?[]:props.posts.dataNoti)//<<<------------------กลับมาเชคอีกรอบ------------------<<<
 
+}, [props]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -129,8 +132,9 @@ export default function PaperNotificaion(props) {
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+                  
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableRow hover  tabIndex={-1} key={index}>
                       <TableCell align="center" style={{fontSize:"16px"}}>{index + 1} </TableCell>
                       <TableCell align="center" style={{fontSize:"16px"}}>{row.date} </TableCell>
                       <TableCell align="center" style={{fontSize:"16px"}}>{row.id_cattle} </TableCell>

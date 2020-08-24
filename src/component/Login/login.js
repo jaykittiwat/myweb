@@ -1,13 +1,10 @@
-////////////////////////////หน้า  Login/////////////////////////////
-
 import React, { Component } from "react";
 import "../styleWebpage.css";
 import { Form, Button } from "react-bootstrap";
 import Header from "../../Header";
 import firebase from "./../../backEnd/firebase/index";
 import Home from "./../Home/homepage";
-import LinearProgress from '@material-ui/core/LinearProgress';
-//import { BrowserRouter, Route, Switch, Router,Redirect,Link } from "react-router-dom";
+import LinearProgress from "@material-ui/core/LinearProgress";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -20,26 +17,17 @@ class Login extends Component {
     };
   }
 
-  // setState ตาม name ที่ได้รับมาจากForm
   onChange = e => {
     const { name, value } = e.target;
-    //console.log(name + ":" + value);
     this.setState({
       ...this.state,
-      [name]: value,
-      
+      [name]: value
     });
   };
 
   handleSignIn = e => {
-    //console.log(this.state.email);
-    //console.log(this.state.password);
-
     e.preventDefault();
     const { email, password } = this.state;
-
-    //firebase.auth().xxxMethod()
-    //firebase.auth().xxxMethod().then(function() || ()=>{}  )
 
     firebase
       .auth()
@@ -53,20 +41,19 @@ class Login extends Component {
         alert("ไอดี หรือ  รหัสผ่าน ของท่านไม่ถูกต้อง");
       });
   };
-  //หลังจาก renderแล้วจะทำการเชคว่ามีการล็อคอินอยู่ไหม ถ้ามี ไป setState currentUser: user
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
           ...this.state,
-          login:"login",
+          login: "login",
           currentUser: user
         });
-      }else{
+      } else {
         this.setState({
           ...this.state,
-          login:"noLogin",
+          login: "noLogin",
           currentUser: user
         });
       }
@@ -157,7 +144,6 @@ class Login extends Component {
               <li>หมายเหตุ</li>
               <ul>
                 <li>version 0.1(Beta)</li>
-              
               </ul>
             </div>
           </div>
@@ -167,14 +153,18 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.login==="login") {
-      return (<Home currentUser={this.state.currentUser} />);
+    if (this.state.login === "login") {
+      return <Home currentUser={this.state.currentUser} />;
     }
-    if (this.state.login==="noLogin") {
+    if (this.state.login === "noLogin") {
       return <div className="container-fluid ">{this.showpageLogin()}</div>;
     }
     //if user haven't id and password  return -->
-    return <div className="container-fluid "><LinearProgress /></div>;
+    return (
+      <div className="container-fluid ">
+        <LinearProgress />
+      </div>
+    );
   }
 }
 export default Login;

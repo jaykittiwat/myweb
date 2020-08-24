@@ -372,6 +372,7 @@ export default function TableClaves(props) {
         countCalf={numberRowcalf}
         damOfclaf={damOfclaf}
         sirOfclaf={sirOfclaf}
+        dataNoti={rows}
       />
     </Paper>
   );

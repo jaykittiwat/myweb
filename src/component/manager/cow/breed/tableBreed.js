@@ -141,6 +141,24 @@ export default function TableBreed(props) {
               time3: time //เวลาเป็นสัด
             });
           }
+          if (HowTobreed === "ฝากถ่าย") {
+            axios.post("http://localhost:4000/breed/" + UID, {
+              dam_id: selectedDamId[a],
+              date_breeding: selectedDate,
+              note: theNote,
+              noti_oestrus: "19",
+              noti_pregnant: "90",
+              recorder: recoder,
+              number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1,//<<<----------------ต้องเอามาคำนวณ---------------<<
+              operator: operator,
+              transfer: HowIdTobreed,
+              semen: HowIdTobreed,
+              sire_id: HowIdTobreed,
+              time_breeding: time3, //เวลาผสม
+              time2: time2, //เวลานิ่ง
+              time3: time //เวลาเป็นสัด
+            });
+          }
         })
         .then(() => {
           axios.post(
@@ -603,10 +621,10 @@ export default function TableBreed(props) {
                           {row.cattle_id}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.bigcorral}
+                          {row.bigcorral||"ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.corral}
+                          {row.corral||"ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
                           {row.herd_no}
@@ -744,6 +762,7 @@ export default function TableBreed(props) {
               <option value=" ">เลือก</option>
               <option>น้ำเชื้อ</option>
               <option> พ่อพันธุ์</option>
+              <option> ฝากถ่าย</option>
             </Select>
           </FormControl>
         </FormGroup>

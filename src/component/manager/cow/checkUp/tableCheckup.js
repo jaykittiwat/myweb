@@ -217,7 +217,7 @@ export default function TableCheckUp(props) {
           });
         })
         .then(async () => {
-           await axios.post("http://localhost:4000/abdominal/" + UID, {
+          await axios.post("http://localhost:4000/abdominal/" + UID, {
             alert_after_7D: show_Affter_7Day[i],
             alert_befor_7D: show_Before_7Day[i],
             alert_sync: show_Syncday,
@@ -232,13 +232,13 @@ export default function TableCheckUp(props) {
             result: theCheckUp,
             timeabd: time
           });
-        }).then(() => {
+        })
+        .then(() => {
           if (i + 1 === selected.length) {
             alert("บันทึกสำเร็จ");
             window.location.reload();
           }
-        })
-    
+        });
     }
   };
   const saveSync = () => {
@@ -292,14 +292,14 @@ export default function TableCheckUp(props) {
             result: theCheckUp,
             timeabd: time
           });
-        }).then(() => {
+        })
+        .then(() => {
           if (i + 1 === selected.length) {
             alert("บันทึกสำเร็จ");
             window.location.reload();
           }
-        })
+        });
     }
-  
   };
 
   const descendingComparator = (a, b, orderBy) => {
@@ -588,14 +588,14 @@ export default function TableCheckUp(props) {
     textRow: {
       fontSize: "16px"
     },
-     headerClave: {
+    headerClave: {
       margin: "0",
       padding: "10px",
       fontSize: "20px",
-      color:"#fff",
+      color: "#fff",
       backgroundColor: "#304ffe",
       borderRadius: "5px 5px 0 0"
-    },
+    }
   }));
 
   const classes = useStyles();
@@ -803,10 +803,10 @@ export default function TableCheckUp(props) {
                           {row.cattle_id}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.bigcorral}
+                          {row.bigcorral || "ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
-                          {row.corral}
+                          {row.corral || "ไม่ระบุ"}
                         </TableCell>
                         <TableCell align="right" className={classes.textRow}>
                           {row.herd_no}
@@ -851,7 +851,6 @@ export default function TableCheckUp(props) {
       </div>
       <div className={classes.headerClave}>บันทึกการตรวจท้อง</div>
       <Paper elevation={3} className={classes.pad}>
-     
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField

@@ -24,52 +24,61 @@ export default function FormData() {
     day_of_birth: "",
     phone_num: "",
     fax: "",
-    privilege: "เจ้าของฟาร์ม",
+    privilege: "เจ้าของฟาร์ม"
   };
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
   const [validated] = useState(false);
   //ยังไม่ได้ทำ  check Form
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     firebase
       .auth()
       .createUserWithEmailAndPassword(account.email, account.pass)
-      .then((res) => {
+      .then(res => {
         console.log(res.user);
         alert("สำเร็จ");
-        
-        axios.post(`http://localhost:4000/user/registor`, {
-        user: account.user,
-        pass:  account.pass,
-        question: account.question,
-        anwser: account.anwser,
-        email: account.email,
-        fname: account.fname,
-        lname: account.lname,
-        gender: account.gender,
-        id_card: account.id_card,
-        address: account.address,
-        day_of_birth: account.day_of_birth,
-        phone_num: account.phone_num,
-        fax: account.fax,
-        privilege: account.privilege
-      })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-        console.log(res.status);
-        alert('ลงทะเบียนสำเร็จ');
+
+        axios
+          .post(`http://localhost:4000/user/registor`, {
+            user: account.user,
+            pass: account.pass,
+            question: account.question,
+            anwser: account.anwser,
+            email: account.email,
+            fname: account.fname,
+            lname: account.lname,
+            gender: account.gender,
+            id_card: account.id_card,
+            address: account.address,
+            day_of_birth: account.day_of_birth,
+            phone_num: account.phone_num,
+            fax: account.fax,
+            privilege: account.privilege
+          })
+          .then(() => {
+            axios.post(`http://localhost:4000/settingbrand/brand/`+account.user, {
+              farm_address:account.address,
+              farm_initial: "",
+              farm_name_EN: account.user,
+              farm_name_TH: account.fname,
+              logo_base64: "",//ดึงภาพจากdatabase
+              phone_num: account.phone_num
+            });
+          })
+          .then(res => {
+            /*console.log(res);
+            console.log(res.data);
+            console.log(res.status);*/
+            alert("ลงทะเบียนสำเร็จ");
+          })
+          .catch(error => {
+           // console.log(error);
+            alert("เกิดความผิดพลาด");
+          });
       })
       .catch(error => {
-        console.log(error);
-        alert('เกิดความผิดพลาด');
-
-      });
-      })
-      .catch((error) => {
         var errorCode = error.code;
-        
 
         if (errorCode === "auth/email-already-in-use") {
           alert("Email มีผู้ใช้แล้ว");
@@ -80,10 +89,7 @@ export default function FormData() {
         if (errorCode === "auth/weak-password") {
           alert("รหัสผ่านไม่ถูกต้อง");
         }
-     
-        
       });
- 
   };
 
   return (
@@ -98,7 +104,7 @@ export default function FormData() {
                 type="text"
                 placeholder="กรอกไอดี 6 ตัว ขึ้นไป"
                 value={account.user}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, user: e.target.value });
                 }}
               />
@@ -111,7 +117,7 @@ export default function FormData() {
                 type="password"
                 placeholder="กรอกรหัสผ่าน 6 หลัก ขึ้นไป"
                 value={account.pass}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, pass: e.target.value });
                 }}
               />
@@ -124,7 +130,7 @@ export default function FormData() {
                 type="password"
                 placeholder="กรอกรหัสผ่านอีกครัง"
                 value={checkpass}
-                onChange={(e) => {
+                onChange={e => {
                   setCheckpass(e.target.value);
                 }}
               />
@@ -137,7 +143,7 @@ export default function FormData() {
                 type="email"
                 placeholder="กรอก Email"
                 value={account.email}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, email: e.target.value });
                 }}
               />
@@ -150,7 +156,7 @@ export default function FormData() {
                 type="text"
                 placeholder="กรอกชื่อ"
                 value={account.fname}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, fname: e.target.value });
                 }}
               />
@@ -163,7 +169,7 @@ export default function FormData() {
                 type="text"
                 placeholder="กรอกนามสกุล"
                 value={account.lname}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, lname: e.target.value });
                 }}
               />
@@ -174,7 +180,7 @@ export default function FormData() {
               <Form.Control
                 as="select"
                 value={account.gender}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, gender: e.target.value });
                 }}
               >
@@ -190,7 +196,7 @@ export default function FormData() {
                 type="text"
                 placeholder="เลขบัตร 13 หลัก"
                 value={account.id_card}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, id_card: e.target.value });
                 }}
               />
@@ -203,7 +209,7 @@ export default function FormData() {
                 type="text"
                 placeholder="วันเกิด"
                 value={account.day_of_birth}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, day_of_birth: e.target.value });
                 }}
               />
@@ -216,7 +222,7 @@ export default function FormData() {
                 type="text"
                 placeholder="บ้านเลขที่ หมู่"
                 value={account.address}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, address: e.target.value });
                 }}
               />
@@ -229,7 +235,7 @@ export default function FormData() {
                 type="text"
                 placeholder="เบอร์โทรศัพท์"
                 value={account.phone_num}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, phone_num: e.target.value });
                 }}
               />
@@ -242,7 +248,7 @@ export default function FormData() {
                 type="text"
                 placeholder="fax"
                 value={account.fax}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, fax: e.target.value });
                 }}
               />
@@ -252,7 +258,7 @@ export default function FormData() {
               <Form.Control
                 as="select"
                 value={account.question}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, question: e.target.value });
                 }}
               >
@@ -269,7 +275,7 @@ export default function FormData() {
                 type="text"
                 placeholder="คำตอบ"
                 value={account.anwser}
-                onChange={(e) => {
+                onChange={e => {
                   setAccount({ ...account, anwser: e.target.value });
                 }}
               />
@@ -289,7 +295,7 @@ export default function FormData() {
               <Button
                 type="submit"
                 className="button-w2"
-                onClick={(event) => handleSubmit(event)}
+                onClick={event => handleSubmit(event)}
               >
                 ตกลง
               </Button>

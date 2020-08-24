@@ -50,7 +50,7 @@ class Induction extends Component {
                   fullToday
               )
               .then(res => {
-                //console.log(res.data);
+              
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
               //  console.log(key);

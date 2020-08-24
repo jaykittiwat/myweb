@@ -1,22 +1,68 @@
-//โมดูลการรักษา
-import React,{Component} from 'react';
-import HeaderLogin from './../../../HeaderLogin';
-import NavbarLogin from './../../../Navbar';
-import PaperBrand from './PaperBrand';
-class Paperbrand extends Component{
-  render(){
-      return(
-        <div className="container-fluid">
-      <div className="row ">
-        <HeaderLogin />
+import React, { Component } from "react";
+import HeaderLogin from "./../../../HeaderLogin";
+import NavbarLogin from "./../../../Navbar";
+import PaperBrand from "./PaperBrand";
+import firebase from "./../../../backEnd/firebase";
+import axios from "axios";
+
+class Paperbrand extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      UID: "",
+      loading: false,
+      data: [{}],
+      key: [{}]
+    };
+    
+  }
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        axios
+          .get("http://localhost:4000/user/logIn/" + user.email)
+          .then(res => {
+            this.setState({ ...this.state, UID: res.data[0].user });
+          })
+          .then(() => {
+            axios
+              .get("http://localhost:4000/settingbrand/brand/" + this.state.UID)
+              .then(res => {
+                console.log(res.data)
+                const key = Object.keys(res.data);
+                const data = Object.values(res.data);
+                const keyset = [];
+                const dataset = [];
+                const array = [keyset, dataset];
+                for (let i = 0; i < data.length; i++) {
+                  keyset.push(key[i]);
+                  dataset.push(data[i]);
+                }
+                return array;
+              })
+              .then(array => {
+               
+                this.setState({ ...this.state,data:array[1],key:array[0],loading:false});
+              }).then(()=>{
+              
+              })
+          });
+      }
+    });
+  }
+  render() {
+    return (
+      <div className="container-fluid">
+        <div className="row ">
+          <HeaderLogin />
+        </div>
+        <div className="row Nav-shadow posi">
+          <NavbarLogin />
+        </div>
+        <PaperBrand posts={this.state} />
       </div>
-      <div className="row Nav-shadow posi">
-        <NavbarLogin />
-      </div >
-      <PaperBrand />
-    </div>
-      
-      )
+    );
   }
 }
 export default Paperbrand;

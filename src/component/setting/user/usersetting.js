@@ -1,22 +1,47 @@
 //โมดูลการรักษา
-import React,{Component} from 'react';
-import HeaderLogin from './../../../HeaderLogin';
-import NavbarLogin from './../../../Navbar';
-import PaperUser from './PaperUser';
-class Paperuser extends Component{
-  render(){
-      return(
-        <div className="container-fluid">
-      <div className="row ">
-        <HeaderLogin />
+import React, { Component } from "react";
+import HeaderLogin from "./../../../HeaderLogin";
+import NavbarLogin from "./../../../Navbar";
+import PaperUser from "./PaperUser";
+import firebase from "./../../../backEnd/firebase";
+import axios from "axios";
+class Paperuser extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      UID: "",
+      loading: false,
+      data: []
+    };
+  }
+  componentDidMount() {
+    this.setState({ ...this.state, loading: true });
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        axios
+          .get("http://localhost:4000/user/profile/" + user.email)
+          .then(res => {
+            this.setState({
+              data: res.data,
+              UID: res.data.user,
+              loading: false
+            });
+          })
+      }
+    });
+  }
+  render() {
+    return (
+      <div className="container-fluid">
+        <div className="row ">
+          <HeaderLogin />
+        </div>
+        <div className="row Nav-shadow posi">
+          <NavbarLogin />
+        </div>
+        <PaperUser posts={this.state} />
       </div>
-      <div className="row Nav-shadow posi">
-        <NavbarLogin />
-      </div >
-      <PaperUser />
-    </div>
-      
-      )
+    );
   }
 }
 export default Paperuser;

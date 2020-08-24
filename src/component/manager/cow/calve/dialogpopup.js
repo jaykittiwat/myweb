@@ -25,12 +25,13 @@ export default function AlertDialog(props) {
   const [oparator, setOparator] = React.useState("");
   const [node, setNode] = React.useState("");
   const [keysDateNotiCattle, setKeysDateNotiCattle] = React.useState([]);
-  const [Rows, setRows] = React.useState([]);
+  const [Rows, setRows] = React.useState([]); //ข้อมูลโค
   const [keycattle, setKeycattle] = React.useState([]);
   const [selectedIndexMom, setSelectefIndexMom] = React.useState(null);
   const [Count_calf, setCount_calf] = React.useState(null);
   const [dam_id, setDam_id] = React.useState("");
   const [sire_id, setSir_id] = React.useState("");
+  const [dataNoti, setDataNoti] = React.useState([]);
   /*const handleClickOpen = () => {
     setOpen(true);
   };*/
@@ -57,6 +58,7 @@ export default function AlertDialog(props) {
     setCount_calf(props.countCalf);
     setDam_id(props.damOfclaf);
     setSir_id(props.sirOfclaf);
+    setDataNoti(props.dataNoti);
   }, [props]);
 
   const recordDataOfCalf = (event, i) => {
@@ -76,11 +78,11 @@ export default function AlertDialog(props) {
           UID +
           "/" +
           keycattle[selectedIndexMom],
-        { status: "คลอดแล้ว", process_date: dateofClave }
+        { status: "คลอดแล้ว", process_date: dateofClave } //ไม่มีปัญหา
       )
       .then(() => {
         axios.post("http://localhost:4000/history/" + UID, {
-          dam_id: Rows[selectedIndexMom].id_cattle,
+          dam_id: Rows[selectedIndexMom].cattle_id, //Rows[selectedIndexMom].id_cattle ไม่มา
           date: dateofClave,
           type: "คลอดแล้ว"
         });
@@ -102,7 +104,7 @@ export default function AlertDialog(props) {
           "http://localhost:4000/notification/" + UID + "/" + dateFatten,
           {
             date: dateFatten,
-            id_cattle: Rows[selectedIndexMom].id_cattle,
+            id_cattle: Rows[selectedIndexMom].cattle_id, //ไม่มา
             type: "บำรุงแม่พันธุ์"
           }
         );
@@ -112,7 +114,7 @@ export default function AlertDialog(props) {
           "http://localhost:4000/notification/" + UID + "/" + dateHeal,
           {
             date: dateHeal,
-            id_cattle: Rows[selectedIndexMom].id_cattle,
+            id_cattle: Rows[selectedIndexMom].cattle_id, //ไม่มา
             type: "รักษาหลังคลอด"
           }
         );
@@ -122,20 +124,22 @@ export default function AlertDialog(props) {
           "http://localhost:4000/notification/delete/" +
             UID +
             "/" +
-            keysDateNotiCattle[selectedIndexMom] +
+            dataNoti[selectedIndexMom].date +
             "/" +
             keysDateNotiCattle[selectedIndexMom]
         );
       })
-      .then(() => {
+      .then(async () => {
         //ลงทะเบียนลูกโค
-
-        for (let i = 1; i <= numberCalf.length; i++) {
-          axios.post(
+        for (let i = 0; i < numberCalf.length; i++) {
+          await axios.post(
             "http://localhost:4000/user/calf/registorCalf/" + UID,
             numberCalf[i]
           );
         }
+      }).then(()=>{
+        alert("บันทึกสำเร็จ");
+        window.location.reload();
       });
   };
   return (
