@@ -142,3 +142,10 @@ var d = new Date(milliseconds);
 var d = new Date(dateString);
 var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);
 
+//สายพันธุ์โค
+-แองกัส
+-เฮียร์ฟอร์ด
+-ซิมเมทอล
+-ชาร์โรเร่
+-พื้นเมือง
+-บราห์มัน

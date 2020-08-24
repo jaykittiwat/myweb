@@ -17,7 +17,8 @@ export default function PaperBrand(props) {
   };
   const handleClicktrue = event => {
     axios.post("http://localhost:4000/settingbrand/brandUpdata/"+props.posts.UID+"/"+props.posts.key,data[0]).then((res)=>{
-      alert("แก้ไขสำเร็จ");
+      alert("บันทึกสำเร็จ");
+     
     })
     
       setEnabled(true);

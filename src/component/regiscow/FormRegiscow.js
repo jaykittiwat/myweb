@@ -58,13 +58,14 @@ class FormRegiscow extends Component {
 
   saveData(e) {
     const { name, value } = e.target;
+    const replString=value.replace(/[/]/gi, ' ')
 
     this.setState(prestate => ({
       UID: prestate.UID,
       currentUser: prestate.currentUser,
       data: {
         ...prestate.data,
-        [name]: value
+        [name]:  replString
       },
       category: prestate.category,
       selectedFile: prestate.selectedFile,
@@ -262,9 +263,10 @@ class FormRegiscow extends Component {
 
                 <Form.Group>
                   <Form.Label>
-                    หมายเลขประจำตัวสัตว์ (์NID/RFID/Microchip/เบอร์หู)
+                    หมายเลขประจำตัวสัตว์ เช่น(์NID/RFID/Microchip/เบอร์หู) ห้ามใช้เครื่องหมาย ' / '
                   </Form.Label>
                   <Form.Control
+                  value={this.state.data.cattle_id}
                     name="cattle_id"
                     type="text"
                     placeholder="กรุณากรอกหมายเลขประจำตัวสัตว์"
@@ -498,6 +500,7 @@ class FormRegiscow extends Component {
                   </Button>{" "}
                   <Link to="/login">
                     <Button
+                    
                       variant="contained"
                       color="secondary"
                       className="button-w2"

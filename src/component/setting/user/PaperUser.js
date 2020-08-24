@@ -18,7 +18,10 @@ export default function PaperUser(props) {
   };
 //<<<---------------------------<<<ยังไม่เสร็จ
   const handleClicktrue = event => {
-    axios.post("http://localhost:4000/user/updataProfile",data)
+    axios.post("http://localhost:4000/user/updataProfile",data).then(()=>{
+      alert("บันทึกสำเร็จ");
+     
+    })
     setEnabled(true);
   };
   // ถ้ามีการเขียนแก้ไขข้อมูลผู้ใช้

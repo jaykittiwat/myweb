@@ -92,16 +92,17 @@ class Induction extends Component {
               .then(data => {
                 const setdata = [];
                 const setKeyCattle = [];
+               
                 for (let i = 0; i < data.length; i++) {
                   const values = Object.keys(data[i]);
                   const dataOneCatle = Object.values(data[i]);
                   const set = Object.assign.apply({}, dataOneCatle);
+                 
+               
                   setdata.push(set);
                   setKeyCattle.push(values[0]);
                 }
               this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
-              }).then(()=>{
-             //console.log(this.state)
               })
           });
       }

@@ -14,6 +14,7 @@ import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,20 +39,21 @@ function TabPanel(props) {
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`
   };
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: "flex",
-    height: 224,
+    height: "auto"
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-  },
+    width:"250px"
+  }
 }));
 
 export default function PaperDrug() {
@@ -60,11 +62,13 @@ export default function PaperDrug() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [note,setnote]=React.useState("หมายเหตุ")
+  const [note_pro_sync,setnote_pro_sync]=React.useState("หมายเหตุ")
   const [disabled, setEnabled] = React.useState(true);
-  const handleClickfalse = (event) => {
+  const handleClickfalse = event => {
     setEnabled(false);
   };
-  const handleClicktrue = (event) => {
+  const handleClicktrue = event => {
     setEnabled(true);
   };
   return (
@@ -83,55 +87,79 @@ export default function PaperDrug() {
             <Tab label="ยา" {...a11yProps(0)} style={{ outline: "none" }} />
             <Tab label="วัคซีน" {...a11yProps(1)} style={{ outline: "none" }} />
             <Tab
-              label="โปรแกรมยา"
+              label="โปรแกรมบำรุง"
               {...a11yProps(2)}
               style={{ outline: "none" }}
             />
+            <Tab
+              label="โปรแกรมเหนี่ยวนำ"
+              {...a11yProps(3)}
+              style={{ outline: "none" }}
+            />
           </Tabs>
-          <TabPanel value={value} index={0}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width300px"
-                  id="outlined0"
-                  label="ชื่อยา"
-                  size="small"
-                />{" "}
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width300px"
-                  id="outlined1"
-                  label="ปริมาณยา(มิลลิลิตร)"
-                  size="small"
-                />{" "}
-                <Fab color="primary" aria-label="add" size="small">
-                  <AddIcon />
-                </Fab>
-                <IconButton aria-label="delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid container>
-                <Grid>
-                  <Button
-                    onClick={handleClickfalse}
-                    style={{ outline: "none", marginLeft: "350%" }}
-                    variant="contained"
-                    color="secondary"
-                    className="textField-width"
-                    startIcon={<SaveIcon />}
-                  >
-                    แก้ไข
-                  </Button>{" "}
+          <TabPanel value={value} index={0} className="container-fluid">
+            <Paper elevation={0} style={{ textAlign: "center" }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="drug_name"
+                    label="ชื่อยา"
+                    size="small"
+                  />{" "}
+                  <TextField
+                    type="text"
+                    style={{ width: "40%" }}
+                    id="common_drug"
+                    label="ชื่อสามามัญ"
+                    size="small"
+                  />
                 </Grid>
-                <Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="dosage"
+                    label="ปริมาณยา(มิลลิลิตร)"
+                    size="small"
+                  />{" "}
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="drug_num"
+                    label="จำนวน"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="date"
+                    id="mfd_date"
+                    label="วันผลิต"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    size="small"
+                  />
+
+                  <TextField
+                    type="date"
+                    style={{ width: "40%" }}
+                    id="exp_date"
+                    label="วันหมดอายุ"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    size="small"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
                   <Button
                     onClick={handleClicktrue}
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
                     color="primary"
                     className="textField-width"
@@ -143,50 +171,70 @@ export default function PaperDrug() {
               </Grid>
             </Paper>
           </TabPanel>
-          <TabPanel value={value} index={1}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width300px"
-                  id="outlined2"
-                  label="ชื่อวัคซีน"
-                  size="small"
-                />{" "}
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width300px"
-                  id="outlined3"
-                  label="ปริมาณวัคซีน(มิลลิลิตร)"
-                  size="small"
-                />{" "}
-                <Fab color="primary" aria-label="add" size="small">
-                  <AddIcon />
-                </Fab>
-                <IconButton aria-label="delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
 
-              <Grid container>
-                <Grid>
-                  <Button
-                    onClick={handleClickfalse}
-                    style={{ outline: "none", marginLeft: "350%" }}
-                    variant="contained"
-                    color="secondary"
-                    className="textField-width"
-                    startIcon={<SaveIcon />}
-                  >
-                    แก้ไข
-                  </Button>{" "}
+          <TabPanel value={value} index={1} className="container-fluid">
+            <Paper elevation={0} style={{ textAlign: "center" }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="vaccine_name"
+                    label="ชื่อยา"
+                    size="small"
+                  />{" "}
+                  <TextField
+                    type="text"
+                    style={{ width: "40%" }}
+                    id="common_vaccine"
+                    label="ชื่อสามามัญ"
+                    size="small"
+                  />
                 </Grid>
-                <Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="vaccine_dosage"
+                    label="ปริมาณยา(มิลลิลิตร)"
+                    size="small"
+                  />{" "}
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="vaccine_num"
+                    label="จำนวน"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="date"
+                    id="mfd_date_vaccine"
+                    label="วันผลิต"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    size="small"
+                  />
+
+                  <TextField
+                    type="date"
+                    style={{ width: "40%" }}
+                    id="exp_date_vaccine"
+                    label="วันหมดอายุ"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    size="small"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
                   <Button
                     onClick={handleClicktrue}
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
                     color="primary"
                     className="textField-width"
@@ -198,60 +246,106 @@ export default function PaperDrug() {
               </Grid>
             </Paper>
           </TabPanel>
-          <TabPanel value={value} index={2}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width600px"
-                  id="outlined0"
-                  label="ชื่อโปรแกรมยา"
-                  size="small"
-                />
-                <Grid>
-                  <TextField
-                    disabled={disabled}
-                    type="text"
-                    className="textField-width300px"
-                    id="outlined1"
-                    label="ชื่อยา/วัคซีน"
-                    size="small"
-                  />{" "}
-                  <TextField
-                    disabled={disabled}
-                    type="text"
-                    className="textField-width300px"
-                    id="outlined1"
-                    label="ปริมาณยา/วัคซีน(มิลลิลิตร)"
-                    size="small"
-                  />{" "}
-                  <Fab color="primary" aria-label="add" size="small">
-                    <AddIcon />
-                  </Fab>
-                  <IconButton aria-label="delete" color="secondary">
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
 
-              <Grid container>
-                <Grid>
+
+          <TabPanel value={value} index={2} className="container-fluid">
+            <Paper elevation={0} style={{ textAlign: "center" }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "80%" }}
+                    type="text"
+                    id="pro_maintain"
+                    label="ชื่อโปแกรมการบำรุง"
+                    size="small"
+                  />{" "}
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="pro_maintain_drug_name"
+                    label="ชื่อยาที่ใช้"
+                    size="small"
+                  />{" "}
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="pro_maintain_grug_dosage"
+                    label="ปริมาณ"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12} /*node------ */>
+                <TextareaAutosize
+                style={{width:"80%",outline:"none"}}
+                aria-label="minimum height"
+                rowsMin={2}
+                value={note}
+                 onChange={e => setnote(e.target.value)}
+          />
+                
+                </Grid>
+
+                <Grid item xs={12}>
                   <Button
-                    onClick={handleClickfalse}
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    onClick={handleClicktrue}
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     className="textField-width"
                     startIcon={<SaveIcon />}
                   >
-                    แก้ไข
-                  </Button>{" "}
+                    บันทึก
+                  </Button>
                 </Grid>
-                <Grid>
+              </Grid>
+            </Paper>
+          </TabPanel>
+
+          <TabPanel value={value} index={3} className="container-fluid">
+            <Paper elevation={0} style={{ textAlign: "center" }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "80%" }}
+                    type="text"
+                    id="pro_pro_sync"
+                    label="ชื่อโปแกรมการบำรุง"
+                    size="small"
+                  />{" "}
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="pro_sync_drug_name"
+                    label="ชื่อยาที่ใช้"
+                    size="small"
+                  />{" "}
+                  <TextField
+                    style={{ width: "40%" }}
+                    type="text"
+                    id="pro_sync_grug_dosage"
+                    label="ปริมาณ"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12} /*node------ */>
+                <TextareaAutosize
+                style={{width:"80%",outline:"none"}}
+                aria-label="minimum height"
+                rowsMin={2}
+                value={note_pro_sync}
+                 onChange={e => setnote_pro_sync(e.target.value)}
+          />
+                
+                </Grid>
+
+                <Grid item xs={12}>
                   <Button
                     onClick={handleClicktrue}
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
                     color="primary"
                     className="textField-width"

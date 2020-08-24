@@ -8,12 +8,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-
+import TableListEachSetting from "./tableListEachSetting";
+import axios from "axios";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -37,34 +34,68 @@ function TabPanel(props) {
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`
   };
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: "flex",
-    height: 224,
+    height: 260
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
+    borderRight: `1px solid ${theme.palette.divider}`
+  }
 }));
 
-export default function PaperFarm() {
+export default function PaperFarm(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [selectedSetting, setSelectedSetting] = React.useState("โรงเรือน");
+  const [keyObjecselected, setkeyObjecselected] = React.useState("bigcorral");
+  const [input, setinput] = React.useState(" ");
   const handleChange = (event, newValue) => {
+    setinput(" ");
+    if (newValue === 0) {
+      setSelectedSetting("โรงเรือน");
+      setkeyObjecselected("bigcorral");
+    }
+    if (newValue === 1) {
+      setSelectedSetting("คอก");
+      setkeyObjecselected("corral");
+    }
+    if (newValue === 2) {
+      setSelectedSetting("ฝูง");
+      setkeyObjecselected("herd_num");
+    }
+    if (newValue === 3) {
+      setSelectedSetting("สี");
+      setkeyObjecselected("color");
+    }
+    if (newValue === 4) {
+      setSelectedSetting("สายพันธุ์");
+      setkeyObjecselected("strian");
+    }
     setValue(newValue);
   };
-  const [disabled, setEnabled] = React.useState(true);
-  const handleClickfalse = (event) => {
-    setEnabled(false);
-  };
-  const handleClicktrue = (event) => {
-    setEnabled(true);
+  const addList = () => {
+    const data = { [keyObjecselected]: input };
+    axios
+      .post(
+        "http://localhost:4000/setting" +
+          keyObjecselected +
+          "/" +
+          keyObjecselected +
+          "/" +
+          props.posts.UID,
+        data
+      )
+      .then(res => {
+        alert("บันทึกสำเร็จ   status:" + res.status);
+        window.location.reload();
+      });
   };
 
   return (
@@ -87,203 +118,153 @@ export default function PaperFarm() {
             />
             <Tab label="คอก" {...a11yProps(1)} style={{ outline: "none" }} />
             <Tab label="ฝูก" {...a11yProps(2)} style={{ outline: "none" }} />
+            <Tab label="สีโค" {...a11yProps(3)} style={{ outline: "none" }} />
             <Tab
               label="สายพันธุ์"
-              {...a11yProps(3)}
+              {...a11yProps(4)}
               style={{ outline: "none" }}
             />
           </Tabs>
-          <TabPanel value={value} index={0}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width600px"
-                  id="outlined0"
-                  label="โรงเรือน"
-                  size="small"
-                />{" "}
-                <Fab color="primary" aria-label="add" size="small">
-                  <AddIcon />
-                </Fab>
-                <IconButton aria-label="delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid container>
-                <Grid>
-                  <Button
-                    onClick={handleClickfalse}
-                    id="b1"
-                    style={{ outline: "none", marginLeft: "350%" }}
-                    variant="contained"
-                    color="secondary"
-                    className="textField-width"
-                    startIcon={<SaveIcon />}
-                  >
-                    แก้ไข
-                  </Button>{" "}
+          <TabPanel value={value} index={0} className="container-fluid">
+            <Paper
+              elevation={0}
+              style={{ textAlign: "center", marginTop: "5%" }}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    onChange={event => setinput(event.target.value)}
+                    style={{ width: "90%" }}
+                    type="text"
+                    label="โรงเรือน"
+                  />{" "}
                 </Grid>
-                <Grid>
+                <Grid item xs={12}>
                   <Button
-                    onClick={handleClicktrue}
-                    id="b2"
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    onClick={() => addList()}
+                    id="bigcorral"
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
                     color="primary"
-                    className="textField-width"
                     startIcon={<SaveIcon />}
                   >
-                    บันทึก
+                    เพิ่ม
                   </Button>
                 </Grid>
               </Grid>
             </Paper>
           </TabPanel>
-          <TabPanel value={value} index={1}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width600px"
-                  id="outlined1"
-                  label="คอก"
-                  size="small"
-                />{" "}
-                <Fab color="primary" aria-label="add" size="small">
-                  <AddIcon />
-                </Fab>
-                <IconButton aria-label="delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid container>
-                <Grid>
-                  <Button
-                    onClick={handleClickfalse}
-                    id="b3"
-                    style={{ outline: "none", marginLeft: "350%" }}
-                    variant="contained"
-                    color="secondary"
-                    className="textField-width"
-                    startIcon={<SaveIcon />}
-                  >
-                    แก้ไข
-                  </Button>{" "}
+          <TabPanel value={value} index={1} className="container-fluid">
+            <Paper
+              elevation={0}
+              style={{ textAlign: "center", marginTop: "5%" }}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "90%" }}
+                    type="text"
+                    label="คอก"
+                    onChange={event => setinput(event.target.value)}
+                  />{" "}
                 </Grid>
-                <Grid>
+                <Grid item xs={12}>
                   <Button
-                    onClick={handleClicktrue}
-                    id="b4"
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    onClick={addList}
+                    id="corral"
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
                     color="primary"
-                    className="textField-width"
                     startIcon={<SaveIcon />}
                   >
-                    บันทึก
+                    เพิ่ม
                   </Button>
                 </Grid>
               </Grid>
             </Paper>
           </TabPanel>
-          <TabPanel value={value} index={2}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width600px"
-                  id="outlined2"
-                  label="ฝูง"
-                  size="small"
-                />{" "}
-                <Fab color="primary" aria-label="add" size="small">
-                  <AddIcon />
-                </Fab>
-                <IconButton aria-label="delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid container>
-                <Grid>
-                  <Button
-                    onClick={handleClickfalse}
-                    id="b5"
-                    style={{ outline: "none", marginLeft: "350%" }}
-                    variant="contained"
-                    color="secondary"
-                    className="textField-width"
-                    startIcon={<SaveIcon />}
-                  >
-                    แก้ไข
-                  </Button>{" "}
+          <TabPanel value={value} index={2} className="container-fluid">
+            <Paper
+              elevation={0}
+              style={{ textAlign: "center", marginTop: "5%" }}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "90%" }}
+                    type="text"
+                    label="ฝูง"
+                    onChange={event => setinput(event.target.value)}
+                  />{" "}
                 </Grid>
-                <Grid>
+                <Grid item xs={12}>
                   <Button
-                    onClick={handleClicktrue}
-                    id="b6"
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    onClick={addList}
+                    id="herd_num"
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
                     color="primary"
-                    className="textField-width"
                     startIcon={<SaveIcon />}
                   >
-                    บันทึก
+                    เพิ่ม
                   </Button>
                 </Grid>
               </Grid>
             </Paper>
           </TabPanel>
-          <TabPanel value={value} index={3}>
-            <Paper elevation={0}>
-              <Grid className="mar pad10">
-                <TextField
-                  disabled={disabled}
-                  type="text"
-                  className="textField-width600px"
-                  id="outlined3"
-                  label="สายพันธุ์"
-                  size="small"
-                />{" "}
-                <Fab color="primary" aria-label="add" size="small">
-                  <AddIcon />
-                </Fab>
-                <IconButton aria-label="delete" color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-
-              <Grid container>
-                <Grid>
-                  <Button
-                    onClick={handleClickfalse}
-                    id="b7"
-                    style={{ outline: "none", marginLeft: "350%" }}
-                    variant="contained"
-                    color="secondary"
-                    className="textField-width"
-                    startIcon={<SaveIcon />}
-                  >
-                    แก้ไข
-                  </Button>{" "}
+          <TabPanel value={value} index={3} className="container-fluid">
+            <Paper
+              elevation={0}
+              style={{ textAlign: "center", marginTop: "5%" }}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "90%" }}
+                    type="text"
+                    label="สี"
+                    onChange={event => setinput(event.target.value)}
+                  />{" "}
                 </Grid>
-                <Grid>
+                <Grid item xs={12}>
                   <Button
-                    onClick={handleClicktrue}
-                    id="b8"
-                    style={{ outline: "none", marginLeft: "350%" }}
+                    onClick={addList}
+                    id="color"
+                    style={{ outline: "none", width: "150px" }}
                     variant="contained"
                     color="primary"
-                    className="textField-width"
                     startIcon={<SaveIcon />}
                   >
-                    บันทึก
+                    เพิ่ม
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </TabPanel>
+          <TabPanel value={value} index={4} className="container-fluid">
+            <Paper
+              elevation={0}
+              style={{ textAlign: "center", marginTop: "5%" }}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ width: "90%" }}
+                    type="text"
+                    label="สายพันธุ์"
+                    onChange={event => setinput(event.target.value)}
+                  />{" "}
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    onClick={addList}
+                    id="strian"
+                    style={{ outline: "none", width: "150px" }}
+                    variant="contained"
+                    color="primary"
+                    startIcon={<SaveIcon />}
+                  >
+                    เพิ่ม
                   </Button>
                 </Grid>
               </Grid>
@@ -291,6 +272,11 @@ export default function PaperFarm() {
           </TabPanel>
         </div>
       </Paper>
+      <TableListEachSetting
+        nameList={selectedSetting}
+        data={props.posts}
+        keyObjecselected={keyObjecselected}
+      />
     </div>
   );
 }

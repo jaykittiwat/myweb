@@ -44,7 +44,7 @@ class CheckUp extends Component {
             if (dd < 10) {
               dd = "0" + dd;
             }
-            var fullToday = "2021-05-08"//yyyy+"-"+mm+"-"+dd;<<<------------------------------ [ อย่าลืมเปลี่ยน ]---<<<
+            var fullToday =yyyy+"-"+mm+"-"+dd;
             axios
               .get(
                 "http://localhost:4000/notification/" +

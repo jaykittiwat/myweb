@@ -7,27 +7,36 @@ import firebase from "./backEnd/firebase"
 //import thor from './component/Img/2.jpg';
 //import axios from "axios";
 //react------ HOOK
+import Badge from '@material-ui/core/Badge';
 
-
+import axios from 'axios'
 
 class NavbarLogin extends Component {
 
  constructor(props){
    super(props);
    this.state={
-     currentUser:""
+     currentUser:"",
+     dara:null
    }
  }
    async componentDidMount() {
     
     await firebase.auth().onAuthStateChanged(user => {
-   
       if (user) {
-        this.setState({
-          currentUser: user.email
-        });
-       
-      }
+        axios
+          .get("http://localhost:4000/user/logIn/" + user.email)
+          .then(res => {
+            this.setState({ ...this.state, currentUser: res.data[0].user });
+            return res.data[0].user;
+          }).then(async(UID)=>{
+        
+          const result =await axios.get("http://localhost:4000/notification/notiAll/"+UID )
+          const data = Object.values(result.data);
+                this.setState({...this.state,dataNoti:data.length})
+          })
+        
+        }
     });
 
 
@@ -91,8 +100,11 @@ render(){
 
         <div className="dropdown">
           <Link to="/notification">
+                  
+          
+       <div className="dropbtn"><Badge badgeContent={this.state.dataNoti} color="secondary">การแจ้งเตือน</Badge></div>
+    
             
-            <div className="dropbtn">การแจ้งเตือน</div>
           </Link>
         </div>
 
