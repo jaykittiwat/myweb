@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -37,8 +37,8 @@ export default function TableBreed(props) {
   let UID = props.posts.UID;
   //let idInduction= props.posts.idCowInduc;
   //const [typeModule] = useState({ status: "ผสมพันธุ์แล้ว" });
-  const [recoder, setRecoder] = useState("");
-  const [operator, setOperator] = useState("");
+  const [recoder, setRecoder] = useState(" ");
+  const [operator, setOperator] = useState(" ");
   const [selectedDate, setSelectedDate] = useState("");
   const [dateCheckup, setDateCheckup] = useState("");
   const [dateBeforeCheckup, setDateBeforeCheckup] = useState("-- -- ----");
@@ -49,7 +49,10 @@ export default function TableBreed(props) {
   const [HowIdTobreed, setHowIdTobreed] = useState("");
   const [showDateCheckUp, setShowDateCheckUp] = useState("-- -- ----");
   const [theNote, setNote] = useState("");
-
+useEffect(() => {
+  setRecoder(props.posts.fname)
+  setOperator(props.posts.fname)
+}, [props]);
   const manageDate = e => {
     //ยังไม่ได้ดึงsetting มา
     var date = new Date(e.target.value);
@@ -65,7 +68,6 @@ export default function TableBreed(props) {
     if (dd < 10) {
       dd = "0" + dd;
     }
-
     var newdate2 = new Date(date); //วันที่สำหรับตรวจเหนี่ยวนำกลับสัดหลังผสม
     newdate2.setDate(newdate2.getDate() + 19);
     var dd2 = newdate2.getDate();
@@ -678,6 +680,7 @@ export default function TableBreed(props) {
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
+          value={recoder}
             id="input1"
             variant="outlined"
             placeholder="ชื่อผู้บันทึก"
@@ -688,6 +691,7 @@ export default function TableBreed(props) {
         <FormGroup className={classes.marTextField}>
           <FormLabel>ชื่อผู้ปฏิบัติการ</FormLabel>
           <TextField
+          value={operator}
             id="input2"
             variant="outlined"
             placeholder="ชื่อผู้ปฏิบัติการ"

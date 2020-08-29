@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -72,16 +72,12 @@ export default function TableInduction(props) {
     setShowDateInduction(setnextmissionday);
     setDateBreed(nextmissionday);
   };
+useEffect(() => {
 
-  /*-----------------------------------------------------------------------------*/
+  setRecoder(props.posts.fname)
+   setOperator(props.posts.fname)
 
-  /* var values = Object.keys(posts).map(key => posts[key]);
-  for (let i = 0; i < values.length; i++) {
-    if (values[i].status === "บำรุงแล้ว") {
-      key.push(Key[i]);
-      rows.push(values[i]);
-    }
-  }*/
+}, [props]);
 
   const saveDataToInduction = () => {
     const x = selected.length;
@@ -638,6 +634,7 @@ export default function TableInduction(props) {
         <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
+          value={recoder}
             id="input1"
             variant="outlined"
             placeholder="กรอกหมายเลขโค"
@@ -648,6 +645,7 @@ export default function TableInduction(props) {
         <FormGroup className={classes.marTextField}>
           <FormLabel>ผู้ปฏิบัติการ</FormLabel>
           <TextField
+          value={operator}
             id="input2"
             variant="outlined"
             placeholder="กรอกหมายเลขโค"

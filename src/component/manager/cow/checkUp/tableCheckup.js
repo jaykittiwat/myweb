@@ -167,6 +167,8 @@ export default function TableCheckUp(props) {
   };
 
   useEffect(() => {
+    setRecoder(props.posts.fname)
+    setOperator(props.posts.fname)
     setDateClave();
   }, [dateNoti]);
 

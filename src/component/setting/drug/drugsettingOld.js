@@ -13,7 +13,7 @@ class Paperdrug extends Component{
       loading: false,
       data:[],
       key:[],
-      
+      UID:"",
 
     }
   }
@@ -27,7 +27,9 @@ class Paperdrug extends Component{
         }).then(async()=>{
            const res =await axios.get("http://localhost:4000/settingdrug/drug/" +
            this.state.UID)
+           console.log(res.data)
            this.setState({...this.state,data:res.data[1],ket:res.data[0],loading:false})
+          
         })
       }
     })
@@ -40,7 +42,7 @@ class Paperdrug extends Component{
       </div>
       <div className="row Nav-shadow posi">
         <NavbarLogin />
-      </div>
+      </div >
       <PaperDrug  posts={this.state}/>
     </div>
       

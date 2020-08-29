@@ -15,7 +15,8 @@ class CheckUp extends Component {
       loading: false,
       keysDate: [],
       dataNoti: [],
-      UID: ""
+      UID: "",
+      fname:""
     };
   }
 
@@ -26,7 +27,7 @@ class CheckUp extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user });
+            this.setState({ ...this.state, UID: res.data[0].user,fname:res.data[0].fname});
             return res.data[0].user;
           })
           .then(resEmail => {
@@ -99,9 +100,7 @@ class CheckUp extends Component {
                     setdata.push(set);
                     setKeyCattle.push(values[0]);
                   }
-                this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
-                }).then(()=>{
-              //console.log(this.state)
+                    this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
                 })
           });
       }

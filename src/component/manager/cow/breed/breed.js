@@ -15,7 +15,8 @@ class Breed extends Component {
       loading: false,
       keysDate: [],
       dataNoti: [],
-      UID: ""
+      UID: "",
+      fname:""
     };
   }
 
@@ -26,7 +27,7 @@ class Breed extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user });
+            this.setState({ ...this.state, UID: res.data[0].user,fname:res.data[0].fname});
             return res.data[0].user;
           })
           .then(resEmail => {

@@ -48,7 +48,7 @@ render(){
 
   return (
     <div className="container-fluid posi">
-      <nav className="row">
+      <nav className="row" >
         <div className="dropdown ">
           <Link to="/login">
             {" "}
@@ -144,17 +144,12 @@ render(){
           </Link>
         </div>
 
-        <div className="col-md-1"></div>
-        <div className="col-md">
-          <div className="row" style={{marginTop: "8px" ,marginRight:"5%"}}>
-         
-          <Avatar style={{backgroundColor:"#ff5722"}}>{this.state.currentUser.substring(0,1)}</Avatar>
-  <div style={{ color:"#ffffff", marginTop: "8px" ,paddingLeft:"5%",fontSize:"18px"}}>{this.state.currentUser}</div>
-         
-          </div>
-        </div>
+        <div className="col-sm"></div>
+         <div className="col-sm" ><Avatar style={{backgroundColor:"#ff5722",marginLeft:"80%",marginTop:"7%"}}>{this.state.currentUser.substring(0,1)}</Avatar>  </div>
+         <div className="col-sm">  <div style={{ color:"#ffffff",fontSize:"18px",marginTop:"9%"}}>{this.state.currentUser}</div></div>
+      
 
-        <div className="col-md-1 floatRight sigout-div ">
+        <div className="col-sm floatRight sigout-div ">
           <Signout />
         </div>
       </nav>

@@ -11,15 +11,19 @@
     src: url('/font/Kanit-Regular.ttf');
 }
 .r2-c1{
-    color: #fe571a;
-    font-size: 30px;
+   
+    color: #ff4400;
+    font-size: 28px;
     font-family: 'Kanit-Light';
+    text-shadow: 1px 0px 5px #b8b8b8;
 }
 .r2-c1-t2
 {
-    color:#040034;
-    font-size: 20px;
+    color:#2c1fc0;
+    font-size: 22px;
     font-family: 'Kanit-Regular';
+    text-shadow: 1px 0px 5px #b8b8b8;
+
 }
 
 .float-right{

@@ -34,9 +34,9 @@ class Notification extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <HeaderLogin />
-        <div className="row Nav-shadow posi">
+        <div className="row Nav-shadow posi ">
           <NavbarLogin />
         </div>
         <PaperNotificaion posts={this.state}/>
