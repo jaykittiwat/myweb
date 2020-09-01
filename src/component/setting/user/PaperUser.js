@@ -8,10 +8,30 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { FormLabel, FormGroup, TextField } from "@material-ui/core";
 import update from "immutability-helper";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+  root:{
+    marginTop:"5px"
+  },
+  headerbrand:{
+    marginTop: "20px",
+    color: "#fff",
+    width: "25%",
+    backgroundColor: "#2979ff",
+    minWidth:"400px",
+    padding: "12px",
+    fontSize:"22px"
+  },
+  boxInput:{
+    width:"95%"
+  }
+ 
+ }));
 export default function PaperUser(props) {
   const [disabled, setEnabled] = React.useState(true);
   const [data, setData] = React.useState({});
+  const classes = useStyles();
 
   const handleClickfalse = event => {
     setEnabled(false);
@@ -47,7 +67,168 @@ export default function PaperUser(props) {
     );
   }
   return (
-    <div className="container martop-10">
+    <div className="container-fluid">
+    <Paper elevation={3} square  className={classes.headerbrand} >ตั้งค่าผู้ใช้</Paper>
+ <Paper elevation={3} square className={classes.root}>
+
+ <Grid container spacing={3}  style={{padding:"20px"}}>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>ชื่อผู้ใช้(ID)</FormLabel>
+              <TextField
+                value={data.user || " "}
+                disabled={disabled}
+                type="text"
+                className={classes.boxInput}
+                id="user"
+                size="small"
+                onChange={dataUpdate}
+              />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>รหัสผ่าน</FormLabel>
+              <TextField
+                value={data.pass || " "}
+                disabled={disabled}
+                type={disabled ? "password" : "text"}
+                id="pass"
+                size="small"     
+                onChange={dataUpdate}
+                className={classes.boxInput}
+              />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>ชื่อ</FormLabel>
+              <TextField
+                value={data.fname || " "}              
+                disabled={disabled}
+                type="text"  
+                id="fname"
+                size="small"
+                onChange={dataUpdate}
+                className={classes.boxInput}
+              />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>นามสกุล</FormLabel>
+              <TextField
+                value={data.lname || " "}
+                disabled={disabled}
+                type="text"
+                id="lname"
+                size="small"
+                onChange={dataUpdate}
+                className={classes.boxInput}
+              />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>ตำแหน่ง</FormLabel>
+              <TextField
+                disabled={disabled}
+                value={data.privilege || " "}
+                type="text"
+                id="privilege"
+                size="small"
+                className={classes.boxInput}
+              />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>ที่อยู่</FormLabel>
+              <TextField
+                value={data.address || " "}
+                disabled={disabled}
+                type="text"
+                id="address"
+                size="small"
+                onChange={dataUpdate}
+                className={classes.boxInput}
+              />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>เบอร์โทรติดต่อ</FormLabel>
+              <TextField
+                value={data.phone_num || " "}
+                disabled={disabled}
+                type="text"
+                id="phone_num"
+                size="small"
+                onChange={dataUpdate}
+                className={classes.boxInput}
+              />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+          <FormLabel style={{ color: "black" }}>อีเมล์ติดต่อ</FormLabel>
+              <TextField
+                value={data.email || " "}
+                disabled={disabled}
+                type="text"
+                id="email"
+                size="small"
+                onChange={dataUpdate}
+                className={classes.boxInput}
+              />
+          </FormGroup>
+        </Grid>
+      
+      
+        <Grid item xs={12} align="center">
+          <Button
+          disabled={disabled}
+            onClick={handleClicktrue}
+            style={{
+              outline: "none",
+              width: "250px",
+              height: "40px",
+              fontSize: "20px"
+            }}
+            variant="contained"
+            color="primary"
+            className="textField-width"
+            startIcon={<SaveIcon />}
+          >
+            บันทึก
+          </Button>
+          {"      "}
+          <Button
+            onClick={handleClickfalse}
+            style={{
+              outline: "none",
+              width: "250px",
+              height: "40px",
+              fontSize: "20px"
+            }}
+            variant="contained"
+            color="secondary"
+            
+            startIcon={<SaveIcon />}
+          >
+            แก้ไข
+          </Button>
+        </Grid>
+      
+       
+        </Grid>
+
+ </Paper>
+ 
+ </div>
+  );
+}
+/* <div className="container martop-10">
       <Paper elevation={3}>
         <div className="text-header">ตั้งค่าผู้ใช้</div>
 
@@ -203,6 +384,4 @@ export default function PaperUser(props) {
           </Grid>
         </Grid>
       </Paper>
-    </div>
-  );
-}
+    </div> */

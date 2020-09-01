@@ -23,11 +23,9 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
-//import { Grid } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import TableClaves from "./table";
 import axios from "axios";
-//เปลี่ยนตัวหนังสือ  บรรทัด310
 
 export default function TableCheckUp(props) {
   let UID = props.posts.UID;
@@ -67,10 +65,8 @@ export default function TableCheckUp(props) {
     }
     return yyyy + "-" + mm + "-" + dd;
   };
-  //let idInduction= props.posts.idCowInduc;
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
-  //const [selectedDate, setSelectedDate] = useState("");
   const [dateCheckup, setDateCheckup] = useState(inntialDate2);
   const [theCheckUp, setThecheckUp] = useState("");
   const [note, setNote] = useState("");
@@ -170,6 +166,7 @@ export default function TableCheckUp(props) {
     setRecoder(props.posts.fname)
     setOperator(props.posts.fname)
     setDateClave();
+ 
   }, [dateNoti]);
 
   const saveData = () => {

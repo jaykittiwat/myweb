@@ -4,6 +4,8 @@ import NavbarLogin from "./../../../Navbar";
 import PaperBrand from "./PaperBrand";
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
+import Footerversion from "./../../../footerversion";
+
 
 class Paperbrand extends Component {
   constructor(props) {
@@ -61,6 +63,7 @@ class Paperbrand extends Component {
           <NavbarLogin />
         </div>
         <PaperBrand posts={this.state} />
+        <Footerversion/>
       </div>
     );
   }

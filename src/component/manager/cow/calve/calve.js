@@ -5,6 +5,7 @@ import HeaderLogin from "./../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
 import firebase from "./../../../../backEnd/firebase";
 import "./../CowStyle.css";
+import Footerversion from "./../../../../footerversion";
 
 class CheckUp extends Component {
   constructor(props) {
@@ -135,6 +136,7 @@ class CheckUp extends Component {
         </div>
         <TableClave  posts={this.state}/>
         <div className="row mar"></div>
+        <Footerversion/>
       </div>
     );
   }

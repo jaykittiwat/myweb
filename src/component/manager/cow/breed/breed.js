@@ -5,6 +5,7 @@ import HeaderLogin from "./../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
 import firebase from "./../../../../backEnd/firebase";
 import "./../CowStyle.css";
+import Footerversion from "./../../../../footerversion";
 
 class Breed extends Component {
   constructor(props) {
@@ -120,6 +121,7 @@ class Breed extends Component {
         </div>
         <TableBreed posts={this.state} />
         <div className="row mar"></div>
+        <Footerversion/>
       </div>
     );
   }

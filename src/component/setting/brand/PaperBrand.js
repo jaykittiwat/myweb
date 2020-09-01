@@ -7,23 +7,48 @@ import SaveIcon from "@material-ui/icons/Save";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { FormLabel, FormGroup, TextField } from "@material-ui/core";
 import update from "immutability-helper";
-import axios from "axios"
+import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    marginTop: "5px"
+  },
+  headerbrand: {
+    marginTop: "20px",
+    color: "#fff",
+    width: "25%",
+    backgroundColor: "#2979ff",
+    minWidth: "400px",
+    padding: "12px",
+    fontSize: "22px"
+  },
+  boxInput: {
+    width: "95%"
+  }
+}));
 
 export default function PaperBrand(props) {
   const [data, setData] = React.useState([""]);
   const [disabled, setEnabled] = React.useState(true);
+  const classes = useStyles();
+
   const handleClickfalse = event => {
     setEnabled(false);
   };
   const handleClicktrue = event => {
-    axios.post("http://localhost:4000/settingbrand/brandUpdata/"+props.posts.UID+"/"+props.posts.key,data[0]).then((res)=>{
-      alert("บันทึกสำเร็จ");
-     
-    })
-    
-      setEnabled(true);
-    
-   
+    axios
+      .post(
+        "http://localhost:4000/settingbrand/brandUpdata/" +
+          props.posts.UID +
+          "/" +
+          props.posts.key,
+        data[0]
+      )
+      .then(res => {
+        alert("บันทึกสำเร็จ");
+      });
+    setEnabled(true);
   };
   const setStateForm = event => {
     const v = event.target.value;
@@ -32,7 +57,7 @@ export default function PaperBrand(props) {
     const newObj = update(collection, { 0: { [ID]: { $set: v } } });
     setData(newObj);
   };
-  
+
   useEffect(() => {
     setData(props.posts.data);
   }, [props]);
@@ -46,20 +71,21 @@ export default function PaperBrand(props) {
     );
   }
   return (
-    <div className="container martop-10">
-      <Paper elevation={3}>
-        <div className="text-header">ตั้งค่าแบรนด์</div>
-        <Grid container spacing={3} className="pad30">
+    <div className="container-fluid">
+      <Paper elevation={3} square className={classes.headerbrand}>
+        ตั้งค่าแบรนด์
+      </Paper>
+      <Paper elevation={3} square className={classes.root}>
+        <Grid container spacing={3}  style={{padding:"20px"}}>
           <Grid item xs={12}>
             <FormGroup>
               <FormLabel style={{ color: "black" }}>ชื่อฟาร์มภาษไทย</FormLabel>
               <TextField
+                className={classes.boxInput}
                 id="farm_name_TH"
                 onChange={setStateForm}
-                variant="outlined"
                 disabled={disabled}
                 value={data[0].farm_name_TH || " "}
-                className="textField-width"
                 size="small"
               />
             </FormGroup>
@@ -70,12 +96,11 @@ export default function PaperBrand(props) {
                 ชื่อฟาร์มภาษาอังกฤษ
               </FormLabel>
               <TextField
+                className={classes.boxInput}
                 id="farm_name_EN"
-                variant="outlined"
                 disabled={disabled}
                 onChange={setStateForm}
                 value={data[0].farm_name_EN || " "}
-                className="textField-width"
                 size="small"
               />
             </FormGroup>
@@ -86,11 +111,10 @@ export default function PaperBrand(props) {
                 ชื่อ-นามสกุล(เจ้าของฟาร์ม)
               </FormLabel>
               <TextField
+                className={classes.boxInput}
                 id="farm_name_TH"
-                variant="outlined"
                 onChange={setStateForm}
                 disabled={disabled}
-                className="textField-width"
                 value={data[0].farm_name_TH || " "} //<------------------------------เวรเอ้ย ทำหน้าเว็บไม่ดูหลังบ้านเลย เวรจริงๆ ลำบากกูเนี่ย
                 //label="ชื่อ-นามสกุล(เจ้าของฟาร์ม)"
                 size="small"
@@ -101,11 +125,10 @@ export default function PaperBrand(props) {
             <FormGroup>
               <FormLabel style={{ color: "black" }}>ที่อยู่ฟาร์ม</FormLabel>
               <TextField
+                className={classes.boxInput}
                 id="farm_address"
-                variant="outlined"
                 disabled={disabled}
                 onChange={setStateForm}
-                className="textField-width"
                 value={data[0].farm_address || " "}
                 //label="ที่อยู่ฟาร์ม"
                 size="small"
@@ -116,25 +139,27 @@ export default function PaperBrand(props) {
             <FormGroup>
               <FormLabel style={{ color: "black" }}>เบอร์โทรติดต่อ</FormLabel>
               <TextField
+                className={classes.boxInput}
                 id="phone_num"
-                variant="outlined"
                 disabled={disabled}
                 onChange={setStateForm}
-                className="textField-width"
                 value={data[0].phone_num || "ไม่ระบุ"}
                 //label="เบอร์โทรติดต่อ"
                 size="small"
               />{" "}
             </FormGroup>
           </Grid>
-          <Grid item xs={12}>
-           
-          </Grid>
-          <Grid item xs={2}>
+
+          <Grid item xs={12} align="center">
             <Button
-            disabled={disabled}
+              disabled={disabled}
               onClick={handleClicktrue}
-              style={{ outline: "none", marginLeft: "220%" }}
+              style={{
+                outline: "none",
+                width: "250px",
+                height: "40px",
+                fontSize: "20px"
+              }}
               variant="contained"
               color="primary"
               className="textField-width"
@@ -142,21 +167,23 @@ export default function PaperBrand(props) {
             >
               บันทึก
             </Button>
-          </Grid>
-          <Grid item xs={2}>
+            {"      "}
             <Button
               onClick={handleClickfalse}
-              style={{ outline: "none", marginLeft: "220%" }}
+              style={{
+                outline: "none",
+                width: "250px",
+                height: "40px",
+                fontSize: "20px"
+              }}
               variant="contained"
               color="secondary"
-              className="textField-width"
               startIcon={<SaveIcon />}
             >
               แก้ไข
-            </Button>{" "}
+            </Button>
           </Grid>
-         
-          </Grid>
+        </Grid>
       </Paper>
     </div>
   );

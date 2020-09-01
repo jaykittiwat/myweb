@@ -5,6 +5,8 @@ import NavbarLogin from "./../../../Navbar";
 import PaperUser from "./PaperUser";
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
+import Footerversion from "./../../../footerversion";
+
 class Paperuser extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +30,9 @@ class Paperuser extends Component {
             });
           })
       }
+      else{ console.log("log out")}
+       
+      
     });
   }
   render() {
@@ -40,6 +45,7 @@ class Paperuser extends Component {
           <NavbarLogin />
         </div>
         <PaperUser posts={this.state} />
+        <Footerversion/>
       </div>
     );
   }

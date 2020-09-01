@@ -55,11 +55,13 @@ const useStyles = makeStyles(theme => ({
   },
 
   HeaderSetting: {
-    fontSize: "22px",
+    marginTop: "20px",
     color: "#fff",
-    width: "36%",
-    padding: "10px",
-    backgroundColor: "#2979ff"
+    width: "25%",
+    backgroundColor: "#2979ff",
+    minWidth:"400px",
+    padding: "12px",
+    fontSize:"22px"
   },
   tapset: {
     fontSize: "18px",
@@ -121,7 +123,7 @@ export default function PaperDrug(props) {
   return (
     <div className="container-fluid">
       <div className={classes.root}>
-        <Paper className={classes.HeaderSetting} elevation={3}>
+        <Paper className={classes.HeaderSetting} elevation={3} square>
         ตั้งค่าระบบฟาร์ม
         </Paper>
         <AppBar position="static" style={{ marginTop: "3px" }}>

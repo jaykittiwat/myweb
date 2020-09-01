@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import HeaderLogin from "./../../HeaderLogin";
 import "./styh.css";
 import NavbarLogin from "./../../Navbar";
+import Footerversion from "./../../footerversion";
 //import thor from "../Img/2.jpg";
 import axios from "axios";
 import { Paper, Grid, Avatar } from "@material-ui/core";
@@ -42,7 +43,9 @@ class Home extends Component {
           .getDownloadURL()
           .then(url => {
             this.setState({ ...this.state, imgeUser: url });
-          });
+          }).then(()=>{
+            //console.log(this.state.user)
+          })
       });
   }
 
@@ -81,7 +84,7 @@ class Home extends Component {
                       ยินดีต้อนรับ
                     </div>
                     <div style={{ fontSize: "30px", color: "#651fff" }}>
-                      Usertest01
+                      {this.state.user.user}
                     </div>
                   </Grid>
                   <Grid item xs={12} sm={12}>
@@ -162,6 +165,9 @@ class Home extends Component {
             </Paper>
           </div>
         </div>
+        
+<Footerversion/>
+        
       </div>
     );
   }

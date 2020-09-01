@@ -4,6 +4,8 @@ import HeaderLogin from "../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
 import firebase from "./../../../../backEnd/firebase";
 import axios from 'axios';
+import Footerversion from "./../../../../footerversion";
+
 class Abortion extends Component{
 constructor(props){
   super(props)
@@ -50,6 +52,7 @@ render(){
       <NavbarLogin />
     </div>
     <TableAbor />
+    <Footerversion/>
   </div>
   )
 }

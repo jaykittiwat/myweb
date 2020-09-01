@@ -24,13 +24,17 @@ const useStyles = makeStyles({
     color: "#fff",
     backgroundColor: "#304ffe",
     borderRadius: "5px 5px 0 0"
-  }, HeaderSetting: {
+  }, 
+  HeaderSetting: {
     marginTop: "20px",
-    fontSize: "22px",
     color: "#fff",
-    width: "36%",
-    padding: "10px",
-    backgroundColor: "#2979ff"
+    width: "25%",
+    backgroundColor: "#2979ff",
+    padding: "12px",
+    fontSize:"22px",
+    minWidth:"400px",
+ 
+    
   }
 });
 
@@ -89,7 +93,7 @@ export default function TableListEachSetting(props) {
   }
   return (
     <div>
-   <Paper className={classes.HeaderSetting} elevation={3}>
+   <Paper className={classes.HeaderSetting} elevation={3} square>
         {props.value === 0
           ? "รายการโรงเรือน"
           : props.value === 1
@@ -107,7 +111,7 @@ export default function TableListEachSetting(props) {
               <TableCell>
                <h6> <b>{nameSelected}</b></h6>
               </TableCell>
-        <TableCell align="right">  <h6> <b>ลบ</b></h6></TableCell>
+        <TableCell align="right" ><h6><b>ลบ</b></h6></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

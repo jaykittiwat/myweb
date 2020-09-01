@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -57,11 +57,13 @@ const useStyles = makeStyles(theme => ({
   },
 
   HeaderSetting: {
-    fontSize: "22px",
+    marginTop: "20px",
     color: "#fff",
-    width: "36%",
-    padding: "10px",
-    backgroundColor: "#2979ff"
+    width: "25%",
+    minWidth:"400px",
+    backgroundColor: "#2979ff",
+    padding: "12px",
+    fontSize:"22px"
   },
   tapset: {
     fontSize: "18px",
@@ -203,7 +205,7 @@ export default function PaperDrug(props) {
   return (
     <div className="container-fluid">
       <div className={classes.root}>
-        <Paper className={classes.HeaderSetting} elevation={3}>
+        <Paper className={classes.HeaderSetting} elevation={3} square>
           ตั้งค่าระบบยาและโปรแกรมการจัดการ
         </Paper>
         <AppBar position="static" style={{ marginTop: "3px" }}>

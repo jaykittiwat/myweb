@@ -10,7 +10,7 @@ class Header extends Component {
       <div>
         <div className="row">
           <img alt="logo" src={Logo} width="75px" height="75px" />
-          <div className="col-md-5">
+          <div className="col-sm-5">
             <Link to="/" style={{ textDecoration: "none" }}>
               <div className="row container-fluid r2-c1 ">
                 เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค
@@ -20,8 +20,8 @@ class Header extends Component {
               </div>
             </Link>
           </div>
-          <div className="col-md-4 "></div>
-          <div className="col-md ">
+          <div className="col-sm-4 "></div>
+          <div className="col-sm ">
             <div className="row float-right">
               <div className="dropdown" style={{ textAlign: "center" }}>
                 <Link to="/login" style={{ textDecorationLine: "none" }}>

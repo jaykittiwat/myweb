@@ -5,6 +5,8 @@ import NavbarLogin from './../../../Navbar';
 import PaperDrug from './PaperDrug';
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
+import Footerversion from "./../../../footerversion";
+
 class Paperdrug extends Component{
   constructor(props){
     super(props);
@@ -75,6 +77,7 @@ class Paperdrug extends Component{
         <NavbarLogin />
       </div>
       <PaperDrug  posts={this.state}/>
+      <Footerversion/>
     </div>
       
       )

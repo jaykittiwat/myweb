@@ -27,11 +27,12 @@ const useStyles = makeStyles({
   },
   HeaderSetting: {
     marginTop: "20px",
-    fontSize: "22px",
     color: "#fff",
-    width: "36%",
-    padding: "10px",
-    backgroundColor: "#2979ff"
+    width: "25%",
+    backgroundColor: "#2979ff",
+    minWidth:"400px",
+    padding: "12px",
+    fontSize:"22px"
   }
 });
 
@@ -106,7 +107,7 @@ export default function TableListEachSetting(props) {
   }
   return (
     <div>
-      <Paper className={classes.HeaderSetting} elevation={3}>
+      <Paper className={classes.HeaderSetting} elevation={3} square>
         {props.value === 0
           ? "รายการยา"
           : props.value === 1

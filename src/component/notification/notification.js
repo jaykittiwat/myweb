@@ -4,6 +4,8 @@ import NavbarLogin from "./../../Navbar";
 import PaperNotificaion from "./paper";
 import firebase from '../../backEnd/firebase'
 import axios from 'axios'
+import Footerversion from "./../../footerversion";
+
 class Notification extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +42,7 @@ class Notification extends Component {
           <NavbarLogin />
         </div>
         <PaperNotificaion posts={this.state}/>
+        <Footerversion/>
       </div>
     );
   }

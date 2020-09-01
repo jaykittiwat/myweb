@@ -6,6 +6,8 @@ import PaperFarm from "./PaperFarmNew";
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
 
+import Footerversion from "./../../../footerversion";
+
 class Paperfarm extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +81,7 @@ class Paperfarm extends Component {
           <NavbarLogin />
         </div>
         <PaperFarm posts={this.state} />
+        <Footerversion/>
       </div>
     );
   }

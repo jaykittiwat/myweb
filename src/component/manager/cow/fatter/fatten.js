@@ -5,6 +5,7 @@ import HeaderLogin from "./../../../../HeaderLogin";
 import NavbarLogin from "../../../../Navbar";
 import firebase from "./../../../../backEnd/firebase";
 import "./../CowStyle.css";
+import Footerversion from "./../../../../footerversion";
 
 class Fatten extends Component {
   constructor(props) {
@@ -16,7 +17,8 @@ class Fatten extends Component {
       keysDate: [], //key ของ notification
       dataNoti: [], //value ของnotification
       UID: "",
-      fname:""
+      fname:"",
+      pro_maintain:[]
     };
   }
 
@@ -96,8 +98,15 @@ class Fatten extends Component {
                       ...this.state,
                       keysDate: array[0],
                       dataNoti: array[1],
-                      loading:false
+                    
                     });
+                    axios.get("http://localhost:4000/settingprogram_maintain/program_maintain/"+this.state.UID).then(res=>{
+                      this.setState({
+                        ...this.state,
+                       loading:false,
+                       pro_maintain:res.data[1]
+                      });
+                    })
                   })
               })
           })
@@ -116,6 +125,7 @@ class Fatten extends Component {
         </div>
 <TableFatter posts={this.state}/>
         <div className="row mar"></div>
+        <Footerversion/>
       </div>
     );
   }

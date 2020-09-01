@@ -28,7 +28,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Grid } from "@material-ui/core";
-import firebase from "./../../../../backEnd/firebase";
 import axios from "axios";
 
 //เปลี่ยนตัวหนังสือ  บรรทัด310
@@ -38,24 +37,17 @@ export default function TableFatter(props) {
   const loading = props.posts.loading;
  
   const [UID, setUID] = useState("");
-  const [currentUser, setCurrentUser] = useState("");
+ 
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [dateInduction, setDateInduction] = useState("");
   const [time, setTime] = useState("");
   const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
- 
- // const [stateStatck, setStateStatck] = useState("1");
+ const [pro_maintain, setpro_maintain] = useState([]);
 
-  const current = () => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        setCurrentUser(user.email);
-      }
-    });
-  };
-  current();
+
+
 
   const manageDate = e => {
     //ยังไม่ได้ดึงsetting มา
@@ -85,9 +77,12 @@ export default function TableFatter(props) {
   let dataNoti = props.posts.dataNoti;
 
   useEffect(() => {
+setpro_maintain(props.posts.pro_maintain)
    setRecoder(props.posts.fname)
    setOperator(props.posts.fname)
    setUID(props.posts.UID)
+   setMedic([{
+   }])
   }, [props]);
 
   const saveDataToInduction = async () => {
@@ -103,7 +98,8 @@ export default function TableFatter(props) {
           axios.post("http://localhost:4000/history/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
-            type: "บำรุงแม่พันธุ์"
+            type: "บำรุงแม่พันธุ์",
+         
           });
         })
         .then(() => {
@@ -113,7 +109,8 @@ export default function TableFatter(props) {
             type: "บำรุงก่อนคลอด",
             recorder: recoder,
             operator: operator,
-            time: time
+            time: time,
+            detail:medic
           });
         })
         .then(async () => {
@@ -427,6 +424,7 @@ export default function TableFatter(props) {
       item: ""
     }
   ]);
+
   const addtable = event => {
     setMedic([
       ...medic,
@@ -449,18 +447,19 @@ export default function TableFatter(props) {
   const showTable = () => {
     return medic.map((medics, index) => (
       <form className={classes.marTextField} key={index}>
-        <FormControl size="small" style={{ width: "95%" }}>
-          <FormLabel>รายการยา</FormLabel>
+        <FormControl size="small" style={{ minWidth: "95%"}}>
+          <FormLabel>โปรแกรมการบำรุง</FormLabel>
           <Select
             variant="outlined"
             native
             value={medic.item}
             onChange={event => handleChange(event, index)}
           >
-            <option value=" ">เลือก</option>
-            <option>Ten</option>
-            <option>Twenty</option>
-            <option>Thirty</option>
+          <option value=" ">เลือก</option>
+        {pro_maintain.map((list,indexlist)=>{    
+           
+            return <option key={indexlist}>{list.pro_maintain}</option>
+            })}
           </Select>
         </FormControl>
 
@@ -580,7 +579,7 @@ export default function TableFatter(props) {
                   })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                    <TableCell colSpan={6} />
+                    <TableCell colSpan={7} />
                   </TableRow>
                 )}
               </TableBody>
@@ -610,7 +609,7 @@ export default function TableFatter(props) {
           label="ย่อตาราง"
         />
       </div>
-      <div className={classes.headerClave}>บันทึกการเหนี่ยวนำ</div>
+      <div className={classes.headerClave}>บันทึกการบำรุง</div>
 
       <Paper elevation={3} className={classes.pad}>
         

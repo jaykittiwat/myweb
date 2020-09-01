@@ -69,3 +69,12 @@ nav .dropdown {
   
   background-color: #3b30d6;
 }
+.posiFooterVersion{
+  color: #f1f1f1;
+    background-color: #3b30d6;
+    position: fixed;
+    bottom: 0%;
+width: "100%";
+
+
+}
