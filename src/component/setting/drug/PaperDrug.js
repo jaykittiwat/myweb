@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -12,6 +12,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import update from "immutability-helper";
+import axios from "axios";
+import TableList from "./tableList"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -26,7 +29,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography component={'span'}>{children}</Typography>
+          <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -54,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   HeaderSetting: {
-    fontSize: "25px",
+    fontSize: "22px",
     color: "#fff",
     width: "36%",
     padding: "10px",
@@ -66,16 +69,139 @@ const useStyles = makeStyles(theme => ({
     color: "black"
   }
 }));
-
+const initialState_drug = {
+  common_drug: " ",
+  dosage: " ",
+  drug_name: "",
+  exp_date: " ",
+  mfd_date: " ",
+  number: 1
+};
+const initialState_vaccine = {
+  common_vaccine: " ",
+  dosage: " ",
+  vaccine_name: "",
+  exp_date_vaccine: " ",
+  mfd_date_vaccine: " ",
+  number: 1
+};
+const initialState_promaintain = {
+  pro_maintain: "",
+  note: " "
+};
+const initialState_prosync = {
+  pro_sync: "",
+  note: " "
+};
 export default function PaperDrug(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [drug, setdrug] = useState(initialState_drug);
+  const [vaccine, setvaccine] = useState(initialState_vaccine);
+  const [maintain, setmaintain] = useState(initialState_promaintain);
+  const [prosync, setprosync] = useState(initialState_prosync);
+  const [keyObjecselected, setkeyObjecselected] = useState("drug");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setdrug(initialState_drug);
+    setvaccine(initialState_vaccine);
+    setmaintain(initialState_promaintain);
+    setprosync(initialState_prosync);
   };
+  const setStateOncheng = event => {
+    const v = event.target.value;
+    const ID = event.target.id;
+    if (value === 0) {
+      const collection = drug; //{key:value}
+      const newObj = update(collection, { [ID]: { $set: v } });
+      setdrug(newObj);
+      setkeyObjecselected("drug");
+    }
+    if (value === 1) {
+      const collection = vaccine; //{key:value}
+      const newObj = update(collection, { [ID]: { $set: v } });
+      setvaccine(newObj);
+      setkeyObjecselected("vaccine");
+    }
+    if (value === 2) {
+      const collection = maintain; //{key:value}
+      const newObj = update(collection, { [ID]: { $set: v } });
+      setmaintain(newObj);
+      setkeyObjecselected("program_maintain");
+    }
+    if (value === 3) {
+      const collection = prosync; //{key:value}
+      const newObj = update(collection, { [ID]: { $set: v } });
+      setprosync(newObj);
+      setkeyObjecselected("program_sync");
+    }
+  };
+
+  async function saveData() {
+    if (value === 0) {
+      const res = await axios.post(
+        "http://localhost:4000/setting" +
+          keyObjecselected +
+          "/" +
+          keyObjecselected +
+          "/" +
+          props.posts.UID,
+        drug
+      );
+      if (res.status === 200) {
+        alert("บันทึกสำเร็จ   status:" + res.status);
+        window.location.reload();
+      }
+    }
+    if (value === 1) {
+      const res = await axios.post(
+        "http://localhost:4000/setting" +
+          keyObjecselected +
+          "/" +
+          keyObjecselected +
+          "/" +
+          props.posts.UID,
+        vaccine
+      );
+      if (res.status === 200) {
+        alert("บันทึกสำเร็จ   status:" + res.status);
+        window.location.reload();
+      }
+    }
+    if (value === 2) {
+      const res = await axios.post(
+        "http://localhost:4000/setting" +
+          keyObjecselected +
+          "/" +
+          keyObjecselected +
+          "/" +
+          props.posts.UID,
+        maintain
+      );
+      if (res.status === 200) {
+        alert("บันทึกสำเร็จ   status:" + res.status);
+        window.location.reload();
+      }
+    }
+    if (value === 3) {
+      const res = await axios.post(
+        "http://localhost:4000/setting" +
+          keyObjecselected +
+          "/" +
+          keyObjecselected +
+          "/" +
+          props.posts.UID,
+        prosync
+      );
+      if (res.status === 200) {
+        alert("บันทึกสำเร็จ   status:" + res.status);
+        window.location.reload();
+      }
+    }
+  }
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className={classes.root}>
         <Paper className={classes.HeaderSetting} elevation={3}>
           ตั้งค่าระบบยาและโปรแกรมการจัดการ
@@ -119,6 +245,7 @@ export default function PaperDrug(props) {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "49%" }}
                   type="text"
                   id="drug_name"
@@ -126,6 +253,7 @@ export default function PaperDrug(props) {
                   size="small"
                 />{" "}
                 <TextField
+                  onChange={setStateOncheng}
                   type="text"
                   style={{ width: "49%" }}
                   id="common_drug"
@@ -135,6 +263,7 @@ export default function PaperDrug(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "49%" }}
                   type="text"
                   id="dosage"
@@ -142,15 +271,17 @@ export default function PaperDrug(props) {
                   size="small"
                 />{" "}
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "49%" }}
                   type="text"
-                  id="drug_num"
+                  id="number"
                   label="จำนวน"
                   size="small"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "49%" }}
                   type="date"
                   id="mfd_date"
@@ -161,6 +292,7 @@ export default function PaperDrug(props) {
                   size="small"
                 />
                 <TextField
+                  onChange={setStateOncheng}
                   type="date"
                   style={{ width: "49%" }}
                   id="exp_date"
@@ -174,6 +306,8 @@ export default function PaperDrug(props) {
 
               <Grid item xs={12} style={{ textAlign: "center" }}>
                 <Button
+                  disabled={drug.drug_name !== "" ? false : true}
+                  onClick={saveData}
                   style={{
                     outline: "none",
                     width: "250px",
@@ -193,6 +327,7 @@ export default function PaperDrug(props) {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "49%" }}
                   type="text"
                   id="vaccine_name"
@@ -200,6 +335,7 @@ export default function PaperDrug(props) {
                   size="small"
                 />{" "}
                 <TextField
+                  onChange={setStateOncheng}
                   type="text"
                   style={{ width: "49%" }}
                   id="common_vaccine"
@@ -209,22 +345,25 @@ export default function PaperDrug(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "49%" }}
                   type="text"
-                  id="vaccine_dosage"
+                  id="dosage"
                   label="ปริมาณยา(มิลลิลิตร)"
                   size="small"
                 />{" "}
                 <TextField
                   style={{ width: "49%" }}
+                  onChange={setStateOncheng}
                   type="text"
-                  id="vaccine_num"
+                  id="number"
                   label="จำนวน"
                   size="small"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "49%" }}
                   type="date"
                   id="mfd_date_vaccine"
@@ -234,8 +373,8 @@ export default function PaperDrug(props) {
                   }}
                   size="small"
                 />
-
                 <TextField
+                  onChange={setStateOncheng}
                   type="date"
                   style={{ width: "49%" }}
                   id="exp_date_vaccine"
@@ -246,9 +385,10 @@ export default function PaperDrug(props) {
                   size="small"
                 />
               </Grid>
-
               <Grid item xs={12} style={{ textAlign: "center" }}>
                 <Button
+                  disabled={vaccine.vaccine_name !== "" ? false : true}
+                  onClick={saveData}
                   style={{
                     outline: "none",
                     width: "250px",
@@ -268,6 +408,7 @@ export default function PaperDrug(props) {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "100%" }}
                   type="text"
                   id="pro_maintain"
@@ -275,18 +416,20 @@ export default function PaperDrug(props) {
                   size="small"
                 />{" "}
               </Grid>
-
               <Grid item xs={12} /*node------ */>
-          
+                หมายเหตุ
                 <TextareaAutosize
+                  onChange={setStateOncheng}
+                  id="note"
                   style={{ width: "100%", outline: "none" }}
                   aria-label="minimum height"
                   rowsMin={2}
                 />
               </Grid>
-
               <Grid item xs={12} style={{ textAlign: "center" }}>
                 <Button
+                  disabled={maintain.pro_maintain !== "" ? false : true}
+                  onClick={saveData}
                   style={{
                     outline: "none",
                     width: "250px",
@@ -306,6 +449,7 @@ export default function PaperDrug(props) {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
+                  onChange={setStateOncheng}
                   style={{ width: "100%" }}
                   type="text"
                   id="pro_sync"
@@ -313,18 +457,20 @@ export default function PaperDrug(props) {
                   size="small"
                 />{" "}
               </Grid>
-
               <Grid item xs={12}>
-               
+                หมายเหตุ
                 <TextareaAutosize
+                  onChange={setStateOncheng}
+                  id="note"
                   style={{ width: "100%", outline: "none" }}
                   aria-label="minimum height"
                   rowsMin={2}
                 />
               </Grid>
-
               <Grid item xs={12} style={{ textAlign: "center" }}>
                 <Button
+                  disabled={prosync.pro_sync !== "" ? false : true}
+                  onClick={saveData}
                   style={{
                     outline: "none",
                     width: "250px",
@@ -342,6 +488,7 @@ export default function PaperDrug(props) {
           </TabPanel>
         </Paper>
       </div>
+      <TableList value={value} data={props.posts}/>
     </div>
   );
 }

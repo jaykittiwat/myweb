@@ -13,6 +13,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles({
   table: {
+    marginTop: "3px",
     width: "100%"
   },
   header: {
@@ -23,6 +24,13 @@ const useStyles = makeStyles({
     color: "#fff",
     backgroundColor: "#304ffe",
     borderRadius: "5px 5px 0 0"
+  }, HeaderSetting: {
+    marginTop: "20px",
+    fontSize: "22px",
+    color: "#fff",
+    width: "36%",
+    padding: "10px",
+    backgroundColor: "#2979ff"
   }
 });
 
@@ -81,15 +89,25 @@ export default function TableListEachSetting(props) {
   }
   return (
     <div>
-      <div className={classes.header}>รายการ</div>
+   <Paper className={classes.HeaderSetting} elevation={3}>
+        {props.value === 0
+          ? "รายการโรงเรือน"
+          : props.value === 1
+          ? "รายการคอก"
+          : props.value === 2
+          ? "รายการฝูง"
+          : props.value === 3
+          ? "รายการสีโค"
+          : "รายการสายพันธุ์"}
+      </Paper>
       <TableContainer className={classes.table} component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>
-                <h6>{nameSelected}</h6>
+               <h6> <b>{nameSelected}</b></h6>
               </TableCell>
-              <TableCell align="right"></TableCell>
+        <TableCell align="right">  <h6> <b>ลบ</b></h6></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
