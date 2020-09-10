@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import TableCkeckUp from "./tableCheckup";
 import HeaderLogin from "./../../../../HeaderLogin";
-import NavbarLogin from "../../../../Navbar";
+import NavbarLogin from "../../../../demo";
 import firebase from "./../../../../backEnd/firebase";
 import "./../CowStyle.css";
 import Footerversion from "./../../../../footerversion";

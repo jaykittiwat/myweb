@@ -14,8 +14,14 @@ import SaveIcon from "@material-ui/icons/Save";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import update from "immutability-helper";
 import axios from "axios";
-import TableList from "./tableList"
-
+import TableList from "./tableList";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import Select from "@material-ui/core/Select";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -60,10 +66,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: "20px",
     color: "#fff",
     width: "25%",
-    minWidth:"400px",
+    minWidth: "400px",
     backgroundColor: "#2979ff",
     padding: "12px",
-    fontSize:"22px"
+    fontSize: "22px"
   },
   tapset: {
     fontSize: "18px",
@@ -202,6 +208,65 @@ export default function PaperDrug(props) {
       }
     }
   }
+  const [medic, setMedic] = useState([
+    {
+      item: ""
+    }
+  ]);
+  const [pro_maintain, setpro_maintain] = useState([]);
+  const addtable = event => {
+    setMedic([
+      ...medic,
+      {
+        item: ""
+      }
+    ]);
+  };
+  const deleteItem = index => {
+    const result = medic.filter(results => results !== medic[index]);
+    //console.log(result);
+    setMedic(result);
+  };
+  const showTable = () => {
+    return medic.map((medics, index) => (
+      <Paper key={index} style={{backgroundColor:"#f4f4f4"}}>
+        <Grid container>
+        <Grid item xs={1} style={{textAlign:"right",marginTop:"16px",marginRight:"5px"}}>
+         อีก
+          </Grid>
+          <Grid item xs={1}>
+          <TextField
+              style={{ width: "95%" }}
+              id="detail"
+            label="จำนวนวัน"
+              
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={9}>
+            <TextField
+              style={{ width: "100%" }}
+              id="detail"
+             
+              label="รายละเอียด"
+              size="small"
+            />
+          </Grid>
+          
+            <IconButton
+              aria-label="delete"
+              color="secondary"
+              style={{ outline: "none" }}
+              onClick={() => deleteItem(index)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          
+        </Grid>
+      </Paper>
+    ));
+  };
+
   return (
     <div className="container-fluid">
       <div className={classes.root}>
@@ -460,6 +525,19 @@ export default function PaperDrug(props) {
                 />{" "}
               </Grid>
               <Grid item xs={12}>
+                {showTable()}
+                <Grid container> <Grid item xs={12} >
+                  <Fab
+                  color="primary"
+                  aria-label="add"
+                  size="small"
+                  style={{ outline: "none" ,marginLeft:'45%',marginTop:"10px"}}
+                >
+                  <AddIcon onClick={addtable} />
+                </Fab></Grid></Grid>
+                
+              </Grid>
+              <Grid item xs={12}>
                 หมายเหตุ
                 <TextareaAutosize
                   onChange={setStateOncheng}
@@ -490,7 +568,7 @@ export default function PaperDrug(props) {
           </TabPanel>
         </Paper>
       </div>
-      <TableList value={value} data={props.posts}/>
+      <TableList value={value} data={props.posts} />
     </div>
   );
 }

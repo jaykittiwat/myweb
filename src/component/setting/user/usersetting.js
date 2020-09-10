@@ -1,7 +1,7 @@
 //โมดูลการรักษา
 import React, { Component } from "react";
 import HeaderLogin from "./../../../HeaderLogin";
-import NavbarLogin from "./../../../Navbar";
+import NavbarLogin from "./../../../demo";
 import PaperUser from "./PaperUser";
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";

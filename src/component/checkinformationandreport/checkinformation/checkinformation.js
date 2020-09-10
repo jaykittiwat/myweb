@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import HeaderLogin from '../../../HeaderLogin';
-import NavbarLogin from '../../../Navbar';
+import NavbarLogin from '../../../demo';
 //import Chardata from './ChartData';
 import TableCheckinfo from './tablecheckinfo';
 class CheckingInformation extends Component{

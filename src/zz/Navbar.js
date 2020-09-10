@@ -1,9 +1,9 @@
 import React,{Component} from "react";
-import Signout from "./Signout";
+import Signout from "../Signout";
 import "./styleNavbar.css";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
-import firebase from "./backEnd/firebase"
+import firebase from "../backEnd/firebase"
 //import thor from './component/Img/2.jpg';
 //import axios from "axios";
 //react------ HOOK
@@ -144,12 +144,12 @@ render(){
           </Link>
         </div>
 
-        <div className="col-sm"></div>
-         <div className="col-sm" ><Avatar style={{backgroundColor:"#ff5722",marginLeft:"80%",marginTop:"7%"}}>{this.state.currentUser.substring(0,1)}</Avatar>  </div>
-         <div className="col-sm">  <div style={{ color:"#ffffff",fontSize:"18px",marginTop:"9%"}}>{this.state.currentUser}</div></div>
+       
+         <div className="col-sm" style={{padding:"14px"}}><Avatar style={{backgroundColor:"#ff5722",marginLeft:"80%"}}>{this.state.currentUser.substring(0,1)}</Avatar>  </div>
+         <div className="col-sm" style={{padding:"17px"}}>  <div style={{ color:"#ffffff",fontSize:"18px"}}>{this.state.currentUser}</div></div>
       
 
-        <div className="col-sm floatRight sigout-div ">
+        <div className="col-sm sigout-div ">
           <Signout />
         </div>
       </nav>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import HeaderLogin from "./../../HeaderLogin";
-import NavbarLogin from "./../../Navbar";
+import NavbarLogin from "./../../demo";
 import PaperNotificaion from "./paper";
 import firebase from '../../backEnd/firebase'
 import axios from 'axios'
@@ -41,7 +41,7 @@ class Notification extends Component {
         <div className="row Nav-shadow posi ">
           <NavbarLogin />
         </div>
-        <PaperNotificaion posts={this.state}/>
+        <PaperNotificaion  posts={this.state}/>
         <Footerversion/>
       </div>
     );

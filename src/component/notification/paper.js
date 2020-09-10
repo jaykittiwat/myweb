@@ -11,6 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
+import Demo from'./democalen'
 
 const columns = [
   { id: "Q", label: "ลำดับ", minWidth: 5, align: "center" },
@@ -36,8 +37,8 @@ const useStyles = makeStyles({
     padding: "10px",
     fontSize: "22px",
     color: "#fff",
-    backgroundColor: "#304ffe",
-    borderRadius: "5px 5px 0 0"
+    backgroundColor:"#e91e63"
+   
   },
   root: {
     width: "100%",
@@ -96,9 +97,9 @@ setRows(props.posts.dataNoti[0]==='No'?[]:props.posts.dataNoti)//<<<------------
     if (type === "ตีเบอร์") {
       history.push("/calfmanage");
     }
-    if (type === "รักษา") {
+    /*if (type === "รักษา") {
       history.push("/calfmanage");
-    }
+    }*/
   };
   if (loading) {
     return (
@@ -110,9 +111,10 @@ setRows(props.posts.dataNoti[0]==='No'?[]:props.posts.dataNoti)//<<<------------
   }
 
   return (
-    <div className="container">
-      <Paper className={classes.root}>
-        <div className={classes.headerClave}>แจ้งเตือนการจัดการ</div>
+    <div className="container-fluid"  >
+       <Demo  />
+      <Paper className={classes.root} square>
+        <div className={classes.headerClave}>ตารางดำเนินงานทั้งหมด(วันนี้)</div>
         <TableContainer className={classes.container}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -164,6 +166,7 @@ setRows(props.posts.dataNoti[0]==='No'?[]:props.posts.dataNoti)//<<<------------
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+     
       <div style={{ marginTop: "50px" }}></div>
     </div>
   );

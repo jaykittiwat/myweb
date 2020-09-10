@@ -1,28 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 import firebase from "./backEnd/firebase/index";
-import "./styleNavbar.css";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button"
 
-class Signout extends Component {
-  logout = e => {
-    //console.log("Logout");
-    firebase.auth().signOut();
-  };
+const logout = e => {
+  firebase.auth().signOut();
+};
 
-  render() {
-    return (
-      <div>
-        <Link to="/">
-          <div
-            className=" floatRight sigOut-color"
-            onClick={e => this.logout(e)}
-          >
-            ออกจากระบบ
-          </div>
-        </Link>
-      </div>
-    );
-  }
+export default function Signout(){
+  return(
+    
+  <Button color="inherit" style={{outline:'none',width:"10%",fontSize:"20px"}} onClick={()=>logout()}><Link to="/" style={{textDecoration:"none",color:"#fff" }}>ออกจากระบบ </Link></Button>
+ 
+  )
 }
-export default Signout;
-/* */

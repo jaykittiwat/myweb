@@ -5,7 +5,7 @@ nav {
 .posi {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10;
 }
 nav .dropdown {
   display: inline-block;
@@ -16,8 +16,8 @@ nav .dropdown {
 .dropbtn {
   background-color: none;
   color: white;
-  padding: 16px;
-  font-size: 18px;
+  padding: 18px;
+  font-size: 20px;
   border: none;
   cursor: pointer;
 
@@ -50,12 +50,7 @@ nav .dropdown {
   background-color: #3b30d6;
 }
 
-.floatRight {
-  float: center;
-  text-align: center;
-  padding-top: 8px;
-  background-color: none;
-}
+
 
 .sigOut-color {
   font-size: 18px;
@@ -64,6 +59,8 @@ nav .dropdown {
 }
 .sigout-div{
   background-color: #493ee6;
+  padding: 17px;
+  text-align: center;
 }
 .sigout-div:hover {
   
