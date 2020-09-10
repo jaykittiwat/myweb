@@ -75,7 +75,7 @@ export default function TableReport() {
             onChange={handleChange}
             aria-label="Vertical tabs example"
             className={classes.tabs}
-            className="width"
+            //className="width"
           >
             <Tab
               label="จำนวนโคภายในฟาร์ม"
