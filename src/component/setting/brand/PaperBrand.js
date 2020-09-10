@@ -17,12 +17,13 @@ const useStyles = makeStyles(theme => ({
   headerbrand: {
     marginTop: "20px",
     color: "#fff",
-    width: "25%",
+    width: "100%",
     backgroundColor: "#2979ff",
     minWidth: "400px",
     padding: "12px",
     fontSize: "22px"
   },
+  
   boxInput: {
     width: "95%"
   }

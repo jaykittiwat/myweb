@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   HeaderSetting: {
     marginTop: "20px",
     color: "#fff",
-    width: "25%",
+    width: "100%",
     backgroundColor: "#2979ff",
     minWidth:"400px",
     padding: "12px",

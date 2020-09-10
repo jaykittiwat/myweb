@@ -77,7 +77,7 @@ export default function TableReport() {
         onChange={handleChange}
         aria-label="Vertical tabs example"
         className={classes.tabs}
-    
+        className="width"
       >
         <Tab label="จำนวนโคภายในฟาร์ม" {...a11yProps(0)} style={{outline:"none"}} />
         <Tab label="จำนวนโคแต่ละสายพันธุ์" {...a11yProps(1)} style={{outline:"none"}} />
