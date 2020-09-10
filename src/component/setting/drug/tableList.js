@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   HeaderSetting: {
     marginTop: "20px",
     color: "#fff",
-    width: "100%",
+    width: "25%",
     backgroundColor: "#e91e63",
     minWidth:"400px",
     padding: "12px",
