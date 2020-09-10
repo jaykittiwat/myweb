@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   HeaderSetting: {
     marginTop: "20px",
     color: "#fff",
-    width: "25%",
+    width: "100%",
     backgroundColor: "#2979ff",
     minWidth: "400px",
     padding: "12px",
@@ -60,7 +60,7 @@ export default function TableClaf() {
   };
 
   return (
-    <Paper>
+    <Paper >
       <Paper className={classes.HeaderSetting} elevation={3} square>
         จัดการลูกโค
       </Paper>

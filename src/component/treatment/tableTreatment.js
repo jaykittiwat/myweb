@@ -1,6 +1,7 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 //import Grid from '@material-ui/core/Grid'
+import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -148,6 +149,19 @@ export default function TableTreatment() {
             className={classes.textField}
           />
         </FormGroup>
+        <div className="container-fluid text-center">
+          <div className={classes.marTextField}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ width: "250px", margin: "10px", outline: "none" }}
+             // onClick={() => saveDataToInduction()}
+            >
+              บันทึก
+            </Button>
+          </div>{" "}
+        </div>
       </Paper>
     </div>
   );

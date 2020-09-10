@@ -207,15 +207,14 @@ export default function TableAbortion() {
           <Grid item xs={3}></Grid>
           <Grid item xs={4}></Grid>
           <Grid item xs={4}>
-            <Button
-              onClick={() => console.log(item)}
-              style={{ outline: "none" }}
+          <Button
               variant="contained"
               color="primary"
-              className="textField-width "
-              startIcon={<SaveIcon />}
+              size="large"
+              style={{ width: "250px", margin: "10px", outline: "none" }}
+             // onClick={() => saveDataToInduction()}
             >
-              Save
+              บันทึก
             </Button>
           </Grid>
           <Grid item xs={4}></Grid>
