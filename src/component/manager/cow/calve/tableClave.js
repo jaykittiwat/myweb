@@ -197,7 +197,7 @@ export default function TableClaves(props) {
 
   return (
     <Paper className={classes.root}>
-      <div className={classes.headerClave}>บันทึกการอคลอด</div>
+      <div className={classes.headerClave}>บันทึกการคลอด</div>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

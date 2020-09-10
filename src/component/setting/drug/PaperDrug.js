@@ -229,7 +229,7 @@ export default function PaperDrug(props) {
   };
   const showTable = () => {
     return medic.map((medics, index) => (
-      <Paper key={index} style={{backgroundColor:"#f4f4f4"}}>
+      <Paper key={index} style={{backgroundColor:"#b2ebf2"}}>
         <Grid container>
         <Grid item xs={1} style={{textAlign:"right",marginTop:"16px",marginRight:"5px"}}>
          อีก

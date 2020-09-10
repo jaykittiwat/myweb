@@ -514,7 +514,6 @@ class FormRegiscow extends Component {
             </div>
           </Form>
         </div>
-        );
       </div>
     );
   }
