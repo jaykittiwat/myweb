@@ -140,7 +140,7 @@ export default function PaperDrug(props) {
               style={{ outline: "none" }}
             />
             <Tab  className={classes.tapset} label="คอก" {...a11yProps(1)} style={{ outline: "none" }} />
-            <Tab  className={classes.tapset} label="ฝูก" {...a11yProps(2)} style={{ outline: "none" }} />
+            <Tab  className={classes.tapset} label="ฝูง" {...a11yProps(2)} style={{ outline: "none" }} />
             <Tab  className={classes.tapset} label="สีโค" {...a11yProps(3)} style={{ outline: "none" }} />
             <Tab  className={classes.tapset}
               label="สายพันธุ์"
