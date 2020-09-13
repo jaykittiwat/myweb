@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -17,11 +17,21 @@ import axios from "axios";
 import TableList from "./tableList";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import Select from "@material-ui/core/Select";
-import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableRow from "@material-ui/core/TableRow";
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
+}))(TableRow);
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -65,9 +75,9 @@ const useStyles = makeStyles(theme => ({
   HeaderSetting: {
     marginTop: "20px",
     color: "#fff",
-    width: "25%",
-    minWidth: "400px",
-    backgroundColor: "#2979ff",
+    width: "100%",
+    background:
+      " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
     padding: "12px",
     fontSize: "22px"
   },
@@ -229,41 +239,43 @@ export default function PaperDrug(props) {
   };
   const showTable = () => {
     return medic.map((medics, index) => (
-      <Paper key={index} style={{backgroundColor:"#b2ebf2"}}>
-        <Grid container>
-        <Grid item xs={1} style={{textAlign:"right",marginTop:"16px",marginRight:"5px"}}>
-         อีก
-          </Grid>
-          <Grid item xs={1}>
-          <TextField
-              style={{ width: "95%" }}
-              id="detail"
-            label="จำนวนวัน"
-              
-              size="small"
-            />
-          </Grid>
-          <Grid item xs={9}>
-            <TextField
-              style={{ width: "100%" }}
-              id="detail"
-             
-              label="รายละเอียด"
-              size="small"
-            />
-          </Grid>
-          
-            <IconButton
-              aria-label="delete"
-              color="secondary"
-              style={{ outline: "none" }}
-              onClick={() => deleteItem(index)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          
-        </Grid>
-      </Paper>
+      <StyledTableRow hove key={index}>
+        <TableCell align="center">{index+1}.</TableCell>
+        <TableCell style={{width:"200px"}} >
+        <Input
+         style={{width:"100%",minWidth:"200px"}}
+           placeholder="จำนวนวัน"
+            endAdornment={<InputAdornment position="end">วัน</InputAdornment>}
+            aria-describedby="standard-weight-helper-text"
+          />
+      
+        </TableCell>
+        <TableCell  style={{minWidth:"500px"}}>
+        <Input
+        
+        style={{width:"100%"}}
+           placeholder="รายละเอียด"
+          />
+        </TableCell>
+        <TableCell  style={{width:"200px"}} >
+        <Input
+       
+         style={{width:"100%",minWidth:"200px"}}
+        type="time"
+          />
+        </TableCell>
+
+        <TableCell>
+          <IconButton
+            aria-label="delete"
+            color="secondary"
+            style={{ outline: "none" }}
+            onClick={() => deleteItem(index)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
+      </StyledTableRow>
     ));
   };
 
@@ -474,12 +486,14 @@ export default function PaperDrug(props) {
           <TabPanel value={value} index={2}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
+              <spam style={{ fontSize: "22px", color: "#616161" }}>
+                  ชื่อโปรแกรมการบำรุง :
+                </spam>
                 <TextField
                   onChange={setStateOncheng}
-                  style={{ width: "100%" }}
+                  style={{ width: "88%" }}
                   type="text"
                   id="pro_maintain"
-                  label="ชื่อโปรแกรมการบำรุง"
                   size="small"
                 />{" "}
               </Grid>
@@ -515,30 +529,50 @@ export default function PaperDrug(props) {
           <TabPanel value={value} index={3}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
+                <spam style={{ fontSize: "22px", color: "#616161" }}>
+                  ชื่อโปรแกรมเหนี่ยวนำ :
+                </spam>
                 <TextField
                   onChange={setStateOncheng}
-                  style={{ width: "100%" }}
+                  style={{ width: "88%", height: "20px" }}
                   type="text"
                   id="pro_sync"
-                  label="ชื่อโปรแกรมการเหนี่ยวนำ"
-                  size="small"
                 />{" "}
               </Grid>
-              <Grid item xs={12}>
-                {showTable()}
-                <Grid container> <Grid item xs={12} >
-                  <Fab
-                  color="primary"
-                  aria-label="add"
-                  size="small"
-                  style={{ outline: "none" ,marginLeft:'45%',marginTop:"10px"}}
+              <Grid item xs={12} style={{ marginTop: "10px" }}>
+                <spam style={{ fontSize: "22px", color: "#616161" }}>
+                  รายละเอียด
+                </spam>
+                <Button
+                  onClick={addtable}
+                  variant="contained"
+                  style={{
+                    marginLeft: "10px",
+                    backgroundColor: "#64dd17",
+                    color: "#fff",
+                    padding: "5px",
+                    outline: "none",
+                    width: "100px"
+                  }}
                 >
-                  <AddIcon onClick={addtable} />
-                </Fab></Grid></Grid>
-                
+                  <AddIcon />
+                  เพิ่ม
+                </Button>
+                <TableContainer component={Paper}>
+                  <Table aria-label="simple table" size="small">
+                    <TableBody> {showTable()}</TableBody>
+                  </Table>
+                </TableContainer>
+
+                <Grid container>
+                  {" "}
+                  <Grid item xs={12}></Grid>
+                </Grid>
               </Grid>
               <Grid item xs={12}>
-                หมายเหตุ
+                <spam style={{ fontSize: "22px", color: "#616161" }}>
+                  หมายเหตุ
+                </spam>
                 <TextareaAutosize
                   onChange={setStateOncheng}
                   id="note"

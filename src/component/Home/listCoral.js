@@ -14,8 +14,9 @@ import { Card1, Card2, Card3, Card4 } from "./card";
               square
               style={{
                 color: "#fff",
-                width: "25%",
-                backgroundColor: "#64dd17",
+                width: "100%",
+                background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
+              
                 minWidth: "250px",
                 padding: "12px",
                 fontSize: "22px"
@@ -33,8 +34,9 @@ import { Card1, Card2, Card3, Card4 } from "./card";
               square
               style={{
                 color: "#fff",
-                width: "25%",
-                backgroundColor: "#64dd17",
+                width: "100%",
+              background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
+          
                 minWidth: "250px",
                 padding: "12px",
                 fontSize: "22px"
@@ -55,8 +57,9 @@ import { Card1, Card2, Card3, Card4 } from "./card";
               square
               style={{
                 color: "#fff",
-                width: "25%",
-                backgroundColor: "#64dd17",
+                width: "100%",
+                background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
+              
                 minWidth: "250px",
                 padding: "12px",
                 fontSize: "22px"
@@ -74,8 +77,9 @@ import { Card1, Card2, Card3, Card4 } from "./card";
               square
               style={{
                 color: "#fff",
-                width: "25%",
-                backgroundColor: "#64dd17",
+                width: "100%",
+                background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
+            
                 minWidth: "250px",
                 padding: "12px",
                 fontSize: "22px"

@@ -45,8 +45,8 @@ export default function DashBoard() {
             square
             style={{
               color: "#fff",
-              width: "25%",
-              backgroundColor: "#2196f3",
+              width: "100%",
+              background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
               minWidth: "400px",
               padding: "12px",
               fontSize: "22px"

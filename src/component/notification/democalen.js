@@ -21,13 +21,13 @@ const appointments = [
     title: "บำรุงหลังคลอด",
     startDate: new Date(2020, 8, 1, 0, 0),
     endDate: new Date(2020, 8, 1, 23, 59),
-    location: "type 1"
+    location: "type 3"
   },
   {
     title: "เหนี่ยวนำ",
     startDate: new Date(2020, 8, 2, 0),
     endDate: new Date(2020, 8, 2, 24),
-    location: "type 1"
+    location: "type 2"
   },
   {
     title: "ผสมพันธุ์",
@@ -39,13 +39,13 @@ const appointments = [
     title: "ตรวจท้อง",
     startDate: new Date(2020, 8, 4, 0),
     endDate: new Date(2020, 8, 4, 24),
-    location: "type 1"
+    location: "type 4"
   },
   {
     title: "วันคลอด",
     startDate: new Date(2020, 8, 6, 0),
     endDate: new Date(2020, 8, 6, 24),
-    location: "type 1"
+    location: "type 4"
   },
   {
     title: "รักษา",
@@ -59,8 +59,11 @@ const resources = [
   {
     fieldName: "location",
     title: "Location",
-    instances: [{ id: "type 1", text: "วันนี้", color: "#304ffe" }]
-  }
+    instances: [{ id: "type 1", text: "วันนี้", color: "#f50057" },
+    { id: "type 2", text: "อีก 1 วัน", color: "#ffea00" },
+    { id: "type 3", text: "อีก 2 วัน", color: "#76ff03" },
+    { id: "type 4", text: "เลยกำหนด", color: "#d500f9" }]
+  },
 ];
 
 const styles = Theme =>
@@ -136,7 +139,7 @@ const AppointmentContent = withStyles(styles, { name: "AppointmentContent" })(
 
 export default function CalenDemo() {
   return (
-    <Paper square  style={{marginTop:"20px"}}>
+    <Paper square  style={{marginTop:"20px",height:"655px",width:'100%'}}>
       <Paper
         elevation={3}
         style={{
@@ -144,14 +147,14 @@ export default function CalenDemo() {
           padding: "10px",
           fontSize: "22px",
           color: "#fff",
-          background: "linear-gradient(90deg, rgba(48,79,254,1) 0%, rgba(69,97,255,1) 50%, rgba(92,116,255,1) 100%)"
+          background:" linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
         }}
         square
       >
         ปฎิทินการดำเนินงาน
       </Paper>
-      <Paper  square>
-        <Scheduler data={appointments}>
+      <Paper  square style={{height:"600px",width:"100%"}}>
+        <Scheduler data={appointments} children   >
           <ViewState />
           <MonthView dayScaleCellComponent={DayScaleCell} />
           <Appointments

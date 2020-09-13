@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,8 +11,15 @@ import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
-import Demo from'./democalen'
-
+import Demo from "./democalen";
+import { Grid } from "@material-ui/core";
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
+}))(TableRow);
 const columns = [
   { id: "Q", label: "ลำดับ", minWidth: 5, align: "center" },
   { id: "date", label: "วันที่", minWidth: 100, align: "center" },
@@ -37,8 +44,7 @@ const useStyles = makeStyles({
     padding: "10px",
     fontSize: "22px",
     color: "#fff",
-    backgroundColor:"#e91e63"
-   
+    background:" linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
   },
   root: {
     width: "100%",
@@ -48,8 +54,8 @@ const useStyles = makeStyles({
   container: {
     maxHeight: "100%"
   },
-  text:{
-    fontSize:"18px"
+  text: {
+    fontSize: "18px"
   }
 });
 
@@ -57,12 +63,11 @@ export default function PaperNotificaion(props) {
   const loading = props.posts.loading;
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows,setRows] = React.useState([]);
-React.useEffect(() => {
-setRows(props.posts.dataNoti[0]==='No'?[]:props.posts.dataNoti)//<<<------------------กลับมาเชคอีกรอบ------------------<<<
-
-}, [props]);
+  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [rows, setRows] = React.useState([]);
+  React.useEffect(() => {
+    setRows(props.posts.dataNoti[0] === "No" ? [] : props.posts.dataNoti); //<<<------------------กลับมาเชคอีกรอบ------------------<<<
+  }, [props]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -111,62 +116,91 @@ setRows(props.posts.dataNoti[0]==='No'?[]:props.posts.dataNoti)//<<<------------
   }
 
   return (
-    <div className="container-fluid"  >
-       <Demo  />
-      <Paper className={classes.root} square>
-        <div className={classes.headerClave}>ตารางดำเนินงานทั้งหมด(วันนี้)</div>
-        <TableContainer className={classes.container}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map(column => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth, zIndex: "0" }}
-                  >
-                    <h5> {column.label}</h5>
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  
-                  return (
-                    <TableRow hover  tabIndex={-1} key={index}>
-                      <TableCell align="center" style={{fontSize:"16px"}}>{index + 1} </TableCell>
-                      <TableCell align="center" style={{fontSize:"16px"}}>{row.date} </TableCell>
-                      <TableCell align="center" style={{fontSize:"16px"}}>{row.id_cattle} </TableCell>
-                      <TableCell align="center" style={{fontSize:"16px"}}>{row.type} </TableCell>
-                      <TableCell align="center" >
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          onClick={() => RouterTopage(row.type)}
-                        >
-                          เลือก
-                        </Button>
+    <div className="container-fluid">
+      <Grid container spacing={10}>
+        {" "}
+        <Grid item md={5} xs={12}>
+          {" "}
+          <Demo />
+        </Grid>
+        <Grid item md={7} xs={12}>
+          <Paper className={classes.root} square>
+            <div className={classes.headerClave}>
+              ตารางดำเนินงานทั้งหมด(วันนี้)
+            </div>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map(column => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth, zIndex: "0" }}
+                      >
+                        <h5> {column.label}</h5>
                       </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
-     
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      return (
+                        <StyledTableRow hover tabIndex={-1} key={index}>
+                          <TableCell
+                            align="center"
+                            style={{ fontSize: "16px" }}
+                          >
+                            {index + 1}{" "}
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ fontSize: "16px" }}
+                          >
+                            {row.date}{" "}
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ fontSize: "16px" }}
+                          >
+                            {row.id_cattle}{" "}
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ fontSize: "16px" }}
+                          >
+                            {row.type}{" "}
+                          </TableCell>
+                          <TableCell align="center">
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              onClick={() => RouterTopage(row.type)}
+                            >
+                              เลือก
+                            </Button>
+                          </TableCell>
+                        </StyledTableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[8, 10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
+
       <div style={{ marginTop: "50px" }}></div>
     </div>
   );

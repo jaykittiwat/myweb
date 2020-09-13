@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
+import {withStyles,
   makeStyles,
   Table,
   TableBody,
@@ -12,6 +12,13 @@ import {
   TextField,
   Button
 } from "@material-ui/core";
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const useStyles = makeStyles({
   table: {
@@ -28,19 +35,22 @@ const useStyles = makeStyles({
     borderRadius: "5px 5px 0 0"
   },
   HeaderSetting: {
+  
     marginTop: "20px",
     color: "#fff",
-    width: "25%",
-    backgroundColor: "#2979ff",
-    minWidth: "400px",
+    background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
+    width:"100%",
     padding: "12px",
     fontSize: "22px"
   },
   colrumLenght1: {
-    minWidth: "100px"
+    fontSize: "18px",
+    minWidth: "150px"
   },
   colrumLenght2: {
-    minWidth: "200px"
+    minWidth: "200px",
+    fontSize: "18px",
+
   }
 });
 
@@ -97,47 +107,159 @@ export default function TableClaf() {
                 <TableCell className={classes.colrumLenght2}>
                   หมายเหตุ
                 </TableCell>
-                <TableCell align="center">บันทึก</TableCell>
+                <TableCell className={classes.colrumLenght2} align="center">บันทึก</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>Sonic</TableCell>
-                <TableCell>2020-10-01</TableCell>
-                <TableCell>ผู้</TableCell>
-                <TableCell>บรามัน</TableCell>
-                <TableCell>A 1</TableCell>
-                <TableCell>B 2</TableCell>
+              <StyledTableRow>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>Sonic</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>2020-10-01</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>ผู้</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>บรามัน</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>A 1</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>B 2</TableCell>
                 <TableCell>
-                  <TextField type="date" style={{ width: "100%" }} />
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
                 </TableCell>
                 <TableCell>
-                  <TextField type="date" style={{ width: "100%" }} />
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
                 </TableCell>
                 <TableCell>
-                  <TextField type="date" style={{ width: "100%" }} />
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
                 </TableCell>
                 <TableCell>
-                  <TextField type="date" style={{ width: "100%" }} />
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
                 </TableCell>
                 <TableCell>
-                  <TextField style={{ width: "100%" }} />
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
                 </TableCell>
                 <TableCell>
-                  <TextField style={{ width: "100%" }} />
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   {" "}
                   <Button
                     variant="outlined"
                     color="primary"
-                    style={{ outline: "none" }}
+                    style={{ outline: "none" ,fontSize:"16px"}}
                   >
                     {" "}
                     บันทึก
                   </Button>
                 </TableCell>
-              </TableRow>
+              </StyledTableRow>
+              <StyledTableRow>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>Sonic</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>2020-10-01</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>ผู้</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>บรามัน</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>A 1</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>B 2</TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
+                </TableCell>
+                <TableCell>
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
+                </TableCell>
+                <TableCell align="center">
+                  {" "}
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ outline: "none" ,fontSize:"16px"}}
+                  >
+                    {" "}
+                    บันทึก
+                  </Button>
+                </TableCell>
+              </StyledTableRow>
+              <StyledTableRow>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>Sonic</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>2020-10-01</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>ผู้</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>บรามัน</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>A 1</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>B 2</TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
+                </TableCell>
+                <TableCell>
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
+                </TableCell>
+                <TableCell align="center">
+                  {" "}
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ outline: "none" ,fontSize:"16px"}}
+                  >
+                    {" "}
+                    บันทึก
+                  </Button>
+                </TableCell>
+              </StyledTableRow>
+              <StyledTableRow>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>Sonic</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>2020-10-01</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>ผู้</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>บรามัน</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>A 1</TableCell>
+                <TableCell style={{ width: "100%" ,fontSize:"16px"}}>B 2</TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField type="date" style={{ width: "100%" ,fontSize:"16px"}} />
+                </TableCell>
+                <TableCell>
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
+                </TableCell>
+                <TableCell>
+                  <TextField style={{ width: "100%",fontSize:"16px" }} />
+                </TableCell>
+                <TableCell align="center">
+                  {" "}
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    style={{ outline: "none" ,fontSize:"16px"}}
+                  >
+                    {" "}
+                    บันทึก
+                  </Button>
+                </TableCell>
+              </StyledTableRow>
+              
             </TableBody>
           </Table>
         </TableContainer>
