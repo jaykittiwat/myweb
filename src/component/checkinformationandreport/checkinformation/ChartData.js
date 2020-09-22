@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Doughnut, Bar } from "react-chartjs-2";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import 'chartjs-plugin-datalabels';
 class ChartData extends Component {
   constructor(props) {
     super(props);
@@ -64,6 +65,7 @@ class ChartData extends Component {
             <Grid item xs={4}>
               <Paper elevation={1}>
                 <Doughnut
+                type="pie"
                   data={this.state.chartData}
                   options={{
                     responsive: true,
@@ -84,6 +86,12 @@ class ChartData extends Component {
                         bottom: 0,
                       },
                     },
+                    plugins: {
+                      datalabels: {
+                         display: true,
+                         color: 'white'
+                      }
+                   }
                   }}
                 />
               </Paper>

@@ -1,0 +1,26 @@
+export const setData = [
+    { name: "A", lastName: "1", Age: "10" },
+    { name: "B", lastName: "2", Age: "20" },
+    { name: "C", lastName: "3", Age: "30" },
+    { name: "D", lastName: "4", Age: "40" },
+    { name: "C", lastName: "5", Age: "30" },
+    { name: "C", lastName: "6", Age: "30" },
+    { name: "C", lastName: "7", Age: "30" },
+    { name: "C", lastName: "8", Age: "30" },
+    { name: "C", lastName: "9", Age: "30" },
+    { name: "C", lastName: "10", Age: "30" },
+    { name: "C", lastName: "11", Age: "30" },
+    { name: "C", lastName: "12", Age: "30" },
+    { name: "C", lastName: "13", Age: "30" },
+    { name: "C", lastName: "14", Age: "30" },
+    { name: "C", lastName: "15", Age: "30" },
+    { name: "C", lastName: "16", Age: "30" },
+    { name: "C", lastName: "17", Age: "30" },
+    { name: "C", lastName: "18", Age: "30" },
+    { name: "C", lastName: "19", Age: "30" },
+    { name: "C", lastName: "20", Age: "30" },
+    { name: "C", lastName: "21", Age: "30" },
+    { name: "C", lastName: "22", Age: "30" },
+    { name: "C", lastName: "23", Age: "30" }
+  ];
+  

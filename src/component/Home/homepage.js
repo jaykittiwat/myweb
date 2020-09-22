@@ -5,7 +5,8 @@ import NavbarLogin from "./../../demo";
 import Footerversion from "./../../footerversion";
 import axios from "axios";
 import firebase from "./../../backEnd/firebase";
-import Board from "./dashboard"
+//import Board from "./dashboard";
+import Walpaper from "./walpaper";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +54,10 @@ class Home extends Component {
         <div className="row Nav-shadow posi">
           <NavbarLogin />
         </div>
-         <Board UserAvatar={this.state.imgeUser} dataUser={this.state.user}/>
+        <div className="row ">
+        <Walpaper/>
+        </div>
+         
       
         
 <Footerversion/>

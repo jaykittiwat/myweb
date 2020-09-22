@@ -10,6 +10,8 @@ import Paper from "@material-ui/core/Paper";
 import "./styleCheckinfo.css";
 import { Doughnut, Bar } from "react-chartjs-2";
 import Grid from "@material-ui/core/Grid";
+import 'chartjs-plugin-datalabels';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -133,6 +135,7 @@ export default function TableReport() {
                           ],
                         }}
                         options={{
+                         
                           responsive: true,
                           title: {
                             display: true,
@@ -150,7 +153,12 @@ export default function TableReport() {
                               top: 0,
                               bottom: 0,
                             },
-                          },
+                          }, plugins: {
+                            datalabels: {
+                               display: true,
+                               color: 'white',
+                            }
+                         }
                         }}
                       />
                     </Paper>

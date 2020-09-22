@@ -275,15 +275,16 @@ export function B7() {
         <Link to="/checkinformation" style={{textDecoration:'none'}}>
           {" "}
           <StyledMenuItem>
-            <ListItemText primary="ตรวจสอบข้อมูล" />
+            <ListItemText primary="กราฟสถิติข้อมูล" />
           </StyledMenuItem>
         </Link>
         <Link to="/report" style={{textDecoration:'none'}}>
           {" "}
           <StyledMenuItem>
-            <ListItemText primary="กราฟสถิติ" />
+            <ListItemText primary="ออกรายงาน" />
           </StyledMenuItem>
         </Link>
+       
       </StyledMenu>
     </div>
   );

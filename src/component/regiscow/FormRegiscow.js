@@ -138,21 +138,21 @@ class FormRegiscow extends Component {
               });
           }
           //ถ้าเป็นลูกโค
-          else {
+         if(check==="calf") {
             axios
               .post(
                 "http://localhost:4000/user/calf/registorCalf/" + res.data[0].user,
                 {
                   birth_id:" ",
-                  birth_weight:this.state.birth_weight,
+                  birth_weight:this.state.data.birth_weight,
                   branding:false,
-                  breed:this.state.breed,
-                  color:this.state.color,
-                  dam_id:this.state.dam_id,
+                  breed:this.state.data.breed,
+                  color:this.state.data.color,
+                  dam_id:this.state.data.dam_id,
                   horndetering: false,
-                  name_cattle:this.state.cattle_id,
-                  sex: this.state.sex,
-                  sire_id:this.state.sire_id,
+                  name_cattle:this.state.data.cattle_id,
+                  sex: this.state.data.sex,
+                  sire_id:this.state.data.sire_id,
                   wean: false
                 }
               )
