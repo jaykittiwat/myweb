@@ -1,6 +1,6 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-import Grid from '@material-ui/core/Grid'
+import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -30,16 +30,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableTreatment() {
   const classes = useStyles();
-  const [time, setTime] =("");
- 
+  const [time, setTime] = "";
+
   return (
     <div className="container">
       <Paper elevation={1}>
         <div className="text-header-treat martop-10">บันทึกการรักษา</div>
-        
+
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
-          <FormGroup>
+            <FormGroup>
               <FormLabel className={classes.title}>ประเภทโค</FormLabel>
               <FormControl className={classes.formControl} size="small">
                 <Select
@@ -70,11 +70,11 @@ export default function TableTreatment() {
               <FormLabel className={classes.title}>อาการ</FormLabel>
             </FormGroup>
             <TextareaAutosize
-            aria-label="minimum height"
-            rowsMin={3}
-            className={classes.textField}
-            className="textField-w"
-          />
+              aria-label="minimum height"
+              rowsMin={3}
+              className={classes.textField}
+              className="textField-w"
+            />
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
@@ -100,7 +100,9 @@ export default function TableTreatment() {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel className={classes.title}>วันที่ติดตามผลการรักษา</FormLabel>
+              <FormLabel className={classes.title}>
+                วันที่ติดตามผลการรักษา
+              </FormLabel>
             </FormGroup>
             <TextField
               type="date"
@@ -110,17 +112,17 @@ export default function TableTreatment() {
             />
           </Grid>
           <Grid item xs={6}>
-          <FormGroup className={classes.marTextField}>
-          <FormLabel className={classes.title}>เวลา</FormLabel>
-          <TextField
-            id="input4"
-            variant="outlined"
-            type="time"
-            size="small"
-            defaultValue="00:00"
-            onChange={e => setTime(e.target.value)}
-          />
-        </FormGroup>
+            <FormGroup className={classes.marTextField}>
+              <FormLabel className={classes.title}>เวลา</FormLabel>
+              <TextField
+                id="input4"
+                variant="outlined"
+                type="time"
+                size="small"
+                defaultValue="00:00"
+                onChange={(e) => setTime(e.target.value)}
+              />
+            </FormGroup>
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
@@ -149,45 +151,44 @@ export default function TableTreatment() {
               <FormLabel className={classes.title}>หมายเหตุ</FormLabel>
             </FormGroup>
             <TextareaAutosize
-            aria-label="minimum height"
-            rowsMin={3}
-            className={classes.textField}
-            className="textField-w"
-          />
+              aria-label="minimum height"
+              rowsMin={3}
+              className={classes.textField}
+              className="textField-w"
+            />
           </Grid>
         </Grid>
-  <Paper>
-  <div className="row">
-          <div className="pad-l-20">ยา</div>
-          <div className="col">
-            <hr />
+        <Paper>
+          <div className="row">
+            <div className="pad-l-20">ยา</div>
+            <div className="col">
+              <hr />
+            </div>
           </div>
-        </div>
-        
-        <div className="container-fluid text-center">
-        <div className={classes.marTextField}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: "250px", margin: "10px", outline: "none" }}
-          >
-            บันทึก
-          </Button>
 
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            style={{ width: "250px", margin: "10px", outline: "none" }}
-          >
-            ยกเลิก
-          </Button>
-        </div>{" "}
-      </div>
-  </Paper>
+          <div className="container-fluid text-center">
+            <div className={classes.marTextField}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                style={{ width: "250px", margin: "10px", outline: "none" }}
+              >
+                บันทึก
+              </Button>
+
+              <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                style={{ width: "250px", margin: "10px", outline: "none" }}
+              >
+                ยกเลิก
+              </Button>
+            </div>{" "}
+          </div>
+        </Paper>
       </Paper>
-      
     </div>
   );
 }
