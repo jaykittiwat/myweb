@@ -1,6 +1,6 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-//import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid'
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -11,6 +11,8 @@ import Select from "@material-ui/core/Select";
 import { FormControl } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,141 +30,164 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableTreatment() {
   const classes = useStyles();
+  const [time, setTime] =("");
+ 
   return (
     <div className="container">
       <Paper elevation={1}>
         <div className="text-header-treat martop-10">บันทึกการรักษา</div>
-        <FormControl
-          className={classes.root}
-          size="small"
-          style={{ width: "85%" }}
-        >
-          <FormLabel className={classes.title}>ประเภทโค</FormLabel>
-          <Select variant="outlined" native className={classes.textField}>
-            <option value=" ">เลือก</option>
-            <option>Ten</option>
-            <option>Twenty</option>
-            <option>Thirty</option>
-          </Select>
-        </FormControl>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>หมายเลขโค</FormLabel>
-          <TextField
-            id="input2"
-            variant="outlined"
-            placeholder="กรอกหมายเลขโค"
-            size="small"
+        
+        <Grid container spacing={3} className="pad-10">
+          <Grid item xs={6}>
+          <FormGroup>
+              <FormLabel className={classes.title}>ประเภทโค</FormLabel>
+              <FormControl className={classes.formControl} size="small">
+                <Select
+                  variant="outlined"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                >
+                  <MenuItem value="A">A</MenuItem>
+                  <MenuItem value="B">B</MenuItem>
+                  <MenuItem value="C">C</MenuItem>
+                </Select>
+              </FormControl>
+            </FormGroup>
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>หมายเลขโค</FormLabel>
+            </FormGroup>
+            <TextField
+              variant="outlined"
+              className="textField-w"
+              placeholder="กรอกหมายเลขโค"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>อาการ</FormLabel>
+            </FormGroup>
+            <TextareaAutosize
+            aria-label="minimum height"
+            rowsMin={3}
             className={classes.textField}
+            className="textField-w"
           />
-        </FormGroup>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>อาการ</FormLabel>
-          <TextField
-            id="input3"
-            variant="outlined"
-            placeholder="กรอกหมายอาการ"
-            size="small"
-            className={classes.textField}
-          />
-        </FormGroup>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>ประเภทการรักษา</FormLabel>
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>ประเภทการรักษา</FormLabel>
+            </FormGroup>
+            <TextField
+              variant="outlined"
+              className="textField-w"
+              placeholder="กรอกประเภทการรักษา"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>วันที่ตรวจ</FormLabel>
+            </FormGroup>
+            <TextField
+              type="date"
+              variant="outlined"
+              className="textField-w"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>วันที่ติดตามผลการรักษา</FormLabel>
+            </FormGroup>
+            <TextField
+              type="date"
+              variant="outlined"
+              className="textField-w"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+          <FormGroup className={classes.marTextField}>
+          <FormLabel className={classes.title}>เวลา</FormLabel>
           <TextField
             id="input4"
             variant="outlined"
-            placeholder="กรอกประเภทการรักษา"
+            type="time"
             size="small"
-            className={classes.textField}
+            defaultValue="00:00"
+            onChange={e => setTime(e.target.value)}
           />
         </FormGroup>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>วันที่</FormLabel>
-          <TextField
-            id="input5"
-            variant="outlined"
-            placeholder="กรอกวันที่"
-            size="small"
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>ผู้บันทึก</FormLabel>
+            </FormGroup>
+            <TextField
+              variant="outlined"
+              className="textField-w"
+              placeholder="กรอกชื่อผู้บันทึก"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>ชื่อโรค</FormLabel>
+            </FormGroup>
+            <TextField
+              variant="outlined"
+              className="textField-w"
+              placeholder="กรอกชื่อโรค"
+              size="small"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormLabel className={classes.title}>หมายเหตุ</FormLabel>
+            </FormGroup>
+            <TextareaAutosize
+            aria-label="minimum height"
+            rowsMin={3}
             className={classes.textField}
+            className="textField-w"
           />
-        </FormGroup>
-
-        <FormControl
-          className={classes.root}
-          size="small"
-          style={{ width: "85%" }}
-        >
-          <FormLabel className={classes.title}>ติดตามผลอีก</FormLabel>
-          <OutlinedInput
-            endAdornment={<InputAdornment position="end">วัน</InputAdornment>}
-            id="input6"
-            variant="outlined"
-            placeholder="กรอกจำนวนวันติดตามผล"
-            size="small"
-            className={classes.textField}
-          />
-        </FormControl>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>เวลา</FormLabel>
-          <TextField
-            id="input7"
-            variant="outlined"
-            placeholder="กรอกเวลา"
-            size="small"
-            className={classes.textField}
-          />
-        </FormGroup>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>ผู้บันทึก</FormLabel>
-          <TextField
-            id="input8"
-            variant="outlined"
-            placeholder="กรอกชื่อผู้บันทึก"
-            size="small"
-            className={classes.textField}
-          />
-        </FormGroup>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>ชื่อโรค</FormLabel>
-          <TextField
-            id="input9"
-            variant="outlined"
-            placeholder="กรอกชื่อโรค"
-            size="small"
-            className={classes.textField}
-          />
-        </FormGroup>
-
-        <FormGroup className={classes.root}>
-          <FormLabel className={classes.title}>หมายเหตุ</FormLabel>
-          <TextField
-            id="input10"
-            variant="outlined"
-            placeholder="กรอกหมายเหตุ"
-            size="small"
-            className={classes.textField}
-          />
-        </FormGroup>
-        <div className="container-fluid text-center">
-          <div className={classes.marTextField}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              style={{ width: "250px", margin: "10px", outline: "none" }}
-             // onClick={() => saveDataToInduction()}
-            >
-              บันทึก
-            </Button>
-          </div>{" "}
+          </Grid>
+        </Grid>
+  <Paper>
+  <div className="row">
+          <div className="pad-l-20">ยา</div>
+          <div className="col">
+            <hr />
+          </div>
         </div>
+        
+        <div className="container-fluid text-center">
+        <div className={classes.marTextField}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ width: "250px", margin: "10px", outline: "none" }}
+          >
+            บันทึก
+          </Button>
+
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            style={{ width: "250px", margin: "10px", outline: "none" }}
+          >
+            ยกเลิก
+          </Button>
+        </div>{" "}
+      </div>
+  </Paper>
       </Paper>
+      
     </div>
   );
 }
