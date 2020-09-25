@@ -14,29 +14,29 @@ import firebase from "../../backEnd/firebase";
 import axios from "axios";
 const startStatecalf = {
   name_cow: "", //ชื่อ
-        birth_chest_head_ratio: "", //รอบอกเกิด*
-        birth_date: "", //วันเกิด*
-        birth_weight: "", //น้ำหนักเกิด*
-        breed: "", //พันธุ์*
-        breed_method: "", //วิธีผสม*
-        breeder: "-", //เจ้าของ---
-        cattle_id: "", //เลขโค*
-        color: "", //สี*
-        bigcorral: "", //โณงเรือน
-        corral: "", //คอก*
-        dam_id: "", //id แม่*
-        herd_no: "", //ฝูง*
-        number_of_breeding: 0, //จำนวนการผสมพันธุ์*
-        owner: "-", //เจ้าของ//เซดเอง//ชื่อนามกสุลของUID--
-        process_date: "-", //น่าจะวันที่บีันทึก--
-        sex: "", //เพศ//BULLผู้/MISSเมีย*
-        sire_id: "", //id พ่อ*
-        status: " ", //สถานะ//ระบบเซต--
-        wean_weight: "-", //น้ำหนักล่าสุดsหลังอย่านม*
-        wean_chest_head_ratio: "", //รอบออกล่าสุดหลังอย่านม
-        wean_date: "", //วันอย่านม
-        year_hip_hight: "", //ความสูงสะโพก1ปี
-        year_weight: "" //น้ำหนักอายุ1ปี
+  birth_chest_head_ratio: "", //รอบอกเกิด*
+  birth_date: "", //วันเกิด*
+  birth_weight: "", //น้ำหนักเกิด*
+  breed: "", //พันธุ์*
+  breed_method: "", //วิธีผสม*
+  breeder: "", //เจ้าของ---
+  cattle_id: "", //เลขโค*
+  color: "", //สี*
+  bigcorral: "", //โณงเรือน
+  corral: "", //คอก*
+  dam_id: "", //id แม่*
+  herd_no: "", //ฝูง*
+  number_of_breeding: 0, //จำนวนการผสมพันธุ์*
+  owner: "", //เจ้าของ//เซดเอง//ชื่อนามกสุลของUID--
+  process_date: "", //น่าจะวันที่บีันทึก--
+  sex: "", //เพศ//BULLผู้/MISSเมีย*
+  sire_id: "", //id พ่อ*
+  status: " ", //สถานะ//ระบบเซต--
+  wean_weight: "", //น้ำหนักล่าสุดsหลังอย่านม*
+  wean_chest_head_ratio: "", //รอบออกล่าสุดหลังอย่านม
+  wean_date: "", //วันอย่านม
+  year_hip_hight: "", //ความสูงสะโพก1ปี
+  year_weight: "", //น้ำหนักอายุ1ปี
 };
 
 export default function FormRegiscalf(props) {
@@ -48,45 +48,55 @@ export default function FormRegiscalf(props) {
   ]);
   const [color, setColor] = React.useState([]);
   const [strian, setStrian] = React.useState([]);
+  const [bigcorral, setbigcorral] = React.useState([]);
+  const [corral, setcorral] = React.useState([]);
+  const [herd_no, setherd_no] = React.useState([]);
 
   React.useEffect(() => {
     setUID(props.posts.UID);
     setColor(props.posts.color);
     setStrian(props.posts.strian);
+    setbigcorral(props.posts.bigcorral)
+    setcorral(props.posts.corral)
+    setherd_no(props.posts.herd_no)
   }, [props]);
 
   const onDrop = (pictureFile, pictureDataURLs) => {
-    
     setpictures(pictureFile);
     setpicturesURL(pictureDataURLs);
+   
   };
   const saveDataCalfToDatabase = () => {
-    if(pictures===[]){ axios.post(
-      "http://localhost:4000/user/calf/registorCalf/" + UID,
-      dataCattle
-    ).then(()=>{
-      alert("บันทึกสำเร็จ")
-    }).then(()=>{
-      setDataCattle(startStatecalf)
-    })}
-    if(pictures!==[]){
-      firebase
-      .storage()
-      .ref("Photo/" + UID + "/pedigree/")
-      .child(dataCattle.birth_id)
-      .put(pictures[0])
-      .then(() => {
-        axios.post(
-          "http://localhost:4000/user/calf/registorCalf/" + UID,
-          dataCattle
-        );
-      }).then(()=>{
-        alert("บันทึกสำเร็จ")
-      }).then(()=>{
-        setDataCattle(startStatecalf)
-      })
+    console.log(dataCattle);
+    if (pictures === []) {
+      axios
+        .post("http://localhost:4000/user/calf/registorCalf/" + UID, dataCattle)
+        .then(() => {
+          alert("บันทึกสำเร็จ");
+        })
+        .then(() => {
+          setDataCattle(startStatecalf);
+        });
     }
-    
+    if (pictures !== []) {
+      firebase
+        .storage()
+        .ref("Photo/" + UID + "/pedigree/")
+        .child(dataCattle.cattle_id)
+        .put(pictures[0])
+        .then(() => {
+          axios.post(
+            "http://localhost:4000/user/calf/registorCalf/" + UID,
+            dataCattle
+          );
+        })
+        .then(() => {
+          alert("บันทึกสำเร็จ");
+        })
+        .then(() => {
+          setDataCattle(startStatecalf);
+        });
+    }
   };
 
   return (
@@ -106,60 +116,63 @@ export default function FormRegiscalf(props) {
         <FormLabel style={{ color: "#000", marginTop: "20px" }}>
           ชื่อโค
         </FormLabel>
-        <TextField
-          value={dataCattle.name_cattle}
-          variant="outlined"
-          placeholder="กรอกชื่อโค"
-          size="small"
-          onChange={(e) =>
-            setDataCattle({ ...dataCattle, name_cattle: e.target.value })
-          }
+        <TextField 
+        value={dataCattle.name_cow}
+        variant="outlined" 
+        placeholder="กรอกชื่อโค" 
+        size="small"  
+        onChange={(e) =>setDataCattle({ ...dataCattle, name_cow: e.target.value }) }
         />
       </FormGroup>
+
       <FormGroup>
         <FormLabel style={{ color: "#000", marginTop: "20px" }}>
-          หมายเลขโค
+          หมายเลขประจำตัวสัตว์ เช่น(์NID/RFID/Microchip/เบอร์หู)
+          ห้ามใช้เครื่องหมาย ' / '
         </FormLabel>
         <TextField
-          onChange={(e) =>
-            setDataCattle({ ...dataCattle, birth_id: e.target.value })
-          }
-          value={dataCattle.birth_id}
+        value={dataCattle.cattle_id}
           variant="outlined"
           placeholder="กรอกหมายเลขโค"
           size="small"
+          onChange={(e) =>setDataCattle({ ...dataCattle, cattle_id: e.target.value.replace(/[/]/gi, ' ') }) }
         />
       </FormGroup>
+
       <FormGroup>
         <FormControl size="small" style={{ minWidth: "95%" }}>
           <FormLabel style={{ color: "#000", marginTop: "20px" }}>
             เพศ
           </FormLabel>
-          <Select
-            value={dataCattle.sex}
-            variant="outlined"
-            native
-            onChange={(e) => setDataCattle({ ...dataCattle, sex: e.target.value })}
-          >
+       
+          <Select value={dataCattle.sex} variant="outlined" native   onChange={(e) =>setDataCattle({ ...dataCattle, sex: e.target.value }) } >
             <option value="">เลือก</option>
             <option value="BULL">ผู้</option>
             <option value="MISS">เมีย</option>
           </Select>
         </FormControl>
       </FormGroup>
+
+      <FormGroup>
+        <FormControl size="small" style={{ minWidth: "95%" }}>
+          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+            วิธีผสม
+          </FormLabel>
+          <Select variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle,  breed_method: e.target.value }) }>
+            <option value="ไม่ระบุ">เลือก </option>
+            <option value="AI">น้ำเชื้อ</option>
+            <option value="NT">พ่อพันธุ์</option>
+            <option>ฝากถ่าย</option>
+          </Select>
+        </FormControl>
+      </FormGroup>
+
       <FormGroup>
         <FormControl size="small" style={{ minWidth: "95%" }}>
           <FormLabel style={{ color: "#000", marginTop: "20px" }}>
             สี{" "}
           </FormLabel>
-          <Select
-            value={dataCattle.color}
-            variant="outlined"
-            native
-            onChange={(e) =>
-              setDataCattle({ ...dataCattle, color: e.target.value })
-            }
-          >
+          <Select value={dataCattle.color} variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle,  color: e.target.value }) } >
             <option value="">เลือก</option>
             {color.map((item, index) => (
               <option key={index}>{item.color}</option>
@@ -170,19 +183,13 @@ export default function FormRegiscalf(props) {
           </FormHelperText>
         </FormControl>
       </FormGroup>
+
       <FormGroup>
         <FormControl size="small" style={{ minWidth: "95%" }}>
           <FormLabel style={{ color: "#000", marginTop: "20px" }}>
             สายพันธุ์
           </FormLabel>
-          <Select
-            value={dataCattle.breed}
-            variant="outlined"
-            native
-            onChange={(e) =>
-              setDataCattle({ ...dataCattle, breed: e.target.value })
-            }
-          >
+          <Select variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle,  breed: e.target.value }) }>
             <option value="">เลือก</option>
             {strian.map((item, index) => (
               <option key={index}>{item.strian}</option>
@@ -193,41 +200,189 @@ export default function FormRegiscalf(props) {
           </FormHelperText>
         </FormControl>
       </FormGroup>
+
+      <FormGroup>
+        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+          วันที่เกิด
+        </FormLabel>
+        <TextField
+        type="date"
+          variant="outlined"
+          size="small"
+          onChange={(e) =>setDataCattle({ ...dataCattle,   birth_date: e.target.value }) }
+        />
+      </FormGroup>
+
       <FormGroup>
         <FormLabel style={{ color: "#000", marginTop: "20px" }}>
           พ่อพันธุ์
         </FormLabel>
         <TextField
-          onChange={(e) => setDataCattle({ ...dataCattle, sir_id: e.target.value })}
-          value={dataCattle.sir_id}
+        value={dataCattle.sire_id}
+        onChange={(e) =>setDataCattle({ ...dataCattle, sire_id: e.target.value }) }
           variant="outlined"
           placeholder="กรอกหมายเลขโค"
           size="small"
         />
       </FormGroup>
+
       <FormGroup>
         <FormLabel style={{ color: "#000", marginTop: "20px" }}>
           แม่พันธุ์
         </FormLabel>
         <TextField
-          onChange={(e) => setDataCattle({ ...dataCattle, dam_id: e.target.value })}
-          value={dataCattle.dam_id}
+         value={dataCattle.dam_id}
+         onChange={(e) =>setDataCattle({ ...dataCattle, dam_id: e.target.value }) }
           variant="outlined"
           placeholder="กรอกหมายเลขโค"
           size="small"
         />
       </FormGroup>
+
       <FormGroup>
         <FormLabel style={{ color: "#000", marginTop: "20px" }}>
-          น้ำหนักตอนเกิด
+        ชื่อผู้ผสมพันธุ์
         </FormLabel>
         <TextField
-          onChange={(e) => setDataCattle({ ...dataCattle, birth_weight: e.target.value })}
-          value={dataCattle.birth_weight}
+        value={dataCattle.breeder}
+        onChange={(e) =>setDataCattle({ ...dataCattle, breeder: e.target.value }) }
+          variant="outlined"
+          placeholder="กรอกชื่อ"
+          size="small"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        น้ำหนักอย่านม (กก.)
+        </FormLabel>
+        <TextField
+          value={dataCattle.wean_weight}
+          onChange={(e) =>setDataCattle({ ...dataCattle, wean_weight: e.target.value }) }
           variant="outlined"
           placeholder="กรอกน้ำหนัก"
           size="small"
         />
+      </FormGroup>
+
+      <FormGroup>
+        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        น้ำหนักอายุ 1ปี (กก.)
+        </FormLabel>
+        <TextField
+          onChange={(e) =>setDataCattle({ ...dataCattle,year_weight: e.target.value }) }
+          value={dataCattle.year_weight}
+          variant="outlined"
+          placeholder="กรอกน้ำหนัก"
+          size="small"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        ความสูงโพก 1ปี (ซม.)
+        </FormLabel>
+        <TextField
+        onChange={(e) =>setDataCattle({ ...dataCattle,year_hip_hight: e.target.value }) }
+        value={dataCattle.year_hip_hight}
+          variant="outlined"
+          placeholder="กรอกความสูง"
+          size="small"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        ขนาดรอบอกตอนเกิด (ซม.) 
+        </FormLabel>
+        <TextField
+           onChange={(e) =>setDataCattle({ ...dataCattle, birth_chest_head_ratio: e.target.value }) }
+           value={dataCattle.birth_chest_head_ratio}
+          variant="outlined"
+          placeholder="กรอกขนาด"
+          size="small"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        ขนาดรอบอกหลังอย่านม (ซม.)
+        </FormLabel>
+        <TextField
+         onChange={(e) =>setDataCattle({ ...dataCattle, wean_chest_head_ratio: e.target.value }) }
+         value={dataCattle.wean_chest_head_ratio}
+          variant="outlined"
+          placeholder="กรอกขนาด"
+          size="small"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+          วันที่หย่านม
+        </FormLabel>
+        <TextField
+        onChange={(e) =>setDataCattle({ ...dataCattle, wean_date: e.target.value }) }
+        value={dataCattle.wean_date}
+          type="date"
+          variant="outlined"
+          size="small"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <FormControl size="small" style={{ minWidth: "95%" }}>
+          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+            โรงเรือน
+          </FormLabel>
+          <Select variant="outlined" native    
+          onChange={(e) =>setDataCattle({ ...dataCattle, bigcorral: e.target.value }) }
+        value={dataCattle.bigcorral}>
+            <option value="">เลือก</option>
+            {bigcorral.map((item, index) => (
+              <option key={index}>{item.bigcorral}</option>
+            ))}
+          </Select>
+          <FormHelperText>
+            หมายเหตุ:ตั้งค่าสายโรงเรือน ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
+          </FormHelperText>
+        </FormControl>
+      </FormGroup>
+
+      <FormGroup>
+        <FormControl size="small" style={{ minWidth: "95%" }}>
+          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+            คอก
+          </FormLabel>
+          <Select variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle, corral: e.target.value }) }
+        value={dataCattle.corral}>
+            <option value="">เลือก</option>
+            {corral.map((item, index) => (
+              <option key={index}>{item.corral}</option>
+            ))}
+          </Select>
+          <FormHelperText>
+            หมายเหตุ:ตั้งค่าคอก ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
+          </FormHelperText>
+        </FormControl>
+      </FormGroup>
+
+      <FormGroup>
+        <FormControl size="small" style={{ minWidth: "95%" }}>
+          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+            ฝูง
+          </FormLabel>
+          <Select variant="outlined"  native onChange={(e) =>setDataCattle({ ...dataCattle, herd_no: e.target.value }) }
+        value={dataCattle.herd_no}>
+            <option value="">เลือก</option>
+            {herd_no.map((item, index) => (
+              <option key={index}>{item.herd_num}</option>
+            ))}
+          </Select>
+          <FormHelperText>
+            หมายเหตุ:ตั้งค่าฝูง ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
+          </FormHelperText>
+        </FormControl>
       </FormGroup>
       <Paper
         style={{ width: "100%", textAlign: "center", marginTop: "20px" }}

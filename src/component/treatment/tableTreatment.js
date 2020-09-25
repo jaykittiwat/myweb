@@ -9,16 +9,9 @@ import "./styleTreatment.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import { FormControl } from "@material-ui/core";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import MenuItem from "@material-ui/core/MenuItem";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,21 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(name, name2, volume, pdate, edate, amount) {
-  return { name, name2, volume, pdate, edate, amount };
-}
 
-const rows = [
-  createData("บิวตาซิว", "บิวตาซิว", 140, "2009/05/06", "2019/12/06", 1),
-  createData(
-    "Isoproply Alcohol",
-    "แอลกอฮอล์ล้างแผล",
-    500,
-    "2020/08/30",
-    "2021/08/30",
-    1
-  ),
-];
 
 export default function TableTreatment() {
   const classes = useStyles();
@@ -98,7 +77,7 @@ export default function TableTreatment() {
               aria-label="minimum height"
               rowsMin={3}
               className={classes.textField}
-              className="textField-w"
+       
             />
           </Grid>
           <Grid item xs={6}>
@@ -179,106 +158,12 @@ export default function TableTreatment() {
               aria-label="minimum height"
               rowsMin={3}
               className={classes.textField}
-              className="textField-w"
+
             />
           </Grid>
         </Grid>
         <Paper>
-          <div className="row">
-            <div className="pad-l-20">ยา</div>
-            <div className="col">
-              <hr />
-            </div>
-          </div>
-
-          <TableContainer
-            component={Paper}
-            style={{ width: "98%", margin: "10px" }}
-          >
-            <Table className={classes.table} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <h6>
-                      <b>ชื่อยา</b>
-                    </h6>
-                  </TableCell>
-                  <TableCell align="right">
-                    <h6>
-                      <b>ชื่อสามัญ</b>
-                    </h6>
-                  </TableCell>
-                  <TableCell align="right">
-                    <h6>
-                      <b>ปริมาณยา(มิลลิลิตร)</b>
-                    </h6>
-                  </TableCell>
-                  <TableCell align="right">
-                    <h6>
-                      <b>วันที่ผลิต</b>
-                    </h6>
-                  </TableCell>
-                  <TableCell align="right">
-                    <h6>
-                      <b>วันหมดอายุ</b>
-                    </h6>
-                  </TableCell>
-                  <TableCell align="right">
-                    <h6>
-                      <b>จำนวน</b>
-                    </h6>
-                  </TableCell>
-                  <TableCell align="center">
-                    <h6>
-                      <b>ลบ</b>
-                    </h6>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.name2}</TableCell>
-                    <TableCell align="right">{row.volume}</TableCell>
-                    <TableCell align="right">{row.pdate}</TableCell>
-                    <TableCell align="right">{row.edate}</TableCell>
-                    <TableCell align="right">{row.amount}</TableCell>
-                    <TableCell align="center">
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        style={{
-                          outline: "none",
-                          height: "30px",
-                          width: "100px",
-                        }}
-                      >
-                        ลบ
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <div className="container-fluid text-center">
-              <Button
-                variant="outlined"
-                color="primary"
-                style={{
-                  outline: "none",
-                  height: "30px",
-                  width: "100px",
-                  margin: "10px",
-                }}
-              >
-                เพิ่ม
-              </Button>
-            </div>
-          </TableContainer>
-
+        
           <div className="container-fluid text-center">
             <div className={classes.marTextField}>
               <Button

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import HeaderLogin from "./../../HeaderLogin";
-import NavbarLogin from "./../../demo";
+import HeaderLogin from "../../HeaderLogin";
+import NavbarLogin from "../../demo";
 import FromRegiscow from "./FormRegiscattle";
 class Header extends Component {
   render() {

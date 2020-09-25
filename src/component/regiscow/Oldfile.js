@@ -190,18 +190,7 @@ class FormRegiscow extends Component {
                     onChange={event => this.saveData(event)}
                   />
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>ประเภทโค</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="CowCalf"
-                    onChange={event => this.saveDataCowOrCalf(event)}
-                  >
-                    <option value="">เลือก</option>
-                    <option value="cow">โค</option>
-                    <option value="calf">ลูกโค</option>
-                  </Form.Control>
-                </Form.Group>
+               
                 <Form.Group>
                   <Form.Label>เพศ</Form.Label>
                   <Form.Control

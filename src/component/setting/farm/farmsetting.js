@@ -81,6 +81,7 @@ class Paperfarm extends Component {
           <NavbarLogin />
         </div>
         <PaperFarm posts={this.state} />
+        <div className="row mar"></div>
         <Footerversion/>
       </div>
     );

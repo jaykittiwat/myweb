@@ -223,7 +223,7 @@ export default function PaperDrug(props) {
       item: ""
     }
   ]);
-  const [pro_maintain, setpro_maintain] = useState([]);
+
   const addtable = event => {
     setMedic([
       ...medic,

@@ -12,7 +12,10 @@ class Header extends Component {
       UID: "",
       loading:false,
       color:[],
-      strian:[]
+      strian:[],
+      bigcorral:[],
+      corral:[],
+      herd_no:[]
     };
   }
   componentDidMount(){
@@ -27,9 +30,14 @@ class Header extends Component {
             this.setState({...this.state,color:res.data[1] });
           }).then(()=>{
             axios.get("http://localhost:4000/settingstrian/strian/"+this.state.UID).then(res=>{
-              this.setState({...this.state,strian:res.data[1],loading:false });
-            }).then(()=>{
-              console.log(this.state);
+              this.setState({...this.state,strian:res.data[1]});
+            }).then(async ()=>{
+              const bc=await axios.get("http://localhost:4000/settingbigcorral/bigcorral/"+this.state.UID)
+              const cr=await axios.get("http://localhost:4000/settingcorral/corral/"+this.state.UID)
+              const hn=await axios.get("http://localhost:4000/settingherd_num/herd_num/"+this.state.UID)
+              
+              this.setState({...this.state,bigcorral:bc.data[1],corral:cr.data[1],herd_no:hn.data[1],loading:true})
+
             })
           })
         })

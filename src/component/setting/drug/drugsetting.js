@@ -77,6 +77,8 @@ class Paperdrug extends Component{
         <NavbarLogin />
       </div>
       <PaperDrug  posts={this.state}/>
+      <div className="row mar"></div>
+
       <Footerversion/>
     </div>
       
