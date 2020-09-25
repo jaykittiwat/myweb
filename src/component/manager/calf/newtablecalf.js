@@ -26,7 +26,7 @@ export default function TableClaf(props) {
         จัดการลูกโค
       </Paper>
       <Paper elevation={3} className={classes.table}>
-       <TableDetailclaf/>
+       <TableDetailclaf posts={props.posts}/>
       </Paper>
     </Paper>
   );

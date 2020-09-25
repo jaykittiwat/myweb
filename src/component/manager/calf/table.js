@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,7 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Creact from "@material-ui/icons/Create";
 import Save from "@material-ui/icons/Save";
-import { TextField } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import update from "immutability-helper";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,18 +20,7 @@ import PropTypes from "prop-types";
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 
-const setData = [
-  { name: "A", lastName: "1", Age: "10" },
-  { name: "B", lastName: "2", Age: "20" },
-  { name: "C", lastName: "3", Age: "30" },
-  { name: "A", lastName: "1", Age: "10" },
-  { name: "B", lastName: "2", Age: "20" },
-  { name: "C", lastName: "3", Age: "30" },
-  { name: "A", lastName: "1", Age: "10" },
-  { name: "B", lastName: "2", Age: "20" },
-  { name: "C", lastName: "3", Age: "30" },
-  { name: "D", lastName: "4", Age: "40" }
-];
+
 const useStyles1 = makeStyles(theme => ({
   root: {
     flexShrink: 0,
@@ -110,7 +99,8 @@ TablePaginationActions.propTypes = {
 
 
 
-export default function SimpleTable() {
+export default function SimpleTable(props) {
+  
   const [checkPage, setCheckPage] = React.useState(0);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -118,7 +108,6 @@ export default function SimpleTable() {
   const [indexRow, setIndexRow] = React.useState(-1);
   const Head = [
     { cell: "ชื่อแรกเกิด", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
-    { cell: "วันเกิด", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
     { cell: "เพศ", align: "left" },
     { cell: "สายพันธุ์", align: "left" },
     { cell: "พ่อ", align: "left" },
@@ -129,9 +118,13 @@ export default function SimpleTable() {
     { cell: "วันหย่านม", align: "left" },
     { cell: "กำหนดเลขโค", align: "left" },
     { cell: "หมายเหตุ", align: "left" },
-    { cell: "Action", align: "center" },
+    { cell: "แก้ไข", align: "center" },
   ];
-  const [rows, setRows] = React.useState(setData);
+  const [rows, setRows] = React.useState([]);
+  useEffect(() => {
+    setRows(props.posts.data)
+  //console.log(props.posts.data)
+  }, [props]);
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -157,8 +150,24 @@ export default function SimpleTable() {
     const v = event.target.value;
     const getToSet = rows;
     const calIndex = page * rowsPerPage + index;
-    const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v } } });
-    setRows(newSet);
+    if(key!=="date_horndetering"&&key!=="date_branding"&&key!=="date_wean"){
+      const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v } } });
+      setRows(newSet);
+    }
+    if(key==="date_horndetering"){
+      const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v },horndetering:{$set: true} } });
+      setRows(newSet);
+    }
+    if(key==="date_branding"){
+      const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v },branding:{$set: true} } });
+      setRows(newSet);
+    }
+    if(key==="date_wean"){
+      const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v },wean:{$set: true} } });
+      setRows(newSet);
+    }
+  
+    
   };
   return (
     <TableContainer component={Paper}>
@@ -179,47 +188,32 @@ export default function SimpleTable() {
           ).map((row, index) => (
             <TableRow key={index}>
               <TableCell  style={{fontSize:"16px"}}>
-                {row.name}
+                {row.name_cattle||""}
+              </TableCell>
+             
+              <TableCell style={{fontSize:"16px"}}>
+                {row.sex==='BULL'?"ผู้":'เมีย'}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
-               {row.lastName}
+              {row.breed||""}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
-                {row.Age}
+              {row.sire_id||""}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
-              {row.Age}
-              </TableCell>
-              <TableCell style={{fontSize:"16px"}}>
-              {row.Age}
-              </TableCell>
-              <TableCell style={{fontSize:"16px"}}>
-              {row.Age}
-              </TableCell>
-              <TableCell style={{fontSize:"16px"}}>
-                {startEdit && indexRow === index && page === checkPage  ? (
-                  <TextField
-                  type="date"
-                    style={{ width: "100%" }}
-                    id="Age"
-                    value={row.Age}
-                    onChange={event => SETVALUES(event, index)}
-                  ></TextField>
-                ) : (
-                  row.Age
-                )}
+              {row.dam_id||""}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
                 {startEdit && indexRow === index && page === checkPage  ? (
                   <TextField
                   type="date"
                     style={{ width: "100%" }}
-                    id="Age"
-                    value={row.Age}
+                    id="date_tatoo"
+                    value={row.date_tatoo||""}
                     onChange={event => SETVALUES(event, index)}
                   ></TextField>
                 ) : (
-                  row.Age
+                  row.date_tatoo||"ยังไม่ระบุ"
                 )}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
@@ -227,12 +221,12 @@ export default function SimpleTable() {
                   <TextField
                   type="date"
                     style={{ width: "100%" }}
-                    id="Age"
-                    value={row.Age}
+                    id="date_horndetering"
+                    value={row.date_horndetering||""}
                     onChange={event => SETVALUES(event, index)}
                   ></TextField>
                 ) : (
-                  row.Age
+                  row.horndetering?row.date_horndetering:"ยังไม่ระบุ"
                 )}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
@@ -240,36 +234,49 @@ export default function SimpleTable() {
                   <TextField
                   type="date"
                     style={{ width: "100%" }}
-                    id="Age"
-                    value={row.Age}
+                    id="date_branding"
+                    value={row.date_branding||""}
                     onChange={event => SETVALUES(event, index)}
                   ></TextField>
                 ) : (
-                  row.Age
+                  row.branding?row.date_branding:"ยังไม่ระบุ"
+                )}
+              </TableCell>
+              <TableCell style={{fontSize:"16px"}}>
+                {startEdit && indexRow === index && page === checkPage  ? (
+                  <TextField
+                  type="date"
+                    style={{ width: "100%" }}
+                    id="date_wean"
+                    value={row.date_wean||""}
+                    onChange={event => SETVALUES(event, index)}
+                  ></TextField>
+                ) : (
+                  row.wean?row.date_wean:"ยังไม่ระบุ"
                 )}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
                 {startEdit && indexRow === index && page === checkPage  ? (
                   <TextField
                     style={{ width: "100%" }}
-                    id="Age"
-                    value={row.Age}
+                    id="birth_id"
+                    value={row.birth_id}
                     onChange={event => SETVALUES(event, index)}
                   ></TextField>
                 ) : (
-                  row.Age
+                  row.birth_id===" "?"ยังไม่ระบุ":row.birth_id
                 )}
               </TableCell>
               <TableCell style={{fontSize:"16px"}}>
                 {startEdit && indexRow === index && page === checkPage  ? (
                   <TextField
                     style={{ width: "100%" }}
-                    id="Age"
-                    value={row.Age}
+                    id="note"
+                    value={row.note||""}
                     onChange={event => SETVALUES(event, index)}
                   ></TextField>
                 ) : (
-                  row.Age
+                  row.note||"ไม่มี"
                 )}
               </TableCell>
               <TableCell style={{ width: "200px" }} align="center">
@@ -291,7 +298,9 @@ export default function SimpleTable() {
           )}
         </TableBody>
         <TableFooter>
+       
           <TableRow>
+            
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={14}
@@ -309,6 +318,7 @@ export default function SimpleTable() {
           </TableRow>
         </TableFooter>
       </Table>
+      
     </TableContainer>
   );
 }

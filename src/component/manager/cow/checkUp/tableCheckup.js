@@ -102,7 +102,6 @@ export default function TableCheckUp(props) {
   };
 
   const setDateClave = () => {
-    // console.log(NotiDate)
     const dayClave = [];
     const dayClaveB7 = [];
     const dayClaveA7 = [];

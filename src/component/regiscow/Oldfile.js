@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import firebase from "./../../backEnd/firebase";
+import firebase from "../../backEnd/firebase";
 import { Form, Col } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
@@ -74,102 +74,19 @@ class FormRegiscow extends Component {
   }
   //กดปุ่มเซฟข้อมูลลงดาต้าเบส
   saveDataCowTodatabase() {
-    const x = Object.values(this.state.data).includes("");
-
-    if (x !== true) {
-      //set time of process_dare:""
-      let date = new Date();
-      let dd = date.getDay();
-      let mm = date.getMonth() + 1;
-      let yyyy = date.getFullYear();
-      if (mm < 10) {
-        mm = "0" + mm;
-      }
-      if (dd < 10) {
-        dd = "0" + dd;
-      }
-      let today = yyyy + "-" + mm + "-" + dd;
-      //ร้องขอมูลuser
-      axios
-        .get("http://localhost:4000/user/logIn/" + this.state.currentUser)
-        .then(res => {
-          this.setState(prevstate => ({
-            //get data user json form firebase
-
-            UID: res.data[0].user,
-            currentUser: prevstate.currentUser,
-            data: {
-              ...prevstate.data,
-              owner: res.data[0].fname + " " + res.data[0].lname, //ต้องเซตเป็นชื่องเจ้าของฟาร์ม
-              process_date: today
-            },
-            category: prevstate.category,
-            selectedFile: prevstate.selectedFile,
-            imagePreviewUrl: prevstate.imagePreviewUrl
-          }));
-          return res;
-        })
-        .then(res => {
-          const sentDataCow = this.state.data; //ส่งข้อมูลไปถ้าเป็นแม่โค
+   
 
           firebase
             .storage()
-            .ref("Photo/" + this.state.UID + "/pedigree/")
-            .child(this.state.data.cattle_id)
+            .ref("Photo/" + "Usertest01"+ "/pedigree/")
+            .child("Hello")
             .put(this.state.selectedFile)
             .then(res => {
-              //Photo/ชื่อid/ชื่อไฟร์
+              console.log(this.state.selectedFile)
             });
-          //ของแม่โค
-          const check = this.state.category;
-          //ถ้าเป็นแม่โค
-          if (check === "cow") {
-            axios
-              .post(
-                "http://localhost:4000/user/cow/registor/" + res.data[0].user,
-                sentDataCow
-              )
-              .then(res => {
-                alert("ลงทะเบียนโคสำเร็จ");
-                window.location.reload(false);
-              })
-              .catch(err => {
-                alert("เกิดข้อผิดพลาดกับระบบ");
-              });
-          }
-          //ถ้าเป็นลูกโค
-         if(check==="calf") {
-            axios
-              .post(
-                "http://localhost:4000/user/calf/registorCalf/" + res.data[0].user,
-                {
-                  birth_id:" ",
-                  birth_weight:this.state.data.birth_weight,
-                  branding:false,
-                  breed:this.state.data.breed,
-                  color:this.state.data.color,
-                  dam_id:this.state.data.dam_id,
-                  horndetering: false,
-                  name_cattle:this.state.data.cattle_id,
-                  sex: this.state.data.sex,
-                  sire_id:this.state.data.sire_id,
-                  wean: false
-                }
-              )
-              .then(res => {
-                alert("ลงทะเบียนโคสำเร็จ");
-                window.location.reload(false);
-              })
-              .catch(err => {
-                alert("เกิดข้อผิดพลาดกับระบบ");
-              });
-          }
-        });
-    } else {
-      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-    }
+         
   }
-  //เมื่อรูปเข้ามา
+  
   fileChangedHandler = event => {
     const nameImge = event.target.files[0];
     this.setState(prestate => ({
@@ -498,9 +415,9 @@ class FormRegiscow extends Component {
                   >
                     ตกลง
                   </Button>{" "}
-                  <Link to="/login">
+               
                     <Button
-                    
+                    onClick={()=>console.log(this.state.imagePreviewUrl)}
                       variant="contained"
                       color="secondary"
                       className="button-w2"
@@ -508,7 +425,7 @@ class FormRegiscow extends Component {
                     >
                       ยกเลิก
                     </Button>
-                  </Link>
+                
                 </Form.Group>
               </div>
             </div>

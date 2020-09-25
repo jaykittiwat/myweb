@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Monitor from './Monitor';
 import {BrowserRouter,Route,Switch} from "react-router-dom";
-//import Loginpage from './component/Login/Loginpage';
 import Registor from './component/Login/registor';
 import Registor2 from './component/Login/registor2';
 import login from "./component/Login/login";
-import regiscow from './component/regiscow/regiscow';
+import regiscattle from './component/regiscow/regiscattle';
+import regiscalf from './component/regiscow/regiscalf';
 import fatten from "./component/manager/cow/fatter/fatten";
 import induction from "./component/manager/cow/induction/induction";
 import breed from "./component/manager/cow/breed/breed";
@@ -34,7 +34,8 @@ class App extends Component{
         <Route path="/login" component={login}/>
         <Route path="/registor" component={Registor}/>
         <Route path="/registor2" component={Registor2}/>
-        <Route path="/regiscow" component={regiscow}/>
+        <Route path="/regiscattle" component={regiscattle}/>
+        <Route path="/regiscalf" component={regiscalf}/>
         <Route path="/fatten" component={fatten}/>
         <Route path="/induction" component={induction}/>
         <Route path="/breed" component={breed}/>

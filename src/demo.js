@@ -6,9 +6,7 @@ import { Grid } from "@material-ui/core";
 import { B1, B2, B3, B4, B5, B6, B7, B8, B9 } from "./buttonNav";
 import axios from 'axios'
 import firebase from "./backEnd/firebase"
-import Avatar from "@material-ui/core/Avatar";
-import Signout from './Signout'
-
+import Signout from './signout'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1
@@ -53,6 +51,7 @@ export default function ButtonAppBar() {
         <Toolbar>
           <Grid container>
             <Grid item xs={"auto"} >
+           
               <B1 />
             </Grid>
             <Grid item xs={"auto"} >
@@ -80,9 +79,7 @@ export default function ButtonAppBar() {
               <B9 />
             </Grid>
           </Grid>
-          <Avatar style={{backgroundColor:"#ff5722"}}>{currentUser.substring(0,1)}</Avatar> 
-          {currentUser}
-          <Signout/>
+          <Signout currentUser={currentUser}/>
         </Toolbar>
       </AppBar>
     </div>

@@ -13,7 +13,16 @@ class Notification extends Component {
       loading: false,
       UID: "",
       data:[],
-      keyData:[]
+      datatatoo:[],
+      databranding:[],
+      datadishorn:[],
+      datawean:[],
+      keyData:[],
+      keytatoo:[],
+      keybranding:[],
+      keydishorn:[],
+      keywean:[],
+
          };
   }
   componentDidMount() {
@@ -30,8 +39,6 @@ class Notification extends Component {
           axios
         .get("http://localhost:4000/calf/calfshowAll/" + UID).then(res=>{
           this.setState({...this.state,data:res.data[1],keyData:res.data[0],loading:true})
-        }).then(()=>{
-          console.log(this.state);
         })
         })
       }
@@ -46,7 +53,7 @@ class Notification extends Component {
         <div className="row Nav-shadow posi ">
           <NavbarLogin />
         </div>
-        <Tablecalf />
+        <Tablecalf posts={this.state}/>
         <Footerversion/>
       </div>
     );
