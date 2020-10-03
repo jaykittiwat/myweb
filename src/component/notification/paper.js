@@ -13,6 +13,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
 import Demo from "./democalen";
 import { Grid } from "@material-ui/core";
+import {setPicker} from './setDatePicker'
 const StyledTableRow = withStyles(theme => ({
   root: {
     "&:nth-of-type(odd)": {
@@ -65,7 +66,9 @@ export default function PaperNotificaion(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
   const [rows, setRows] = React.useState([]);
+  const [dateGen,setDateGen]= React.useState([]);
   React.useEffect(() => {
+   setDateGen(setPicker(props.posts.dataNoti))
     setRows(props.posts.dataNoti[0] === "No" ? [] : props.posts.dataNoti); //<<<------------------กลับมาเชคอีกรอบ------------------<<<
   }, [props]);
   const handleChangePage = (event, newPage) => {
@@ -106,6 +109,13 @@ export default function PaperNotificaion(props) {
       history.push("/calfmanage");
     }*/
   };
+  const formatDate = (date)=>{
+    const newDate=new Date(date)
+    const Day=newDate.getDate()
+    const Mounth =newDate.getMonth()+1
+    const Years=newDate.getFullYear()
+    return(Day+"/"+Mounth+"/"+Years)
+  }
   if (loading) {
     return (
       <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
@@ -117,16 +127,13 @@ export default function PaperNotificaion(props) {
 
   return (
     <div className="container-fluid">
-      <Grid container spacing={10}>
+      <Grid container spacing={5}>
         {" "}
-        <Grid item md={5} xs={12}>
-          {" "}
-          <Demo />
-        </Grid>
-        <Grid item md={7} xs={12}>
+        
+        <Grid item md={9} xs={12}>
           <Paper className={classes.root} square>
             <div className={classes.headerClave}>
-              ตารางดำเนินงานทั้งหมด(วันนี้)
+              ตารางดำเนินงานวันนี้
             </div>
             <TableContainer className={classes.container}>
               <Table stickyHeader aria-label="sticky table">
@@ -156,16 +163,17 @@ export default function PaperNotificaion(props) {
                             {index + 1}{" "}
                           </TableCell>
                           <TableCell
+                          
                             align="center"
                             style={{ fontSize: "16px" }}
                           >
-                            {row.date}{" "}
+                           {formatDate(row.date)}
                           </TableCell>
                           <TableCell
                             align="center"
                             style={{ fontSize: "16px" }}
                           >
-                            {row.id_cattle}{" "}
+                            {  row.id_cattle}{" "}
                           </TableCell>
                           <TableCell
                             align="center"
@@ -198,6 +206,11 @@ export default function PaperNotificaion(props) {
               onChangeRowsPerPage={handleChangeRowsPerPage}
             />
           </Paper>
+        </Grid>
+        <Grid item md={3} xs={12} >
+          {" "}
+           <Demo Data={dateGen} />
+         
         </Grid>
       </Grid>
 

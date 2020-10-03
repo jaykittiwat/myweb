@@ -43,37 +43,131 @@ export default function FormRegiscalf(props) {
   }, [props]);
 
   const onDrop = (pictureFile, pictureDataURLs) => {
-    
     setpictures(pictureFile);
     setpicturesURL(pictureDataURLs);
   };
   const saveDataCalfToDatabase = () => {
-    if(pictures===[]){ axios.post(
-      "http://localhost:4000/user/calf/registorCalf/" + UID,
-      dataCalf
-    ).then(()=>{
-      alert("บันทึกสำเร็จ")
-    }).then(()=>{
-      setDataCalf(startStatecalf)
-    })}
-    if(pictures!==[]){
-      firebase
-      .storage()
-      .ref("Photo/" + UID + "/pedigree/")
-      .child(dataCalf.birth_id)
-      .put(pictures[0])
-      .then(() => {
-        axios.post(
-          "http://localhost:4000/user/calf/registorCalf/" + UID,
-          dataCalf
-        );
-      }).then(()=>{
-        alert("บันทึกสำเร็จ")
-      }).then(()=>{
-        setDataCalf(startStatecalf)
-      })
+    if (pictures === []) {
+      axios
+        .post("http://localhost:4000/user/calf/registorCalf/" + UID, dataCalf)
+        .then(() => {
+          const setBranding = {
+            birth_id: "",
+            dam_id: "",
+            datebran: "",
+            note: "",
+            operator: "",
+            recoder: "",
+            wid: "",
+          };
+          axios
+            .post("http://localhost:4000/branding/" + UID, setBranding)
+            .then(() => {
+              const setHorndetering = {
+                birth_id: "",
+                dam_id: "",
+                datedishorn: "",
+                method: "",
+                note: "",
+                operator: "",
+                recoder: "",
+              };
+              axios
+                .post("http://localhost:4000/dishorn/" + UID, setHorndetering)
+                .then(() => {
+                 
+                  const setWean = {
+                    birth_id: "",
+                    dam_id: "",
+                    datewean: "",
+                    note: "",
+                    operator: "",
+                    recoder: "",
+                    wean_chest_head_ratio: "",
+                    wean_hip_hight: "",
+                    weanweight: "",
+                  }
+                  axios
+                    .post("http://localhost:4000/wean/" + UID, setWean)
+                    .then(() => {
+                      setDataCalf(startStatecalf);
+                    })
+                    .then(() => {
+                      alert("บันทึกสำเร็จ");
+                    })
+                    .then(() => {
+                      setpictures([]);
+                      setpicturesURL(["https://www.flaticon.com/svg/static/icons/svg/685/685686.svg",]);
+                      setDataCalf(startStatecalf);
+                    });
+                });
+            });
+        });
     }
-    
+    if (pictures !== []) {
+      firebase
+        .storage()
+        .ref("Photo/" + UID + "/pedigree/")
+        .child(dataCalf.birth_id)
+        .put(pictures[0])
+        .then(() => {
+          axios.post(
+            "http://localhost:4000/user/calf/registorCalf/" + UID,dataCalf
+          ).then(() => {
+            const setBranding = {
+              birth_id: "",
+              dam_id: "",
+              datebran: "",
+              note: "",
+              operator: "",
+              recoder: "",
+              wid: "",
+            };
+            axios
+              .post("http://localhost:4000/branding/" + UID, setBranding)
+              .then(() => {
+                const setHorndetering = {
+                  birth_id: "",
+                  dam_id: "",
+                  datedishorn: "",
+                  method: "",
+                  note: "",
+                  operator: "",
+                  recoder: "",
+                };
+                axios
+                  .post("http://localhost:4000/dishorn/" + UID, setHorndetering)
+                  .then(() => {
+                    const setWean = {
+                      birth_id: "",
+                      dam_id: "",
+                      datewean: "",
+                      note: "",
+                      operator: "",
+                      recoder: "",
+                      wean_chest_head_ratio: "",
+                      wean_hip_hight: "",
+                      weanweight: "",
+                    };
+                    axios
+                      .post("http://localhost:4000/wean/" + UID, setWean)
+                      .then(() => {
+                        setDataCalf(startStatecalf);
+                      })
+                      .then(() => {
+                        alert("บันทึกสำเร็จ");
+                      })
+                      .then(() => {
+                        setpictures([]);
+                        setpicturesURL(["https://www.flaticon.com/svg/static/icons/svg/685/685686.svg",]);
+                        setDataCalf(startStatecalf);
+                      });
+                  });
+              });
+          });
+        })
+        
+    }
   };
 
   return (
@@ -185,8 +279,10 @@ export default function FormRegiscalf(props) {
           พ่อพันธุ์
         </FormLabel>
         <TextField
-          onChange={(e) => setDataCalf({ ...dataCalf, sir_id: e.target.value })}
-          value={dataCalf.sir_id}
+          onChange={(e) =>
+            setDataCalf({ ...dataCalf, sire_id: e.target.value })
+          }
+          value={dataCalf.sire_id}
           variant="outlined"
           placeholder="กรอกหมายเลขโค"
           size="small"
@@ -209,7 +305,9 @@ export default function FormRegiscalf(props) {
           น้ำหนักตอนเกิด
         </FormLabel>
         <TextField
-          onChange={(e) => setDataCalf({ ...dataCalf, birth_weight: e.target.value })}
+          onChange={(e) =>
+            setDataCalf({ ...dataCalf, birth_weight: e.target.value })
+          }
           value={dataCalf.birth_weight}
           variant="outlined"
           placeholder="กรอกน้ำหนัก"

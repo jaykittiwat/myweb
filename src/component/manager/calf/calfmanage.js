@@ -3,7 +3,7 @@ import HeaderLogin from "./../../../HeaderLogin";
 import NavbarLogin from "./../../../demo";
 import Tablecalf from "./newtablecalf";
 import firebase from "./../../../backEnd/firebase";
-import axios from 'axios'
+import axios from "axios";
 import Footerversion from "./../../../footerversion";
 
 class Notification extends Component {
@@ -12,39 +12,87 @@ class Notification extends Component {
     this.state = {
       loading: false,
       UID: "",
-      data:[],
-      datatatoo:[],
-      databranding:[],
-      datadishorn:[],
-      datawean:[],
-      keyData:[],
-      keytatoo:[],
-      keybranding:[],
-      keydishorn:[],
-      keywean:[],
+      fname: "",
+      lastname: "",
 
-         };
+      data: [],
+      databranding: [],
+      datadishorn: [],
+      datawean: [{},{},{}],
+
+      keyData: [],
+      keybranding: [],
+      keydishorn: [],
+      keywean: [],
+    };
   }
   componentDidMount() {
-    this.setState({...this.state,loading:true})
-    firebase.auth().onAuthStateChanged(user=>{
-      if(user){
+    this.setState({ ...this.state, loading: true });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
         axios
-        .get("http://localhost:4000/user/logIn/" + user.email)
-        .then(res => {
-        
-          this.setState({ ...this.state, UID: res.data[0].user});
-          return res.data[0].user;
-        }).then((UID)=>{
-          axios
-        .get("http://localhost:4000/calf/calfshowAll/" + UID).then(res=>{
-          this.setState({...this.state,data:res.data[1],keyData:res.data[0],loading:true})
-        })
-        })
+          .get("http://localhost:4000/user/logIn/" + user.email)
+          .then((res) => {
+            this.setState({
+              ...this.state,
+              UID: res.data[0].user,
+              fname: res.data[0].fname,
+              lastname: res.data[0].lname,
+            });
+            return res.data[0].user;
+          })
+          .then(() => {
+            axios
+              .get("http://localhost:4000/calf/calfshowAll/" + this.state.UID)
+              .then((res) => {
+                this.setState({
+                  ...this.state,
+                  data: res.data[1],
+                  keyData: res.data[0],
+                });
+              })
+              .then(() => {
+                axios
+                  .get("http://localhost:4000/dishorn/" + this.state.UID)
+                  .then((res) => {
+                    this.setState({
+                      ...this.state,
+                      datadishorn: res.data[1],
+                      keydishorn: res.data[0],
+                    });
+                  })
+                  .then(() => {
+                    axios
+                      .get("http://localhost:4000/branding/" + this.state.UID)
+                      .then((res) => {
+                        this.setState({
+                          ...this.state,
+                          databranding: res.data[1],
+                          keybranding: res.data[0],
+                          
+                        });
+                      })
+                      .then(() => {
+                        axios
+                          .get("http://localhost:4000/wean/" + this.state.UID)
+                          .then((res) => {
+                            console.log(res.data[1]);
+                            this.setState({
+                              ...this.state,
+                              datawean:res.data[1],
+                              keywean: res.data[0],
+                              loading: false,
+                            });
+                          })
+                          .then(() => {
+                            console.log(this.state);
+                          });
+                      });
+                  });
+              });
+          });
       }
-    })
-    
-   
+    });
   }
   render() {
     return (
@@ -53,8 +101,8 @@ class Notification extends Component {
         <div className="row Nav-shadow posi ">
           <NavbarLogin />
         </div>
-        <Tablecalf posts={this.state}/>
-        <Footerversion/>
+        <Tablecalf posts={this.state} />
+        <Footerversion />
       </div>
     );
   }

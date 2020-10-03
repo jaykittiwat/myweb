@@ -162,7 +162,9 @@ export default function FormRegiscalf(props) {
             <option value="ไม่ระบุ">เลือก </option>
             <option value="AI">น้ำเชื้อ</option>
             <option value="NT">พ่อพันธุ์</option>
-            <option>ฝากถ่าย</option>
+            <option>ฝากถ่ายตัวอ่อน</option>
+            <option>ผสมในหลอดทดลอง</option>
+
           </Select>
         </FormControl>
       </FormGroup>

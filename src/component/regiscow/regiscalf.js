@@ -8,7 +8,7 @@ import firebase from "../../backEnd/firebase";
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       UID: "",
       loading:false,
       color:[],
@@ -28,8 +28,6 @@ class Header extends Component {
           }).then(()=>{
             axios.get("http://localhost:4000/settingstrian/strian/"+this.state.UID).then(res=>{
               this.setState({...this.state,strian:res.data[1],loading:false });
-            }).then(()=>{
-              console.log(this.state);
             })
           })
         })
