@@ -11,7 +11,7 @@ export const setPicker = (props) => {
     //console.log(item); //ติดไม่ลบคือยังไม่ถึงกำหนด
     if (Difference_In_Days === 0) {
       const set = {
-        text: item.type,
+        text: item.type+" "+item.id_cattle,
         startDate: new Date( years, mount, day, 0, 0),
         endDate: new Date(years, mount, day, 23, 59),
         alertTypeID: 3,
@@ -20,7 +20,7 @@ export const setPicker = (props) => {
     }
     if (Difference_In_Days < 0 && Difference_In_Days >= -1) {
       const set = {
-        text: item.type+"(อีก1วัน)",
+        text: item.type+" "+item.id_cattle+"(อีก1วัน)",
         startDate: new Date( years, mount, day, 0, 0),
         endDate: new Date(years, mount, day, 23, 59),
         alertTypeID: 2,
@@ -29,7 +29,7 @@ export const setPicker = (props) => {
     }
     if (Difference_In_Days < -1 && Difference_In_Days <= -2) {
       const set = {
-        text: item.type+"(อีก2วัน)",
+        text: item.type+" "+item.id_cattle+"(อีก2วัน)",
         startDate: new Date( years, mount, day, 0, 0),
         endDate:new Date(years, mount, day, 23, 59),
         alertTypeID: 1,
@@ -38,7 +38,7 @@ export const setPicker = (props) => {
     }
     if (Difference_In_Days > 0) {
       const set = {
-        text: item.type+"(เลยกำหนด)",
+        text: item.type+" "+item.id_cattle+"(เลยกำหนด)",
         startDate: new Date( years, mount, day, 0, 0),
         endDate: new Date(years, mount, day, 23, 59),
         alertTypeID: 4,

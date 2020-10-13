@@ -9,8 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import { FormControl } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import {top100Films }from './datademo'
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import axios from "axios";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,99 +27,166 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 650,
-  }, HeaderSetting: {
+  },
+  HeaderSetting: {
     marginTop: "20px",
     color: "#fff",
-    background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
-    width:"100%",
+    background:
+      " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
+    width: "100%",
     padding: "12px",
-    fontSize: "22px"
-  }
+    fontSize: "22px",
+  },
 }));
 
-
-
-export default function TableTreatment() {
+export default function TableTreatment(props) {
   const classes = useStyles();
-  const [time, setTime] = "";
+  const [type, setType] = React.useState("โค");
+  const [seletedId, setSelectedId] = React.useState("");
+  const [sickness, setSickness] = React.useState("");
+  const [operator, setOperator] = React.useState("");
+  const [recoder, setRecoder] = React.useState("");
+  const [date, setDate] = React.useState("");
+  const [datenoti, setDatenoti] = React.useState("");
+  const [time, setTime] = React.useState("");
+  const [typetreatment, setTypetreatment] = React.useState("");
+  const [seletedMedic, setSeletedMedic] = React.useState([]);
+  const [note, setNote] = React.useState("");
 
+  const [top100Films, settop100Films] = React.useState([]);
+  const [medicID, setMedicid] = React.useState([]);
+
+  React.useEffect(() => {
+    setOperator(props.posts.fname);
+    setRecoder(props.posts.fname);
+    settop100Films(props.posts.setAllcow);
+    setMedicid(props.posts.drug);
+  }, [props]);
+  const setValue = (newValue) => {
+    setSeletedMedic(newValue);
+  };
+  const setid = (newValue) => {
+    setSelectedId(newValue);
+  };
+  const SaveData = () => {
+    axios.post("http://localhost:4000/treatment/" + props.posts.UID, {
+      datediagnose: datenoti,
+      id: seletedId,
+      noti_treatment: 1,
+      number_of_treatment: 0,
+      operator: operator,
+      recoder: recoder,
+      sickness: sickness,
+      timediagnose: time,
+      drug: seletedMedic,
+      typetreatment:typetreatment
+    }).then(()=>{
+      axios.post("http://localhost:4000/treatment/noti/" + props.posts.UID+"/"+datenoti, {
+        date: datenoti,id_cattle:seletedId,type: "ติดตามการรักษา",
+      }).then(()=>{
+        alert("บันทึกสำเร็จ")
+        window.location.reload();
+      })
+    })
+  };
+  if (props.posts.loading) {
+    return (
+      <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
+        <CircularProgress size={40} />
+        <h3>Loading.....</h3>
+      </div>
+    );
+  }
   return (
-    <div className="container">
+    <div className="container" style={{ marginBottom: "20px" }}>
       <Paper elevation={3} square>
-      <Paper className={classes.HeaderSetting} elevation={3} square>
-       บันทึกการรักษา
-      </Paper>
+        <Paper className={classes.HeaderSetting} elevation={3} square>
+          บันทึกการรักษา
+        </Paper>
 
-        <Grid container spacing={3} style={{padding:"25px"}}>
+        <Grid container spacing={3} style={{ padding: "25px" }}>
           <Grid item xs={6}>
-          <FormGroup>
-        <FormControl size="small" >
-          <FormLabel className={classes.title}>
-            ประเภทโค
-          </FormLabel>
-       
-          <Select variant="outlined" native    >
-            <option>พ่อพันธุ์</option>
-            <option>แม่พันธุ์</option>
-            <option >ลูกโค</option>
-          </Select>
-        </FormControl>
-      </FormGroup>
+            <FormGroup>
+              <FormControl size="small">
+                <FormLabel className={classes.title}>ประเภทโค</FormLabel>
+
+                <Select
+                  variant="outlined"
+                  native
+                  onChange={(e) => setType(e.target.value)}
+                  value={type}
+                >
+                  <option>โค</option>
+                  <option>ลูกโค</option>
+                </Select>
+              </FormControl>
+            </FormGroup>
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
               <FormLabel className={classes.title}>หมายเลขโค</FormLabel>
             </FormGroup>
             <Autocomplete
-        freeSolo
-        id="free-solo-2-demo"
-        disableClearable
-        options={top100Films.map((option) => option.title)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            size="small"
-            variant="outlined"
-            InputProps={{ ...params.InputProps, type: 'search' }}
-          />
-        )}
-      />
-          </Grid>
-          <Grid item xs={6}>
-            <FormGroup>
-              <FormLabel className={classes.title}>อาการ</FormLabel>
-            </FormGroup>
-            <TextareaAutosize
-              aria-label="minimum height"
-              rowsMin={3}
-              className={classes.textField}
-       
+              freeSolo
+              id="free-solo-2-demo"
+              disableClearable
+              getOptionSelected={(option, value) =>
+                option.cattle_id === value.cattle_id
+              }
+              onChange={(event, newValue) => setid(newValue)}
+              options={top100Films.map((option) => option.cattle_id)}
+              renderInput={(params) => (
+                <TextField
+                  placeholder="กรอกหมายเลขโค"
+                  {...params}
+                  size="small"
+                  variant="outlined"
+                  InputProps={{ ...params.InputProps, type: "search" }}
+                />
+              )}
             />
           </Grid>
           <Grid item xs={6}>
-          <FormGroup>
-        <FormControl size="small" >
-          <FormLabel className={classes.title}>
-            ประเภทการรักษา
-          </FormLabel>
-       
-          <Select variant="outlined" native    >
-            <option>ฉีดใต้ผิว/กล้ามเนื้อ</option>
-            <option>ทา</option>
-            <option >ราด</option>
-            <option >กิน</option>
-          </Select>
-        </FormControl>
-      </FormGroup>
+            <FormGroup>
+              <FormLabel className={classes.title}>โรค/อาการ</FormLabel>
+            </FormGroup>
+            <TextareaAutosize
+              value={sickness}
+              onChange={(e) => setSickness(e.target.value)}
+              aria-label="minimum height"
+              rowsMin={3}
+              className={classes.textField}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <FormGroup>
+              <FormControl size="small">
+                <FormLabel className={classes.title}>ประเภทการรักษา</FormLabel>
+
+                <Select
+                  variant="outlined"
+                  native
+                  value={typetreatment}
+                  onChange={(e) => setTypetreatment(e.target.value)}
+                >
+                  <option>ฉีดใต้ผิว/กล้ามเนื้อ</option>
+                  <option>ทา</option>
+                  <option>ราด</option>
+                  <option>กิน</option>
+                </Select>
+              </FormControl>
+            </FormGroup>
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
               <FormLabel className={classes.title}>วันที่ตรวจ</FormLabel>
             </FormGroup>
             <TextField
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
               type="date"
               variant="outlined"
-              style={{width:"100%"}}
+              style={{ width: "100%" }}
               size="small"
             />
           </Grid>
@@ -129,9 +197,11 @@ export default function TableTreatment() {
               </FormLabel>
             </FormGroup>
             <TextField
+              value={datenoti}
+              onChange={(e) => setDatenoti(e.target.value)}
               type="date"
               variant="outlined"
-              style={{width:"100%"}}
+              style={{ width: "100%" }}
               size="small"
             />
           </Grid>
@@ -139,7 +209,6 @@ export default function TableTreatment() {
             <FormGroup className={classes.marTextField}>
               <FormLabel className={classes.title}>เวลา</FormLabel>
               <TextField
-                id="input4"
                 variant="outlined"
                 type="time"
                 size="small"
@@ -153,55 +222,64 @@ export default function TableTreatment() {
               <FormLabel className={classes.title}>ผู้บันทึก</FormLabel>
             </FormGroup>
             <TextField
+              value={operator}
               variant="outlined"
-             style={{width:"100%"}}
+              style={{ width: "100%" }}
               placeholder="กรอกชื่อผู้บันทึก"
               size="small"
+              onChange={(e) => setOperator(e.target.value)}
             />
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel className={classes.title}>ชื่อโรค</FormLabel>
+              <FormLabel className={classes.title}>ยาที่ใช้รักษา</FormLabel>
             </FormGroup>
-            <TextField
-              variant="outlined"
-              style={{width:"100%"}}
-              placeholder="กรอกชื่อโรค"
-              size="small"
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              options={medicID}
+              getOptionLabel={(option) => option.drugId}
+              filterSelectedOptions
+              getOptionSelected={(option, value) =>
+                option.drugId === value.drugId
+              }
+              onChange={(event, newValue) => setValue(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="เพิ่มยา"
+                  size="small"
+                />
+              )}
             />
           </Grid>
           <Grid item xs={6}>
-            <FormGroup>
+          <FormGroup>
               <FormLabel className={classes.title}>หมายเหตุ</FormLabel>
             </FormGroup>
             <TextareaAutosize
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
               aria-label="minimum height"
               rowsMin={3}
               className={classes.textField}
-
             />
           </Grid>
+
+          <Grid item xs={6}></Grid>
         </Grid>
         <Paper>
-        
           <div className="container-fluid text-center">
             <div className={classes.marTextField}>
               <Button
+                onClick={() => SaveData()}
                 variant="contained"
                 color="primary"
                 size="large"
                 style={{ width: "250px", margin: "10px", outline: "none" }}
               >
                 บันทึก
-              </Button>
-
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                style={{ width: "250px", margin: "10px", outline: "none" }}
-              >
-                ยกเลิก
               </Button>
             </div>{" "}
           </div>
