@@ -25,6 +25,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
+
 const StyledTableRow = withStyles(theme => ({
   root: {
     "&:nth-of-type(odd)": {
@@ -111,6 +112,7 @@ const initialState_prosync = {
   pro_sync: "",
   note: " "
 };
+
 export default function PaperDrug(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -219,8 +221,10 @@ export default function PaperDrug(props) {
     }
   }
   const [medic, setMedic] = useState([
-    {
-      item: ""
+   { 
+     num_day:"0",
+      item0: "",
+      time:""
     }
   ]);
 
@@ -228,21 +232,33 @@ export default function PaperDrug(props) {
     setMedic([
       ...medic,
       {
-        item: ""
+        num_day:"0",
+        ["item"+[medic.length]]: "",
+        time:""
       }
     ]);
+    console.log(medic);
   };
   const deleteItem = index => {
     const result = medic.filter(results => results !== medic[index]);
-    //console.log(result);
     setMedic(result);
   };
+  const setDetaisync = (event,index) =>{
+    const v = event.target.value;
+    const ID = event.target.id;
+    const collection = medic; 
+    const newObj = update(collection, { [index]: { [ID]: { $set: v } } });
+    setMedic(newObj);
+  }
   const showTable = () => {
     return medic.map((medics, index) => (
-      <StyledTableRow hove key={index}>
+      <StyledTableRow  key={index}>
         <TableCell align="center">{index+1}.</TableCell>
         <TableCell style={{width:"200px"}} >
         <Input
+        id="num_day"
+        value={medics.num_day}
+        onChange={(event)=> setDetaisync(event,index)}
          style={{width:"100%",minWidth:"200px"}}
            placeholder="จำนวนวัน"
             endAdornment={<InputAdornment position="end">วัน</InputAdornment>}
@@ -252,14 +268,16 @@ export default function PaperDrug(props) {
         </TableCell>
         <TableCell  style={{minWidth:"500px"}}>
         <Input
-        
+         id={"item"+index}
+         onChange={(event)=> setDetaisync(event,index)}
         style={{width:"100%"}}
            placeholder="รายละเอียด"
           />
         </TableCell>
         <TableCell  style={{width:"200px"}} >
         <Input
-       
+        id="time"
+        onChange={(event)=> setDetaisync(event,index)}
          style={{width:"100%",minWidth:"200px"}}
         type="time"
           />
@@ -486,9 +504,9 @@ export default function PaperDrug(props) {
           <TabPanel value={value} index={2}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-              <spam style={{ fontSize: "22px", color: "#616161" }}>
+              <div style={{ fontSize: "22px", color: "#616161" }}>
                   ชื่อโปรแกรมการบำรุง :
-                </spam>
+                </div>
                 <TextField
                   onChange={setStateOncheng}
                   style={{ width: "88%" }}
@@ -498,7 +516,9 @@ export default function PaperDrug(props) {
                 />{" "}
               </Grid>
               <Grid item xs={12} /*node------ */>
-                หมายเหตุ
+              <div style={{ fontSize: "22px", color: "#616161" }}>
+                  ชื่อโปรแกรมเหนี่ยวนำ :
+                </div>
                 <TextareaAutosize
                   onChange={setStateOncheng}
                   id="note"
@@ -529,9 +549,9 @@ export default function PaperDrug(props) {
           <TabPanel value={value} index={3}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <spam style={{ fontSize: "22px", color: "#616161" }}>
+                <div style={{ fontSize: "22px", color: "#616161" }}>
                   ชื่อโปรแกรมเหนี่ยวนำ :
-                </spam>
+                </div>
                 <TextField
                   onChange={setStateOncheng}
                   style={{ width: "88%", height: "20px" }}
@@ -540,11 +560,11 @@ export default function PaperDrug(props) {
                 />{" "}
               </Grid>
               <Grid item xs={12} style={{ marginTop: "10px" }}>
-                <spam style={{ fontSize: "22px", color: "#616161" }}>
+                <div style={{ fontSize: "22px", color: "#616161" }}>
                   รายละเอียด
-                </spam>
+                </div>
                 <Button
-                  onClick={addtable}
+                  onClick={(event)=>addtable(event)}
                   variant="contained"
                   style={{
                     marginLeft: "10px",
@@ -570,9 +590,9 @@ export default function PaperDrug(props) {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <spam style={{ fontSize: "22px", color: "#616161" }}>
+                <div style={{ fontSize: "22px", color: "#616161" }}>
                   หมายเหตุ
-                </spam>
+                </div>
                 <TextareaAutosize
                   onChange={setStateOncheng}
                   id="note"

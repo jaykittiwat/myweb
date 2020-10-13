@@ -52,8 +52,8 @@ export default function FormRegiscalf(props) {
         .post("http://localhost:4000/user/calf/registorCalf/" + UID, dataCalf)
         .then(() => {
           const setBranding = {
-            birth_id: "",
-            dam_id: "",
+            birth_id: dataCalf.birth_id,
+            dam_id: dataCalf.dam_id,
             datebran: "",
             note: "",
             operator: "",
@@ -64,8 +64,8 @@ export default function FormRegiscalf(props) {
             .post("http://localhost:4000/branding/" + UID, setBranding)
             .then(() => {
               const setHorndetering = {
-                birth_id: "",
-                dam_id: "",
+                birth_id: dataCalf.birth_id,
+                dam_id: dataCalf.dam_id,
                 datedishorn: "",
                 method: "",
                 note: "",
@@ -77,8 +77,8 @@ export default function FormRegiscalf(props) {
                 .then(() => {
                  
                   const setWean = {
-                    birth_id: "",
-                    dam_id: "",
+                    birth_id: dataCalf.birth_id,
+                    dam_id: dataCalf.dam_id,
                     datewean: "",
                     note: "",
                     operator: "",
@@ -115,8 +115,8 @@ export default function FormRegiscalf(props) {
             "http://localhost:4000/user/calf/registorCalf/" + UID,dataCalf
           ).then(() => {
             const setBranding = {
-              birth_id: "",
-              dam_id: "",
+              birth_id: dataCalf.birth_id,
+              dam_id: dataCalf.dam_id,
               datebran: "",
               note: "",
               operator: "",
@@ -127,8 +127,8 @@ export default function FormRegiscalf(props) {
               .post("http://localhost:4000/branding/" + UID, setBranding)
               .then(() => {
                 const setHorndetering = {
-                  birth_id: "",
-                  dam_id: "",
+                  birth_id: dataCalf.birth_id,
+                  dam_id: dataCalf.dam_id,
                   datedishorn: "",
                   method: "",
                   note: "",
@@ -139,8 +139,8 @@ export default function FormRegiscalf(props) {
                   .post("http://localhost:4000/dishorn/" + UID, setHorndetering)
                   .then(() => {
                     const setWean = {
-                      birth_id: "",
-                      dam_id: "",
+                      birth_id: dataCalf.birth_id,
+                      dam_id: dataCalf.dam_id,
                       datewean: "",
                       note: "",
                       operator: "",

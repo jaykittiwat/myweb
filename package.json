@@ -9,6 +9,7 @@
     "@devexpress/dx-react-scheduler-material-ui": "^2.7.2",
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -32,11 +33,14 @@
     "react-bootstrap": "^1.0.0",
     "react-bootstrap-table-next": "^4.0.3",
     "react-chartjs-2": "^2.9.0",
+    "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
+    "react-export-excel": "^0.5.3",
     "react-filepond": "^7.0.1",
     "react-images-upload": "^1.2.8",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-to-pdf": "0.0.13",
     "simple-react-calendar": "^2.2.1"
   },
   "scripts": {

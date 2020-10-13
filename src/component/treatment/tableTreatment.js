@@ -5,13 +5,12 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
-import "./styleTreatment.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import { FormControl } from "@material-ui/core";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import MenuItem from "@material-ui/core/MenuItem";
-
+import {top100Films }from './datademo'
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +22,18 @@ const useStyles = makeStyles((theme) => ({
     color: "#3f3f3f",
   },
   textField: {
-    width: "80%",
+    width: "100%",
   },
   table: {
     minWidth: 650,
-  },
+  }, HeaderSetting: {
+    marginTop: "20px",
+    color: "#fff",
+    background: " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
+    width:"100%",
+    padding: "12px",
+    fontSize: "22px"
+  }
 }));
 
 
@@ -38,36 +44,45 @@ export default function TableTreatment() {
 
   return (
     <div className="container">
-      <Paper elevation={1}>
-        <div className="text-header-treat martop-10">บันทึกการรักษา</div>
+      <Paper elevation={3} square>
+      <Paper className={classes.HeaderSetting} elevation={3} square>
+       บันทึกการรักษา
+      </Paper>
 
-        <Grid container spacing={3} className="pad-10">
+        <Grid container spacing={3} style={{padding:"25px"}}>
           <Grid item xs={6}>
-            <FormGroup>
-              <FormLabel className={classes.title}>ประเภทโค</FormLabel>
-              <FormControl className={classes.formControl} size="small">
-                <Select
-                  variant="outlined"
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                >
-                  <MenuItem value="A">A</MenuItem>
-                  <MenuItem value="B">B</MenuItem>
-                  <MenuItem value="C">C</MenuItem>
-                </Select>
-              </FormControl>
-            </FormGroup>
+          <FormGroup>
+        <FormControl size="small" >
+          <FormLabel className={classes.title}>
+            ประเภทโค
+          </FormLabel>
+       
+          <Select variant="outlined" native    >
+            <option>พ่อพันธุ์</option>
+            <option>แม่พันธุ์</option>
+            <option >ลูกโค</option>
+          </Select>
+        </FormControl>
+      </FormGroup>
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
               <FormLabel className={classes.title}>หมายเลขโค</FormLabel>
             </FormGroup>
-            <TextField
-              variant="outlined"
-              className="textField-w"
-              placeholder="กรอกหมายเลขโค"
-              size="small"
-            />
+            <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        options={top100Films.map((option) => option.title)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            size="small"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, type: 'search' }}
+          />
+        )}
+      />
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
@@ -81,15 +96,20 @@ export default function TableTreatment() {
             />
           </Grid>
           <Grid item xs={6}>
-            <FormGroup>
-              <FormLabel className={classes.title}>ประเภทการรักษา</FormLabel>
-            </FormGroup>
-            <TextField
-              variant="outlined"
-              className="textField-w"
-              placeholder="กรอกประเภทการรักษา"
-              size="small"
-            />
+          <FormGroup>
+        <FormControl size="small" >
+          <FormLabel className={classes.title}>
+            ประเภทการรักษา
+          </FormLabel>
+       
+          <Select variant="outlined" native    >
+            <option>ฉีดใต้ผิว/กล้ามเนื้อ</option>
+            <option>ทา</option>
+            <option >ราด</option>
+            <option >กิน</option>
+          </Select>
+        </FormControl>
+      </FormGroup>
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
@@ -98,7 +118,7 @@ export default function TableTreatment() {
             <TextField
               type="date"
               variant="outlined"
-              className="textField-w"
+              style={{width:"100%"}}
               size="small"
             />
           </Grid>
@@ -111,7 +131,7 @@ export default function TableTreatment() {
             <TextField
               type="date"
               variant="outlined"
-              className="textField-w"
+              style={{width:"100%"}}
               size="small"
             />
           </Grid>
@@ -134,7 +154,7 @@ export default function TableTreatment() {
             </FormGroup>
             <TextField
               variant="outlined"
-              className="textField-w"
+             style={{width:"100%"}}
               placeholder="กรอกชื่อผู้บันทึก"
               size="small"
             />
@@ -145,7 +165,7 @@ export default function TableTreatment() {
             </FormGroup>
             <TextField
               variant="outlined"
-              className="textField-w"
+              style={{width:"100%"}}
               placeholder="กรอกชื่อโรค"
               size="small"
             />

@@ -130,7 +130,13 @@ export default function PaperNotificaion(props) {
       <Grid container spacing={5}>
         {" "}
         
-        <Grid item md={9} xs={12}>
+       
+        <Grid item md={12} xs={12} >
+          {" "}
+           <Demo Data={dateGen} />
+         
+        </Grid>
+        <Grid item md={12} xs={12}>
           <Paper className={classes.root} square>
             <div className={classes.headerClave}>
               ตารางดำเนินงานวันนี้
@@ -206,11 +212,6 @@ export default function PaperNotificaion(props) {
               onChangeRowsPerPage={handleChangeRowsPerPage}
             />
           </Paper>
-        </Grid>
-        <Grid item md={3} xs={12} >
-          {" "}
-           <Demo Data={dateGen} />
-         
         </Grid>
       </Grid>
 

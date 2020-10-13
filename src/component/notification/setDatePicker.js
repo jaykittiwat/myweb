@@ -20,7 +20,7 @@ export const setPicker = (props) => {
     }
     if (Difference_In_Days < 0 && Difference_In_Days >= -1) {
       const set = {
-        text: item.type,
+        text: item.type+"(อีก1วัน)",
         startDate: new Date( years, mount, day, 0, 0),
         endDate: new Date(years, mount, day, 23, 59),
         alertTypeID: 2,
@@ -29,7 +29,7 @@ export const setPicker = (props) => {
     }
     if (Difference_In_Days < -1 && Difference_In_Days <= -2) {
       const set = {
-        text: item.type,
+        text: item.type+"(อีก2วัน)",
         startDate: new Date( years, mount, day, 0, 0),
         endDate:new Date(years, mount, day, 23, 59),
         alertTypeID: 1,
@@ -38,7 +38,7 @@ export const setPicker = (props) => {
     }
     if (Difference_In_Days > 0) {
       const set = {
-        text: item.type,
+        text: item.type+"(เลยกำหนด)",
         startDate: new Date( years, mount, day, 0, 0),
         endDate: new Date(years, mount, day, 23, 59),
         alertTypeID: 4,
