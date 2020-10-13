@@ -35,8 +35,11 @@ export default function ButtonAppBar() {
               return res.data[0].user;
             }).then(async(UID)=>{
           
-            const result =await axios.get("http://localhost:4000/notification/notiAll/"+UID )
-            const data = Object.values(result.data);
+              const result =await axios.get("http://localhost:4000/notification/notiAll/"+UID )
+              const result2 =await axios.get("http://localhost:4000/treatment/notiAll/"+UID )
+              const data1 = Object.values(result.data);
+              const data2 = Object.values(result2.data);
+              const data=data1.concat(data2)
             setDataNoti(data.length)
                   
             })

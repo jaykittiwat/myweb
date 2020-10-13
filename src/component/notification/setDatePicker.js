@@ -8,17 +8,17 @@ export const setPicker = (props) => {
     let years = setDate.getFullYear();
     let Difference_In_Time = newDate.getTime() - setDate.getTime();
     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    //console.log(item); //ติดไม่ลบคือยังไม่ถึงกำหนด
-    if (Difference_In_Days === 0) {
+    console.log(item); //ติดไม่ลบคือยังไม่ถึงกำหนด
+    if (Difference_In_Days <= 0 && Difference_In_Days > -1) {
       const set = {
-        text: item.type+" "+item.id_cattle,
+        text: item.type+" "+item.id_cattle+"(วันนี้)",
         startDate: new Date( years, mount, day, 0, 0),
         endDate: new Date(years, mount, day, 23, 59),
         alertTypeID: 3,
       };
       data.push(set)
     }
-    if (Difference_In_Days < 0 && Difference_In_Days >= -1) {
+    if (Difference_In_Days <= -1 && Difference_In_Days > -2) {
       const set = {
         text: item.type+" "+item.id_cattle+"(อีก1วัน)",
         startDate: new Date( years, mount, day, 0, 0),
@@ -27,7 +27,7 @@ export const setPicker = (props) => {
       };
       data.push(set)
     }
-    if (Difference_In_Days < -1 && Difference_In_Days <= -2) {
+    if (Difference_In_Days <= -2 && Difference_In_Days > -3) {
       const set = {
         text: item.type+" "+item.id_cattle+"(อีก2วัน)",
         startDate: new Date( years, mount, day, 0, 0),

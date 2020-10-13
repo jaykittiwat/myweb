@@ -105,9 +105,9 @@ export default function PaperNotificaion(props) {
     if (type === "ตีเบอร์") {
       history.push("/calfmanage");
     }
-    /*if (type === "รักษา") {
-      history.push("/calfmanage");
-    }*/
+    if (type === "ติดตามการรักษา") {
+      history.push("/treatment");
+    }
   };
   const formatDate = (date)=>{
     const newDate=new Date(date)

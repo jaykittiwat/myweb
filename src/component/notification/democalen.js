@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
 
 const alertType = [{
   id: 1,
-  color: '#ffd600',//อีก 2 วัน
+  color: '#ffc400',//อีก 2 วัน
 }, {
   id: 2,
-  color: '#76ff03',// อีก 1 วัน
+  color: '#00c853',// อีก 1 วัน
 }, {
   id: 3,
   color: '#ff1744',//อีก 0 วัน
@@ -69,9 +69,9 @@ export default function App (props) {
  
     <div className={classes.root}>
       <Avatar className={classes.small} sizes=" m" style={{backgroundColor:"#ff1744"}} >{""}</Avatar><div  style={{fontSize:"18px",color:"#fff"}}>วันที่กำหนด</div>
-      <Avatar className={classes.small}  style={{backgroundColor:"#76ff03"}}>{""}</Avatar><div style={{fontSize:"18px",color:"#fff"}}>อีก 1 วัน</div>
+      <Avatar className={classes.small}  style={{backgroundColor:"#00c853"}}>{""}</Avatar><div style={{fontSize:"18px",color:"#fff"}}>อีก 1 วัน</div>
     
-      <Avatar className={classes.small}  style={{backgroundColor:"#ffd600"}}>{""}</Avatar><div  style={{fontSize:"18px",color:"#fff"}}>อีก 2 วัน</div>
+      <Avatar className={classes.small}  style={{backgroundColor:"#ffc400"}}>{""}</Avatar><div  style={{fontSize:"18px",color:"#fff"}}>อีก 2 วัน</div>
       <Avatar className={classes.small}  style={{backgroundColor:"#6a1b9a"}}>{""}</Avatar><div  style={{fontSize:"18px",color:"#fff"}}>เลยกำหนด</div>
     </div>
     </Paper >

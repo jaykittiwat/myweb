@@ -70,16 +70,17 @@ export default function TableTreatment(props) {
   };
   const SaveData = () => {
     axios.post("http://localhost:4000/treatment/" + props.posts.UID, {
-      datediagnose: datenoti,
-      id: seletedId,
+      datediagnose: datenoti||"",
+      id: seletedId||"",
       noti_treatment: 1,
       number_of_treatment: 0,
-      operator: operator,
-      recoder: recoder,
-      sickness: sickness,
-      timediagnose: time,
-      drug: seletedMedic,
-      typetreatment:typetreatment
+      operator: operator||"",
+      recoder: recoder||"",
+      sickness: sickness||"",
+      timediagnose: time||"",
+      drug: seletedMedic||"",
+      typetreatment:typetreatment||"",
+      note:note||""
     }).then(()=>{
       axios.post("http://localhost:4000/treatment/noti/" + props.posts.UID+"/"+datenoti, {
         date: datenoti,id_cattle:seletedId,type: "ติดตามการรักษา",
