@@ -45,7 +45,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-to-pdf": "0.0.13",
-    "simple-react-calendar": "^2.2.1"
+    "simple-react-calendar": "^2.2.1",
+    "node": "^14.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
