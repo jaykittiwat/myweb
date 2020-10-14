@@ -6,7 +6,7 @@ import { Grid } from "@material-ui/core";
 import { B1, B2, B3, B4, B5, B6, B7, B8, B9 } from "./buttonNav";
 import axios from 'axios'
 import firebase from "./backEnd/firebase"
-import Signout from './signout'
+import Signout from './Logout'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1
