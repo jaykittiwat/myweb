@@ -39,9 +39,7 @@ class Download extends React.Component {
             <ExcelFile element={<Button variant="contained" style={{backgroundColor:"green" ,color:"#fff"}}>Download </Button>}>
                 <ExcelSheet data={dataSet1} name="Employees" >
                     <ExcelColumn label="ชื่อ" value="name"   />
-                    <ExcelColumn label="เงิน" value="amount"/>
-                    <ExcelColumn label="เพศ" value="sex"/>
-                    <ExcelColumn label="สถานะภาพ"value={(col) => col.is_married ? "Married" : "Single"}/>
+                
                 </ExcelSheet>
             </ExcelFile>
         );

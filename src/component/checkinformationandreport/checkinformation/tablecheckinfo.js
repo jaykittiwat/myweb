@@ -6,9 +6,8 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-//import Button from "@material-ui/core/Button";
 import "./styleCheckinfo.css";
-import { Doughnut, Bar } from "react-chartjs-2";
+import {  Bar } from "react-chartjs-2";
 import Grid from "@material-ui/core/Grid";
 import 'chartjs-plugin-datalabels';
 
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TableReport() {
+export default function TableReport(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -110,83 +109,22 @@ export default function TableReport() {
                 <Grid>
                   <Grid>
                     <Paper elevation={0} className="pad-10">
-                      <Doughnut
-                        data={{
-                          labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
-                          ],
-                          datasets: [
-                            {
-                              data: [12, 19, 3, 5, 30, 3],
-                              backgroundColor: [
-                                "rgba(255, 99, 132)",
-                                "rgba(54, 162, 235)",
-                                "rgba(255, 206, 86)",
-                                "rgba(75, 192, 192)",
-                                "rgba(153, 102, 255)",
-                                "rgba(255, 159, 64)",
-                              ],
-                            },
-                          ],
-                        }}
-                        options={{
-                         
-                          responsive: true,
-                          title: {
-                            display: true,
-                            text: "โคภายในฟาร์ม",
-                            fontSize: 25,
-                          },
-                          legend: {
-                            display: true,
-                            position: "bottom",
-                          },
-                          layout: {
-                            padding: {
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                            },
-                          }, plugins: {
-                            datalabels: {
-                               display: true,
-                               color: 'white',
-                            }
-                         }
-                        }}
-                      />
-                    </Paper>
-                  </Grid>
-                </Grid>
-                <Grid>
-                  <Grid>
-                    <Paper elevation={0} className="pad-10">
                       <Bar
                         data={{
                           labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
+                            "แม่พันธุ์",
+                            "พ่อพันธุ์",
+                            "ลูกโค",
+                            
                           ],
                           datasets: [
                             {
-                              data: [12, 19, 3, 5, 30, 3],
+                              data:props.posts.data1,
                               backgroundColor: [
                                 "rgba(255, 99, 132)",
                                 "rgba(54, 162, 235)",
                                 "rgba(255, 206, 86)",
-                                "rgba(75, 192, 192)",
-                                "rgba(153, 102, 255)",
-                                "rgba(255, 159, 64)",
+                               
                               ],
                             },
                           ],
@@ -227,70 +165,12 @@ export default function TableReport() {
                 <Grid>
                   <Grid>
                     <Paper elevation={0} className="pad-10">
-                      <Doughnut
-                        data={{
-                          labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
-                          ],
-                          datasets: [
-                            {
-                              data: [12, 19, 3, 5, 30, 3],
-                              backgroundColor: [
-                                "rgba(255, 99, 132)",
-                                "rgba(54, 162, 235)",
-                                "rgba(255, 206, 86)",
-                                "rgba(75, 192, 192)",
-                                "rgba(153, 102, 255)",
-                                "rgba(255, 159, 64)",
-                              ],
-                            },
-                          ],
-                        }}
-                        options={{
-                          responsive: true,
-                          title: {
-                            display: true,
-                            text: "โคภายในฟาร์ม",
-                            fontSize: 25,
-                          },
-                          legend: {
-                            display: true,
-                            position: "bottom",
-                          },
-                          layout: {
-                            padding: {
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                            },
-                          },
-                        }}
-                      />
-                    </Paper>
-                  </Grid>
-                </Grid>
-                <Grid>
-                  <Grid>
-                    <Paper elevation={0} className="pad-10">
                       <Bar
                         data={{
-                          labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
-                          ],
+                          labels: Object.keys(props.posts.data2),
                           datasets: [
                             {
-                              data: [12, 19, 3, 5, 30, 3],
+                              data:Object.values(props.posts.data2),
                               backgroundColor: [
                                 "rgba(255, 99, 132)",
                                 "rgba(54, 162, 235)",
@@ -306,7 +186,7 @@ export default function TableReport() {
                           responsive: true,
                           title: {
                             display: true,
-                            text: "โคภายในฟาร์ม",
+                            text: "จำนวนสายพันธุ์โค",
                             fontSize: 25,
                           },
                           legend: {
@@ -335,57 +215,6 @@ export default function TableReport() {
           >
               <div className="container-fluid">
               <Grid>
-                <Grid>
-                  <Grid>
-                    <Paper elevation={0} className="pad-10">
-                      <Doughnut
-                        data={{
-                          labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
-                          ],
-                          datasets: [
-                            {
-                              data: [12, 19, 3, 5, 30, 3],
-                              backgroundColor: [
-                                "rgba(255, 99, 132)",
-                                "rgba(54, 162, 235)",
-                                "rgba(255, 206, 86)",
-                                "rgba(75, 192, 192)",
-                                "rgba(153, 102, 255)",
-                                "rgba(255, 159, 64)",
-                              ],
-                            },
-                          ],
-                        }}
-                        options={{
-                          responsive: true,
-                          title: {
-                            display: true,
-                            text: "โคภายในฟาร์ม",
-                            fontSize: 25,
-                          },
-                          legend: {
-                            display: true,
-                            position: "bottom",
-                          },
-                          layout: {
-                            padding: {
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                            },
-                          },
-                        }}
-                      />
-                    </Paper>
-                  </Grid>
-                </Grid>
                 <Grid>
                   <Grid>
                     <Paper elevation={0} className="pad-10">
@@ -446,57 +275,6 @@ export default function TableReport() {
           >
               <div className="container-fluid">
               <Grid>
-                <Grid>
-                  <Grid>
-                    <Paper elevation={0} className="pad-10">
-                      <Doughnut
-                        data={{
-                          labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
-                          ],
-                          datasets: [
-                            {
-                              data: [12, 19, 3, 5, 30, 3],
-                              backgroundColor: [
-                                "rgba(255, 99, 132)",
-                                "rgba(54, 162, 235)",
-                                "rgba(255, 206, 86)",
-                                "rgba(75, 192, 192)",
-                                "rgba(153, 102, 255)",
-                                "rgba(255, 159, 64)",
-                              ],
-                            },
-                          ],
-                        }}
-                        options={{
-                          responsive: true,
-                          title: {
-                            display: true,
-                            text: "โคภายในฟาร์ม",
-                            fontSize: 25,
-                          },
-                          legend: {
-                            display: true,
-                            position: "bottom",
-                          },
-                          layout: {
-                            padding: {
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                            },
-                          },
-                        }}
-                      />
-                    </Paper>
-                  </Grid>
-                </Grid>
                 <Grid>
                   <Grid>
                     <Paper elevation={0} className="pad-10">

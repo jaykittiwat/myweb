@@ -10,7 +10,11 @@ class Abortion extends Component{
 constructor(props){
   super(props)
   this.state={
-      loading:false
+      loading:false,
+      keyNoti:[],
+      valuesNoti:[],
+      dataNoti:[],
+      keyDataNoti:[]
   }
 }
 
@@ -26,18 +30,21 @@ componentDidMount(){
       }).then(async(UID)=>{
     
       const result =await axios.get("http://localhost:4000/notification/notiAll/"+UID )
-      const data = Object.values(result.data);
+      console.log(result.data)
+      const data = [Object.keys(result.data),Object.values(result.data)];
        return data
       }).then((data)=>{
-        const filter= []
-        for(let i = 0;i<data.length;i++){
-          if(data[i].type==="วันคลอด"){
-               filter.push(data[i])
+        const datakey=data[0]
+        const datavalue=data[1]
+        const filterkeys= []
+        const filtervalues= []
+        for(let i = 0;i<data[1].length;i++){
+          if( datavalue[i].type==="วันคลอด"){
+            filtervalues.push(datavalue[i])
+            filterkeys.push(datakey[i])
           }
         }
-        return filter
-      }).then((filter)=>{
-        console.log(filter)
+    this.setState({...this.state,keyNoti:filterkeys,valuesNoti:filtervalues,loading:false})
       })
     }
   })
@@ -51,7 +58,7 @@ render(){
     <div className="row Nav-shadow posi">
       <NavbarLogin />
     </div>
-    <TableAbor />
+    <TableAbor posts={this.state} />
     <Footerversion/>
   </div>
   )

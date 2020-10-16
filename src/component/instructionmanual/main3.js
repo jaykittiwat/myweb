@@ -8,7 +8,7 @@ const ref = React.createRef();
 function App() {
   return (
     <div >
-      <Pdf targetRef={ref} filename="code-example.pdf">
+      <Pdf targetRef={ref} filename="ข้อมูลพ่อแม่โคใน.pdf">
         {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
       </Pdf>
       <div ref={ref}>

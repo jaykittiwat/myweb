@@ -10,7 +10,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Tablemom from "./tableOfmom";
 import Tableclaf from "./tableOfcalf";
-import Tabledad from "./tableOfdad";
+//import Tabledad from "./tableOfdad";
 import Tablefatten from "./tableOffatten";
 import Tableinduction from "./tableOfinduction";
 import Tablebreed from "./tableOfBreed";
@@ -18,8 +18,8 @@ import Tablecheckup from "./tableOfcheckup";
 import Tablecalve from "./tableOfclave";
 import Tableabortion from "./tableOfabortion";
 import Tabletreat from "./tableOftreatment";
-import Tablevaccine from "./tableOfvaccine";
-import Tableparasite from "./tableOfparasite";
+//import Tablevaccine from "./tableOfvaccine";
+//import Tableparasite from "./tableOfparasite";
 
 
 
@@ -52,11 +52,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function App() {
+export default function App(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [open2, setOpen2] = React.useState(true);
   const [seletedList, setSelectedList] = React.useState(0);
+  React.useEffect(() => {
+  //console.log(props.posts);
+  }, [props]);
   const handleClick = () => {
     setOpen(!open);
   };
@@ -152,40 +155,17 @@ export default function App() {
             onClick={() => setSelectedList(9)}
           >
             <ListItemText
-              primary="การรักษาโรค"
+              primary="ประวัติรักษาโรค"
               classes={{ primary: classes.text2 }}
             />
           </ListItem>
         </List>
         <Divider />
-        <List component="div" disablePadding>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={() => setSelectedList(10)}
-          >
-            <ListItemText
-              primary="การฉีดวัคซีน"
-              classes={{ primary: classes.text2 }}
-            />
-          </ListItem>
-        </List>
-        <Divider />
-        <List component="div" disablePadding>
-          <ListItem
-            button
-            className={classes.nested}
-            onClick={() => setSelectedList(11)}
-          >
-            <ListItemText
-              primary="การถ่ายพยาธิ"
-              classes={{ primary: classes.text2 }}
-            />
-          </ListItem>
-        </List>
+       
       </Collapse>
     );
   };
+
   return (
     <Paper square elevation={3} style={{ marginTop: "20px" }}>
       <Grid container spacing={2}>
@@ -201,7 +181,7 @@ export default function App() {
                 onClick={() => setSelectedList(0)}
               >
                 <ListItemText
-                  primary="ข้อมูลแม่พันธุ์"
+                  primary="ข้อมูลพ่อแม่โค"
                   classes={{ primary: classes.text }}
                 />
               </ListItem>
@@ -217,17 +197,7 @@ export default function App() {
                 />
               </ListItem>
               <Divider />
-              <ListItem
-                button
-                className={classes.headItem}
-                onClick={() => setSelectedList(2)}
-              >
-                <ListItemText
-                  primary="ข้อมูลพ่อพันธุ์"
-                  classes={{ primary: classes.text }}
-                />
-              </ListItem>
-              <Divider />
+             
               <ListItem
                 button
                 onClick={handleClick}
@@ -259,28 +229,25 @@ export default function App() {
         </Grid>
         <Grid item xs={10}>
           {seletedList === 0 ? (
-            <Tablemom />
+            <Tablemom  keydata={props.posts.keycattle} data={props.posts.datacattle} load={props.posts.loading} />
           ) : seletedList === 1 ? (
-            <Tableclaf />
-          ) : seletedList === 2 ? (
-            <Tabledad />
-          ) : seletedList === 3 ? (
-            <Tablefatten />
+            <Tableclaf  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+          )  : seletedList === 3 ? (
+            <Tablefatten  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) : seletedList === 4 ? (
-            <Tableinduction />
+            <Tableinduction  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) : seletedList === 5 ? (
-            <Tablebreed />
+            <Tablebreed  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) : seletedList === 6 ? (
-            <Tablecheckup />
+            <Tablecheckup  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) : seletedList === 7 ? (
-            <Tablecalve />
+            <Tablecalve  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) : seletedList === 8 ? (
-            <Tableabortion />
-          ) : seletedList === 9 ? (
-            <Tabletreat />
-          ) : seletedList === 10 ? (
-            <Tablevaccine />
-          ) :  <Tableparasite />}
+            <Tableabortion  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+          ) :  (
+            <Tabletreat  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+          )
+           }
         </Grid>
       </Grid>
     </Paper>

@@ -6,7 +6,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { setData } from "./Data";
+//import { setData } from "./Data";
 import Delete from "@material-ui/icons/Delete";
 import Creact from "@material-ui/icons/Create";
 import Save from "@material-ui/icons/Save";
@@ -19,6 +19,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import ReactExport from "react-export-excel";
+
 const useStyles1 = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -99,21 +102,83 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired
 };
-export default function TableOfmom() {
+export default function TableOfmom(props) {
   const classes = useStyles1();
-
-  const [rows, setRows] = React.useState(setData);
+  const [rows, setRows] = React.useState([]);
   const [startEdit, setStartEdit] = React.useState(false);
   const [indexRow, setIndexRow] = React.useState(-1);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [checkPage, setCheckPage] = React.useState(0);
   const Head = [
-    { cell: "name", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
-    { cell: "lastname", align: "left" },
-    { cell: "Age", align: "left" },
-    { cell: "Action", align: "center" }
+    { cell: "หมายเลขโค", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
+    { cell: "สายพันธุ์โค", align: "left" },
+    { cell: "สี", align: "left" },
+    { cell: "วันที่เกิด", align: "left" },
+    { cell: "เพศ", align: "left" },
+    { cell: "การผสม", align: "left" },
+    { cell: "พ่อ", align: "left" },
+    { cell: "แม่", align: "left" },
+    { cell: "น้ำหนักแรกเกิด", align: "left" },
+    { cell: "น้ำหนักหลังอย่านม", align: "left" },
+    { cell: "น้ำหนัก 1 ปี", align: "left" },
+    { cell: "ความสูงสะโพก 1 ปี", align: "left" },
+    { cell: "รอบอกตอนเกิด", align: "left" },
+    { cell: "รอบอกหลังอย่านม", align: "left" },
+    { cell: "วันที่อย่านม", align: "left" },
+    { cell: "จำนวนการผสม", align: "left" },
+     { cell: "โรงเรือน", align: "left" },
+    { cell: "คอก", align: "left" },
+    { cell: "ฝูง", align: "left" },
+
+    
+    
+    { cell: "แก้ไข", align: "center" }
   ];
+  React.useEffect(() => {
+  setRows(props.data)
+  }, [props]);
+
+  const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const Download=()=>{
+  return (
+    <ExcelFile element={  <Button
+      style={{
+        color: "#fff",
+        backgroundColor: "#64dd17",
+        fontSize: "16px",
+        width: "auto",
+        margin: "0px"
+      }}
+    >
+      DOWNLOAD EXCEL
+    </Button>}>
+        <ExcelSheet data={rows} name="cattleL_List" >
+            <ExcelColumn label="หมายเลขโค" value="cattle_id"   />
+            <ExcelColumn label="สายพันธุ์" value="breed"   />
+            <ExcelColumn label="สี" value="color"   />
+            <ExcelColumn label="วันที่เกิด" value="birth_date"   />
+            <ExcelColumn label="เพศ" value="sex"   />
+            <ExcelColumn label="การผสม" value="breed_method"   />
+            <ExcelColumn label="พ่อ" value="sire_id"   />
+            <ExcelColumn label="แม่" value="dam_id"   />
+            <ExcelColumn label="น้ำหนักแรกเกิด(kg.)" value="birth_weight"   />
+            <ExcelColumn label="น้ำหนักหลังอย่านม(kg.)" value="wean_weight"   />
+            <ExcelColumn label="น้ำหนัก 1 ปี(kg.)" value="year_weight"   />
+            <ExcelColumn label="ความสูงสะโพก 1 ปี(cm.)" value="year_hip_hight"   />
+            <ExcelColumn label="รอบอกตอนเกิด(cm.)" value="birth_chest_head_ratio"   />
+            <ExcelColumn label="รอบอกหลังอย่านม(cm.)" value="wean_chest_head_ratio"   />
+            <ExcelColumn label="วันที่อย่านม" value="wean_date"   />
+            <ExcelColumn label="จำนวนการผสม(ครั้ง)" value="number_of_breeding"   />
+            <ExcelColumn label="โรงเรือน" value="bigcorral"   />
+            <ExcelColumn label="คอก" value="corral"   />
+            <ExcelColumn label="ฝูง" value="herd_no"   />
+        </ExcelSheet>
+    </ExcelFile>
+);
+}
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -135,7 +200,7 @@ export default function TableOfmom() {
   };
   const SAVE = (index) => {
     setStartEdit(!startEdit);
-  };
+  };//-------------------------------------------------------------------คำนวณ INDEXXXXXXXXXXXXXXXX
   const SETVALUES = (event, index) => {
     const key = event.target.id;
     const v = event.target.value;
@@ -144,6 +209,12 @@ export default function TableOfmom() {
     const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v } } });
     setRows(newSet);
   };
+  if(props.load){
+    return( <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
+    <CircularProgress size={40} />
+    <h3>Loading.....</h3>
+  </div>)
+  }
   return (
     <Paper square elevation={3}>
       <Paper className={classes.HeaderSetting} elevation={3} square>
@@ -155,36 +226,21 @@ export default function TableOfmom() {
             </div>
           </Grid>
           <Grid item xs={6} style={{textAlign:"right"}}>
-            <Button
-              color="secondary"
-              variant="contained"
-              style={{ fontSize: "16px", width: "90px", margin: "0px" }}
-            >
-              PDF
-            </Button>{" "}
-            <Button
-              style={{
-                color: "#fff",
-                backgroundColor: "#64dd17",
-                fontSize: "16px",
-                width: "90px",
-                margin: "0px"
-              }}
-            >
-              EXCEL
-            </Button>
+       
+          {Download()}
           </Grid>
         </Grid>
       </Paper>
       <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+        <Table >
           <TableHead>
             <TableRow>
               {Head.map((list, index) => (
                 <TableCell
+                
                   align={list.align}
                   key={index}
-                  style={{ fontSize: "20px" }}
+                  style={{ fontSize: "20px" ,minWidth: "150px"}}
                 >
                   {list.cell}
                 </TableCell>
@@ -201,36 +257,240 @@ export default function TableOfmom() {
                   {startEdit && indexRow === index && page === checkPage ? (
                     <TextField
                       style={{ width: "100%" }}
-                      id="name"
-                      value={row.name}
+                      id="cattle_id"
+                      value={row.cattle_id||""}
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.name
+                    row.cattle_id||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
                   {startEdit && indexRow === index && page === checkPage ? (
                     <TextField
                       style={{ width: "100%" }}
-                      id="lastName"
-                      value={row.lastName}
+                      id="breed"
+                      value={row.breed||""}
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.lastName
+                    row.breed||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
                   {startEdit && indexRow === index && page === checkPage ? (
                     <TextField
                       style={{ width: "100%" }}
-                      id="Age"
-                      value={row.Age}
+                      id="color"
+                      value={row.color||""}
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.Age
+                    row.color||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                    type="date"
+                      style={{ width: "100%" }}
+                      id="birth_date"
+                      value={row.birth_date||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.birth_date||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                  
+                      style={{ width: "100%" }}
+                      id="sex"
+                      value={row.sex||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.sex||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="breed_method"
+                      value={row.breed_method||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.breed_method||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="sire_id"
+                      value={row.sire_id||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.sire_id||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="dam_id"
+                      value={row.sire_id||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.dam_id||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="birth_weight"
+                      value={row.birth_weight||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.birth_weight+"Kg."||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="wean_weight"
+                      value={row.wean_weight||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.wean_weight+"Kg."||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="year_weight"
+                      value={row.year_weight||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.year_weight+"Kg."||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="year_hip_hight"
+                      value={row.year_hip_hight||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.year_hip_hight+"cm."||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="birth_chest_head_ratio"
+                      value={row.birth_chest_head_ratio||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.birth_chest_head_ratio+"cm."||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                 
+                      style={{ width: "100%" }}
+                      id="wean_chest_head_ratio"
+                      value={row.wean_chest_head_ratio||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.wean_chest_head_ratio+"cm."||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      type="date"
+                      style={{ width: "100%" }}
+                      id="wean_date"
+                      value={row.wean_date||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.wean_date||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="number_of_breeding"
+                      value={row.number_of_breeding||"ไม่มี"}
+                     
+                    ></TextField>
+                  ) : (
+                    row.number_of_breeding||"ไม่มี"
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="bigcorral"
+                      value={row.bigcorral||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.bigcorral||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="corral"
+                      value={row.corral||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.corral||""
+                  )}
+                </TableCell>
+               < TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="herd_no"
+                      value={row.herd_no||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.herd_no||""
                   )}
                 </TableCell>
                 <TableCell style={{ width: "200px" }}>
@@ -265,7 +525,7 @@ export default function TableOfmom() {
                   100,
                   { label: "All", value: -1 }
                 ]}
-                colSpan={5}
+                colSpan={20}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

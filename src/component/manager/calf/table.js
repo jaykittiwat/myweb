@@ -158,9 +158,7 @@ export default function SimpleTable(props) {
     setCheckPage(page);
   };
  
- const SAVE2 = () =>{
-   console.log(wean);
- }
+
   const SAVE = (index) => {
     axios
       .post(

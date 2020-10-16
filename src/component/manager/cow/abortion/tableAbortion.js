@@ -9,21 +9,38 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import SaveIcon from "@material-ui/icons/Save";
 import "./../CowStyle.css";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: "100%"
   }
 }));
-export default function TableAbortion() {
+export default function TableAbortion(props) {
   const classes = useStyles();
   const [item, setItem] = React.useState("");
-
+  const [selectedId, setSelectedId] = React.useState("");
+  const [top100Films, settop100Films] = React.useState([]);
+React.useEffect(() => {
+  settop100Films(props.posts.valuesNoti)
+}, [props]);
   const handleChange = event => {
     setItem(event.target.value);
   };
+  const setid = (newValue) => {
+    setSelectedId(newValue);
+  };
+  if(props.posts.loading){
+    return (
+      <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
+        <CircularProgress size={40} />
+        <h3>Loading.....</h3>
+      </div>
+    );
+  }
   return (
     <div className="container" style={{ marginTop: "20px" }}>
       {" "}
@@ -32,13 +49,26 @@ export default function TableAbortion() {
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>หมายเลขโค</FormLabel>
+              <FormLabel >หมายเลขโค</FormLabel>
             </FormGroup>
-            <TextField
-              placeholder="กรอกหมายเลขโค"
-              variant="outlined"
-              className="textField-width"
-              size="small"
+            <Autocomplete
+              freeSolo
+              id="free-solo-2-demo"
+              disableClearable
+              getOptionSelected={(option, value) =>
+                option.cattle_id === value.cattle_id
+              }
+              onChange={(event, newValue) => setid(newValue)}
+              options={top100Films.map((option) => option.id_cattle)}
+              renderInput={(params) => (
+                <TextField
+                  placeholder="กรอกหมายเลขโค"
+                  {...params}
+                  size="small"
+                  variant="outlined"
+                  InputProps={{ ...params.InputProps, type: "search" }}
+                />
+              )}
             />
           </Grid>
           <Grid item xs={6}>
