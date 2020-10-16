@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 import "./../CowStyle.css";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import axios from 'axios'
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -24,6 +24,7 @@ export default function TableAbortion(props) {
   const [item, setItem] = React.useState("");
   const [selectedId, setSelectedId] = React.useState("");
   const [top100Films, settop100Films] = React.useState([]);
+  const [dataCalve,setDataCalve] = React.useState([]);
 React.useEffect(() => {
   settop100Films(props.posts.valuesNoti)
 }, [props]);
@@ -31,8 +32,16 @@ React.useEffect(() => {
     setItem(event.target.value);
   };
   const setid = (newValue) => {
+    axios.get("http://localhost:4000/cattle/checkClave/" + props.posts.UID+"/"+newValue).then((res)=>{
+      setDataCalve(res.data[1])
+    }).then(()=>{
+      axios.get("http://localhost:4000/breed/lasttime/" + props.posts.UID+"/"+newValue).then(res=>{
+        console.log(res.data);
+      })
+    })
     setSelectedId(newValue);
   };
+
   if(props.posts.loading){
     return (
       <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
@@ -49,7 +58,7 @@ React.useEffect(() => {
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel >หมายเลขโค</FormLabel>
+              <FormLabel style={{color:"#000"}} >หมายเลขโค</FormLabel>
             </FormGroup>
             <Autocomplete
               freeSolo
@@ -73,11 +82,11 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>ท้องครั้งที่</FormLabel>
+              <FormLabel  style={{color:"#000"}} >ท้องครั้งที่</FormLabel>
             </FormGroup>
             <TextField
-              disabled
-              value="0"
+              
+              value={dataCalve.number_of_breeding||"-"}
               variant="outlined"
               className="textField-width"
               size="small"
@@ -85,11 +94,12 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>วันที่ผสม</FormLabel>
+              <FormLabel  style={{color:"#000"}} >วันที่ผสม</FormLabel>
             </FormGroup>
             <TextField
-              type="date"
+              
               disabled
+              value="ยังไม่เสร็จ"
               variant="outlined"
               className="textField-width"
               size="small"
@@ -97,11 +107,11 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>วิธีผสม</FormLabel>
+              <FormLabel  style={{color:"#000"}} >วิธีผสม</FormLabel>
             </FormGroup>
             <TextField
               disabled
-              value="-"
+              value="ยังไม่เสร็จ"
               variant="outlined"
               className="textField-width"
               size="small"
@@ -109,11 +119,11 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>หมายเลขน่ำเชื้อ</FormLabel>
+              <FormLabel  style={{color:"#000"}} >หมายเลขน้ำเชื้อ</FormLabel>
             </FormGroup>
             <TextField
               disabled
-              value="-"
+              value="ยังไม่เสร็จ"
               variant="outlined"
               className="textField-width"
               size="small"
@@ -121,11 +131,11 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>จำนวนการแท้ง</FormLabel>
+              <FormLabel  style={{color:"#000"}} >จำนวนการแท้ง</FormLabel>
             </FormGroup>
             <TextField
               disabled
-              value="0"
+              value="ยังไม่เสร็จ"
               variant="outlined"
               className="textField-width"
               size="small"
@@ -141,7 +151,7 @@ React.useEffect(() => {
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>วันที่แท้ง</FormLabel>
+              <FormLabel  style={{color:"#000"}} > วันที่แท้ง</FormLabel>
             </FormGroup>
             <TextField
               type="date"
@@ -152,7 +162,7 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>ผู้บันทึก</FormLabel>
+              <FormLabel  style={{color:"#000"}} >ผู้บันทึก</FormLabel>
             </FormGroup>
             <TextField
               variant="outlined"
@@ -162,7 +172,7 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>สาเหตุ</FormLabel>
+              <FormLabel  style={{color:"#000"}} >สาเหตุ</FormLabel>
             </FormGroup>
             <TextField
               variant="outlined"
@@ -172,7 +182,7 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>หมายเหตุ</FormLabel>
+              <FormLabel  style={{color:"#000"}} >หมายเหตุ</FormLabel>
             </FormGroup>
             <TextField
               variant="outlined"
@@ -190,7 +200,7 @@ React.useEffect(() => {
         <Grid container spacing={3} className="pad-10">
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>ติดตามการรักษา (วัน)</FormLabel>
+              <FormLabel  style={{color:"#000"}} > ติดตามการรักษา (วัน)</FormLabel>
             </FormGroup>
             <TextField
               variant="outlined"
@@ -200,7 +210,7 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={6}>
             <FormGroup>
-              <FormLabel>ผู้ปฏิบัติการ</FormLabel>
+              <FormLabel style={{color:"#000"}}>ผู้ปฏิบัติการ</FormLabel>
             </FormGroup>
             <TextField
               variant="outlined"
@@ -211,7 +221,7 @@ React.useEffect(() => {
           </Grid>
           <Grid item xs={12}>
             <FormGroup>
-              <FormLabel>ยาที่ใช้</FormLabel>
+              <FormLabel style={{color:"#000"}}>ยาที่ใช้</FormLabel>
               <FormControl className={classes.formControl} size="small">
                 <Select
                   variant="outlined"

@@ -134,7 +134,7 @@ export default function TableReport(props) {
                           title: {
                             display: true,
                             text: "โคภายในฟาร์ม",
-                            fontSize: 25,
+                            fontSize: 22,
                           },
                           legend: {
                             display: false,
@@ -146,8 +146,20 @@ export default function TableReport(props) {
                               top: 0,
                               bottom: 0,
                             },
-                          },
+                          },plugins: {
+                            datalabels: {
+                              color:'#ffffff',
+                              formatter: function (value) {
+                                return Math.round(value) + 'ตัว';
+                              },
+                              font: {
+                                weight: 'bold',
+                                size: 16,
+                              }
+                            }
+                          }
                         }}
+                        
                       />
                     </Paper>
                   </Grid>
@@ -186,20 +198,40 @@ export default function TableReport(props) {
                           responsive: true,
                           title: {
                             display: true,
-                            text: "จำนวนสายพันธุ์โค",
-                            fontSize: 25,
+                            text: "ยังไม่เสร็จ",
+                            fontSize: 22
                           },
                           legend: {
-                            display: false,
+                            display: false
                           },
                           layout: {
                             padding: {
                               left: 0,
                               right: 0,
                               top: 0,
-                              bottom: 0,
-                            },
+                              bottom: 0
+                            }
                           },
+                          scales: {
+                            yAxes: [
+                              {
+                                ticks: {
+                                  beginAtZero: true
+                                }
+                              }
+                            ]
+                          },plugins: {
+                            datalabels: {
+                              color:'#ffffff',
+                              formatter: function (value) {
+                                return Math.round(value) + 'ตัว';
+                              },
+                              font: {
+                                weight: 'bold',
+                                size: 16,
+                              }
+                            }
+                          }
                         }}
                       />
                     </Paper>
@@ -246,7 +278,7 @@ export default function TableReport(props) {
                           responsive: true,
                           title: {
                             display: true,
-                            text: "โคภายในฟาร์ม",
+                            text: "ยังไม่เสร็จ",
                             fontSize: 25,
                           },
                           legend: {

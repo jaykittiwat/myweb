@@ -10,6 +10,7 @@ class Abortion extends Component{
 constructor(props){
   super(props)
   this.state={
+    UID:"",
       loading:false,
       keyNoti:[],
       valuesNoti:[],
@@ -30,7 +31,7 @@ componentDidMount(){
       }).then(async(UID)=>{
     
       const result =await axios.get("http://localhost:4000/notification/notiAll/"+UID )
-      console.log(result.data)
+     // console.log(result.data)
       const data = [Object.keys(result.data),Object.values(result.data)];
        return data
       }).then((data)=>{
