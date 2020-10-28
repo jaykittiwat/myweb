@@ -245,7 +245,7 @@ export default function App(props) {
           ) : seletedList === 8 ? (
             <Tableabortion  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) :  (
-            <Tabletreat  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+            <Tabletreat  keydata={props.posts} data={props.posts.genListname} load={props.posts.loading}/>
           )
            }
         </Grid>

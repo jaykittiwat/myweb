@@ -1,20 +1,21 @@
 import React from "react";
 import {
   Paper,
-  FormGroup,
-  FormLabel,
   TextField,
   Button,
   Grid,
 } from "@material-ui/core/";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-export default function TableOfmom() {
+export default function TableOfmom(props) {
   const top100Films = [{ id_cattle: "1" }, { id_cattle: "2" }];
   const [selectedId, setSelectedId] = React.useState("");
   const setid = (newValue) => {
     setSelectedId(newValue);
   };
+  React.useEffect(() => {
+console.log(props);
+  }, [props]);
   return (
     <Paper square elevation={3} style={{ padding: "20px", margin: "10px" }}>
       <Grid container spacing={3}>

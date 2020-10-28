@@ -5,7 +5,7 @@ import {
   FormLabel,
   TextField,
   Button,
-  FormHelperText,
+  FormHelperText,Grid
 } from "@material-ui/core";
 import ImageUploader from "react-images-upload";
 import Select from "@material-ui/core/Select";
@@ -284,18 +284,7 @@ const [ageShow,setAgeShow]=React.useState("")
   const calfState=()=>{
     return(<>     
     <FormGroup>
-    <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
-      อายุ(ลูกโค)
-        </FormLabel>
-        <TextField
-          value={ageShow}
-          
-          variant="outlined"
-          placeholder="อายุ"
-          size="small"
-        />
-      </FormGroup>
+   
       <FormLabel style={{ color: "#000", marginTop: "20px" }}>
         น้ำหนักตอนเกิด
       </FormLabel>
@@ -329,21 +318,26 @@ const [ageShow,setAgeShow]=React.useState("")
     /></>)
   }
   const cattleState=()=>{
-  return(<>
-    <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
-      อายุ(แม่พันธุ์/พ่อพันธุ์)
-        </FormLabel>
-        <TextField
-          value={ageShow}
-          
-          variant="outlined"
-          placeholder="อายุ"
-          size="small"
-        />
-      </FormGroup>
+  return(<Grid container spacing={3}>
+    <Grid item xs={12} md={6}>
    <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+   
+   <FormLabel style={{ color: "#000" }}>
+     น้ำหนักตอนเกิด
+   </FormLabel>
+   <TextField
+     onChange={(e) =>
+       setDataCattle({ ...dataCattle, birth_weight: e.target.value })
+     }
+     value={dataCalf.birth_weight}
+     variant="outlined"
+     placeholder="กรอกน้ำหนัก"
+     size="small"
+   />
+ </FormGroup>
+ </Grid>
+  <Grid item xs={12} md={6}> <FormGroup>
+        <FormLabel style={{ color: "#000"}}>
         น้ำหนักอย่านม (กก.)
         </FormLabel>
         <TextField
@@ -353,10 +347,9 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกน้ำหนัก"
           size="small"
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+  <Grid item xs={12} md={6}> <FormGroup>
+        <FormLabel style={{ color: "#000" }}>
         น้ำหนักอายุ 1ปี (กก.)
         </FormLabel>
         <TextField
@@ -366,10 +359,9 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกน้ำหนัก"
           size="small"
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+  <Grid item xs={12} md={6}>  <FormGroup>
+        <FormLabel style={{ color: "#000"}}>
         ความสูงโพก 1ปี (ซม.)
         </FormLabel>
         <TextField
@@ -379,10 +371,9 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกความสูง"
           size="small"
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+  <Grid item xs={12} md={6}>   <FormGroup>
+        <FormLabel style={{ color: "#000"}}>
         ขนาดรอบอกตอนเกิด (ซม.) 
         </FormLabel>
         <TextField
@@ -392,10 +383,10 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกขนาด"
           size="small"
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+  
+      <Grid item xs={12} md={6}><FormGroup>
+        <FormLabel style={{ color: "#000"}}>
         ขนาดรอบอกหลังอย่านม (ซม.)
         </FormLabel>
         <TextField
@@ -405,10 +396,9 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกขนาด"
           size="small"
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup>  </Grid>
+      <Grid item xs={12} md={6}> <FormGroup>
+        <FormLabel style={{ color: "#000"}}>
           วันที่หย่านม
         </FormLabel>
         <TextField
@@ -418,11 +408,10 @@ const [ageShow,setAgeShow]=React.useState("")
           variant="outlined"
           size="small"
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormControl size="small" style={{ minWidth: "95%" }}>
-          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup> </Grid>
+      <Grid item xs={12} md={6}>    <FormGroup>
+        <FormControl size="small" style={{ minWidth: "100%" }}>
+          <FormLabel style={{ color: "#000" }}>
             โรงเรือน
           </FormLabel>
           <Select variant="outlined" native    
@@ -433,15 +422,13 @@ const [ageShow,setAgeShow]=React.useState("")
               <option key={index}>{item.bigcorral}</option>
             ))}
           </Select>
-          <FormHelperText>
-            หมายเหตุ:ตั้งค่าสายโรงเรือน ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
-          </FormHelperText>
+        
         </FormControl>
       </FormGroup>
-
-      <FormGroup>
-        <FormControl size="small" style={{ minWidth: "95%" }}>
-          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+ </Grid>
+      <Grid item xs={12} md={6}>  <FormGroup>
+        <FormControl size="small" style={{ minWidth: "100%" }}>
+          <FormLabel style={{ color: "#000" }}>
             คอก
           </FormLabel>
           <Select variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle, corral: e.target.value }) }
@@ -451,15 +438,13 @@ const [ageShow,setAgeShow]=React.useState("")
               <option key={index}>{item.corral}</option>
             ))}
           </Select>
-          <FormHelperText>
-            หมายเหตุ:ตั้งค่าคอก ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
-          </FormHelperText>
+     
         </FormControl>
-      </FormGroup>
-
-      <FormGroup>
-        <FormControl size="small" style={{ minWidth: "95%" }}>
-          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup> </Grid>
+     
+      <Grid item xs={12} md={6}> <FormGroup>
+        <FormControl size="small" style={{ minWidth: "100%" }}>
+          <FormLabel style={{ color: "#000"}}>
             ฝูง
           </FormLabel>
           <Select variant="outlined"  native onChange={(e) =>setDataCattle({ ...dataCattle, herd_no: e.target.value }) }
@@ -469,13 +454,10 @@ const [ageShow,setAgeShow]=React.useState("")
               <option key={index}>{item.herd_num}</option>
             ))}
           </Select>
-          <FormHelperText>
-            หมายเหตุ:ตั้งค่าฝูง ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
-          </FormHelperText>
         </FormControl>
-      </FormGroup>
+      </FormGroup> </Grid> 
       <Paper
-        style={{ width: "100%", textAlign: "center", marginTop: "20px" }}
+        style={{ width: "100%", textAlign: "center" }}
         elevation={0}
       >
         <img
@@ -492,7 +474,7 @@ const [ageShow,setAgeShow]=React.useState("")
         imgExtension={[".jpg", ".gif", ".png", ".gif"]}
         maxFileSize={5242880}
       />
-  </>)
+  </Grid>)
   }
   return (
     <Paper
@@ -507,7 +489,9 @@ const [ageShow,setAgeShow]=React.useState("")
         ลงทะเบียนโค
       </Paper>
 
-      <FormGroup>
+
+      <Grid container spacing={3}>
+  <Grid item xs={12} md={6}>  <FormGroup>
         <FormLabel style={{ color: "#000", marginTop: "20px" }}>
           ชื่อโค
         </FormLabel>
@@ -518,12 +502,11 @@ const [ageShow,setAgeShow]=React.useState("")
         size="small"  
         onChange={(e) =>setDataCattle({ ...dataCattle, name_cow: e.target.value }) }
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+  <Grid item xs={12}md={6}>  <FormGroup>
+        <FormLabel style={{ color: "#000" ,marginTop: "20px" }}>
           หมายเลขประจำตัวสัตว์ เช่น(์NID/RFID/Microchip/เบอร์หู)
-          ห้ามใช้เครื่องหมาย ' / '
+        
         </FormLabel>
         <TextField
         value={dataCattle.cattle_id}
@@ -533,10 +516,11 @@ const [ageShow,setAgeShow]=React.useState("")
           onChange={(e) =>setDataCattle({ ...dataCattle, cattle_id: e.target.value.replace(/[/]/gi, ' ') }) }
         />
       </FormGroup>
+</Grid>
 
-      <FormGroup>
-        <FormControl size="small" style={{ minWidth: "95%" }}>
-          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+  <Grid item xs={12} md={6}> <FormGroup>
+        <FormControl size="small" style={{ minWidth: "100%" }}>
+          <FormLabel style={{ color: "#000" }}>
             เพศ
           </FormLabel>
        
@@ -546,11 +530,10 @@ const [ageShow,setAgeShow]=React.useState("")
             <option value="MISS">เมีย</option>
           </Select>
         </FormControl>
-      </FormGroup>
-
-      <FormGroup>
-        <FormControl size="small" style={{ minWidth: "95%" }}>
-          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+  <Grid item xs={12} md={6}>   <FormGroup>
+        <FormControl size="small" style={{ minWidth: "100%" }}>
+          <FormLabel style={{ color: "#000"}}>
             วิธีผสม
           </FormLabel>
           <Select variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle,  breed_method: e.target.value }) }>
@@ -562,11 +545,11 @@ const [ageShow,setAgeShow]=React.useState("")
 
           </Select>
         </FormControl>
-      </FormGroup>
-
+      </FormGroup></Grid>
+  <Grid item xs={12} md={6}>
       <FormGroup>
-        <FormControl size="small" style={{ minWidth: "95%" }}>
-          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        <FormControl size="small" style={{ minWidth: "100%" }}>
+          <FormLabel style={{ color: "#000" }}>
             สี{" "}
           </FormLabel>
           <Select value={dataCattle.color} variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle,  color: e.target.value }) } >
@@ -575,15 +558,13 @@ const [ageShow,setAgeShow]=React.useState("")
               <option key={index}>{item.color}</option>
             ))}
           </Select>
-          <FormHelperText>
-            หมายเหตุ:ตั้งค่าสี ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
-          </FormHelperText>
+       
         </FormControl>
       </FormGroup>
-
-      <FormGroup>
-        <FormControl size="small" style={{ minWidth: "95%" }}>
-          <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+</Grid>
+  <Grid item xs={12} md={6}> <FormGroup>
+        <FormControl size="small" style={{ minWidth: "100%" }}>
+          <FormLabel style={{ color: "#000"}}>
             สายพันธุ์
           </FormLabel>
           <Select variant="outlined" native onChange={(e) =>setDataCattle({ ...dataCattle,  breed: e.target.value }) }>
@@ -592,16 +573,14 @@ const [ageShow,setAgeShow]=React.useState("")
               <option key={index}>{item.strian}</option>
             ))}
           </Select>
-          <FormHelperText>
-            หมายเหตุ:ตั้งค่าสายพันธุ์ ไปที่ตั้งค่าฟาร์ม / ไปที่ตั้งค่าระบบฟาร์ม
-          </FormHelperText>
+        
         </FormControl>
       </FormGroup>
 
-    
-
+    </Grid>
+    <Grid item xs={12} md={6}>
       <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        <FormLabel style={{ color: "#000",}}>
           พ่อพันธุ์
         </FormLabel>
         <TextField
@@ -611,10 +590,9 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกหมายเลขโค"
           size="small"
         />
-      </FormGroup>
-
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+    <Grid item xs={12} md={6}>  <FormGroup>
+        <FormLabel style={{ color: "#000" }}>
           แม่พันธุ์
         </FormLabel>
         <TextField
@@ -624,10 +602,10 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกหมายเลขโค"
           size="small"
         />
-      </FormGroup>
-
+      </FormGroup></Grid>
+    <Grid item xs={12} md={6}>
       <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+        <FormLabel style={{ color: "#000" }}>
         ชื่อผู้ผสมพันธุ์
         </FormLabel>
         <TextField
@@ -637,9 +615,9 @@ const [ageShow,setAgeShow]=React.useState("")
           placeholder="กรอกชื่อ"
           size="small"
         />
-      </FormGroup>
-      <FormGroup>
-        <FormLabel style={{ color: "#000", marginTop: "20px" }}>
+      </FormGroup></Grid>
+      <Grid item xs={12} md={6}>  <FormGroup>
+        <FormLabel style={{ color: "#000" }}>
           วันที่เกิด
         </FormLabel>
         <TextField
@@ -649,6 +627,30 @@ const [ageShow,setAgeShow]=React.useState("")
           onChange={(e) =>cattleAge(e) }
         />
       </FormGroup>
+ </Grid>
+</Grid>
+
+
+    
+
+    
+     
+
+   
+
+     
+
+
+    
+
+    
+
+
+
+
+
+
+
      {checkAge===""?"":checkAge==="cattle"?cattleState():calfState()}
       <Paper
         elevation={0}
