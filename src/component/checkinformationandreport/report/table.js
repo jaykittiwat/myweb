@@ -58,7 +58,7 @@ export default function App(props) {
   const [open2, setOpen2] = React.useState(true);
   const [seletedList, setSelectedList] = React.useState(0);
   React.useEffect(() => {
-  console.log(props.posts);
+  //console.log(props.posts);
   }, [props]);
   const handleClick = () => {
     setOpen(!open);
@@ -245,7 +245,7 @@ export default function App(props) {
           ) : seletedList === 8 ? (
             <Tableabortion  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) :  (
-            <Tabletreat  keydata={props.posts} data={props.posts.genListname} load={props.posts.loading}/>
+            <Tabletreat  keydata={props.posts} data1={props.posts.datacattle}  data2={props.posts.datacalf} load={props.posts.loading} UID={props.posts.UID}/>
           )
            }
         </Grid>

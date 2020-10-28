@@ -15,8 +15,7 @@ class Header extends Component {
       keycattle: [],
       datacalf: [],
       keycalf: [],
-      listname:[],
-      genListname:[]
+     
     };
     
   }
@@ -32,26 +31,6 @@ class Header extends Component {
            const datacattle = await axios.get("http://localhost:4000/cattle/showAll/" +this.state.UID)
            const datacalf = await axios.get("http://localhost:4000/calf/calfshowAll/" +this.state.UID)
            this.setState({...this.state,datacattle:datacattle.data[1],keycattle:datacattle.data[0],datacalf:datacalf.data[1],keycalf:datacalf.data[0],loading:false})
-          }).then(()=>{
-            const children = this.state.datacattle.concat(
-              this.state.datacalf
-            );
-            this.setState({ ...this.state,listname: children });
-          }).then(()=>{
-            const setId = [];
-            this.state.listname.map((item) => {
-              const validKeys = ["cattle_id", "birth_id"];
-              Object.keys(item).forEach(
-                (key) => validKeys.includes(key) || delete item[key]
-              );
-              const key = "birth_id";
-              item["cattle_id"] = item[key]
-                ? item[key]
-                : item["cattle_id"];
-              delete item[key];
-              setId.push(item);
-            });
-            this.setState({ ...this.state, genListname: setId });
           })
       }
     })
