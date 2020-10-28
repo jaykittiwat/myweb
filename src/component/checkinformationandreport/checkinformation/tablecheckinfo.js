@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+ width:"300px"
   },
 }));
 
@@ -64,7 +65,7 @@ export default function TableReport(props) {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <Paper>
         <div className="text-header-report martop-10">ออกรายงาน</div>
         <div className={classes.root}>
@@ -81,23 +82,14 @@ export default function TableReport(props) {
             <Tab
               label="จำนวนโคภายในฟาร์ม"
               {...a11yProps(0)}
-              style={{ outline: "none" }}
+              style={{ outline: "none",fontSize:"18px" }}
             />
             <Tab
               label="จำนวนโคแต่ละสายพันธุ์"
               {...a11yProps(1)}
-              style={{ outline: "none" }}
+              style={{ outline: "none",fontSize:"18px" }}
             />
-            <Tab
-              label="จำนวนการเกิดและการแท้ง"
-              {...a11yProps(2)}
-              style={{ outline: "none" }}
-            />
-            <Tab
-              label="จำนวนการเกิดโรค"
-              {...a11yProps(3)}
-              style={{ outline: "none" }}
-            />
+           
           </Tabs>
           <TabPanel
             value={value}
@@ -232,126 +224,6 @@ export default function TableReport(props) {
                               }
                             }
                           }
-                        }}
-                      />
-                    </Paper>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </div>
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={2}
-            className="container-fluid text-center  "
-          >
-              <div className="container-fluid">
-              <Grid>
-                <Grid>
-                  <Grid>
-                    <Paper elevation={0} className="pad-10">
-                      <Bar
-                        data={{
-                          labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
-                          ],
-                          datasets: [
-                            {
-                              data: [12, 19, 3, 5, 30, 3],
-                              backgroundColor: [
-                                "rgba(255, 99, 132)",
-                                "rgba(54, 162, 235)",
-                                "rgba(255, 206, 86)",
-                                "rgba(75, 192, 192)",
-                                "rgba(153, 102, 255)",
-                                "rgba(255, 159, 64)",
-                              ],
-                            },
-                          ],
-                        }}
-                        options={{
-                          responsive: true,
-                          title: {
-                            display: true,
-                            text: "ยังไม่เสร็จ",
-                            fontSize: 25,
-                          },
-                          legend: {
-                            display: false,
-                          },
-                          layout: {
-                            padding: {
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                            },
-                          },
-                        }}
-                      />
-                    </Paper>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </div>
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={3}
-            className="container-fluid text-center  "
-          >
-              <div className="container-fluid">
-              <Grid>
-                <Grid>
-                  <Grid>
-                    <Paper elevation={0} className="pad-10">
-                      <Bar
-                        data={{
-                          labels: [
-                            "บรามัน",
-                            "แองกัส",
-                            "พื้นเมือง",
-                            "ชาโรเล่",
-                            "ควาย",
-                            "เฮียฟอร์ด",
-                          ],
-                          datasets: [
-                            {
-                              data: [12, 19, 3, 5, 30, 3],
-                              backgroundColor: [
-                                "rgba(255, 99, 132)",
-                                "rgba(54, 162, 235)",
-                                "rgba(255, 206, 86)",
-                                "rgba(75, 192, 192)",
-                                "rgba(153, 102, 255)",
-                                "rgba(255, 159, 64)",
-                              ],
-                            },
-                          ],
-                        }}
-                        options={{
-                          responsive: true,
-                          title: {
-                            display: true,
-                            text: "โคภายในฟาร์ม",
-                            fontSize: 25,
-                          },
-                          legend: {
-                            display: false,
-                          },
-                          layout: {
-                            padding: {
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                            },
-                          },
                         }}
                       />
                     </Paper>

@@ -348,7 +348,7 @@ export default function SimpleTable(props) {
                     type="date"
                     style={{ width: "100%" }}
                     id="date_branding"
-                    value={ branding[index].datebran|| ""}
+                    value={ branding[index].datebran|| "2020-10-01"}
                     onChange={(event) => SETVALUES(event, index)}
                   ></TextField>
                 ) : (

@@ -19,6 +19,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
+import ReactExport from "react-export-excel";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 const useStyles1 = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -99,7 +102,7 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired
 };
-export default function TableOfmom() {
+export default function TableOfmom(props) {
   const classes = useStyles1();
 
   const [rows, setRows] = React.useState(setData);
@@ -109,11 +112,25 @@ export default function TableOfmom() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [checkPage, setCheckPage] = React.useState(0);
   const Head = [
-    { cell: "name", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
-    { cell: "lastname", align: "left" },
-    { cell: "Age", align: "left" },
-    { cell: "Action", align: "center" }
+    { cell: "ชื่อโค", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
+    { cell: "หมายเลขโค", align: "left" },
+    { cell: "เพศ", align: "left" },
+    { cell: "สายพันธุ์", align: "left" },
+    { cell: "น้ำหนักแรกเกิด", align: "left" },
+    { cell: "พ่อพันธุ์", align: "left" },
+    { cell: "แม่พันธุ์", align: "left" },
+    { cell: "สี", align: "left" },
+    { cell: "สุญเขา", align: "left" },
+    { cell: "ตีเบอร์", align: "left" },
+     { cell: "อย่านม", align: "left" },
+    { cell: "แก้ไข", align: "center" }
   ];
+
+  React.useEffect(() => {
+  setRows(props.data)
+    }, [props]);
+
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -144,6 +161,46 @@ export default function TableOfmom() {
     const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v } } });
     setRows(newSet);
   };
+  const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const Download=()=>{
+  return (
+    <ExcelFile element={  <Button
+      style={{
+        color: "#fff",
+        backgroundColor: "#64dd17",
+        fontSize: "16px",
+        width: "auto",
+        margin: "0px"
+      }}
+    >
+      DOWNLOAD EXCEL
+    </Button>}>
+        <ExcelSheet data={rows} name="calf_List" >
+            <ExcelColumn label="ชื่อโค" value="name_cattle"   />
+            <ExcelColumn label="หมายเลขโค" value="birth_id"   />
+            <ExcelColumn label="เพศ" value="sex"   />
+            <ExcelColumn label="สายพันธุ์" value="breed"   />
+            <ExcelColumn label="น้ำหนักแรกเกิด" value="birth_weight"   />
+            <ExcelColumn label="พ่อพันธุ์" value="sire_id"   />
+            <ExcelColumn label="แม่พันธุ์" value="dam_id"   />
+            <ExcelColumn label="สี" value="color"   />
+            <ExcelColumn label="สุญเขา" value="horndetering"   />
+            <ExcelColumn label="ตีเบอร์" value="branding"   />
+            <ExcelColumn label="อย่านม" value="wean"   />
+           
+        </ExcelSheet>
+    </ExcelFile>
+);
+}
+
+if(props.load){
+  return( <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
+  <CircularProgress size={40} />
+  <h3>Loading.....</h3>
+</div>)
+}
   return (
     <Paper square elevation={3}>
       <Paper className={classes.HeaderSetting} elevation={3} square>
@@ -155,24 +212,9 @@ export default function TableOfmom() {
             </div>
           </Grid>
           <Grid item xs={6} style={{textAlign:"right"}}>
-            <Button
-              color="secondary"
-              variant="contained"
-              style={{ fontSize: "16px", width: "90px", margin: "0px" }}
-            >
-              PDF
-            </Button>{" "}
-            <Button
-              style={{
-                color: "#fff",
-                backgroundColor: "#64dd17",
-                fontSize: "16px",
-                width: "90px",
-                margin: "0px"
-              }}
-            >
-              EXCEL
-            </Button>
+           
+          {Download()}
+         
           </Grid>
         </Grid>
       </Paper>
@@ -201,37 +243,108 @@ export default function TableOfmom() {
                   {startEdit && indexRow === index && page === checkPage ? (
                     <TextField
                       style={{ width: "100%" }}
-                      id="name"
-                      value={row.name}
+                      id="name_cattle"
+                      value={row.name_cattle}
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.name
+                    row.name_cattle
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
                   {startEdit && indexRow === index && page === checkPage ? (
                     <TextField
                       style={{ width: "100%" }}
-                      id="lastName"
-                      value={row.lastName}
+                      id="birth_id"
+                      value={row.birth_id}
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.lastName
+                    row.birth_id||"-"
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
                   {startEdit && indexRow === index && page === checkPage ? (
                     <TextField
                       style={{ width: "100%" }}
-                      id="Age"
-                      value={row.Age}
+                      id="sex"
+                      value={row.sex}
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.Age
+                    row.sex
                   )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="breed"
+                      value={row.breed}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.breed||"-"
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="birth_weight"
+                      value={row.birth_weight}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.birth_weight||"-"
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="sire_id"
+                      value={row.sire_id}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.sire_id||"-"
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="dam_id"
+                      value={row.dam_id}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.dam_id||"-"
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="color"
+                      value={row.color}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.color||"-"
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px",width:"150px" }}>
+               
+                    {row.horndetering?<span style={{color:"green"}}>ทำแล้ว</span>:<span style={{color:"red"}}>ยังไม่เสร็จ</span>||"-"}
+                  
+                </TableCell>
+                <TableCell style={{ fontSize: "18px",width:"150px" }}>
+                  {row.branding?<span style={{color:"green"}}>ทำแล้ว</span>:<span style={{color:"red"}}>ยังไม่เสร็จ</span>||"-"}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {row.wean?<span style={{color:"green"}}>ทำแล้ว</span>:<span style={{color:"red"}}>ยังไม่เสร็จ</span>||"-"}
                 </TableCell>
                 <TableCell style={{ width: "200px" }}>
                   <Grid container>
@@ -265,7 +378,7 @@ export default function TableOfmom() {
                   100,
                   { label: "All", value: -1 }
                 ]}
-                colSpan={5}
+                colSpan={15}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

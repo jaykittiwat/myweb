@@ -30,10 +30,13 @@ class Notification extends Component {
           const result2 =await axios.get("http://localhost:4000/treatment/notiAll/"+UID )
           const data1 = Object.values(result.data);
           const data2 = Object.values(result2.data);
+      
           const data=data1.concat(data2)
+          
                 this.setState({...this.state,dataNoti:data,loading:false})
+          }).then(()=>{
+            console.log(this.state.dataNoti);
           })
-        
         }
     })
   }

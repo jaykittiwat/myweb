@@ -24,6 +24,7 @@ import Select from "@material-ui/core/Select";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import Grid from "@material-ui/core/Grid";
 import TableClaves from "./table";
 import axios from "axios";
 
@@ -50,7 +51,7 @@ export default function TableCheckUp(props) {
     }
     return dd + "-" + mm + "-" + yyyy;
   };
-  const inntialDate2 = () => {
+  /*const inntialDate2 = () => {
     var date = new Date();
     var newdate = new Date(date);
     newdate.setDate(newdate.getDate());
@@ -64,23 +65,23 @@ export default function TableCheckUp(props) {
       dd = "0" + dd;
     }
     return yyyy + "-" + mm + "-" + dd;
-  };
+  };*/
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
-  const [dateCheckup, setDateCheckup] = useState(inntialDate2);
+  const [dateCheckup, setDateCheckup] = useState("");
   const [theCheckUp, setThecheckUp] = useState("");
   const [note, setNote] = useState("");
   const [time, setTime] = useState(" ");
-  const [Number_dayClave, setNumber_dayclave] = useState("198");
+  const [Number_dayClave, setNumber_dayclave] = useState("193");
   const [Number_daySync, setNumber_daySync] = useState("7");
   const [show_Syncday, set_Show_Syncday] = useState(inntialDate);
-  const [show_Before_7Day, set_Show_Before_7Day] = useState();
-  const [show_Claveday, set_show_clavedate] = useState();
-  const [show_Affter_7Day, set_Show_Affter_7Day] = useState();
+  const [show_Before_7Day, set_Show_Before_7Day] = useState([]);
+  const [show_Claveday, set_show_clavedate] = useState([]);
+  const [show_Affter_7Day, set_Show_Affter_7Day] = useState([]);
   const [dateNoti, setDateNoti] = useState([]); //เก็บข้อมูลในnoti ที่เลือก
 
-  const manageDateSync = e => {
-    //ยังไม่ได้ดึงsetting มา
+  const manageDateSync = (e) => {
+    setDateClave(e);
     setDateCheckup(e.target.value);
     var date = new Date(e.target.value);
     var newdate = new Date(date); //วันที่สำหรับตรวจท้อง
@@ -162,11 +163,9 @@ export default function TableCheckUp(props) {
   };
 
   useEffect(() => {
-    setRecoder(props.posts.fname)
-    setOperator(props.posts.fname)
-    setDateClave();
- 
-  }, [dateNoti]);
+    setRecoder(props.posts.fname);
+    setOperator(props.posts.fname);
+  }, [props]);
 
   const saveData = () => {
     if (theCheckUp === "ท้อง") {
@@ -193,7 +192,7 @@ export default function TableCheckUp(props) {
             {
               date: show_Before_7Day[i],
               id_cattle: selectedDamId[i],
-              type: "วันคลอด"
+              type: "วันคลอด",
             }
           );
         })
@@ -211,7 +210,7 @@ export default function TableCheckUp(props) {
           axios.post("http://localhost:4000/history/" + UID, {
             dam_id: selectedDamId[i],
             date: dateCheckup,
-            type: "ตรวจท้อง"
+            type: "ตรวจท้อง",
           });
         })
         .then(async () => {
@@ -228,7 +227,7 @@ export default function TableCheckUp(props) {
             pregnant_noti: Number_dayClave, //198วันคลอด
             recoder: recoder,
             result: theCheckUp,
-            timeabd: time
+            timeabd: time,
           });
         })
         .then(() => {
@@ -253,7 +252,7 @@ export default function TableCheckUp(props) {
             {
               date: show_Syncday,
               id_cattle: selectedDamId[i],
-              type: "บำรุงแม่พันธุ์"
+              type: "บำรุงแม่พันธุ์",
             }
           );
         })
@@ -271,7 +270,7 @@ export default function TableCheckUp(props) {
           axios.post("http://localhost:4000/history/" + UID, {
             dam_id: selectedDamId[i],
             date: dateCheckup,
-            type: "ตรวจท้อง"
+            type: "ตรวจท้อง",
           });
         })
         .then(() => {
@@ -288,7 +287,7 @@ export default function TableCheckUp(props) {
             pregnant_noti: Number_dayClave, //198วันคลอด
             recoder: recoder,
             result: theCheckUp,
-            timeabd: time
+            timeabd: time,
           });
         })
         .then(() => {
@@ -323,10 +322,10 @@ export default function TableCheckUp(props) {
       if (order !== 0) return order;
       return a[1] - b[1];
     });
-    return stabilizedThis.map(el => el[0]);
+    return stabilizedThis.map((el) => el[0]);
   };
 
-  const CalculateDateSync = e => {
+  const CalculateDateSync = (e) => {
     const numberdate = e.target.value;
     var date = new Date(dateCheckup);
     var newdate = new Date(date); //วันที่สำหรับตรวจท้อง
@@ -346,7 +345,7 @@ export default function TableCheckUp(props) {
     set_Show_Syncday(setnextmissionday);
   };
 
-  const CalculateDateClave = e => {
+  const CalculateDateClave = (e) => {
     const number = e.target.value;
     setNumber_dayclave(number);
     const dayClave = [];
@@ -416,8 +415,8 @@ export default function TableCheckUp(props) {
       id: "6",
       numeric: true,
       disablePadding: false,
-      label: "สิ้นสุดวันที่ตรวจท้อง"
-    }
+      label: "สิ้นสุดวันที่ตรวจท้อง",
+    },
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -436,11 +435,11 @@ export default function TableCheckUp(props) {
               inputProps={{ "aria-label": "select all desserts" }}
             />
           </TableCell>
-          {headCells.map(headCell => (
+          {headCells.map((headCell) => (
             <TableCell
               style={{
                 minWidth: 100,
-                textAlign: headCell.numeric ? "right" : "left"
+                textAlign: headCell.numeric ? "right" : "left",
               }}
               key={headCell.id}
               sortDirection={orderBy === headCell.id ? order : false}
@@ -460,37 +459,37 @@ export default function TableCheckUp(props) {
     onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(["asc", "desc"]).isRequired,
     orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired
+    rowCount: PropTypes.number.isRequired,
   };
 
-  const useToolbarStyles = makeStyles(theme => ({
+  const useToolbarStyles = makeStyles((theme) => ({
     root: {
       paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.primary.main,
-            backgroundColor: lighten(theme.palette.primary.light, 0.85)
+            backgroundColor: lighten(theme.palette.primary.light, 0.85),
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
           },
     title: {
-      flex: "1 1 100%"
-    }
+      flex: "1 1 100%",
+    },
   }));
 
-  const EnhancedTableToolbar = props => {
+  const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
 
     return (
       <Toolbar
         className={clsx(classes.root, {
-          [classes.highlight]: numSelected > 0
+          [classes.highlight]: numSelected > 0,
         })}
       >
         {numSelected > 0 ? (
@@ -512,19 +511,19 @@ export default function TableCheckUp(props) {
   };
 
   EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired
+    numSelected: PropTypes.number.isRequired,
   };
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      width: "100%"
+      width: "100%",
     },
     paper: {
       width: "100%",
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     table: {
-      minWidth: 750
+      minWidth: 750,
     },
     visuallyHidden: {
       border: 0,
@@ -535,10 +534,10 @@ export default function TableCheckUp(props) {
       padding: 0,
       position: "absolute",
       top: 20,
-      width: 1
+      width: 1,
     },
     FormWidth: {
-      width: "100%"
+      width: "100%",
     },
     paperNoti0: {
       backgroundColor: "#fb8c00",
@@ -546,7 +545,7 @@ export default function TableCheckUp(props) {
       width: "100%",
       fontSize: "20px",
       padding: "10px",
-      color: "white"
+      color: "white",
     },
     paperNoti1: {
       backgroundColor: "#536dfe",
@@ -554,7 +553,7 @@ export default function TableCheckUp(props) {
       width: "100%",
       fontSize: "20px",
       padding: "10px",
-      color: "white"
+      color: "white",
     },
     paperNoti2: {
       backgroundColor: "#304ffe",
@@ -562,7 +561,7 @@ export default function TableCheckUp(props) {
       width: "100%",
       fontSize: "20px",
       padding: "10px",
-      color: "white"
+      color: "white",
     },
     paperNoti3: {
       backgroundColor: "#536dfe",
@@ -570,21 +569,21 @@ export default function TableCheckUp(props) {
       width: "100%",
       fontSize: "20px",
       padding: "10px",
-      color: "white"
+      color: "white",
     },
     pad: {
       paddingLeft: "2%",
       paddingRight: "2%",
-      paddingTop: "2%"
+      paddingTop: "2%",
     },
     marForm: {
-      marginTop: "1%"
+      marginTop: "1%",
     },
     marTextField: {
-      marginTop: "2%"
+      marginTop: "2%",
     },
     textRow: {
-      fontSize: "16px"
+      fontSize: "16px",
     },
     headerClave: {
       margin: "0",
@@ -592,8 +591,8 @@ export default function TableCheckUp(props) {
       fontSize: "20px",
       color: "#fff",
       backgroundColor: "#304ffe",
-      borderRadius: "5px 5px 0 0"
-    }
+      borderRadius: "5px 5px 0 0",
+    },
   }));
 
   const classes = useStyles();
@@ -603,7 +602,7 @@ export default function TableCheckUp(props) {
   const [selectedDamId, setSelectedDamId] = React.useState([]); //cattle_idโคที่เลือก
   const [keyDateNoti, setKeyDateNoti] = useState([]); //key child  in --cattle child database  from selected table row
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // เรียงลำดับ
@@ -613,12 +612,12 @@ export default function TableCheckUp(props) {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = event => {
+  const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = key.map(n => n);
-      const newSelectedsDamId = rows.map(n => n.cattle_id);
-      const newSelectedsDate = date.map(n => n);
-      const newSelectedsKeysDate = keysDateNotiCattle.map(n => n);
+      const newSelecteds = key.map((n) => n);
+      const newSelectedsDamId = rows.map((n) => n.cattle_id);
+      const newSelectedsDate = date.map((n) => n);
+      const newSelectedsKeysDate = keysDateNotiCattle.map((n) => n);
 
       setSelected(newSelecteds);
       setSelectedDamId(newSelectedsDamId);
@@ -704,16 +703,12 @@ export default function TableCheckUp(props) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleChangeDense = event => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = id => selected.indexOf(id) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -728,230 +723,241 @@ export default function TableCheckUp(props) {
   }
 
   return (
-    <div className="container">
-      <div className={classes.root}>
-        <Paper
-          className={classes.paper}
-          elevation={3}
-          style={{ marginTop: "20px" }}
-        >
-          <EnhancedTableToolbar numSelected={selected.length} />
-          <TableContainer>
-            <Table
-              className={classes.table}
-              aria-labelledby="tableTitle"
-              size={dense ? "small" : "medium"}
-              aria-label="enhanced table"
-            >
-              <EnhancedTableHead
-                classes={classes}
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-              <TableBody
-              /* ----------------------------ตัวตาราง--------------------------- */
-              >
-                {stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(
-                      key[index],
-                      row.cattle_id
-                    );
-                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                    return (
-                      <TableRow
-                        hover
-                        onClick={event =>
-                          handleClick(
-                            event,
-                            key[index],
-                            row.cattle_id,
-                            date[index],
-                            keysDateNotiCattle[index]
-                          )
-                        }
-                        role="checkbox"
-                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
-                        tabIndex={-1}
-                        key={row.cattle_id}
-                      >
-                        <TableCell
-                          padding="checkbox"
-                          /*ส่วนของcheckBox แต่ละแถว*/
-                        >
-                          <Checkbox
-                            checked={isItemSelected}
-                            inputProps={{ "aria-labelledby": labelId }}
-                            color="primary"
-                          />
-                        </TableCell>
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        ></TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.cattle_id}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.bigcorral || "ไม่ระบุ"}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.corral || "ไม่ระบุ"}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.herd_no}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {date[index].date}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                    <TableCell colSpan={7} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <div>
-            <TablePagination
-              //ปุ่มเปลี่ยนห้นา
-              rowsPerPageOptions={[5, 10, 15, 20]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          </div>
-        </Paper>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={dense}
-              onChange={handleChangeDense}
-              color="primary"
-            />
-          }
-          label="ย่อตาราง"
-        />
-      </div>
-      <div className={classes.headerClave}>บันทึกการตรวจท้อง</div>
-      <Paper elevation={3} className={classes.pad}>
-        <FormGroup className={classes.marForm}>
-          <FormLabel>ชื่อผู้บันทึก</FormLabel>
-          <TextField
-            variant="outlined"
-            placeholder="ชื่อผู้บันทึก"
-            size="small"
-            value={recoder}
-            onChange={e => setRecoder(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
-          <FormLabel>ชื่อผู้ปฏิบัติการ</FormLabel>
-          <TextField
-            variant="outlined"
-            placeholder="ชื่อผู้ปฏิบัติการ"
-            size="small"
-            value={operator}
-            onChange={e => setOperator(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
-          <FormLabel>วันที่ตรวจ</FormLabel>
-          <TextField
-            variant="outlined"
-            type="date"
-            size="small"
-            value={dateCheckup}
-            onChange={manageDateSync}
-          />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
-          <FormLabel>เวลาที่ตรวจ</FormLabel>
-          <TextField
-            variant="outlined"
-            type="time"
-            size="small"
-            onChange={e => setTime(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
-          <FormControl size="small">
-            <FormLabel>ผลการตรวจท้อง</FormLabel>
-            <Select
-              variant="outlined"
-              native
-              value={theCheckUp}
-              onChange={e => setThecheckUp(e.target.value)}
-            >
-              <option value=" ">เลือก</option>
-              <option>ท้อง</option>
-              <option>ไม่ท้อง</option>
-            </Select>
-          </FormControl>
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
-          <FormLabel>จำนวนวันแจ้งคลอด(วัน)</FormLabel>
-          <TextField
-            variant="outlined"
-            size="small"
-            value={Number_dayClave}
-            onChange={CalculateDateClave}
-          />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
-          <FormLabel>จำนวนกลับสัด(วัน)</FormLabel>
-          <TextField
-            variant="outlined"
-            size="small"
-            value={Number_daySync}
-            onChange={CalculateDateSync}
-          />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
-          <FormLabel>หมายเหตุ(หากมี)</FormLabel>
-          <TextareaAutosize
-            aria-label="minimum height"
-            rowsMin={3}
-            placeholder=" "
-            value={note}
-            onChange={e => setNote(e.target.value)}
-          />
-        </FormGroup>
-
-        <TableClaves
-          id={selectedDamId}
-          clavedate={show_Claveday}
-          B7={show_Before_7Day}
-          A7={show_Affter_7Day}
-          sync={show_Syncday}
-        />
-
-        <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ width: "250px", margin: "10px", outline: "none" }}
-            onClick={saveData}
+    <div className="container-fluid">
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper
+            className={classes.paper}
+            elevation={3}
+            style={{ marginTop: "20px" }}
           >
-            บันทึก
-          </Button>
-        </Paper>
-      </Paper>
+            <EnhancedTableToolbar numSelected={selected.length} />
+            <TableContainer>
+              <Table
+                className={classes.table}
+                aria-labelledby="tableTitle"
+                size={"medium"}
+                aria-label="enhanced table"
+              >
+                <EnhancedTableHead
+                  classes={classes}
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={rows.length}
+                />
+                <TableBody
+                /* ----------------------------ตัวตาราง--------------------------- */
+                >
+                  {stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(
+                        key[index],
+                        row.cattle_id
+                      );
+                      const labelId = `enhanced-table-checkbox-${index}`;
+
+                      return (
+                        <TableRow
+                          hover
+                          onClick={(event) =>
+                            handleClick(
+                              event,
+                              key[index],
+                              row.cattle_id,
+                              date[index],
+                              keysDateNotiCattle[index]
+                            )
+                          }
+                          role="checkbox"
+                          aria-checked={isItemSelected} //คลิกเลืองตรงตารา
+                          tabIndex={-1}
+                          key={row.cattle_id}
+                        >
+                          <TableCell
+                            padding="checkbox"
+                            /*ส่วนของcheckBox แต่ละแถว*/
+                          >
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ "aria-labelledby": labelId }}
+                              color="primary"
+                            />
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          ></TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.cattle_id}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.bigcorral || "ไม่ระบุ"}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.corral || "ไม่ระบุ"}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.herd_no}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {date[index].date}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={7} />
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <div>
+              <TablePagination
+                //ปุ่มเปลี่ยนห้นา
+                rowsPerPageOptions={[5, 10, 15, 20]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <div className={classes.headerClave}>บันทึกการตรวจท้อง</div>
+
+          <Paper elevation={3} className={classes.pad}>
+            <Grid container spacing={3} >
+              <Grid item xs={6}>
+                <FormGroup className={classes.marForm}>
+                  <FormLabel>ชื่อผู้บันทึก</FormLabel>
+                  <TextField
+                    variant="outlined"
+                    placeholder="ชื่อผู้บันทึก"
+                    size="small"
+                    value={recoder}
+                    onChange={(e) => setRecoder(e.target.value)}
+                  />
+                </FormGroup>
+                <FormGroup className={classes.marTextField}>
+                  <FormLabel>ชื่อผู้ปฏิบัติการ</FormLabel>
+                  <TextField
+                    variant="outlined"
+                    placeholder="ชื่อผู้ปฏิบัติการ"
+                    size="small"
+                    value={operator}
+                    onChange={(e) => setOperator(e.target.value)}
+                  />
+                </FormGroup>
+                <Grid container spacing={3} style={{marginTop:"0px"}}>
+  <Grid item xs={12} md={6}>  <FormGroup className={classes.marTextField}>
+                  <FormLabel>วันที่ตรวจ</FormLabel>
+                  <TextField
+                    variant="outlined"
+                    type="date"
+                    size="small"
+                    value={dateCheckup}
+                    onChange={manageDateSync}
+                  />
+                </FormGroup></Grid>
+  <Grid item xs={12} md={6}> <FormGroup className={classes.marTextField}>
+                  <FormLabel>เวลาที่ตรวจ</FormLabel>
+                  <TextField
+                    variant="outlined"
+                    type="time"
+                    size="small"
+                    onChange={(e) => setTime(e.target.value)}
+                  />
+                </FormGroup></Grid>
+</Grid>
+              
+               
+                <FormGroup className={classes.marTextField}>
+                  <FormControl size="small">
+                    <FormLabel>ผลการตรวจท้อง</FormLabel>
+                    <Select
+                      variant="outlined"
+                      native
+                      value={theCheckUp}
+                      onChange={(e) => setThecheckUp(e.target.value)}
+                    >
+                      <option value=" ">เลือก</option>
+                      <option>ท้อง</option>
+                      <option>ไม่ท้อง</option>
+                    </Select>
+                  </FormControl>
+                </FormGroup>
+                <FormGroup className={classes.marTextField}>
+                  <FormLabel>จำนวนวันแจ้งคลอด(วัน)</FormLabel>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    value={Number_dayClave}
+                    onChange={CalculateDateClave}
+                  />
+                </FormGroup>
+                <FormGroup className={classes.marTextField}>
+                  <FormLabel>จำนวนกลับสัด(วัน)</FormLabel>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    value={Number_daySync}
+                    onChange={CalculateDateSync}
+                  />
+                </FormGroup>
+                <FormGroup className={classes.marTextField}>
+                  <FormLabel>หมายเหตุ(หากมี)</FormLabel>
+                  <TextareaAutosize
+                    aria-label="minimum height"
+                    rowsMin={3}
+                    placeholder=" "
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                  />
+                </FormGroup>
+              </Grid>
+              <Grid item xs={6}>
+                {" "}
+                <TableClaves
+                  id={selectedDamId}
+                  clavedate={show_Claveday}
+                  B7={show_Before_7Day}
+                  A7={show_Affter_7Day}
+                  sync={show_Syncday}
+                />
+              </Grid>
+            </Grid>
+
+            <Paper
+              elevation={0}
+              style={{ marginTop: "20px", textAlign: "center" }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                style={{ width: "250px", margin: "10px", outline: "none" }}
+                onClick={saveData}
+              >
+                บันทึก
+              </Button>
+            </Paper>
+          </Paper>
+        </Grid>
+      </Grid>
     </div>
   );
 }
+/*   <Grid item xs={5}>
+       
+        </Grid>*/

@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { Form, Col, Button } from "react-bootstrap";
-//import { Button } from "react-bootstrap";
 import FormImg from "./FormImg";
-
 import { Link } from "react-router-dom";
 import firebase from "./../../backEnd/firebase/index";
 import axios from "axios";
-//ยังไม่ได้ทำ ระบบบลงทะเบียน
 
-////////////////////////หน้าสำหรับกรอกข้อมูลการสมัคร [เจ้าของฟาร์ม]/////////////////////
 export default function FormData() {
   const intailState = {
     user: "",
@@ -24,71 +20,67 @@ export default function FormData() {
     day_of_birth: "",
     phone_num: "",
     fax: "",
-    privilege: "เจ้าของฟาร์ม"
+    privilege: "เจ้าของฟาร์ม",
   };
+  /*const defaliMedic=[{common_drug: "ยาปฏิชีวนะ(ฉีดยาเข้าเส้นเลือดหรือกล้ามเนื้อ)",dosage: "",drug_name: "กาน่ามัยซิน(Kanamycin)",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "ยาปฏิชีวนะ(ฉีดยาเข้าเส้นเลือดหรือกล้ามเนื้อ)",dosage: "",drug_name: "เพนนิซิลลิน(Penicllin)",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "ยาซัลฟา",dosage: "",drug_name: "ไทโลซิน (Tylosin)",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "ยาถ่ายพยาธิ(การให้ยาทางปาก)",dosage: "",drug_name: "บิปเปอราซิน",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "ยาถ่ายพยาธิ(การให้ยาทางปาก)",dosage: "",drug_name: "โทอะเบนไซล",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "ยาถ่ายพยาธิภายนอก(การให้ยาทางปาก)",dosage: "",drug_name: "เซฟวิน",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "วัคซีนป้องกันคอบวม(ฉีดเข้าใต้ผิวหนัง)",dosage: "",drug_name: "วัคซีนเฮโมเรยิกเซฟติซีเมีย",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "วัคซีนป้องกันโรคกาลี(ฉีดเข้าใต้ผิวหนัง)",dosage: "",drug_name: "วัคซีนแอนแทรกซ์",exp_date: "-",mfd_date: "-",number:0},
+{common_drug: "วัคซีนป้องกันแท้งติดต่อ(ฉีดเข้าใต้ผิวหนัง)",dosage: "",drug_name: "วัคซีนบรูเซลโลซีส",exp_date: "-",mfd_date: "-",number:0},]*/
+
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
   const [validated] = useState(false);
-  //ยังไม่ได้ทำ  check Form
-  const handleSubmit = event => {
-    event.preventDefault();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(account.email, account.pass)
-      .then(res => {
-        console.log(res.user);
-        alert("สำเร็จ");
-
-        axios
-          .post(`http://localhost:4000/user/registor`, {
-            user: account.user,
-            pass: account.pass,
-            question: account.question,
-            anwser: account.anwser,
-            email: account.email,
-            fname: account.fname,
-            lname: account.lname,
-            gender: account.gender,
-            id_card: account.id_card,
-            address: account.address,
-            day_of_birth: account.day_of_birth,
-            phone_num: account.phone_num,
-            fax: account.fax,
-            privilege: account.privilege
-          })
-          .then(() => {
-            axios.post(`http://localhost:4000/settingbrand/brand/`+account.user, {
-              farm_address:account.address,
-              farm_initial: "",
-              farm_name_EN: account.user,
-              farm_name_TH: account.fname,
-              logo_base64: "",//ดึงภาพจากdatabase
-              phone_num: account.phone_num
-            });
-          })
-          .then(res => {
-            /*console.log(res);
-            console.log(res.data);
-            console.log(res.status);*/
-            alert("ลงทะเบียนสำเร็จ");
-          })
-          .catch(error => {
-           // console.log(error);
-            alert("เกิดความผิดพลาด");
-          });
+  const handleSubmit = () => {
+    axios
+      .post(`http://localhost:4000/user/registor`, {
+        user: account.user,
+        pass: account.pass,
+        question: account.question,
+        anwser: account.anwser,
+        email: account.email,
+        fname: account.fname,
+        lname: account.lname,
+        gender: account.gender,
+        id_card: account.id_card,
+        address: account.address,
+        day_of_birth: account.day_of_birth,
+        phone_num: account.phone_num,
+        fax: account.fax,
+        privilege: account.privilege,
       })
-      .catch(error => {
-        var errorCode = error.code;
+      .then((res) => {
+        axios.post("http://localhost:4000/settingbrand/brand/" + account.user, {
+          farm_address: account.address,
+          farm_initial: "",
+          farm_name_EN: account.user,
+          farm_name_TH: account.fname,
+          logo_base64: "",
+          phone_num: account.phone_num,
+        });
+      })
+      .then(() => {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(account.email, account.pass)
+          .then((res) => {})
+          .catch((error) => {
+            var errorCode = error.code;
 
-        if (errorCode === "auth/email-already-in-use") {
-          alert("Email มีผู้ใช้แล้ว");
-        }
-        if (errorCode === "auth/invalid-email") {
-          alert("กรอกข้อมููลให้ครบ");
-        }
-        if (errorCode === "auth/weak-password") {
-          alert("รหัสผ่านไม่ถูกต้อง");
-        }
+            if (errorCode === "auth/email-already-in-use") {
+              alert("Email มีผู้ใช้แล้ว");
+            }
+            if (errorCode === "auth/invalid-email") {
+              alert("กรอกข้อมููลให้ครบ");
+            }
+            if (errorCode === "auth/weak-password") {
+              alert("รหัสผ่านไม่ถูกต้อง");
+            }
+          });
       });
   };
 
@@ -104,7 +96,7 @@ export default function FormData() {
                 type="text"
                 placeholder="กรอกไอดี 6 ตัว ขึ้นไป"
                 value={account.user}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, user: e.target.value });
                 }}
               />
@@ -117,7 +109,7 @@ export default function FormData() {
                 type="password"
                 placeholder="กรอกรหัสผ่าน 6 หลัก ขึ้นไป"
                 value={account.pass}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, pass: e.target.value });
                 }}
               />
@@ -130,7 +122,7 @@ export default function FormData() {
                 type="password"
                 placeholder="กรอกรหัสผ่านอีกครัง"
                 value={checkpass}
-                onChange={e => {
+                onChange={(e) => {
                   setCheckpass(e.target.value);
                 }}
               />
@@ -143,7 +135,7 @@ export default function FormData() {
                 type="email"
                 placeholder="กรอก Email"
                 value={account.email}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, email: e.target.value });
                 }}
               />
@@ -156,7 +148,7 @@ export default function FormData() {
                 type="text"
                 placeholder="กรอกชื่อ"
                 value={account.fname}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, fname: e.target.value });
                 }}
               />
@@ -169,7 +161,7 @@ export default function FormData() {
                 type="text"
                 placeholder="กรอกนามสกุล"
                 value={account.lname}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, lname: e.target.value });
                 }}
               />
@@ -180,7 +172,7 @@ export default function FormData() {
               <Form.Control
                 as="select"
                 value={account.gender}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, gender: e.target.value });
                 }}
               >
@@ -196,7 +188,7 @@ export default function FormData() {
                 type="text"
                 placeholder="เลขบัตร 13 หลัก"
                 value={account.id_card}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, id_card: e.target.value });
                 }}
               />
@@ -206,10 +198,10 @@ export default function FormData() {
               <Form.Label>วันเกิด</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="date"
                 placeholder="วันเกิด"
                 value={account.day_of_birth}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, day_of_birth: e.target.value });
                 }}
               />
@@ -222,7 +214,7 @@ export default function FormData() {
                 type="text"
                 placeholder="บ้านเลขที่ หมู่"
                 value={account.address}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, address: e.target.value });
                 }}
               />
@@ -235,7 +227,7 @@ export default function FormData() {
                 type="text"
                 placeholder="เบอร์โทรศัพท์"
                 value={account.phone_num}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, phone_num: e.target.value });
                 }}
               />
@@ -248,7 +240,7 @@ export default function FormData() {
                 type="text"
                 placeholder="fax"
                 value={account.fax}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, fax: e.target.value });
                 }}
               />
@@ -258,7 +250,7 @@ export default function FormData() {
               <Form.Control
                 as="select"
                 value={account.question}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, question: e.target.value });
                 }}
               >
@@ -275,7 +267,7 @@ export default function FormData() {
                 type="text"
                 placeholder="คำตอบ"
                 value={account.anwser}
-                onChange={e => {
+                onChange={(e) => {
                   setAccount({ ...account, anwser: e.target.value });
                 }}
               />
@@ -292,11 +284,7 @@ export default function FormData() {
         <div className="row  ">
           <div className="text-center container-fluid">
             <Form.Group>
-              <Button
-                type="submit"
-                className="button-w2"
-                onClick={event => handleSubmit(event)}
-              >
+              <Button className="button-w2" onClick={() => handleSubmit()}>
                 ตกลง
               </Button>
 
@@ -312,16 +300,3 @@ export default function FormData() {
     </div>
   );
 }
-//form กรอกข้อมูลสมัคร
-//...account   ไม่ต้อง พิมพ์เยอะ
-
-//useEffect  ดัก การเปลี่ยนแปลงcomponent
-
-/*firebase.auth().createUserWithEmailAndPassword(account.email, account.password).then(function(){
-      
-    })
-      .catch(function(error) {
-        var errorMessage = error.message;
-        alert(errorMessage);
-      });
-*/

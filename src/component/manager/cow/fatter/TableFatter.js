@@ -45,15 +45,17 @@ export default function TableFatter(props) {
   const [time, setTime] = useState("");
   const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
  const [pro_maintain, setpro_maintain] = useState([]);
-
+const [numdays,setNumdays]= useState(20);
 
 
 
   const manageDate = e => {
-    //ยังไม่ได้ดึงsetting มา
-    var date = new Date(e.target.value);
+
+    if(e.target.id==='numday'){ 
+      setNumdays( parseInt(e.target.value||0))
+      var date = new Date(selectedDate);
     var newdate = new Date(date);
-    newdate.setDate(newdate.getDate() + 20);
+    newdate.setDate(newdate.getDate() +  parseInt(e.target.value||0));
     var dd = newdate.getDate();
     var mm = newdate.getMonth() + 1;
     var yyyy = newdate.getFullYear();
@@ -65,11 +67,31 @@ export default function TableFatter(props) {
     }
     var nextmissionday = yyyy + "-" + mm + "-" + dd;
     var setnextmissionday = dd + "-" + mm + "-" + yyyy;
+    setSelectedDate(selectedDate);
+    setShowDateInduction(setnextmissionday);
+    setDateInduction(nextmissionday);
+    }
+    
+    if(e.target.id!=='numday'){
+       date = new Date(e.target.value);
+   newdate = new Date(date);
+    newdate.setDate(newdate.getDate() + numdays);
+     dd = newdate.getDate();
+     mm = newdate.getMonth() + 1;
+     yyyy = newdate.getFullYear();
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+     nextmissionday = yyyy + "-" + mm + "-" + dd;
+     setnextmissionday = dd + "-" + mm + "-" + yyyy;
     setSelectedDate(e.target.value);
     setShowDateInduction(setnextmissionday);
     setDateInduction(nextmissionday);
+    }
   };
-
   /*-----------------------------------------------------------------------------*/
   let rows = props.posts.data;
   let key = props.posts.keydata;
@@ -612,8 +634,8 @@ setpro_maintain(props.posts.pro_maintain)
       <div className={classes.headerClave}>บันทึกการบำรุง</div>
 
       <Paper elevation={3} className={classes.pad}>
-        
-        <FormGroup className={classes.marForm}>
+        <Grid container spacing={3} >
+          <Grid item xs={6}><FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
          value={recoder}
@@ -623,8 +645,7 @@ setpro_maintain(props.posts.pro_maintain)
             size="small"
             onChange={e => setRecoder(e.target.value)}
           />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
+        </FormGroup></Grid><Grid item xs={6}><FormGroup className={classes.marTextField}>
           <FormLabel>ผู้ปฏิบัติการ</FormLabel>
           <TextField
            value={operator}
@@ -634,18 +655,19 @@ setpro_maintain(props.posts.pro_maintain)
             size="small"
             onChange={e => setOperator(e.target.value)}
           />
-        </FormGroup>
+        </FormGroup></Grid>
+          <Grid item xs={4}> 
         <FormGroup className={classes.marTextField}>
           <FormLabel>วันที่</FormLabel>
           <TextField
+          value={selectedDate}
             id="input3"
             variant="outlined"
             type="date"
             size="small"
             onChange={e => manageDate(e)}
           />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
+        </FormGroup></Grid><Grid item xs={4}><FormGroup className={classes.marTextField}>
           <FormLabel>เวลา</FormLabel>
           <TextField
             id="input4"
@@ -655,7 +677,19 @@ setpro_maintain(props.posts.pro_maintain)
             defaultValue="00:00"
             onChange={e => setTime(e.target.value)}
           />
-        </FormGroup>
+        </FormGroup></Grid>
+        <Grid item xs={4}> <FormGroup className={classes.marTextField}>
+          <FormLabel>จำนวนวัน</FormLabel>
+          <TextField
+           value={numdays}
+            id="numday"
+            variant="outlined"
+            placeholder="จำนวนวัน"
+            size="small"
+            onChange={e => manageDate(e)}
+          />
+        </FormGroup></Grid>
+        </Grid> 
         {showTable()}
         <div className={classes.marTextField}>
           <div className="container-fluid text-center">
@@ -670,13 +704,11 @@ setpro_maintain(props.posts.pro_maintain)
           </div>
         </div>
         <Grid container className={classes.marTextField}>
-          <Grid item xs={2}></Grid>
-          <Grid item xs={8}>
+        
             <Paper elevation={3} className={classes.paperNoti}>
               เริ่มการเหนี่ยวนำ วันที่ {showDateInduction}
             </Paper>
-          </Grid>
-          <Grid item xs={2}></Grid>
+          
         </Grid>
         <div className="container-fluid text-center">
           <div className={classes.marTextField}>

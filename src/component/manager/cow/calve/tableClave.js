@@ -27,6 +27,12 @@ const columns = [
     minWidth: 100,
     align: "center"
   },
+  {
+    id: "้howclave",
+    label: "ลักษณะการคลอด",
+    minWidth: 100,
+    align: "center"
+  },
   { id: "number", label: "จำนวนการเกิด", minWidth: 100, align: "center" },
   {
     id: "recovery",
@@ -126,7 +132,7 @@ export default function TableClaves(props) {
 
   const [numberCalf, setNumberClaf] = React.useState([]);
   const [oldIndex, setOldindex] = React.useState(null);
-
+const [howclave,setHowClave]=React.useState("")
   React.useEffect(() => {
     setRecorder(props.posts.fname);
     setOparator(props.posts.fname);
@@ -171,7 +177,8 @@ export default function TableClaves(props) {
       name_cattle: "",
       sex: "",
       sire_id: sirOfclaf,
-      wean: false
+      wean: false,
+      howClave:howclave
     };
     const stack = [];
     const array = [];
@@ -245,6 +252,16 @@ export default function TableClaves(props) {
                         size="small"
                         type="time"
                         onChange={event => setTimeClave(event.target.value)}
+                        disabled={index === indexRow ? false : true}
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      {" "}
+                      <TextField
+                        variant="outlined"
+                        size="small"
+                      
+                        onChange={event => setHowClave(event.target.value)}
                         disabled={index === indexRow ? false : true}
                       />
                     </TableCell>
@@ -354,6 +371,7 @@ export default function TableClaves(props) {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       <Dialogpopup
+      howclave={howclave}
         OPEN={open}
         NUMBERCALF={numberCalf}
         BackFormdialog={backFormdialog}

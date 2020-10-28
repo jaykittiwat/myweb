@@ -58,7 +58,7 @@ export default function App(props) {
   const [open2, setOpen2] = React.useState(true);
   const [seletedList, setSelectedList] = React.useState(0);
   React.useEffect(() => {
-  //console.log(props.posts);
+  console.log(props.posts);
   }, [props]);
   const handleClick = () => {
     setOpen(!open);
@@ -231,7 +231,7 @@ export default function App(props) {
           {seletedList === 0 ? (
             <Tablemom  keydata={props.posts.keycattle} data={props.posts.datacattle} load={props.posts.loading} />
           ) : seletedList === 1 ? (
-            <Tableclaf  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+            <Tableclaf  keydata={props.posts.keycalf} data={props.posts.datacalf} load={props.posts.loading}/>
           )  : seletedList === 3 ? (
             <Tablefatten  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) : seletedList === 4 ? (

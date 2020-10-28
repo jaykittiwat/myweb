@@ -46,6 +46,8 @@ class CheckingInformation extends Component{
               
                 const getbreed=[]
                 data1.map(d=>getbreed.push(d.breed))
+                s3.map(d=>getbreed.push(d.breed))
+
                 const a = getbreed.reduce(function (acc, curr) {
                   if (typeof acc[curr] == 'undefined') {
                     acc[curr] = 1;
@@ -64,6 +66,8 @@ class CheckingInformation extends Component{
                //สายพันธุ์
                
            this.setState({...this.state,data1:dataset,data2:a,loading:false})
+          }).then(()=>{
+            console.log(this.state);
           })
       }
     })

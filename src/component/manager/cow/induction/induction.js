@@ -17,7 +17,8 @@ class Induction extends Component {
       keysDate: [],
       dataNoti: [],
       UID: "",
-      fname:""
+      fname:"",
+      program_sync:[]
     };
   }
 
@@ -55,15 +56,11 @@ class Induction extends Component {
               
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
-              //  console.log(key);
-              //  console.log(data);
                 const keyInduction = [];
                 const dataInduction = [];
                 const array = [keyInduction, dataInduction];
                 for (let i = 0; i < data.length; i++) {
                   if (data[i].type === "เหนี่ยวนำกลับสัด") {
-                   // console.log(key[i]);
-                    //console.log(data[i]);
                     keyInduction.push(key[i]);
                     dataInduction.push(data[i]);
                   }
@@ -78,7 +75,6 @@ class Induction extends Component {
                 });
               })
               .then(async () => {
-               // console.log(this.state.dataNoti);
                 const cattleListData = [];
                 for (let i = 0; i < this.state.keysDate.length; i++) {
                   let res = await axios.get(
@@ -98,13 +94,17 @@ class Induction extends Component {
                 for (let i = 0; i < data.length; i++) {
                   const values = Object.keys(data[i]);
                   const dataOneCatle = Object.values(data[i]);
-                  const set = Object.assign.apply({}, dataOneCatle);
-                 
-               
+                  const set = Object.assign.apply({}, dataOneCatle);   
                   setdata.push(set);
                   setKeyCattle.push(values[0]);
                 }
-              this.setState({...this.state,keydata:setKeyCattle,data:setdata,loading:false})
+              this.setState({...this.state,keydata:setKeyCattle,data:setdata})
+              }).then(()=>{
+                axios.get(
+                  "http://localhost:4000/settingprogram_sync/program_sync/" + this.state.UID
+                ).then(res=>{
+                  this.setState({...this.state,program_sync:res.data[1],loading:false})
+                })
               })
           });
       }

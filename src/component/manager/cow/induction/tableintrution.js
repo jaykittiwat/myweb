@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -21,10 +21,6 @@ import TextField from "@material-ui/core/TextField";
 import "date-fns";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-/*import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";*/
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import { Grid } from "@material-ui/core";
@@ -41,96 +37,128 @@ export default function TableInduction(props) {
   let date = props.posts.dataNoti;
   let UID = props.posts.UID;
 
-  //console.log(props.posts.keyDate);
-
-  //let idInduction= props.posts.idCowInduc;
-  //const [typeModule] = useState({ status: "เหนี่ยวนำแล้ว" });
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [dateBreed, setDateBreed] = useState("");
   const [time, setTime] = useState("");
   const [showDateInduction, setShowDateInduction] = useState("-- -- ----");
-
-  const manageDate = e => {
+  const [numdays, setNumdays] = useState(11);
+  const [pro_sync, setPro_sync] = useState([]);
+  const manageDate = (e) => {
     //ยังไม่ได้ดึงsetting มา
-    var date = new Date(e.target.value);
-    var newdate = new Date(date);
-    newdate.setDate(newdate.getDate() + 21);
-    var dd = newdate.getDate();
-    var mm = newdate.getMonth() + 1;
-    var yyyy = newdate.getFullYear();
-    if (mm < 10) {
-      mm = "0" + mm;
+    if (e.target.id === "numday") {
+      setNumdays(parseInt(e.target.value || 0));
+      var date = new Date(selectedDate);
+      var newdate = new Date(date);
+      newdate.setDate(newdate.getDate() + parseInt(e.target.value || 0));
+      var dd = newdate.getDate();
+      var mm = newdate.getMonth() + 1;
+      var yyyy = newdate.getFullYear();
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+      var nextmissionday = yyyy + "-" + mm + "-" + dd;
+      var setnextmissionday = dd + "-" + mm + "-" + yyyy;
+      setSelectedDate(selectedDate);
+      setShowDateInduction(setnextmissionday);
+      setDateBreed(nextmissionday);
     }
-    if (dd < 10) {
-      dd = "0" + dd;
+    if (e.target.id !== "numday") {
+      date = new Date(e.target.value);
+      newdate = new Date(date);
+      newdate.setDate(newdate.getDate() + numdays);
+      dd = newdate.getDate();
+      mm = newdate.getMonth() + 1;
+      yyyy = newdate.getFullYear();
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+      nextmissionday = yyyy + "-" + mm + "-" + dd;
+      setnextmissionday = dd + "-" + mm + "-" + yyyy;
+      setSelectedDate(e.target.value);
+      setShowDateInduction(setnextmissionday);
+      setDateBreed(nextmissionday);
+      setCalDate([]);
+      setPrigramSync("");
     }
-    var nextmissionday = yyyy + "-" + mm + "-" + dd;
-    var setnextmissionday = dd + "-" + mm + "-" + yyyy;
-    setSelectedDate(e.target.value);
-    setShowDateInduction(setnextmissionday);
-    setDateBreed(nextmissionday);
   };
-useEffect(() => {
-
-  setRecoder(props.posts.fname)
-   setOperator(props.posts.fname)
-
-}, [props]);
+  useEffect(() => {
+    setPro_sync(props.posts.program_sync);
+    setRecoder(props.posts.fname);
+    setOperator(props.posts.fname);
+  }, [props]);
 
   const saveDataToInduction = () => {
     const x = selected.length;
 
     for (let a = 0; a < x; a++) {
-      axios
-        .post(
-          "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
-          { status: "เหนี่ยวนำแล้ว", process_date: selectedDate }
-        )
-        .then(() => {
-          axios.post("http://localhost:4000/history/" + UID, {
-            dam_id: selectedDamId[a],
-            date: selectedDate,
-            time: time,
-            type: "เหนี่ยวนำกลับสัด"
-          });
-        })
-        .then(() => {
-          axios.post("http://localhost:4000/synchronize/" + UID, {
-            dam_id: selectedDamId[a],
-            datepro: selectedDate,
-            program_sync: programSync,
-            recorder: recoder,
-            operator: operator
-          });
-        })
-        .then(() => {
-          axios.post(
-            "http://localhost:4000/notification/" + UID + "/" + dateBreed,
-            {
-              date: dateBreed,
-              id_cattle: selectedDamId[a],
-              type: "ผสมพันธุ์"
-            }
-          );
-        })
-        .then(async () => {
-          await axios.delete(
-            "http://localhost:4000/notification/delete/" +
-              UID +
-              "/" +
-              dateNoti[a].date +
-              "/" +
-              keyDateNoti[a]
-          );
-        })
-        .then(() => {
-          if (a + 1 === selected.length) {
-            alert("บันทึกสำเร็จ");
-            window.location.reload();
-          }
-        });
+      const x = {
+        cattle_id: selectedDamId[a],
+        name_program: "โปรแกรมเหนี่ยวนำ",
+      };
+      const newsetData = [];
+      calDate.map((list) => {
+        newsetData.push({ ...list, ...x });
+      });
+          axios
+            .post(
+              "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+              { status: "เหนี่ยวนำแล้ว", process_date: selectedDate }
+            )
+            .then(() => {
+              axios.post("http://localhost:4000/history/" + UID, {
+                dam_id: selectedDamId[a],
+                date: selectedDate,
+                time: time,
+                type: "เหนี่ยวนำกลับสัด",
+              });
+            })
+            .then(() => {
+              axios.post("http://localhost:4000/synchronize/" + UID, {
+                dam_id: selectedDamId[a],
+                datepro: selectedDate,
+                program_sync: props.posts.program_sync[programSync].pro_sync,
+                recorder: recoder,
+                operator: operator,
+              });
+            })
+            .then(() => {
+              axios.post(
+                "http://localhost:4000/notification/" + UID + "/" + dateBreed,
+                {
+                  date: dateBreed,
+                  id_cattle: selectedDamId[a],
+                  type: "ผสมพันธุ์",
+                }
+              );
+            })
+            .then( () => {
+               axios.delete(
+                "http://localhost:4000/notification/delete/" +
+                  UID +
+                  "/" +
+                  dateNoti[a].date +
+                  "/" +
+                  keyDateNoti[a]
+              );
+            }).then(() => {
+              axios
+              .post("http://localhost:4000/synchronize/notisync/" + UID, newsetData)
+            })
+            .then(()=>{
+              if (a + 1 === selected.length) {
+                alert("บันทึกสำเร็จ");
+                window.location.reload();
+              }
+            })
+      
     }
   };
 
@@ -158,7 +186,7 @@ useEffect(() => {
       if (order !== 0) return order;
       return a[1] - b[1];
     });
-    return stabilizedThis.map(el => el[0]);
+    return stabilizedThis.map((el) => el[0]);
   };
   // headCells คอลัม หัวตาราง
   const headCells = [
@@ -171,8 +199,8 @@ useEffect(() => {
       id: "6",
       numeric: true,
       disablePadding: false,
-      label: "วันที่กำหนดเหนี่ยวนำ"
-    }
+      label: "วันที่กำหนดเหนี่ยวนำ",
+    },
   ];
   //รับ prop มา ทำหัวตาราง
   function EnhancedTableHead(props) {
@@ -194,14 +222,14 @@ useEffect(() => {
               inputProps={{ "aria-label": "select all desserts" }}
             />
           </TableCell>
-          {headCells.map(headCell => (
+          {headCells.map((headCell) => (
             //map headCells ชื่อหัวตาราง และจัดหน้า
             <TableCell
               key={headCell.id}
               //numeric จริง ชิดขวา เท็จ ชิดซ้าย
               style={{
                 minWidth: 100,
-                textAlign: headCell.numeric ? "right" : "left"
+                textAlign: headCell.numeric ? "right" : "left",
               }}
               //จริง,เท็จ      calories=== headCell.id //แต่ของของเราไม่ใช่
               sortDirection={orderBy === headCell.id ? order : false}
@@ -220,37 +248,37 @@ useEffect(() => {
     onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(["asc", "desc"]).isRequired,
     orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired
+    rowCount: PropTypes.number.isRequired,
   };
 
-  const useToolbarStyles = makeStyles(theme => ({
+  const useToolbarStyles = makeStyles((theme) => ({
     root: {
       paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.primary.main,
-            backgroundColor: lighten(theme.palette.primary.light, 0.85)
+            backgroundColor: lighten(theme.palette.primary.light, 0.85),
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
           },
     title: {
-      flex: "1 1 100%"
-    }
+      flex: "1 1 100%",
+    },
   }));
 
-  const EnhancedTableToolbar = props => {
+  const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
 
     return (
       <Toolbar
         className={clsx(classes.root, {
-          [classes.highlight]: numSelected > 0
+          [classes.highlight]: numSelected > 0,
         })}
       >
         {numSelected > 0 ? (
@@ -272,19 +300,19 @@ useEffect(() => {
   };
 
   EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired
+    numSelected: PropTypes.number.isRequired,
   };
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
-      width: "100%"
+      width: "100%",
     },
     paper: {
       width: "100%",
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     table: {
-      minWidth: 750
+      minWidth: 750,
     },
     visuallyHidden: {
       border: 0,
@@ -295,10 +323,10 @@ useEffect(() => {
       padding: 0,
       position: "absolute",
       top: 20,
-      width: 1
+      width: 1,
     },
     FormWidth: {
-      width: "100%"
+      width: "100%",
     },
     paperNoti: {
       textAlign: "center",
@@ -306,29 +334,29 @@ useEffect(() => {
       fontSize: "20px",
       padding: "10px",
       color: "#fff",
-      backgroundColor: "#3b4fff"
+      backgroundColor: "#3b4fff",
     },
     pad: {
       paddingLeft: "2%",
       paddingRight: "2%",
-      paddingTop: "2%"
+      paddingTop: "2%",
     },
     marForm: {
-      marginTop: "1%"
+      marginTop: "1%",
     },
     marTextField: {
-      marginTop: "2%"
+      marginTop: "3%",
     },
     textRow: {
-      fontSize: "16px"
-    }, 
+      fontSize: "16px",
+    },
     headerClave: {
       margin: "0",
       padding: "10px",
       fontSize: "20px",
-      color:"#fff",
+      color: "#fff",
       backgroundColor: "#304ffe",
-      borderRadius: "5px 5px 0 0"
+      borderRadius: "5px 5px 0 0",
     },
   }));
 
@@ -351,14 +379,14 @@ useEffect(() => {
     setOrderBy(property);
   };
   //checkBox  ทั้งหมด-----------------------------------------------------------------------------------
-  const handleSelectAllClick = event => {
+  const handleSelectAllClick = (event) => {
     //ถ้ามีการ คลิกเชค
     if (event.target.checked) {
       //map row    idเก็บ ไว้ใน newSelecteds
-      const newSelecteds = key.map(n => n);
-      const newSelectedsDamId = rows.map(n => n.cattle_id);
-      const newSelectedsDate = date.map(n => n);
-      const newSelectedsKeysDate = keysDateNotiCattle.map(n => n);
+      const newSelecteds = key.map((n) => n);
+      const newSelectedsDamId = rows.map((n) => n.cattle_id);
+      const newSelectedsDate = date.map((n) => n);
+      const newSelectedsKeysDate = keysDateNotiCattle.map((n) => n);
 
       //console.log(newDateNoti) ;
 
@@ -447,41 +475,78 @@ useEffect(() => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleChangeDense = event => {
+  const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
-  const isSelected = id => selected.indexOf(id) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-
   const [programSync, setPrigramSync] = useState("");
-  const handleChange = event => {
-    setPrigramSync(event.target.value);
+  const [calDate, setCalDate] = useState([]);
+
+  const handleChange = (event) => {
+    const index = event.target.value;
+    if (event.target.value === "ไม่ระบุ") {
+      setPrigramSync("เลือก");
+      setCalDate([]);
+    }
+    if (event.target.value !== "ไม่ระบุ") {
+      setPrigramSync(index); //ชื่อโโปรแกรม
+      const arrayDataset = [];
+      pro_sync[index].medic.map((item, indexmedic) => {
+        //console.log(item.num_day);
+        const date = new Date(selectedDate);
+        const newdate = new Date(date);
+        newdate.setDate(newdate.getDate() + parseInt(item.num_day));
+        let dd = newdate.getDate();
+        let mm = newdate.getMonth() + 1;
+        let yyyy = newdate.getFullYear();
+        if (mm < 10) {
+          mm = "0" + mm;
+        }
+        if (dd < 10) {
+          dd = "0" + dd;
+        }
+        const nextmissionday = yyyy + "-" + mm + "-" + dd;
+
+        const dataset = {
+          numdays: item.num_day,
+          date: nextmissionday,
+          type: item.item,
+          time: item.time,
+        };
+        arrayDataset.push(dataset);
+      });
+      setCalDate(arrayDataset);
+    }
   };
- 
 
   const showTable = () => {
     return (
       <form className={classes.marTextField}>
-        <FormControl size="small" style={{ width: "95%" }}>
-          <FormLabel>รายการยา</FormLabel>
+        <FormControl size="small" style={{ width: "100%" }}>
+          <FormLabel>โปรแกรมเหนี่ยวนำ</FormLabel>
           <Select
             variant="outlined"
             native
             value={programSync}
-            onChange={event => handleChange(event)}
+            onChange={(event) => handleChange(event)}
           >
-            <option value=" "></option>
-            <option>Program A</option>
-            <option>Program B</option>
-            <option>Program C</option>
+            <option value="ไม่ระบุ">เลือก</option>
+            {pro_sync.map((list, index) => {
+              return (
+                <option key={index} value={index}>
+                  {list.pro_sync}
+                </option>
+              );
+            })}
           </Select>
         </FormControl>
       </form>
@@ -533,69 +598,71 @@ useEffect(() => {
               <TableBody
               /* ----------------------------ตัวตาราง--------------------------- */
               >
-                {//ส่ง Array Rows กับ call back getComparator()
-                //แสดงข้อมูลและการจัดการต่างๆทีละแถว
-                stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(
-                      key[index],
-                      row.cattle_id
-                    );
-                    const labelId = `enhanced-table-checkbox-${index}`;
+                {
+                  //ส่ง Array Rows กับ call back getComparator()
+                  //แสดงข้อมูลและการจัดการต่างๆทีละแถว
+                  stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(
+                        key[index],
+                        row.cattle_id
+                      );
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
-                        onClick={event =>
-                          handleClick(
-                            event,
-                            key[index],
-                            row.cattle_id,
-                            date[index],
-                            keysDateNotiCattle[index]
-                          )
-                        }
-                        role="checkbox"
-                        aria-checked={isItemSelected} //คลิกเลืองตรงตารา
-                        tabIndex={-1}
-                        key={row.cattle_id} /*keyyyyyyyyyyyyy*/
-                      >
-                        <TableCell
-                          padding="checkbox"
-                          /*ส่วนของcheckBox แต่ละแถว*/
+                      return (
+                        <TableRow
+                          hover
+                          //เมื่อมีการคลิกในแถว  หรือ check box จะเรียกใช้handleClick เพื่อไปเก็บไว้ใน serSelected([]);
+                          onClick={(event) =>
+                            handleClick(
+                              event,
+                              key[index],
+                              row.cattle_id,
+                              date[index],
+                              keysDateNotiCattle[index]
+                            )
+                          }
+                          role="checkbox"
+                          aria-checked={isItemSelected} //คลิกเลืองตรงตารา
+                          tabIndex={-1}
+                          key={row.cattle_id} /*keyyyyyyyyyyyyy*/
                         >
-                          <Checkbox
-                            checked={isItemSelected}
-                            inputProps={{ "aria-labelledby": labelId }}
-                            color="primary"
-                          />
-                        </TableCell>
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        ></TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.cattle_id}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.bigcorral||"ไม่ระบุ"}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.corral||"ไม่ระบุ"}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {row.herd_no}
-                        </TableCell>
-                        <TableCell align="right" className={classes.textRow}>
-                          {date[index].date}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          <TableCell
+                            padding="checkbox"
+                            /*ส่วนของcheckBox แต่ละแถว*/
+                          >
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ "aria-labelledby": labelId }}
+                              color="primary"
+                            />
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          ></TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.cattle_id}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.bigcorral || "ไม่ระบุ"}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.corral || "ไม่ระบุ"}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {row.herd_no}
+                          </TableCell>
+                          <TableCell align="right" className={classes.textRow}>
+                            {date[index].date}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                }
                 {emptyRows > 0 && (
                   <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                     <TableCell colSpan={7} />
@@ -630,40 +697,43 @@ useEffect(() => {
       </div>
       <div className={classes.headerClave}>บันทึกการเหนี่ยวนำ</div>
       <Paper elevation={3} className={classes.pad}>
-       
-        <FormGroup className={classes.marForm}>
+      <Grid container spacing={3}>
+  <Grid item xs={6}><FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
-          value={recoder}
+            value={recoder}
             id="input1"
             variant="outlined"
             placeholder="กรอกหมายเลขโค"
             size="small"
-            onChange={e => setRecoder(e.target.value)}
+            onChange={(e) => setRecoder(e.target.value)}
           />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
+        </FormGroup></Grid>
+  <Grid item xs={6}><FormGroup className={classes.marForm}>
           <FormLabel>ผู้ปฏิบัติการ</FormLabel>
           <TextField
-          value={operator}
+            value={operator}
             id="input2"
             variant="outlined"
             placeholder="กรอกหมายเลขโค"
             size="small"
-            onChange={e => setOperator(e.target.value)}
+            onChange={(e) => setOperator(e.target.value)}
           />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
+        </FormGroup></Grid>
+
+        <Grid item xs={6}>   
+        <FormGroup >
           <FormLabel>วันที่</FormLabel>
           <TextField
             id="input3"
             variant="outlined"
             type="date"
             size="small"
-            onChange={e => manageDate(e)}
+            onChange={(e) => manageDate(e)}
           />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
+        </FormGroup></Grid>
+  <Grid item xs={6}>  
+  <FormGroup >
           <FormLabel>เวลา</FormLabel>
           <TextField
             id="input4"
@@ -671,19 +741,84 @@ useEffect(() => {
             type="time"
             size="small"
             defaultValue="00:00"
-            onChange={e => setTime(e.target.value)}
+            onChange={(e) => setTime(e.target.value)}
           />
         </FormGroup>
+        </Grid>
+</Grid>
+
+
+        
+     
+      
         {showTable()}
 
+        <TableContainer
+          component={Paper}
+          variant="outlined"
+          style={{ marginTop: "20px" }}
+        >
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell style={{ fontSize: "16px" }}>ลำดับที่</TableCell>
+                <TableCell style={{ fontSize: "16px" }}>วันที่ดำเนินกิจกรรม</TableCell>
+                <TableCell style={{ fontSize: "16px" }}>วันที่</TableCell>
+                <TableCell style={{ fontSize: "16px" }} >
+                  เวลา
+                </TableCell>
+                <TableCell style={{ fontSize: "16px" }}>รายละเอีด</TableCell>
+               
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {calDate.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {" "}
+                    <strong>{index + 1}.</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>{row.numdays}</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>{row.date==="NaN-NaN-NaN"?"-":row.date}</strong>
+                  </TableCell>
+                  <TableCell >
+                    <strong>{row.time}</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>{row.type}</strong>
+                  </TableCell>
+                  
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <FormGroup className={classes.marTextField}>
+          <FormLabel>
+            จำนวนวัน
+            <span style={{ color: "red" }}>
+              (กรอกจำนวนวันผสมพันธุ์ให้ตรงกับตาราง)
+            </span>
+          </FormLabel>
+          <TextField
+            value={numdays}
+            id="numday"
+            variant="outlined"
+            placeholder="จำนวนวัน"
+            size="small"
+            onChange={(e) => manageDate(e)}
+          />
+        </FormGroup>
         <Grid container className={classes.marTextField}>
-          <Grid item xs={2}></Grid>
-          <Grid item xs={8}>
+         
             <Paper elevation={3} className={classes.paperNoti}>
               เริ่มการผสมพันธุ์ วันที่ {showDateInduction}
             </Paper>
-          </Grid>
-          <Grid item xs={2}></Grid>
+          
         </Grid>
 
         <div className="container-fluid text-center">
@@ -703,5 +838,3 @@ useEffect(() => {
     </div>
   );
 }
-
-

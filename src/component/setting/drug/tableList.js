@@ -151,17 +151,7 @@ export default function TableListEachSetting(props) {
                   </b>{" "}
                 </h6>
               </TableCell>
-              <TableCell>
-                <h6>
-                  <b>
-                    {props.value === 0
-                      ? "ปริมาณ(มิลลิลิตร)"
-                      : props.value === 1
-                      ? "ปริมาณ(มิลลิลิตร)"
-                      : " "}
-                  </b>{" "}
-                </h6>
-              </TableCell>
+              
               <TableCell>
                 <h6>
                   <b>
@@ -185,17 +175,7 @@ export default function TableListEachSetting(props) {
                   </b>
                 </h6>
               </TableCell>
-              <TableCell>
-                <h6>
-                  <b>
-                    {props.value === 0
-                      ? "จำนวน"
-                      : props.value === 1
-                      ? "จำนวน"
-                      : " "}
-                  </b>
-                </h6>
-              </TableCell>
+              
               <TableCell align="center">
                 <h6>
                   <b>ลบ</b>
@@ -233,16 +213,7 @@ export default function TableListEachSetting(props) {
                       : " "}
                   </h6>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  <h6>
-                    {" "}
-                    {props.value === 0
-                      ? data.dosage
-                      : props.value === 1
-                      ? data.dosage
-                      : " "}
-                  </h6>
-                </TableCell>
+                
                 <TableCell component="th" scope="row">
                   <h6>
                     {props.value === 0
@@ -261,15 +232,7 @@ export default function TableListEachSetting(props) {
                       : " "}
                   </h6>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  <h6>
-                    {props.value === 0
-                      ? data.number
-                      : props.value === 1
-                      ? data.number
-                      : " "}
-                  </h6>
-                </TableCell>
+               
                 <TableCell align="center">
                   <Button
                     onClick={() => deleteDataList(index)}

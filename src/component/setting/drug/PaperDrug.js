@@ -89,20 +89,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const initialState_drug = {
-  common_drug: " ",
-  dosage: " ",
+  common_drug: "",
+  dosage: "",
   drug_name: "",
-  exp_date: " ",
-  mfd_date: " ",
-  number: 1
+  exp_date: "",
+  mfd_date: "",
+  number: 0
 };
 const initialState_vaccine = {
-  common_vaccine: " ",
-  dosage: " ",
+  common_vaccine: "",
+  dosage: "",
   vaccine_name: "",
-  exp_date_vaccine: " ",
-  mfd_date_vaccine: " ",
-  number: 1
+  exp_date_vaccine: "",
+  mfd_date_vaccine: "",
+  number: 0
 };
 const initialState_promaintain = {
   pro_maintain: "",
@@ -121,7 +121,13 @@ export default function PaperDrug(props) {
   const [maintain, setmaintain] = useState(initialState_promaintain);
   const [prosync, setprosync] = useState(initialState_prosync);
   const [keyObjecselected, setkeyObjecselected] = useState("drug");
-
+  const [medic, setMedic] = useState([
+    { 
+      num_day:"0",
+       item: "",
+       time:""
+     }
+   ]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setdrug(initialState_drug);
@@ -205,6 +211,8 @@ export default function PaperDrug(props) {
       }
     }
     if (value === 3) {
+    
+      const sync={...prosync,medic}
       const res = await axios.post(
         "http://localhost:4000/setting" +
           keyObjecselected +
@@ -212,7 +220,7 @@ export default function PaperDrug(props) {
           keyObjecselected +
           "/" +
           props.posts.UID,
-        prosync
+          sync
       );
       if (res.status === 200) {
         alert("บันทึกสำเร็จ   status:" + res.status);
@@ -220,24 +228,18 @@ export default function PaperDrug(props) {
       }
     }
   }
-  const [medic, setMedic] = useState([
-   { 
-     num_day:"0",
-      item0: "",
-      time:""
-    }
-  ]);
+
 
   const addtable = event => {
     setMedic([
       ...medic,
       {
         num_day:"0",
-        ["item"+[medic.length]]: "",
+        item: "",
         time:""
       }
     ]);
-    console.log(medic);
+    
   };
   const deleteItem = index => {
     const result = medic.filter(results => results !== medic[index]);
@@ -253,7 +255,7 @@ export default function PaperDrug(props) {
   const showTable = () => {
     return medic.map((medics, index) => (
       <StyledTableRow  key={index}>
-        <TableCell align="center">{index+1}.</TableCell>
+        <TableCell align="center"><strong>{index+1}.</strong></TableCell>
         <TableCell style={{width:"200px"}} >
         <Input
         id="num_day"
@@ -268,7 +270,7 @@ export default function PaperDrug(props) {
         </TableCell>
         <TableCell  style={{minWidth:"500px"}}>
         <Input
-         id={"item"+index}
+         id="item"
          onChange={(event)=> setDetaisync(event,index)}
         style={{width:"100%"}}
            placeholder="รายละเอียด"
@@ -358,24 +360,7 @@ export default function PaperDrug(props) {
                   size="small"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  onChange={setStateOncheng}
-                  style={{ width: "49%" }}
-                  type="text"
-                  id="dosage"
-                  label="ปริมาณยา(มิลลิลิตร)"
-                  size="small"
-                />{" "}
-                <TextField
-                  onChange={setStateOncheng}
-                  style={{ width: "49%" }}
-                  type="text"
-                  id="number"
-                  label="จำนวน"
-                  size="small"
-                />
-              </Grid>
+  
               <Grid item xs={12}>
                 <TextField
                   onChange={setStateOncheng}
@@ -428,7 +413,7 @@ export default function PaperDrug(props) {
                   style={{ width: "49%" }}
                   type="text"
                   id="vaccine_name"
-                  label="ชื่อยา"
+                  label="ชื่อวัคซีน"
                   size="small"
                 />{" "}
                 <TextField
@@ -440,24 +425,7 @@ export default function PaperDrug(props) {
                   size="small"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  onChange={setStateOncheng}
-                  style={{ width: "49%" }}
-                  type="text"
-                  id="dosage"
-                  label="ปริมาณยา(มิลลิลิตร)"
-                  size="small"
-                />{" "}
-                <TextField
-                  style={{ width: "49%" }}
-                  onChange={setStateOncheng}
-                  type="text"
-                  id="number"
-                  label="จำนวน"
-                  size="small"
-                />
-              </Grid>
+        
               <Grid item xs={12}>
                 <TextField
                   onChange={setStateOncheng}
@@ -563,27 +531,27 @@ export default function PaperDrug(props) {
                 <div style={{ fontSize: "22px", color: "#616161" }}>
                   รายละเอียด
                 </div>
+           
+                <TableContainer component={Paper} style={{marginTop:"5px"}}>
+                  <Table aria-label="simple table" size="small">
+                    <TableBody> {showTable()}</TableBody>
+                  </Table>
+                </TableContainer>
                 <Button
                   onClick={(event)=>addtable(event)}
                   variant="contained"
                   style={{
-                    marginLeft: "10px",
+                    margin: "10px",
                     backgroundColor: "#64dd17",
                     color: "#fff",
                     padding: "5px",
                     outline: "none",
-                    width: "100px"
+                    width: "100%"
                   }}
                 >
                   <AddIcon />
                   เพิ่ม
                 </Button>
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple table" size="small">
-                    <TableBody> {showTable()}</TableBody>
-                  </Table>
-                </TableContainer>
-
                 <Grid container>
                   {" "}
                   <Grid item xs={12}></Grid>
@@ -626,3 +594,24 @@ export default function PaperDrug(props) {
     </div>
   );
 }
+
+
+
+/*<Grid item xs={12}>
+<TextField
+  onChange={setStateOncheng}
+  style={{ width: "49%" }}
+  type="text"
+  id="dosage"
+  label="ปริมาณยา(มิลลิลิตร)"
+  size="small"
+/>{" "}
+<TextField
+  onChange={setStateOncheng}
+  style={{ width: "49%" }}
+  type="text"
+  id="number"
+  label="จำนวน"
+  size="small"
+/>
+</Grid>*/

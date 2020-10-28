@@ -40,8 +40,8 @@ export default function ButtonAppBar() {
               const data1 = Object.values(result.data);
               const data2 = Object.values(result2.data);
               const data=data1.concat(data2)
-            setDataNoti(data.length)
-                  
+            setDataNoti(data[0]==="No"?null:data.length)
+                
             })
           
           }

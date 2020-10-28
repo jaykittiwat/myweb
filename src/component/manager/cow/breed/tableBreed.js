@@ -48,6 +48,7 @@ export default function TableBreed(props) {
   const [HowTobreed, setHowTobreed] = useState("");
   const [HowIdTobreed, setHowIdTobreed] = useState("");
   const [showDateCheckUp, setShowDateCheckUp] = useState("-- -- ----");
+  const  [showDateClave, setShowDateClave] = useState("-- -- ----");
   const [theNote, setNote] = useState("");
 useEffect(() => {
   setRecoder(props.posts.fname)
@@ -86,17 +87,26 @@ useEffect(() => {
     setShowDateCheckUp(setnextmissionday); //แสดงวันที่ตรวจท้อง
     setDateCheckup(nextmissionday); //เก็บวันที่moduleถัดไป(ตรวจท้อง)
     setDateBeforeCheckup(nextmissionday2);
+
+    var newdate3 = new Date(date); //วันที่สำหรับคลอด
+    newdate3.setDate(newdate3.getDate() + 283);
+    var dd3 = newdate3.getDate();
+    var mm3 = newdate3.getMonth() + 1;
+    var yyyy3 = newdate3.getFullYear();
+    if (mm3 < 10) {
+      mm3 = "0" + mm3;
+    }
+    if (dd3 < 10) {
+      dd3 = "0" + dd3;
+    }
+    var nextmissionday3 = dd3 + "-" + mm3 + "-" + yyyy3;
+    setShowDateClave(nextmissionday3)
   };
 
   const saveDataToInduction = () => {
-    //console.log(selected);
-    // console.log(selectedDamId);
-
+  
     const x = selected.length;
 
-    //delete notification
-
-    //เปลี่ยนสถานะโค
     for (let a = 0; a < x; a++) {
       axios
         .post(
@@ -127,7 +137,7 @@ useEffect(() => {
               time3: time //เวลาเป็นสัด
             });
           }
-          if (HowTobreed === "น้ำเชื้อ") {
+          if (HowTobreed === "หลอดน้ำเชื้อ") {
             axios.post("http://localhost:4000/breed/" + UID, {
               dam_id: selectedDamId[a],
               date_breeding: selectedDate,
@@ -143,7 +153,7 @@ useEffect(() => {
               time3: time //เวลาเป็นสัด
             });
           }
-          if (HowTobreed === "ฝากถ่าย") {
+          if (HowTobreed === "ฝากถ่ายตัวอ่อน(ET)") {
             axios.post("http://localhost:4000/breed/" + UID, {
               dam_id: selectedDamId[a],
               date_breeding: selectedDate,
@@ -676,8 +686,8 @@ useEffect(() => {
         className={classes.pad}
       >
         
-
-        <FormGroup className={classes.marForm}>
+        <Grid container spacing={3}>
+  <Grid item xs={6}> <FormGroup className={classes.marForm}>
           <FormLabel>ชื่อผู้บันทึก</FormLabel>
           <TextField
           value={recoder}
@@ -687,8 +697,8 @@ useEffect(() => {
             size="small"
             onChange={e => setRecoder(e.target.value)}
           />
-        </FormGroup>
-        <FormGroup className={classes.marTextField}>
+        </FormGroup></Grid>
+  <Grid item xs={6}> <FormGroup className={classes.marTextField}>
           <FormLabel>ชื่อผู้ปฏิบัติการ</FormLabel>
           <TextField
           value={operator}
@@ -698,9 +708,9 @@ useEffect(() => {
             size="small"
             onChange={e => setOperator(e.target.value)}
           />
-        </FormGroup>
+        </FormGroup></Grid>
 
-        <FormGroup className={classes.marTextField}>
+  <Grid item xs={3}>   <FormGroup >
           <FormLabel>วันที่</FormLabel>
           <TextField
             id="input3"
@@ -709,11 +719,8 @@ useEffect(() => {
             size="small"
             onChange={e => manageDate(e)}
           />
-        </FormGroup>
-
-        <Grid container spacing={2} className={classes.marTextField}>
-          <Grid item xs={4}>
-            <FormGroup>
+        </FormGroup></Grid>
+  <Grid item xs={3}>   <FormGroup>
               <FormLabel>เวลาเป็นสัด</FormLabel>
               <TextField
                 id="input4"
@@ -723,10 +730,8 @@ useEffect(() => {
                 defaultValue="00:00"
                 onChange={e => setTime(e.target.value)}
               />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={4}>
-            <FormGroup>
+            </FormGroup></Grid>
+  <Grid item xs={3}>    <FormGroup>
               <FormLabel>เวลานิ่ง</FormLabel>
               <TextField
                 id="input5"
@@ -736,11 +741,8 @@ useEffect(() => {
                 defaultValue="00:00"
                 onChange={e => setTime2(e.target.value)}
               />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={4}>
-            {" "}
-            <FormGroup>
+            </FormGroup></Grid>
+  <Grid item xs={3}> <FormGroup>
               <FormLabel>เวลาผสม</FormLabel>
               <TextField
                 id="input6"
@@ -750,11 +752,8 @@ useEffect(() => {
                 defaultValue="00:00"
                 onChange={e => setTime3(e.target.value)}
               />
-            </FormGroup>
-          </Grid>
-        </Grid>
-
-        <FormGroup className={classes.marTextField}>
+            </FormGroup></Grid>
+            <Grid item xs={6}><FormGroup >
           <FormControl size="small">
             <FormLabel>วิธีการผสม</FormLabel>
             <Select
@@ -764,14 +763,15 @@ useEffect(() => {
               onChange={e => setHowTobreed(e.target.value)}
             >
               <option value=" ">เลือก</option>
-              <option>น้ำเชื้อ</option>
-              <option> พ่อพันธุ์</option>
-              <option> ฝากถ่าย</option>
+              <option>หลอดน้ำเชื้อ</option>
+              <option>พ่อพันธุ์</option>
+              <option> ฝากถ่ายตัวอ่อน(ET)</option>
+              
             </Select>
           </FormControl>
         </FormGroup>
-
-        <FormGroup className={classes.marTextField}>
+</Grid>
+  <Grid item xs={6}> <FormGroup >
           <FormLabel>หมายเลขน้ำเชื้อ/พ่อพันพันธุ์</FormLabel>
           <TextField
             id="input7"
@@ -780,7 +780,11 @@ useEffect(() => {
             size="small"
             onChange={e => setHowIdTobreed(e.target.value)}
           />
-        </FormGroup>
+        </FormGroup></Grid>
+</Grid>
+
+        
+       
 
         <FormGroup className={classes.marTextField}>
           <FormLabel>หมายเหตุ(หากมี)</FormLabel>
@@ -799,7 +803,12 @@ useEffect(() => {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Paper elevation={3} className={classes.paperNoti1}>
-              ตรวจท้อง วันที่ {showDateCheckUp}
+              ตรวจท้อง วันนี้ ถึง {showDateCheckUp}
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Paper elevation={3} className={classes.paperNoti1}>
+              วันคลอด วันที่ {showDateClave}
             </Paper>
           </Grid>
         </Grid>

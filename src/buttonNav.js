@@ -31,54 +31,17 @@ export function B1() {
           aria-controls="customized-menu"
           aria-haspopup="true"
         >
-          หน้าหลัก
+          หน้าแรก
         </Button>
       </Link>
     </div>
   );
 }
 export function B2() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const StyledMenu = withStyles({
-    paper: {
-      border: "1px solid #d3d4d5"
-    }
-  })(props => (
-    <Menu
-      elevation={0}
-      getContentAnchorEl={null}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "center"
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "center"
-      }}
-      {...props}
-    />
-  ));
-
-  const StyledMenuItem = withStyles(theme => ({
-    root: {
-      "&:focus": {
-        backgroundColor: theme.palette.primary.main,
-        "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-          color: theme.palette.common.white
-        }
-      }
-    }
-  }))(MenuItem);
   return (
-    <div>
+    
+       <Link to="/regiscattle" style={{textDecoration:'none'}}>
       <Button
         style={{
           width: "190px",
@@ -88,34 +51,12 @@ export function B2() {
         }}
         aria-controls="customized-menu"
         aria-haspopup="true"
-        startIcon={<Iconadd/>}
-        endIcon={<IconDrop/>}
-        onClick={handleClick}
+        startIcon={<Iconadd/>}      
       >
        ลงทะเบียนโค
-      </Button>
-      <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-         <Link to="/regiscattle" style={{textDecoration:'none'}}>
-          {" "}
-          <StyledMenuItem>
-            <ListItemText primary="ลงทะเบียนโค" />
-          </StyledMenuItem>
+      </Button> 
         </Link>
-        <Link to="/regiscalf" style={{textDecoration:'none'}}>
-          {" "}
-          <StyledMenuItem>
-            <ListItemText primary="ลงทะเบียนลูกโค" />
-          </StyledMenuItem>
-        </Link>
-       
-      </StyledMenu>
-    </div>
+
   );
 }
 
@@ -194,7 +135,7 @@ export function B3() {
 
         <Link to="/breed" style={{textDecoration:'none'}}>
           <StyledMenuItem>
-            <ListItemText primary="บันทึกหารผสม" />
+            <ListItemText primary="บันทึกการผสม" />
           </StyledMenuItem>
         </Link>
 

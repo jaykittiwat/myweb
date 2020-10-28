@@ -9,6 +9,8 @@ import { FormLabel, FormGroup, TextField } from "@material-ui/core";
 import update from "immutability-helper";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
+import ImageUploader from "react-images-upload";
+import firebase from "./../../../backEnd/firebase";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,12 +33,20 @@ export default function PaperBrand(props) {
   const [data, setData] = React.useState([""]);
   const [disabled, setEnabled] = React.useState(true);
   const classes = useStyles();
-
+  const [pictures, setpictures] = React.useState([]);
+  const [picturesURL, setpicturesURL] = React.useState([]);
+  const onDrop = (pictureFile, pictureDataURLs) => {
+    setpictures(pictureFile);
+    setpicturesURL(pictureDataURLs);
+   
+  };
+ 
   const handleClickfalse = event => {
     setEnabled(false);
   };
   const handleClicktrue = event => {
-    axios
+    if (pictures === []) {
+      axios
       .post(
         "http://localhost:4000/settingbrand/brandUpdata/" +
           props.posts.UID +
@@ -48,6 +58,29 @@ export default function PaperBrand(props) {
         alert("บันทึกสำเร็จ");
       });
     setEnabled(true);
+    } 
+    if (pictures !== []) {
+      firebase
+      .storage()
+      .ref("Photo/" +props.posts.UID +"/")
+      .child("logo")
+      .put(pictures[0]).then(()=>{
+        axios
+        .post(
+          "http://localhost:4000/settingbrand/brandUpdata/" +
+            props.posts.UID +
+            "/" +
+            props.posts.key,
+          data[0]
+        )
+        .then(res => {
+          alert("บันทึกสำเร็จ");
+        });
+      })
+      setEnabled(true);
+    }
+
+  
   };
   const setStateForm = event => {
     const v = event.target.value;
@@ -56,8 +89,16 @@ export default function PaperBrand(props) {
     const newObj = update(collection, { 0: { [ID]: { $set: v } } });
     setData(newObj);
   };
-
+const callImg = () =>{
+  firebase.storage().ref("Photo/kittiwat01/").child("logo").getDownloadURL().then((url) =>{
+    // Or inserted into an <img> element:
+    setpicturesURL([url])
+  }).catch((error)=> {
+    setpicturesURL(["https://www.flaticon.com/svg/static/icons/svg/685/685686.svg"])
+  });
+}
   useEffect(() => {
+    callImg()
     setData(props.posts.data);
   }, [props]);
 
@@ -71,9 +112,28 @@ export default function PaperBrand(props) {
   }
   return (
     <div className="container-fluid">
+ 
       <Paper elevation={3} square className={classes.headerbrand}>
         ตั้งค่าแบรนด์
       </Paper>
+      <Paper
+      style={{ width: "100%", textAlign: "center", marginTop: "10px" }}
+      elevation={0}
+    >
+      <img
+        src={picturesURL}
+        alt="imgbrand"
+        style={{ width: "200px", height: "200px" }}
+      />
+    </Paper>
+
+    <ImageUploader
+      withIcon={false}
+      buttonText="โลโก้ฟาร์ม"
+      onChange={onDrop}
+      imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+      maxFileSize={5242880}
+    />
       <Paper elevation={3} square className={classes.root}>
         <Grid container spacing={3}  style={{padding:"20px"}}>
           <Grid item xs={12}>

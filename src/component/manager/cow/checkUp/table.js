@@ -10,20 +10,20 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'name', label: 'Cattle ID', minWidth: 100 },
-  { id: 'sync', label: 'วันกลับสัด(หากไม่ท้อง)', minWidth: 100,align: 'right' },
-  { id: 'code', label: 'แจ้งเตือนก่อน 7วัน', minWidth: 100,align: 'right' },
+  { id: 'name', label: 'Cattle ID', minWidth:"110px" },
+  { id: 'sync', label: 'วันกลับสัด', minWidth:"120px",align: 'left' },
+  { id: 'sync', label: 'สิ้นสุดวันจับสัด', minWidth:"120px",align: 'left' },
   {
     id: 'population',
     label: 'วันคลอด',
-    minWidth: 100,
-    align: 'right',
+    minWidth: "120px",
+    align: 'left',
   },
   {
     id: 'size',
-    label: 'แจ้งเตือนหลัง 7 วัน',
-    minWidth: 100,
-    align: 'right',
+    label: 'ระยะเฝ้าระวัง',
+    minWidth: "160px",
+    align: 'left',
   },
  
 ];
@@ -32,7 +32,7 @@ const columns = [
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    marginTop:"20px",
+
   },
   container: {
     maxHeight: 440,
@@ -49,21 +49,54 @@ const useStyles = makeStyles({
 
 export default function TableClaves(props) {
   const rows =props.id;
-const B7=props.B7;
-const Clave=props.clavedate;
-const A7=props.A7;
-const dateSync=props.sync;
-  
+  const B7=props.B7;
+  const A7=props.A7;
+  const dateSync=props.sync;
+
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+const [Clave,setClave]=React.useState([])
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  const caldate=(date)=>{
+    var newdateA7 = new Date(date);
+    newdateA7.setDate(newdateA7.getDate() +4);
+    var ddA7 = newdateA7.getDate();
+    var mmA7 = newdateA7.getMonth() + 1;
+    var yyyyA7 = newdateA7.getFullYear();
+    if (mmA7 < 10) {
+      mmA7 = "0" + mmA7;
+    }
+    if (ddA7 < 10) {
+      ddA7 = "0" + ddA7;
+    }
+
+    return ( ddA7+ "-" + mmA7 + "-" +yyyyA7 );
+  }
+React.useEffect(() => {
+setClave(props.clavedate)
+}, [props]);
+
+const swapDate=(date)=>{
+  var newdateA7 = new Date(date);
+  newdateA7.setDate(newdateA7.getDate());
+  var ddA7 = newdateA7.getDate();
+  var mmA7 = newdateA7.getMonth() + 1;
+  var yyyyA7 = newdateA7.getFullYear();
+  if (mmA7 < 10) {
+    mmA7 = "0" + mmA7;
+  }
+  if (ddA7 < 10) {
+    ddA7 = "0" + ddA7;
+  }
+
+  return ( ddA7+ "-" + mmA7 + "-" +yyyyA7==="NaN-NaN-NaN"?"":ddA7+ "-" + mmA7 + "-" +yyyyA7);
+}
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(event.target.value);
     setPage(0);
   };
 
@@ -90,10 +123,10 @@ const dateSync=props.sync;
               return (
                 <TableRow hover tabIndex={-1} key={index}>
                  <TableCell>{row}</TableCell>
-                 <TableCell align="right">{dateSync}</TableCell>
-                 <TableCell align="right">{B7[index]}</TableCell>
-                 <TableCell align="right">{Clave[index]}</TableCell>
-                 <TableCell align="right">{A7[index]}</TableCell>
+                 <TableCell align="left">{dateSync}</TableCell>
+                 <TableCell align="left">{caldate(dateSync)}</TableCell>
+                 <TableCell align="left">{swapDate(Clave[index])}</TableCell>
+                 <TableCell align="left">{swapDate(B7[index])} - {swapDate(A7[index])}</TableCell>
                 </TableRow>
               );
             })}

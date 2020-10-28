@@ -112,6 +112,7 @@ export default function TableOfmom(props) {
   const [checkPage, setCheckPage] = React.useState(0);
   const Head = [
     { cell: "หมายเลขโค", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
+    { cell: "สถานะ", align: "left" },
     { cell: "สายพันธุ์โค", align: "left" },
     { cell: "สี", align: "left" },
     { cell: "วันที่เกิด", align: "left" },
@@ -119,12 +120,12 @@ export default function TableOfmom(props) {
     { cell: "การผสม", align: "left" },
     { cell: "พ่อ", align: "left" },
     { cell: "แม่", align: "left" },
-    { cell: "น้ำหนักแรกเกิด", align: "left" },
-    { cell: "น้ำหนักหลังอย่านม", align: "left" },
+    { cell: "น้ำหนักแรกเกิด(Kg.)", align: "left" },
+    { cell: "น้ำหนักหลังอย่านม(Kg.)", align: "left" },
     { cell: "น้ำหนัก 1 ปี", align: "left" },
-    { cell: "ความสูงสะโพก 1 ปี", align: "left" },
-    { cell: "รอบอกตอนเกิด", align: "left" },
-    { cell: "รอบอกหลังอย่านม", align: "left" },
+    { cell: "ความสูงสะโพก 1 ปี(cm.)", align: "left" },
+    { cell: "รอบอกตอนเกิด(cm.)", align: "left" },
+    { cell: "รอบอกหลังอย่านม(cm.)", align: "left" },
     { cell: "วันที่อย่านม", align: "left" },
     { cell: "จำนวนการผสม", align: "left" },
      { cell: "โรงเรือน", align: "left" },
@@ -157,6 +158,7 @@ const Download=()=>{
     </Button>}>
         <ExcelSheet data={rows} name="cattleL_List" >
             <ExcelColumn label="หมายเลขโค" value="cattle_id"   />
+            <ExcelColumn label="สถานะ" value="status"   />
             <ExcelColumn label="สายพันธุ์" value="breed"   />
             <ExcelColumn label="สี" value="color"   />
             <ExcelColumn label="วันที่เกิด" value="birth_date"   />
@@ -240,7 +242,7 @@ const Download=()=>{
                 
                   align={list.align}
                   key={index}
-                  style={{ fontSize: "20px" ,minWidth: "150px"}}
+                  style={{ fontSize: "18px" ,minWidth: "180px"}}
                 >
                   {list.cell}
                 </TableCell>
@@ -263,6 +265,18 @@ const Download=()=>{
                     ></TextField>
                   ) : (
                     row.cattle_id||""
+                  )}
+                </TableCell>
+                <TableCell style={{ fontSize: "18px" }}>
+                  {startEdit && indexRow === index && page === checkPage ? (
+                    <TextField
+                      style={{ width: "100%" }}
+                      id="status"
+                      value={row.status||""}
+                      onChange={(event) => SETVALUES(event, index)}
+                    ></TextField>
+                  ) : (
+                    row.status||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -377,7 +391,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.wean_weight+"Kg."||""
+                    row.wean_weight||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -390,7 +404,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.year_weight+"Kg."||""
+                    row.year_weight||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -403,7 +417,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.year_hip_hight+"cm."||""
+                    row.year_hip_hight||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -416,7 +430,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.birth_chest_head_ratio+"cm."||""
+                    row.birth_chest_head_ratio||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -429,7 +443,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.wean_chest_head_ratio+"cm."||""
+                    row.wean_chest_head_ratio||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -525,7 +539,7 @@ const Download=()=>{
                   100,
                   { label: "All", value: -1 }
                 ]}
-                colSpan={20}
+                colSpan={24}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

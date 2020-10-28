@@ -26,23 +26,10 @@ class Home extends Component {
         const getUser = res.data[0];
         this.setState({ ...this.state, user: getUser });
       })
-      .then(() => {
-        firebase
-          .storage()
-          .ref(
-            "/Photo/" +
-              this.state.user.user +
-              "/photoUser/" +
-              this.state.user.user +
-              ".jpg"
-          )
-          .getDownloadURL()
-          .then(url => {
-            this.setState({ ...this.state, imgeUser: url });
-          }).then(()=>{
-            //console.log(this.state.user)
-          })
-      });
+      
+      
+          
+    
   }
 
   render() {

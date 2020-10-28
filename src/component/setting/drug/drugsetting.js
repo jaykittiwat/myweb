@@ -60,8 +60,6 @@ class Paperdrug extends Component{
                 pro_synckey: p_sync.data[0],
                 loading:false
               });
-            }).then(()=>{
-              console.log(this.state)
             })
         }
       });

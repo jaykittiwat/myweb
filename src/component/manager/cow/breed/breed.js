@@ -59,8 +59,6 @@ class Breed extends Component {
                 const array = [keyฺBreed, dataBreed];
                 for (let i = 0; i < data.length; i++) {
                   if (data[i].type === "ผสมพันธุ์") {
-                    // console.log(key[i]);
-                    //console.log(data[i]);
                     keyฺBreed.push(key[i]);
                     dataBreed.push(data[i]);
                   }

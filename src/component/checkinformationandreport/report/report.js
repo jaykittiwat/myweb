@@ -12,7 +12,9 @@ class Header extends Component {
       UID: "",
       loading: false,
       datacattle: [],
-      keycattle: []
+      keycattle: [],
+      datacalf: [],
+      keycalf: []
     };
     
   }
@@ -26,7 +28,9 @@ class Header extends Component {
             this.setState({ ...this.state, UID: res.data[0].user });
           }).then( async()=>{
            const datacattle = await axios.get("http://localhost:4000/cattle/showAll/" +this.state.UID)
-           this.setState({...this.state,datacattle:datacattle.data[1],keycattle:datacattle.data[0],loading:false})
+           const datacalf = await axios.get("http://localhost:4000/calf/calfshowAll/" +this.state.UID)
+     
+           this.setState({...this.state,datacattle:datacattle.data[1],keycattle:datacattle.data[0],datacalf:datacalf.data[1],keycalf:datacalf.data[0],loading:false})
           })
       }
     })

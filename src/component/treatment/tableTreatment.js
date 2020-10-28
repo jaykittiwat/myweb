@@ -49,7 +49,7 @@ export default function TableTreatment(props) {
   const [date, setDate] = React.useState("");
   const [datenoti, setDatenoti] = React.useState("");
   const [time, setTime] = React.useState("");
-  const [typetreatment, setTypetreatment] = React.useState("");
+  const [typetreatment, setTypetreatment] = React.useState([]);
   const [seletedMedic, setSeletedMedic] = React.useState([]);
   const [note, setNote] = React.useState("");
 
@@ -65,6 +65,9 @@ export default function TableTreatment(props) {
   const setValue = (newValue) => {
     setSeletedMedic(newValue);
   };
+  const setTypetreat = (newValue) =>{
+    setTypetreatment(newValue)
+  }
   const setid = (newValue) => {
     setSelectedId(newValue);
   };
@@ -90,6 +93,7 @@ export default function TableTreatment(props) {
       })
     })
   };
+  const typeList=[{type:"ฉีดใต้ผิว/กล้ามเนื้อ"},{type:"ทา"},{type:"ราด"}, {type:"กิน"},{type:"สอด"}]
   if (props.posts.loading) {
     return (
       <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
@@ -160,23 +164,28 @@ export default function TableTreatment(props) {
             />
           </Grid>
           <Grid item xs={6}>
-            <FormGroup>
-              <FormControl size="small">
-                <FormLabel className={classes.title}>ประเภทการรักษา</FormLabel>
-
-                <Select
-                  variant="outlined"
-                  native
-                  value={typetreatment}
-                  onChange={(e) => setTypetreatment(e.target.value)}
-                >
-                  <option>ฉีดใต้ผิว/กล้ามเนื้อ</option>
-                  <option>ทา</option>
-                  <option>ราด</option>
-                  <option>กิน</option>
-                </Select>
-              </FormControl>
+            <FormGroup>  
+                <FormLabel className={classes.title}>ลักษณะการใช้ยา</FormLabel>
             </FormGroup>
+            <Autocomplete
+              multiple
+              id="tags-outlined-type"
+              options={typeList}
+              getOptionLabel={(option) => option.type}
+              filterSelectedOptions
+              getOptionSelected={(option, value) =>
+                option.type === value.type
+              }
+              onChange={(event, newValue) => setTypetreat(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="ลักษณะการรักษา"
+                  size="small"
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={6}>
             <FormGroup>

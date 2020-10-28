@@ -39,6 +39,7 @@ class Notification extends Component {
               fname: res.data[0].fname,
               lastname: res.data[0].lname,
             });
+           
             return res.data[0].user;
           })
           .then(() => {
@@ -76,7 +77,7 @@ class Notification extends Component {
                         axios
                           .get("http://localhost:4000/wean/" + this.state.UID)
                           .then((res) => {
-                            console.log(res.data[1]);
+                           // console.log(res.data[1]);
                             this.setState({
                               ...this.state,
                               datawean:res.data[1],
@@ -85,7 +86,7 @@ class Notification extends Component {
                             });
                           })
                           .then(() => {
-                            console.log(this.state);
+                           // console.log(this.state);
                           });
                       });
                   });

@@ -132,10 +132,11 @@ export default function AlertDialog(props) {
       .then(async () => {
         //ลงทะเบียนลูกโค
         for (let i = 0; i < numberCalf.length; i++) {
-          await axios.post(
-            "http://localhost:4000/user/calf/registorCalf/" + UID,
-            numberCalf[i]
-          );
+          await axios.post("http://localhost:4000/user/calf/registorCalf/" + UID,numberCalf[i]);
+          await axios.post("http://localhost:4000/branding/" + UID,  { birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id , datebran: "",note: "",operator: "", recoder: "",wid: "",})
+          await axios.post("http://localhost:4000/dishorn/" + UID, {birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datedishorn: "",method: "",note: "",operator: "",recoder: "",})
+          await  axios.post("http://localhost:4000/wean/" + UID,{ birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datewean: "",note: "",operator: "",recoder: "",wean_chest_head_ratio: "",wean_hip_hight: "",weanweight: "",
+          })
         }
       }).then(()=>{
         alert("บันทึกสำเร็จ");
@@ -200,19 +201,15 @@ export default function AlertDialog(props) {
                       />
                     </TableCell>
                     <TableCell align="center">
-                      <FormGroup>
-                        <FormControl
-                          size="small"
-                          value={numberCalf[index].color}
-                          onChange={event => recordDataOfCalf(event, index)}
-                        >
-                          <Select variant="outlined" native id="color">
-                            <option value=" ">เลือก</option>
-                            <option value="ดำ">ดำ</option>
-                            <option value="ขาว">ขาว</option>
-                          </Select>
-                        </FormControl>
-                      </FormGroup>
+                      <TextField
+                        id="color"
+                        value={numberCalf[index].color}
+                        onChange={event => recordDataOfCalf(event, index)}
+                        
+                        variant="outlined"
+                        size="small"
+                        style={{ width: "170px" }}
+                      />
                     </TableCell>
                     <TableCell align="center">
                       <TextField
