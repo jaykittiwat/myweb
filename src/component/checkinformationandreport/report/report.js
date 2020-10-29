@@ -15,6 +15,7 @@ class Header extends Component {
       keycattle: [],
       datacalf: [],
       keycalf: [],
+      owner:""
      
     };
     
@@ -26,7 +27,7 @@ class Header extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user });
+            this.setState({ ...this.state, UID: res.data[0].user,owner:res.data[0].fname+ ' '+res.data[0].lname });
           }).then( async()=>{
            const datacattle = await axios.get("http://localhost:4000/cattle/showAll/" +this.state.UID)
            const datacalf = await axios.get("http://localhost:4000/calf/calfshowAll/" +this.state.UID)

@@ -30,8 +30,7 @@ class Paperbrand extends Component {
           .then(() => {
             axios
               .get("http://localhost:4000/settingbrand/brand/" + this.state.UID)
-              .then(res => {
-               
+              .then(res => {   
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
                 const keyset = [];
@@ -44,10 +43,7 @@ class Paperbrand extends Component {
                 return array;
               })
               .then(array => {
-               
                 this.setState({ ...this.state,data:array[1],key:array[0],loading:false});
-              }).then(()=>{
-              
               })
           });
       }

@@ -17,7 +17,7 @@ const App = () => {
     setNameFarm("กิตติวัฒน์ฟาร์ม")
     setSex("MISS")
     setDatabody([ 
-              ['2020-02-20', 'ท้องร่วง', 'ยาปฏิชีวนะ'],
+              ['2020-02-20', ['ท้องร่วง','fdfsdf'], 'ยาปฏิชีวนะ'],
               ['2020-02-21', 'ท้องร่วง', 'ยาปฏิชีวนะ']])
   }, []);
   const pdf = () => {
@@ -33,10 +33,15 @@ const App = () => {
     doc.setFontSize(18)
     doc.text('ชื่อฟาร์ม:'+nameFarm, 14, finalY + 25)
     doc.text('หมายเลขโค:'+cattle_id, 14, finalY + 35)
-    doc.text('สายพันธุ์:'+breed, 64, finalY + 35)
-    doc.text('เพศ:'+sex,114, finalY + 35)
+    doc.text('วันที่เกิด:'+breed, 64, finalY + 35)
+    doc.text('สายพันธุ์:'+sex,104, finalY + 35)
+    doc.text('สี:'+sex,144, finalY + 35)
+    doc.text('น้ำหนักแรกเกิด:'+sex,14, finalY + 45)
+    doc.text('พ่อพันธุ์:'+sex,64, finalY + 45)
+    doc.text('แม่พันธุ์:'+sex,104, finalY + 45)
+    doc.text('วิธีผสม:'+sex,144, finalY + 45)
     doc.autoTable({
-      startY: finalY + 40,
+      startY: finalY + 55,
       head: [['วันที่', 'ผลการวินิฉัย', 'การักษา']],
       body:databody,
       headStyles: { font: "custom",fontSize:18,fillColor: [85,157,251]},

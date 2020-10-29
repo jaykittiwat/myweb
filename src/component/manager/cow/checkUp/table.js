@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 const columns = [
   { id: 'name', label: 'Cattle ID', minWidth:"110px" },
   { id: 'sync', label: 'วันกลับสัด', minWidth:"120px",align: 'left' },
-  { id: 'sync', label: 'สิ้นสุดวันจับสัด', minWidth:"120px",align: 'left' },
+  { id: 'sync', label: 'ระยะเฝ้าระวังวันจับสัด', minWidth:"120px",align: 'left' },
   {
     id: 'population',
     label: 'วันคลอด',
@@ -21,7 +21,7 @@ const columns = [
   },
   {
     id: 'size',
-    label: 'ระยะเฝ้าระวัง',
+    label: 'ระยะเฝ้าระวังวันคลอด',
     minWidth: "160px",
     align: 'left',
   },

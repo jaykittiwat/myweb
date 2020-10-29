@@ -90,7 +90,7 @@ export default function PaperBrand(props) {
     setData(newObj);
   };
 const callImg = () =>{
-  firebase.storage().ref("Photo/kittiwat01/").child("logo").getDownloadURL().then((url) =>{
+  firebase.storage().ref("Photo/"+props.posts.UID+"/").child("logo").getDownloadURL().then((url) =>{
     // Or inserted into an <img> element:
     setpicturesURL([url])
   }).catch((error)=> {
