@@ -27,34 +27,44 @@ const [Owner,setOwner]=React.useState("")
     });
     setList(setId);
   };
+
+
+
   React.useEffect(() => {
     concatData(props.data1, props.data2);
     setOwner(props.owner)
   }, [props]);
+
+
+
 
 const  queryDataPDF= async(id)=>{
 
           const res=await axios.get("http://localhost:4000/treatment/history/" +props.UID+"/"+id)
           const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
           const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
-          console.log(Object.values(res3.data))
+     
+          const databrand=Object.values(res3.data)
           const dataSet=[]
          let data=res.data;
-          data.map(i=>{
+          data.map((i)=>{
          const arrData= Object.values(i)
          const a=[]
-         arrData[1].map(j=>{
+         arrData[1].map((j) => {
          const s = Object.values(j)
          a.push(s+"\n")
          })
          dataSet.push([arrData[0],arrData[3],arrData[8],a])
           })
       
-      PDF(dataSet,res2.data[1])
+      PDF(dataSet,res2.data[1],databrand[0])
 }
 
 
-const PDF=(data,profile)=>{
+
+
+
+const PDF=(data,profile,databrand)=>{
   const doc = new jsPDF()
   const content=font
   const finalY = doc.lastAutoTable.finalY || 10
@@ -65,7 +75,7 @@ const PDF=(data,profile)=>{
 
   doc.text('ใบประวัติการรักษา', 85, finalY + 15)
   doc.setFontSize(18)
-  doc.text('ชื่อฟาร์ม:'+"", 14, finalY + 25)
+  doc.text('ชื่อฟาร์ม:'+databrand.farm_name_TH, 14, finalY + 25)
   doc.text('หมายเลขโค:'+profile.cattle_id, 14, finalY + 35)
   doc.text('วันที่เกิด:'+profile.birth_date, 64, finalY + 35)
   doc.text('สายพันธุ์:'+profile.breed,104, finalY + 35)
@@ -93,15 +103,23 @@ const PDF=(data,profile)=>{
   doc.text("       (      " +Owner+"      )", 120, doc.lastAutoTable.finalY + 22);
   doc.text("                     "+date()+"            ", 120, doc.lastAutoTable.finalY + 29);
   doc.save("table.pdf");
+  setSelectedId("")
 }
+
+
+
+
 const queryDataExcel=async(id)=>{
-  const res=await axios.get("http://localhost:4000/treatment/history/" +props.UID+"/"+id)
+  //const res=await axios.get("http://localhost:4000/treatment/history/" +props.UID+"/"+id)
 
   }
-    const date=()=>{
+
+
+
+const date=()=>{
       const newdate= new Date()
-       const dd =  newdate.getDate();
-      const mm = newdate.getMonth() + 1;
+       let dd =  newdate.getDate();
+      let mm = newdate.getMonth() + 1;
       const yyyy = newdate.getFullYear();
      if (mm < 10) {
        mm = "0" + mm;
@@ -111,6 +129,10 @@ const queryDataExcel=async(id)=>{
      }
      return( dd + "/" + mm + "/" + yyyy)
     }
+
+
+
+
   const showlist=()=>{
     return list.map(i=>(
       <Paper key={i.cattle_id} elevation={3} style={{ padding: "10px" }}>
@@ -146,7 +168,7 @@ const queryDataExcel=async(id)=>{
         </Button></Grid>
      
        
-     
+
       </Grid> </Paper>
     ))
   }
