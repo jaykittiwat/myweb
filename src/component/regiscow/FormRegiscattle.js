@@ -326,10 +326,11 @@ const [ageShow,setAgeShow]=React.useState("")
      น้ำหนักตอนเกิด
    </FormLabel>
    <TextField
+   value={dataCattle.birth_weight}
      onChange={(e) =>
        setDataCattle({ ...dataCattle, birth_weight: e.target.value })
      }
-     value={dataCalf.birth_weight}
+  
      variant="outlined"
      placeholder="กรอกน้ำหนัก"
      size="small"

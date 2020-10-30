@@ -24,15 +24,16 @@ export default function ButtonAppBar() {
   const classes = useStyles();
   const [currentUser, setCurrentUser] = useState("");
   const [dataNoti, setDataNoti] = useState(null);
-
+const [uid,setUid]= useState("");
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
           axios
             .get("http://localhost:4000/user/logIn/" + user.email)
             .then(res => {
-             setCurrentUser (res.data[0].user) 
-              return res.data[0].user;
+             setCurrentUser (res.data[0].adminfarm||res.data[0].user) 
+             setUid(res.data[0].user)
+              return res.data[0].adminfarm||res.data[0].user;
             }).then(async(UID)=>{
           
               const result =await axios.get("http://localhost:4000/notification/notiAll/"+UID )
@@ -82,7 +83,7 @@ export default function ButtonAppBar() {
               <B9 />
             </Grid>
           </Grid>
-          <Signout currentUser={currentUser}/>
+          <Signout currentUser={uid}/>
         </Toolbar>
       </AppBar>
     </div>

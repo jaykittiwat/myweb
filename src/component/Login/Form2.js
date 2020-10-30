@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { Form, Col, Button } from "react-bootstrap";
-//import { Button } from "react-bootstrap";
 import FormImg from "./FormImg";
-
 import { Link } from "react-router-dom";
-import firebase from "../../backEnd/firebase/index";
-//import axios from "axios";
-//ยังไม่ได้ทำ ระบบบลงทะเบียน
+import firebase from "./../../backEnd/firebase/index";
+import axios from "axios";
 
-////////////////////////หน้าสำหรับกรอกข้อมูลการสมัคร [เจ้าของฟาร์ม]/////////////////////
-export default function FormData() {
+export default function FormData(props) {
   const intailState = {
+    adminfarm:"",//------------------ID เจ้าของฟาร์ม
     user: "",
     pass: "",
     question: "",
@@ -24,39 +21,20 @@ export default function FormData() {
     day_of_birth: "",
     phone_num: "",
     fax: "",
-    aminFarm: "รอการอนุมัติ",
+    privilege: "ยังไม่ได้อนุมัติ",
+   vacancy:"",//----------------ตำแหน่งงาน
   };
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
   const [validated] = useState(false);
   //ยังไม่ได้ทำ  check Form
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(account.email, account.pass)
-      .then((res) => {
-        console.log(res.user);
-        alert("สำเร็จ");
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(error);
-        console.log(errorCode);
-        console.log(errorMessage);
-        if (errorCode === "auth/email-already-in-use") {
-          alert("Email มีผู้ใช้แล้ว");
-        }
-        if (errorCode === "auth/invalid-email") {
-          alert("Email ไม่ถูกต้อง");
-        }
-        // ...
-      });
-    /* axios
+  const handleSubmit = () => {
+  
+    axios
       .post(`http://localhost:4000/user/registor`, {
+        adminfarm:account.adminfarm ,
         user: account.user,
-        pass:  account.pass,
+        pass: account.pass,
         question: account.question,
         anwser: account.anwser,
         email: account.email,
@@ -68,19 +46,29 @@ export default function FormData() {
         day_of_birth: account.day_of_birth,
         phone_num: account.phone_num,
         fax: account.fax,
-        privilege: account.privilege
-      })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-        console.log(res.status);
-        alert('ลงทะเบียนสำเร็จ');
-      })
-      .catch(error => {
-        console.log(error);
-        alert('เกิดความผิดพลาด');
+        privilege: account.privilege,
+        vacancy:account.vacancy
+      }).then((res) => {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(account.email, account.pass)
+          .then((res) => {
+            alert("ลงทะเบียนเสร็จสิ้น")
+            window.location.reload()
+          }).catch((error) => {
+            var errorCode = error.code;
 
-      });*/
+            if (errorCode === "auth/email-already-in-use") {
+              alert("Email มีผู้ใช้แล้ว");
+            }
+            if (errorCode === "auth/invalid-email") {
+              alert("กรอกข้อมููลให้ครบ");
+            }
+            if (errorCode === "auth/weak-password") {
+              alert("รหัสผ่านไม่ถูกต้อง");
+            }
+          });
+      });
   };
 
   return (
@@ -88,7 +76,7 @@ export default function FormData() {
       <Form noValidate validated={validated}>
         <Form.Row>
           <Col md={{ span: 4, offset: 1 }}>
-            <Form.Group controlId="formUserId">
+            <Form.Group >
               <Form.Label>ไอดี</Form.Label>
               <Form.Control
                 required
@@ -101,7 +89,7 @@ export default function FormData() {
               />
             </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group >
               <Form.Label>รหัสผ่าน</Form.Label>
               <Form.Control
                 required
@@ -114,7 +102,7 @@ export default function FormData() {
               />
             </Form.Group>
 
-            <Form.Group controlId="formBasicRePassword">
+            <Form.Group >
               <Form.Label>ยืนยันรหัสผ่าน</Form.Label>
               <Form.Control
                 required
@@ -127,7 +115,7 @@ export default function FormData() {
               />
             </Form.Group>
 
-            <Form.Group controlId="formGroupEmail">
+            <Form.Group >
               <Form.Label>Email</Form.Label>
               <Form.Control
                 required
@@ -166,7 +154,7 @@ export default function FormData() {
               />
             </Form.Group>
 
-            <Form.Group controlId="formGridState">
+            <Form.Group >
               <Form.Label>เพศ</Form.Label>
               <Form.Control
                 as="select"
@@ -175,12 +163,13 @@ export default function FormData() {
                   setAccount({ ...account, gender: e.target.value });
                 }}
               >
+                <option  value="">เลือก</option>
                 <option>ชาย</option>
                 <option>หญิง</option>
               </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="validationCustom03">
+            <Form.Group >
               <Form.Label>เลขบัตรประชาชน</Form.Label>
               <Form.Control
                 required
@@ -193,11 +182,11 @@ export default function FormData() {
               />
             </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlTextarea4">
+            <Form.Group>
               <Form.Label>วันเกิด</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="date"
                 placeholder="วันเกิด"
                 value={account.day_of_birth}
                 onChange={(e) => {
@@ -206,7 +195,7 @@ export default function FormData() {
               />
             </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Group >
               <Form.Label>ที่อยู่</Form.Label>
               <Form.Control
                 required
@@ -219,7 +208,7 @@ export default function FormData() {
               />
             </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlTextarea2">
+            <Form.Group >
               <Form.Label>เบอร์โทร</Form.Label>
               <Form.Control
                 required
@@ -231,7 +220,36 @@ export default function FormData() {
                 }}
               />
             </Form.Group>
-
+            <Form.Group >
+              <Form.Label>กรอกไอดีฟาร์ม</Form.Label>
+              <Form.Control
+                as="select"
+                value={account.adminfarm}
+                onChange={(e) => {
+                  setAccount({ ...account, adminfarm: e.target.value });
+                }}
+              >
+                <option  value="">เลือก</option>
+                {props.admin.map(i=>{
+                   return <option key={i}>{i}</option>
+                })}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>ตำแหนง</Form.Label>
+              <Form.Control
+                as="select"
+                value={account.vacancy}
+                onChange={(e) => {
+                  setAccount({ ...account, vacancy: e.target.value });
+                }}
+              >
+                <option  value="">เลือก</option>
+                <option>สัตวแพทย์</option>
+                <option>สัตวบาล</option>
+                <option>พนักงานฟาร์ม</option>
+              </Form.Control>
+            </Form.Group>
             <Form.Group controlId="exampleForm.ControlTextarea3">
               <Form.Label>fax.</Form.Label>
               <Form.Control
@@ -253,6 +271,7 @@ export default function FormData() {
                   setAccount({ ...account, question: e.target.value });
                 }}
               >
+                <option value="-">เลือก</option>
                 <option>สัตว์เลี้ยงของคุณชื่ออะไร</option>
                 <option>คุณชอบสีอะไร</option>
                 <option>แฟนของคุณคือใคร</option>
@@ -284,9 +303,9 @@ export default function FormData() {
           <div className="text-center container-fluid">
             <Form.Group>
               <Button
-                type="submit"
+                
                 className="button-w2"
-                onClick={(event) => handleSubmit(event)}
+                onClick={() => handleSubmit()}
               >
                 ตกลง
               </Button>
@@ -303,16 +322,3 @@ export default function FormData() {
     </div>
   );
 }
-//form กรอกข้อมูลสมัคร
-//...account   ไม่ต้อง พิมพ์เยอะ
-
-//useEffect  ดัก การเปลี่ยนแปลงcomponent
-
-/*firebase.auth().createUserWithEmailAndPassword(account.email, account.password).then(function(){
-      
-    })
-      .catch(function(error) {
-        var errorMessage = error.message;
-        alert(errorMessage);
-      });
-*/

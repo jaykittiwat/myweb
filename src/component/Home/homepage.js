@@ -4,16 +4,19 @@ import "./styh.css";
 import NavbarLogin from "./../../demo";
 import Footerversion from "./../../footerversion";
 import axios from "axios";
-import firebase from "./../../backEnd/firebase";
-//import Board from "./dashboard";
 import Walpaper from "./walpaper";
+import  firebase from "./../../backEnd/firebase/index"
+import { Button } from "@material-ui/core";
+
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {},
       param: this.props,
-      imgeUser: ""
+      imgeUser: "",
+      statusUser:"",
+      admin:""
     };
   }
 
@@ -24,15 +27,33 @@ class Home extends Component {
       )
       .then(res => {
         const getUser = res.data[0];
-        this.setState({ ...this.state, user: getUser });
+        console.log(getUser);
+        this.setState({ ...this.state, user: getUser,statusUser:getUser.privilege,admin:getUser.adminfarm });
       })
       
       
           
     
   }
-
+  logout = e => {
+    
+    firebase.auth().signOut()
+    window.location.reload()
+  ;
+    
+  
+  };
   render() {
+    if(this.state.statusUser==="ยังไม่ได้อนุมัติ"){
+      return (
+        <div className="container-fluid " style={{textAlign:"center"}}>
+     <div style={{fontSize:"40px",marginTop:"10%"}} >รอ<span style={{color:"blue"}}> {this.state.admin}</span> ทำการอนุมัติ</div>
+     <div style={{fontSize:"40px"}} >กรุณากลับมาใหม่ในภายหลัง</div>
+     <Button style={{fontSize:"40px"}} variant="text" onClick={()=>this.logout()} color="secondary">ออกจากระบบ</Button>
+          </div>
+      )
+    }
+
     return (
       <div className="container-fluid ">
         <div className="row ">

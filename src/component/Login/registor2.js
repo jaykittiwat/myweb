@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../styleWebpage.css";
 
 import FormData from "./Form2";
-
+import axios from 'axios'
 import Header from "./../../Header";
 ////////////////////////พนักงาน/////////////////////////
 class Registor2 extends Component {
@@ -10,8 +10,13 @@ class Registor2 extends Component {
     super(props);
     this.state = {
       getLink: "https://mdbootstrap.com/img/Photos/Others/placeholder.jpg",
+      admin:[]
     };
   }
+  async  componentDidMount (){
+ const res=await axios.get("http://localhost:4000/user/checkAdmin")
+ this.setState({...this.state,admin:res.data})
+}
 
   render() {
     return (
@@ -27,7 +32,7 @@ class Registor2 extends Component {
           <div className="title-regis container-fluid">ระบบลงทะเบียนพนักงาน</div>
 
           <div className="col-md-12">
-            <FormData />
+            <FormData  admin={this.state.admin}/>
           </div>
         </div>
         <hr />

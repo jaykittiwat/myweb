@@ -29,8 +29,8 @@ class Fatten extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user,fname:res.data[0].fname });
-            return res.data[0].user;
+            this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname });
+            
           })
           .then(() => {
             axios

@@ -35,12 +35,12 @@ class Notification extends Component {
           .then((res) => {
             this.setState({
               ...this.state,
-              UID: res.data[0].user,
+              UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,
               fname: res.data[0].fname,
               lastname: res.data[0].lname,
             });
            
-            return res.data[0].user;
+           
           })
           .then(() => {
             axios

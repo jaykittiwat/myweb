@@ -6,6 +6,7 @@ import NavbarLogin from "../../../../demo";
 import firebase from "./../../../../backEnd/firebase";
 import "./../CowStyle.css";
 import Footerversion from "./../../../../footerversion";
+import { Button } from "@material-ui/core";
 
 class Induction extends Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class Induction extends Component {
       dataNoti: [],
       UID: "",
       fname:"",
-      program_sync:[]
+      program_sync:[],
+      statusUser:"",
+      admin:""
     };
   }
 
@@ -29,10 +32,10 @@ class Induction extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user,fname:res.data[0].fname  });
-            return res.data[0].user;
+            this.setState({ ...this.state, UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname,statusUser:res.data[0].privilege,admin:res.data[0].adminfarm   });
+           
           })
-          .then(resEmail => {
+          .then(() => {
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth() + 1;
@@ -48,7 +51,7 @@ class Induction extends Component {
             axios
               .get(
                 "http://localhost:4000/notification/" +
-                  resEmail +
+                  this.state.UID +
                   "/" +
                   fullToday
               )
@@ -110,8 +113,20 @@ class Induction extends Component {
       }
     });
   }
-
+  logout = e => {
+    firebase.auth().signOut();
+  };
   render() {
+    if(this.state.statusUser==="ยังไม่ได้อนุมัติ"){
+      return (
+        <div className="container-fluid " style={{textAlign:"center"}}>
+     <div style={{fontSize:"40px",marginTop:"10%"}} >รอ<span style={{color:"blue"}}> {this.state.admin}</span> ทำการอนุมัติ</div>
+     <div style={{fontSize:"40px"}} >กรุณากลับมาใหม่ในภายหลัง</div>
+     <Button style={{fontSize:"40px"}} variant="text" onClick={()=>this.logout()} color="secondary">ออกจากระบบ</Button>
+          
+          </div>
+      )
+    }
     return (
       <div className="container-fluid">
         <div className="row ">

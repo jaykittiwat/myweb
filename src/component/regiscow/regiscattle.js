@@ -4,7 +4,7 @@ import NavbarLogin from "./../../demo";
 import FromRegiscattle from "./FormRegiscattle";
 import axios from "axios";
 import firebase from "../../backEnd/firebase";
-
+import { Button } from "@material-ui/core";
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,9 @@ class Header extends Component {
       strian:[],
       bigcorral:[],
       corral:[],
-      herd_no:[]
+      herd_no:[],
+      statusUser:"",
+      admin:""
     };
   }
   componentDidMount(){
@@ -24,7 +26,7 @@ class Header extends Component {
       if(user){
         axios
         .get("http://localhost:4000/user/logIn/" + user.email).then(res=>{
-          this.setState({...this.state,UID: res.data[0].user });
+          this.setState({...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,statusUser:res.data[0].privilege,admin:res.data[0].adminfarm  });
         }).then(()=>{
           axios.get("http://localhost:4000/settingcolor/color/"+this.state.UID).then(res=>{
             this.setState({...this.state,color:res.data[1] });
@@ -44,7 +46,20 @@ class Header extends Component {
       }
     })
   }
+  logout = e => {
+    firebase.auth().signOut();
+  };
   render() {
+    if(this.state.statusUser==="ยังไม่ได้อนุมัติ"){
+      return (
+        <div className="container-fluid " style={{textAlign:"center"}}>
+     <div style={{fontSize:"40px",marginTop:"10%"}} >รอ<span style={{color:"blue"}}> {this.state.admin}</span> ทำการอนุมัติ</div>
+     <div style={{fontSize:"40px"}} >กรุณากลับมาใหม่ในภายหลัง</div>
+     <Button style={{fontSize:"40px"}} variant="text" onClick={()=>this.logout()} color="secondary">ออกจากระบบ</Button>
+          
+          </div>
+      )
+    }
     return (
       <div className="container-fluid">
       <div className="row ">

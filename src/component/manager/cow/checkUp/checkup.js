@@ -28,10 +28,10 @@ class CheckUp extends Component {
         axios
           .get("http://localhost:4000/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state, UID: res.data[0].user,fname:res.data[0].fname});
-            return res.data[0].user;
+            this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname});
+           
           })
-          .then(resEmail => {
+          .then(() => {
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth() + 1;
@@ -47,23 +47,20 @@ class CheckUp extends Component {
             axios
               .get(
                 "http://localhost:4000/notification/CheckUp/" +
-                  resEmail +
+                  this.state.UID +
                   "/" +
                   fullToday
               )
               .then(res => {
-                //  console.log(res.data);
+               ;
                   const key = Object.keys(res.data);
                   const data = Object.values(res.data);
-                //  console.log(key);
-                //  console.log(data);
+               ;
                   const keyCheckUp = [];
                   const dataCheckUp = [];
                   const array = [keyCheckUp ,dataCheckUp];
                   for (let i = 0; i < data.length; i++) {
                     if (data[i].type === "ตรวจท้อง") {
-                     // console.log(key[i]);
-                      //console.log(data[i]);
                       keyCheckUp.push(key[i]);
                       dataCheckUp.push(data[i]);
                     }

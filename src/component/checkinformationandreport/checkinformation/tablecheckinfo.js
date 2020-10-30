@@ -122,6 +122,15 @@ export default function TableReport(props) {
                           ],
                         }}
                         options={{
+                          scales: {
+                            yAxes: [
+                              {
+                                ticks: {
+                                  beginAtZero: true
+                                }
+                              }
+                            ]
+                          },
                           responsive: true,
                           title: {
                             display: true,

@@ -22,15 +22,7 @@ export default function FormData() {
     fax: "",
     privilege: "เจ้าของฟาร์ม",
   };
-  /*const defaliMedic=[{common_drug: "ยาปฏิชีวนะ(ฉีดยาเข้าเส้นเลือดหรือกล้ามเนื้อ)",dosage: "",drug_name: "กาน่ามัยซิน(Kanamycin)",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "ยาปฏิชีวนะ(ฉีดยาเข้าเส้นเลือดหรือกล้ามเนื้อ)",dosage: "",drug_name: "เพนนิซิลลิน(Penicllin)",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "ยาซัลฟา",dosage: "",drug_name: "ไทโลซิน (Tylosin)",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "ยาถ่ายพยาธิ(การให้ยาทางปาก)",dosage: "",drug_name: "บิปเปอราซิน",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "ยาถ่ายพยาธิ(การให้ยาทางปาก)",dosage: "",drug_name: "โทอะเบนไซล",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "ยาถ่ายพยาธิภายนอก(การให้ยาทางปาก)",dosage: "",drug_name: "เซฟวิน",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "วัคซีนป้องกันคอบวม(ฉีดเข้าใต้ผิวหนัง)",dosage: "",drug_name: "วัคซีนเฮโมเรยิกเซฟติซีเมีย",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "วัคซีนป้องกันโรคกาลี(ฉีดเข้าใต้ผิวหนัง)",dosage: "",drug_name: "วัคซีนแอนแทรกซ์",exp_date: "-",mfd_date: "-",number:0},
-{common_drug: "วัคซีนป้องกันแท้งติดต่อ(ฉีดเข้าใต้ผิวหนัง)",dosage: "",drug_name: "วัคซีนบรูเซลโลซีส",exp_date: "-",mfd_date: "-",number:0},]*/
+ 
 
   const [account, setAccount] = useState(intailState);
   const [checkpass, setCheckpass] = useState("");
@@ -67,7 +59,10 @@ export default function FormData() {
         firebase
           .auth()
           .createUserWithEmailAndPassword(account.email, account.pass)
-          .then((res) => {})
+          .then((res) => {
+            alert("ลงทะเบียนเสร็จสิ้น")
+            window.location.reload()
+          })
           .catch((error) => {
             var errorCode = error.code;
 

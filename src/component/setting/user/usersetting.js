@@ -13,7 +13,10 @@ class Paperuser extends Component {
     this.state = {
       UID: "",
       loading: false,
-      data: []
+      data: [],
+      employeeData:[],
+      employeeKey:[],
+      UIDowner:"",
     };
   }
   componentDidMount() {
@@ -26,8 +29,14 @@ class Paperuser extends Component {
             this.setState({
               data: res.data,
               UID: res.data.user,
-              loading: false
+              UIDowner:res.data.privilege==="เจ้าของฟาร์ม"?res.data.user:res.data.adminfarm
+              
             });
+          }).then(()=>{
+            axios
+            .get("http://localhost:4000/user/checkemployee/" +this.state.UIDowner).then(res=>{
+                this.setState({...this.state,loading: false, employeeData:res.data[1],employeeKey:res.data[0]})
+            })
           })
       }
       else{ console.log("log out")}
