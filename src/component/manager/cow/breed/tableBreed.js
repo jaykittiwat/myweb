@@ -131,7 +131,7 @@ useEffect(() => {
               recorder: recoder,
               number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1,
               operator: operator,
-              sire_id: HowIdTobreed,
+              sire_id: HowTobreed+HowIdTobreed,
               time_breeding: time3, //เวลาผสม
               time2: time2, //เวลานิ่ง
               time3: time //เวลาเป็นสัด
@@ -147,7 +147,7 @@ useEffect(() => {
               recorder: recoder,
               number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1,//<<<----------------ต้องเอามาคำนวณ---------------<<
               operator: operator,
-              semen: HowIdTobreed,
+              semen: HowTobreed+HowIdTobreed,
               time_breeding: time3, //เวลาผสม
               time2: time2, //เวลานิ่ง
               time3: time //เวลาเป็นสัด
@@ -164,7 +164,7 @@ useEffect(() => {
               number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1,//<<<----------------ต้องเอามาคำนวณ---------------<<
               operator: operator,
               transfer: HowIdTobreed,
-              semen: HowIdTobreed,
+              semen: HowTobreed+HowIdTobreed,
               sire_id: HowIdTobreed,
               time_breeding: time3, //เวลาผสม
               time2: time2, //เวลานิ่ง

@@ -51,7 +51,7 @@ export default function FormData() {
           farm_initial: "",
           farm_name_EN: account.user,
           farm_name_TH: account.fname,
-          logo_base64: "",
+          logo_base64: "https://firebasestorage.googleapis.com/v0/b/testapp-ca98d.appspot.com/o/Photos%2F123456789%2FLogo?alt=media&token=03e7d2fd-cdc0-4f7a-8600-c9b3c8e70d86",
           phone_num: account.phone_num,
         });
       })

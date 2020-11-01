@@ -1,286 +1,381 @@
 import React from "react";
-import { Table, TableFooter, TablePagination, Button } from "@material-ui/core";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { setData } from "./Data";
-import Delete from "@material-ui/icons/Delete";
-import Creact from "@material-ui/icons/Create";
-import Save from "@material-ui/icons/Save";
-import { TextField, Grid } from "@material-ui/core";
-import update from "immutability-helper";
-import PropTypes from "prop-types";
-import { useTheme, makeStyles } from "@material-ui/core/styles";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
-import IconButton from "@material-ui/core/IconButton";
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5)
+import { Paper, TextField, Button, Grid } from "@material-ui/core/";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import axios from "axios"
+import jsPDF from "jspdf";
+import {font} from './conten'
+import "jspdf-autotable";
+import ReactExport from 'react-data-export';
+
+
+
+export default function TableOfmom(props) {
+  const [list, setList] = React.useState([]);
+  const [Owner,setOwner]=React.useState("")
+  const [selectedId, setSelectedId] = React.useState("");
+  const [dataExcel,setDataExcel]=React.useState(null)
+const [indexCheck,setIndexCheck]=React.useState(null)
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+
+  const setid = (newValue) => {
+    setSelectedId(newValue);
+  };
+  const concatData = (d1, d2) => {
+    const children = d1.concat(d2);
+    const setId = [];
+    children.map((item) => {
+      const validKeys = ["cattle_id", "birth_id"];
+      Object.keys(item).forEach(
+        (key) => validKeys.includes(key) || delete item[key]
+      );
+      const key = "birth_id";
+      item["cattle_id"] = item[key] ? item[key] : item["cattle_id"];
+      delete item[key];
+      setId.push(item);
+    });
+    setList(setId);
+  };
+
+
+
+  React.useEffect(() => {
+    concatData(props.data1, props.data2);
+    setOwner(props.owner)
+  }, [props]);
+
+
+
+
+const  queryDataPDF= async(id)=>{
+
+          const res=await axios.get("http://localhost:4000/breed/history/" +props.UID+"/"+id)
+          const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
+          const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
+     
+          const databrand=Object.values(res3.data)
+         let dataSet=[]//[["1","2","3"],["1","2","3"],["1","2","3"]]
+         let data=res.data;
+          data.map(async(i)=>{
+         const arrData= Object.values(i)
+        console.log(i.semen);
+         dataSet.push([arrData[1],i.semen||i.sire_id,arrData[5],arrData[2]||'ไม่มี'])
+          })
+         
+     
+      PDF(dataSet,res2.data[1],databrand[0])
+}
+
+
+
+
+
+const PDF=(data,profile,databrand)=>{
+  const doc = new jsPDF()
+  const content=font
+  const finalY = doc.lastAutoTable.finalY || 10
+  doc.addFileToVFS('THSarabunNew.ttf',content)
+  doc.addFont('THSarabunNew.ttf', 'custom', 'normal');
+  doc.setFont('custom');
+  doc.setFontSize(24);
+
+  doc.text('ใบประวัติการผสมพันธุ์', 85, finalY + 15)
+  doc.setFontSize(18)
+  doc.text('ชื่อฟาร์ม:'+databrand.farm_name_TH, 14, finalY + 25)
+  doc.text('หมายเลขโค:'+profile.cattle_id, 14, finalY + 35)
+  doc.text('วันที่เกิด:'+profile.birth_date, 64, finalY + 35)
+  doc.text('สายพันธุ์:'+profile.breed,104, finalY + 35)
+  doc.text('สี:'+profile.color,144, finalY + 35)
+  doc.text('น้ำหนักแรกเกิด:'+profile.birth_weight,14, finalY + 45)
+  doc.text('พ่อพันธุ์:'+profile.sire_id,64, finalY + 45)
+  doc.text('แม่พันธุ์:'+profile.dam_id,104, finalY + 45)
+  doc.text('วิธีผสม:'+profile.breed_method,144, finalY + 45)
+  doc.autoTable({
+    startY: finalY + 50,
+    head: [['วันที่', 'วิธีผสม','ครั้งที่ท้อง','หมายเหตุ']],
+    columnStyles: {
+      0: {cellWidth:25},
+      1: {cellWidth: 45},
+      2: {cellWidth: 45},
+      3: {cellWidth: 45},
+   
   },
-  HeaderSetting: {
-    color: "#fff",
-    background:
-      " linear-gradient(180deg, rgba(62,134,255,1) 0%, rgba(0,72,186,1) 100%)",
-    padding: "8px"
+    body:data,
+    headStyles: { font: "custom",fontSize:18,fillColor: [85,157,251]},
+    bodyStyles: { font: "custom",fontSize:16},
+    theme: 'grid',
+
+  })
+  doc.text("ลงชื่อ...........................................................", 120, doc.lastAutoTable.finalY + 15)
+  doc.text("       (      " +Owner+"      )", 120, doc.lastAutoTable.finalY + 22);
+  doc.text("                     "+date()+"            ", 120, doc.lastAutoTable.finalY + 29);
+  doc.save("table.pdf");
+  setSelectedId("")
+}
+
+
+
+
+
+const queryDataExcel=async(id,index)=>{
+  const res=await axios.get("http://localhost:4000/breed/history/" +props.UID+"/"+id)
+   const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
+   const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
+     
+   const databrand=Object.values(res3.data)
+   const data=[]
+   const borders = {
+    top: { style: "thin" },
+    bottom: { style: "thin" },
+    left: { style: "thin" },
+    right: { style: "thin" }
   }
-}));
-const TablePaginationActions = (props) => {
-  const classes = useStyles1();
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onChangePage } = props;
+   res.data.map(i=>{
+    const newSet=[
+      {
+        value: i.date_breeding ,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top',}}
+      },
+      {
+        value:i.semen||i.sire_id,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
+      },
+      {
+        value:i.number_of_breeding ,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
+      },
+      {
+        value: i.note,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
+      },
+     
+    ]
 
-  const handleFirstPageButtonClick = (event) => {
-    onChangePage(event, 0);
-  };
+  data.push(newSet)
+   })
+  /* const data2=[]
+   const data3=[]
+   const setDataApi=[res2.data[1]]
+ 
+   setDataApi.map(i=>{
+    const newSet2=[
+      {
+        value: i.cattle_id , style: {border: borders} , 
+      },
+      {
+        value: i.birth_date, style: { border: borders},
+      },
+      {
+        value: i.breed , style: { border: borders},
+      },
+      {
+        value: i.color, style: { border: borders},
+      },
+    ]
+    const newSet3=[
+  
+      {
+        value: i.birth_weight, style: { border: borders},
+      },
+      {
+        value: i.sire_id, style: { border: borders},
+      },
+      {
+        value: i.dam_id, style: { border: borders},
+      },
+      {
+        value: i.breed_method, style: { border: borders},
+      }
+    ]
 
-  const handleBackButtonClick = (event) => {
-    onChangePage(event, page - 1);
-  };
+  data2.push(newSet2)
+  data3.push(newSet3)
+   })*/
 
-  const handleNextButtonClick = (event) => {
-    onChangePage(event, page + 1);
-  };
 
-  const handleLastPageButtonClick = (event) => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
 
-  return (
-    <div className={classes.root}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowRight />
-        ) : (
-          <KeyboardArrowLeft />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowLeft />
-        ) : (
-          <KeyboardArrowRight />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </div>
-  );
-};
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired
-};
-export default function TableOfmom() {
-  const classes = useStyles1();
+const multiDataSet=[
+  { 
+    xSteps:0,
+    ySteps:0,
+    columns: [
+      {title: "ใบประวัติการผสมพันธุ์"},//pixels width 
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:1,
+    columns: [
+      {title: "ชื่อฟาร์ม:"+databrand[0].farm_name_TH, width: {wpx: 90}},//pixels width 
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:0,
+    columns: [
+      {title: "หมายเลขโค: "+res2.data[1].cattle_id||res2.data[1].birth_id , width: {wpx: 90},},//pixels width 
+      {title: "วันที่เกิด: "+res2.data[1].birth_date, width: {wpx:90},},//char width 
+      {title: "สายพันธุ์: "+res2.data[1].breed, width: {wpx: 90}, },
+      {title: "สี: "+res2.data[1].color, width: {wpx:90},},
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:0,
+    columns: [
+      {title: "น้ำหนักแรกเกิด: "+res2.data[1].birth_weight, width: {wpx: 100}, },//pixels width 
+      {title: "พ่อพันธุ์: "+res2.data[1].sire_id, width: {wpx:100}, },//char width 
+      {title: "แม่พันธุ์: "+res2.data[1].dam_id, width: {wpx: 100},},
+      {title: "วิธีผสม: "+res2.data[1].breed_method, width: {wpx:100}, },
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:1,
+    columns: [
+      {title: "วันที่", width: {wpx:100}, style: { border: borders, font: { bold: true }},},//pixels width 
+      {title:"วิธีผสม", width: {wpx:100}, style: { border: borders, font: { bold: true }},},//char width 
+      {title: "ครั้งที่ท้อง", width: {wpx:100}, style: { border: borders, font: { bold: true }},},
+      {title: "หมายเหตุ", width: {wpx:100}, style: { border: borders, font: { bold: true }},},
+  ],
+  data:data
+  }
+]
+ setDataExcel(multiDataSet)
+setIndexCheck(index)
 
-  const [rows, setRows] = React.useState(setData);
-  const [startEdit, setStartEdit] = React.useState(false);
-  const [indexRow, setIndexRow] = React.useState(-1);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [checkPage, setCheckPage] = React.useState(0);
-  const Head = [
-    { cell: "name", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
-    { cell: "lastname", align: "left" },
-    { cell: "Age", align: "left" },
-    { cell: "Action", align: "center" }
-  ];
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  }
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
-  const UPDATE = (index) => {
-    setCheckPage(page);
-    setIndexRow(index);
-    setStartEdit(!startEdit);
-  };
-  const DELETE = (index) => {
-    const getToUpdate = rows;
-    const newUpdate = update(getToUpdate, { $splice: [[index, 1]] });
-    setRows(newUpdate);
-  };
-  const SAVE = (index) => {
-    setStartEdit(!startEdit);
-  };
-  const SETVALUES = (event, index) => {
-    const key = event.target.id;
-    const v = event.target.value;
-    const getToSet = rows;
-    const calIndex = page * rowsPerPage + index;
-    const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v } } });
-    setRows(newSet);
-  };
-  return (
-    <Paper square elevation={3}>
-      <Paper className={classes.HeaderSetting} elevation={3} square>
-        <Grid container>
-          <Grid item xs={6}>
-            {" "}
-            <div style={{ fontSize: "22px", marginTop: "2px" }}>
-              ข้อมูลการผสมพันธุ์
-            </div>
-          </Grid>
-          <Grid item xs={6} style={{textAlign:"right"}}>
-            <Button
-              color="secondary"
-              variant="contained"
-              style={{ fontSize: "16px", width: "90px", margin: "0px" }}
-            >
-              PDF
-            </Button>{" "}
-            <Button
-              style={{
-                color: "#fff",
-                backgroundColor: "#64dd17",
-                fontSize: "16px",
-                width: "90px",
-                margin: "0px"
-              }}
-            >
-              EXCEL
-            </Button>
-          </Grid>
+
+const date=()=>{
+      const newdate= new Date()
+       let dd =  newdate.getDate();
+      let mm = newdate.getMonth() + 1;
+      const yyyy = newdate.getFullYear();
+     if (mm < 10) {
+       mm = "0" + mm;
+     }
+     if (dd < 10) {
+       dd = "0" + dd;
+     }
+     return( dd + "/" + mm + "/" + yyyy)
+    }
+
+
+
+
+  const showlist=()=>{
+    return list.map((i,index)=>(
+      <Paper key={i.cattle_id} elevation={3} style={{ padding: "10px" }}>
+      <Grid container spacing={3}>  
+        <Grid item xs={6}>หมายเลขโค:{i.cattle_id}</Grid>
+        <Grid item xs={6} style={{textAlign:"center"}}> <Button
+             onClick={()=>queryDataPDF(i.cattle_id)}
+          variant="contained"
+          style={{
+            marginLeft: "10%",
+            backgroundColor: "red",
+            color: "#fff",
+            padding: "10px",
+            width: "100px",
+            outline:"none"
+          }}
+        >
+          PDF
+        </Button>{" "}
+        <Button
+         onClick={()=>queryDataExcel(i.cattle_id,index)}
+   
+          variant="contained"
+          style={{
+            backgroundColor: "green",
+            color: "#fff",
+            padding: "10px",
+            width: "100px",
+            outline:"none"
+          }}
+        >
+          EXCEL
+        </Button>
+        {dataExcel != null&&index===indexCheck ? 
+                 <ExcelFile element={<button>Download Data With Styles</button>}  hideElement={true}>
+                 <ExcelSheet dataSet={dataExcel} name="ใบประวัติการผสม"/>
+             </ExcelFile>:null
+            }   
+        
         </Grid>
-      </Paper>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {Head.map((list, index) => (
-                <TableCell
-                  align={list.align}
-                  key={index}
-                  style={{ fontSize: "20px" }}
-                >
-                  {list.cell}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row, index) => (
-              <TableRow key={index}>
-                <TableCell style={{ fontSize: "18px" }}>
-                  {startEdit && indexRow === index && page === checkPage ? (
-                    <TextField
-                      style={{ width: "100%" }}
-                      id="name"
-                      value={row.name}
-                      onChange={(event) => SETVALUES(event, index)}
-                    ></TextField>
-                  ) : (
-                    row.name
-                  )}
-                </TableCell>
-                <TableCell style={{ fontSize: "18px" }}>
-                  {startEdit && indexRow === index && page === checkPage ? (
-                    <TextField
-                      style={{ width: "100%" }}
-                      id="lastName"
-                      value={row.lastName}
-                      onChange={(event) => SETVALUES(event, index)}
-                    ></TextField>
-                  ) : (
-                    row.lastName
-                  )}
-                </TableCell>
-                <TableCell style={{ fontSize: "18px" }}>
-                  {startEdit && indexRow === index && page === checkPage ? (
-                    <TextField
-                      style={{ width: "100%" }}
-                      id="Age"
-                      value={row.Age}
-                      onChange={(event) => SETVALUES(event, index)}
-                    ></TextField>
-                  ) : (
-                    row.Age
-                  )}
-                </TableCell>
-                <TableCell style={{ width: "200px" }}>
-                  <Grid container>
-                    {" "}
-                    <Grid item xs={6} align="center">
-                      {startEdit && indexRow === index && page === checkPage ? (
-                        <Save onClick={() => SAVE(index)} color="primary" />
-                      ) : (
-                        <Creact
-                          onClick={() => UPDATE(index)}
-                          style={{ color: "#ffa000" }}
-                        />
-                      )}
-                    </Grid>
-                    <Grid item xs={6} align="center">
-                      <Delete onClick={() => DELETE(index)} color="secondary" />
-                    </Grid>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[
-                  1,
-                  10,
-                  25,
-                  50,
-                  100,
-                  { label: "All", value: -1 }
-                ]}
-                colSpan={5}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
-                  native: true
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
+     
+       
+
+      </Grid> </Paper>
+    ))
+  }
+  return (
+    <Paper square elevation={3} style={{ padding: "20px", margin: "10px" }}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          ค้นหาหมายเลขโค
+          <Autocomplete
+            freeSolo
+            id="free-solo-2-demo"
+            disableClearable
+            getOptionSelected={(option, value) =>
+              option.cattle_id === value.cattle_id
+            }
+            onChange={(event, newValue) => setid(newValue)}
+            options={list.map((option) => option.cattle_id)}
+            renderInput={(params) => (
+              <TextField
+                style={{ width: "100%" }}
+                placeholder="กรอกหมายเลขโค"
+                {...params}
+                size="small"
+                variant="outlined"
+                InputProps={{ ...params.InputProps, type: "search" }}
               />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+            )}
+          />
+        </Grid>
+        <Grid item xs={12} >
+          {selectedId ===""?
+            showlist():<Paper elevation={3} style={{ padding: "10px" }}>
+              หมายเลขโค:{selectedId}
+              <Button
+                onClick={()=>queryDataPDF(selectedId)}
+                variant="contained"
+                style={{
+                  marginLeft: "10%",
+                  backgroundColor: "red",
+                  color: "#fff",
+                  padding: "10px",
+                  width: "100px",
+                }}
+              >
+                PDF
+              </Button>{" "}
+              <Button
+              onClick={()=>queryDataExcel(selectedId,null)}
+                variant="contained"
+                style={{
+                  backgroundColor: "green",
+                  color: "#fff",
+                  padding: "10px",
+                  width: "100px",
+                }}
+              >
+                EXCEL
+              </Button>
+              {dataExcel != null&&selectedId!=="" ? 
+               <ExcelFile element={<button>Download Data With Styles</button>} hideElement={true}>
+               <ExcelSheet dataSet={dataExcel} name="ใบประวัติการผสม"/>
+           </ExcelFile>:null
+              
+            }   
+            </Paper>
+          }
+        </Grid>
+      </Grid>
     </Paper>
   );
 }

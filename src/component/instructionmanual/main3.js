@@ -28,7 +28,6 @@ const App = () => {
     doc.addFont('THSarabunNew.ttf', 'custom', 'normal');
     doc.setFont('custom');
     doc.setFontSize(24);
-
     doc.text('ใบประวัติการรักษา', 85, finalY + 15)
     doc.setFontSize(18)
     doc.text('ชื่อฟาร์ม:'+nameFarm, 14, finalY + 25)

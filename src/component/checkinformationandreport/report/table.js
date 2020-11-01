@@ -10,7 +10,6 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Tablemom from "./tableOfmom";
 import Tableclaf from "./tableOfcalf";
-//import Tabledad from "./tableOfdad";
 import Tablefatten from "./tableOffatten";
 import Tableinduction from "./tableOfinduction";
 import Tablebreed from "./tableOfBreed";
@@ -18,8 +17,7 @@ import Tablecheckup from "./tableOfcheckup";
 import Tablecalve from "./tableOfclave";
 import Tableabortion from "./tableOfabortion";
 import Tabletreat from "./tableOftreatment";
-//import Tablevaccine from "./tableOfvaccine";
-//import Tableparasite from "./tableOfparasite";
+
 
 
 
@@ -229,23 +227,23 @@ export default function App(props) {
         </Grid>
         <Grid item xs={10}>
           {seletedList === 0 ? (
-            <Tablemom  keydata={props.posts.keycattle} data={props.posts.datacattle} load={props.posts.loading} />
+            <Tablemom  keydata={props.posts.keycattle} data={props.posts.datacattle} load={props.posts.loading} UID={props.posts.UID} />
           ) : seletedList === 1 ? (
             <Tableclaf  keydata={props.posts.keycalf} data={props.posts.datacalf} load={props.posts.loading}/>
           )  : seletedList === 3 ? (
-            <Tablefatten  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+            <Tablefatten  keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           ) : seletedList === 4 ? (
-            <Tableinduction  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+            <Tableinduction   keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           ) : seletedList === 5 ? (
-            <Tablebreed  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+            <Tablebreed keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           ) : seletedList === 6 ? (
-            <Tablecheckup  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+            <Tablecheckup keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           ) : seletedList === 7 ? (
             <Tablecalve  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) : seletedList === 8 ? (
             <Tableabortion  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
           ) :  (
-            <Tabletreat  keydata={props.posts} data1={props.posts.datacattle}  data2={props.posts.datacalf} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
+            <Tabletreat  keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           )
            }
         </Grid>

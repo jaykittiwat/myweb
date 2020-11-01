@@ -21,7 +21,10 @@ import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ReactExport from "react-export-excel";
-
+import jsPDF from "jspdf";
+import {font} from './conten'
+import "jspdf-autotable";
+import axios from "axios";
 const useStyles1 = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -131,9 +134,6 @@ export default function TableOfmom(props) {
      { cell: "โรงเรือน", align: "left" },
     { cell: "คอก", align: "left" },
     { cell: "ฝูง", align: "left" },
-
-    
-    
     { cell: "แก้ไข", align: "center" }
   ];
   React.useEffect(() => {
@@ -143,18 +143,86 @@ export default function TableOfmom(props) {
   const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+
+const  queryDataPDF= ()=>{
+
+ const setData=[]
+ const setData2=[]
+rows.map(i=>{
+setData.push([i.cattle_id||"-",i.status||"-",i.breed||"-",i.color||"-",i.birth_date||"-",i.sex||"-",i.breed_method||"-",i.sire_id||"-",i.dam_id||"-",i.birth_weight||"-"])
+setData2.push([i.wean_weight||"-",i.year_weight||"-",i.year_hip_hight||"-",i.birth_chest_head_ratio||"-",i.wean_chest_head_ratio||"-",i.wean_date||"-",i.number_of_breeding||"-",i.bigcorral||"-",i.corral||"-",i.herd_no||"-"])
+})
+PDF(setData,setData2)
+}
+
+
+const PDF=(data,data2)=>{
+  const doc = new jsPDF('l', 'mm', 'a4')
+  const content=font
+  const finalY = doc.lastAutoTable.finalY || 10
+  doc.addFileToVFS('THSarabunNew.ttf',content)
+  doc.addFont('THSarabunNew.ttf', 'custom', 'normal');
+  doc.setFont('custom');
+  doc.autoTable({
+    startY: finalY + 5,
+    head: [['หมายเลขโค', 'สถานะ','สายพันธุ์โค', 'สี','วันที่เกิด','เพศ','การผสม','พ่อ','แม่',"น้ำหนักแรกเกิด(kg.)"]],
+    columnStyles: {
+      0: {cellWidth:30},
+      1: {cellWidth: 30},
+      2: {cellWidth: 30},
+      3: {cellWidth: 15},
+      4: {cellWidth: 30},
+      5: {cellWidth: 15},
+      6: {cellWidth: 20},
+      7: {cellWidth: 30},
+      8: {cellWidth: 30},
+      9: {cellWidth:40},
+  },
+    body:data,
+    headStyles: { font: "custom",fontSize:18,fillColor: [85,157,251]},
+    bodyStyles: { font: "custom",fontSize:16},
+    theme: 'grid',
+
+  })
+  doc.addPage()
+  doc.autoTable({
+    startY: finalY + 5,
+    head: [['น้ำหนักหลังอย่านม(Kg.)','น้ำหนัก 1 ปี(kg.)','ความสูงสะโพก 1 ปี(cm.)','รอบอกตอนเกิด(cm.)','รอบอกหลังอย่านม(cm.)','วันที่อย่านม','จำนวนการผสม(ครั้ง)','โรงเรือน','คอก','ฝูง']],
+    columnStyles: {
+      0: {cellWidth: 30},
+      1: {cellWidth: 30},
+      2: {cellWidth: 30},
+      3: {cellWidth: 30},
+      4: {cellWidth: 30},
+      5: {cellWidth: 30},
+      6: {cellWidth: 30},
+      7: {cellWidth: 20},
+      8: {cellWidth: 20},
+      9: {cellWidth: 20},
+    
+  },
+    body:data2,
+    headStyles: { font: "custom",fontSize:18,fillColor: [85,157,251]},
+    bodyStyles: { font: "custom",fontSize:16},
+    theme: 'grid',
+
+  })
+  doc.save("table.pdf");
+}
+
+
 const Download=()=>{
   return (
     <ExcelFile element={  <Button
       style={{
         color: "#fff",
-        backgroundColor: "#64dd17",
+        backgroundColor: "green",
         fontSize: "16px",
         width: "auto",
         margin: "0px"
       }}
     >
-      DOWNLOAD EXCEL
+      EXCEL
     </Button>}>
         <ExcelSheet data={rows} name="cattleL_List" >
             <ExcelColumn label="หมายเลขโค" value="cattle_id"   />
@@ -181,28 +249,43 @@ const Download=()=>{
     </ExcelFile>
 );
 }
+
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+
   const UPDATE = (index) => {
     setCheckPage(page);
     setIndexRow(index);
     setStartEdit(!startEdit);
   };
+
+
   const DELETE = (index) => {
     const getToUpdate = rows;
     const newUpdate = update(getToUpdate, { $splice: [[index, 1]] });
     setRows(newUpdate);
   };
+
+
   const SAVE = (index) => {
-    setStartEdit(!startEdit);
+    axios.post("http://localhost:4000/cattle/status/"+props.UID+"/"+props.keydata[index],rows[index])
+    .then(()=>{
+      setStartEdit(!startEdit);
+      alert("บันทึกสำเร็จ")
+    })
+   
   };//-------------------------------------------------------------------คำนวณ INDEXXXXXXXXXXXXXXXX
+
+
   const SETVALUES = (event, index) => {
     const key = event.target.id;
     const v = event.target.value;
@@ -211,12 +294,16 @@ const Download=()=>{
     const newSet = update(getToSet, { [calIndex]: { [key]: { $set: v } } });
     setRows(newSet);
   };
+
+
   if(props.load){
     return( <div className="container-fluid text-center" style={{ marginTop: "17%" }}>
     <CircularProgress size={40} />
     <h3>Loading.....</h3>
   </div>)
   }
+
+
   return (
     <Paper square elevation={3}>
       <Paper className={classes.HeaderSetting} elevation={3} square>
@@ -224,12 +311,20 @@ const Download=()=>{
           <Grid item xs={6}>
             {" "}
             <div style={{ fontSize: "22px", marginTop: "2px" }}>
-              ข้อมูลแม่พันธุ์โค
+              ข้อมูลโค
             </div>
           </Grid>
           <Grid item xs={6} style={{textAlign:"right"}}>
        
           {Download()}
+          {" "}
+          <Button style={{
+        color: "#fff",
+        backgroundColor: "red",
+        fontSize: "16px",
+        width: "auto",
+        margin: "0px"
+      }} onClick={() =>queryDataPDF()}>PDF</Button>
           </Grid>
         </Grid>
       </Paper>

@@ -128,7 +128,7 @@ setpro_maintain(props.posts.pro_maintain)
           axios.post("http://localhost:4000/maintain/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
-            type: "บำรุงก่อนคลอด",
+            type: "บำรุง",
             recorder: recoder,
             operator: operator,
             time: time,

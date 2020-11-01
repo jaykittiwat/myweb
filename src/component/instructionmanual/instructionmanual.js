@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import HeaderLogin from './../../HeaderLogin';
 import NavbarLogin from './../../demo';
-import Main from './main'
+import Main from './main2'
 class Header extends Component{
   render(){
       return(
@@ -14,5 +14,5 @@ class Header extends Component{
       )
   }
 }
-export default Header;
+export default Header
 

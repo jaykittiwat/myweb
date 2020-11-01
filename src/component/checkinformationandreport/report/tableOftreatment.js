@@ -5,10 +5,19 @@ import axios from "axios"
 import jsPDF from "jspdf";
 import {font} from './conten'
 import "jspdf-autotable";
+import ReactExport from 'react-data-export';
+
+
+
 export default function TableOfmom(props) {
   const [list, setList] = React.useState([]);
-const [Owner,setOwner]=React.useState("")
+  const [Owner,setOwner]=React.useState("")
   const [selectedId, setSelectedId] = React.useState("");
+  const [dataExcel,setDataExcel]=React.useState(null)
+const [indexCheck,setIndexCheck]=React.useState(null)
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+
   const setid = (newValue) => {
     setSelectedId(newValue);
   };
@@ -107,10 +116,142 @@ const PDF=(data,profile,databrand)=>{
 }
 
 
+const mapDrug=(data)=>{
+
+let value=""
+data.map(i=>{
+value=value+" -"+i.drugId+"\n"
+})
+return value
+}
 
 
-const queryDataExcel=async(id)=>{
-  //const res=await axios.get("http://localhost:4000/treatment/history/" +props.UID+"/"+id)
+const queryDataExcel=async(id,index)=>{
+   const res=await axios.get("http://localhost:4000/treatment/history/" +props.UID+"/"+id)
+   const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
+   const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
+     
+   const databrand=Object.values(res3.data)
+   const data=[]
+   const borders = {
+    top: { style: "thin" },
+    bottom: { style: "thin" },
+    left: { style: "thin" },
+    right: { style: "thin" }
+  }
+   res.data.map(i=>{
+    const newSet=[
+      {
+        value: i.datediagnose ,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top',}}
+      },
+      {
+        value: i.note,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
+      },
+      {
+        value: i.sickness,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
+      },
+      {
+        value: mapDrug(i.drug),style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
+   
+      }
+    ]
+
+  data.push(newSet)
+   })
+  /* const data2=[]
+   const data3=[]
+   const setDataApi=[res2.data[1]]
+ 
+   setDataApi.map(i=>{
+    const newSet2=[
+      {
+        value: i.cattle_id , style: {border: borders} , 
+      },
+      {
+        value: i.birth_date, style: { border: borders},
+      },
+      {
+        value: i.breed , style: { border: borders},
+      },
+      {
+        value: i.color, style: { border: borders},
+      },
+    ]
+    const newSet3=[
+  
+      {
+        value: i.birth_weight, style: { border: borders},
+      },
+      {
+        value: i.sire_id, style: { border: borders},
+      },
+      {
+        value: i.dam_id, style: { border: borders},
+      },
+      {
+        value: i.breed_method, style: { border: borders},
+      }
+    ]
+
+  data2.push(newSet2)
+  data3.push(newSet3)
+   })*/
+
+
+
+const multiDataSet=[
+  { 
+    xSteps:0,
+    ySteps:0,
+    columns: [
+      {title: "ใบประวัติการรักษา"},//pixels width 
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:1,
+    columns: [
+      {title: "ชื่อฟาร์ม:"+databrand[0].farm_name_TH, width: {wpx: 90}},//pixels width 
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:0,
+    columns: [
+      {title: "หมายเลขโค: "+res2.data[1].cattle_id||res2.data[1].birth_id , width: {wpx: 90},},//pixels width 
+      {title: "วันที่เกิด: "+res2.data[1].birth_date, width: {wpx:90},},//char width 
+      {title: "สายพันธุ์: "+res2.data[1].breed, width: {wpx: 90}, },
+      {title: "สี: "+res2.data[1].color, width: {wpx:90},},
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:0,
+    columns: [
+      {title: "น้ำหนักแรกเกิด: "+res2.data[1].birth_weight, width: {wpx: 100}, },//pixels width 
+      {title: "พ่อพันธุ์: "+res2.data[1].sire_id, width: {wpx:100}, },//char width 
+      {title: "แม่พันธุ์: "+res2.data[1].dam_id, width: {wpx: 100},},
+      {title: "วิธีผสม: "+res2.data[1].breed_method, width: {wpx:100}, },
+  ],
+  data:[]
+  },
+  { 
+    xSteps:0,
+    ySteps:1,
+    columns: [
+      {title: "วันที่", width: {wpx: 100}, style: { border: borders, font: { bold: true }},},//pixels width 
+      {title: "อาการ", width: {wpx:100}, style: { border: borders, font: { bold: true }},},//char width 
+      {title: "ผลการวินิจฉัย", width: {wpx:100}, style: { border: borders, font: { bold: true }},},
+      {title: "การรักษา", width: {wpx:150}, style: { border: borders, font: { bold: true }},},
+  ],
+  data:data
+  }
+]
+ setDataExcel(multiDataSet)
+setIndexCheck(index)
 
   }
 
@@ -134,11 +275,11 @@ const date=()=>{
 
 
   const showlist=()=>{
-    return list.map(i=>(
+    return list.map((i,index)=>(
       <Paper key={i.cattle_id} elevation={3} style={{ padding: "10px" }}>
       <Grid container spacing={3}>  
         <Grid item xs={6}>หมายเลขโค:{i.cattle_id}</Grid>
-        <Grid item xs={6}> <Button
+        <Grid item xs={6} style={{textAlign:"center"}}> <Button
              onClick={()=>queryDataPDF(i.cattle_id)}
           variant="contained"
           style={{
@@ -153,7 +294,7 @@ const date=()=>{
           PDF
         </Button>{" "}
         <Button
-         onClick={()=>queryDataExcel(i.cattle_id)}
+         onClick={()=>queryDataExcel(i.cattle_id,index)}
    
           variant="contained"
           style={{
@@ -165,7 +306,14 @@ const date=()=>{
           }}
         >
           EXCEL
-        </Button></Grid>
+        </Button>
+        {dataExcel != null&&index===indexCheck ? 
+                 <ExcelFile element={<button>Download Data With Styles</button>}  hideElement={true}>
+                 <ExcelSheet dataSet={dataExcel} name="ใบประวัติการรักษา"/>
+             </ExcelFile>:null
+            }   
+        
+        </Grid>
      
        
 
@@ -198,7 +346,7 @@ const date=()=>{
             )}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} >
           {selectedId ===""?
             showlist():<Paper elevation={3} style={{ padding: "10px" }}>
               หมายเลขโค:{selectedId}
@@ -216,7 +364,7 @@ const date=()=>{
                 PDF
               </Button>{" "}
               <Button
-              onClick={()=>queryDataExcel(selectedId)}
+              onClick={()=>queryDataExcel(selectedId,null)}
                 variant="contained"
                 style={{
                   backgroundColor: "green",
@@ -227,6 +375,12 @@ const date=()=>{
               >
                 EXCEL
               </Button>
+              {dataExcel != null&&selectedId!=="" ? 
+               <ExcelFile element={<button>Download Data With Styles</button>} hideElement={true}>
+               <ExcelSheet dataSet={dataExcel} name="ใบประวัติการรักษา"/>
+           </ExcelFile>:null
+              
+            }   
             </Paper>
           }
         </Grid>

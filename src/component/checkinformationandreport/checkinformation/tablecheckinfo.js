@@ -199,7 +199,7 @@ export default function TableReport(props) {
                           responsive: true,
                           title: {
                             display: true,
-                            text: "ยังไม่เสร็จ",
+                            text: "จำนวนโคแต่ละสายพันธุ์",
                             fontSize: 22
                           },
                           legend: {
