@@ -302,7 +302,7 @@ const date=()=>{
         </Button>
         {dataExcel != null&&index===indexCheck ? 
                  <ExcelFile element={<button>Download Data With Styles</button>}  hideElement={true}>
-                 <ExcelSheet dataSet={dataExcel} name="ใบประวัติการรักษา"/>
+                 <ExcelSheet dataSet={dataExcel} name="ใบประวัติการเหนี่ยวนำ"/>
              </ExcelFile>:null
             }   
         
@@ -370,7 +370,7 @@ const date=()=>{
               </Button>
               {dataExcel != null&&selectedId!=="" ? 
                <ExcelFile element={<button>Download Data With Styles</button>} hideElement={true}>
-               <ExcelSheet dataSet={dataExcel} name="ใบประวัติการรักษา"/>
+               <ExcelSheet dataSet={dataExcel} name="ใบประวัติการเหนี่ยวนำ"/>
            </ExcelFile>:null
               
             }   

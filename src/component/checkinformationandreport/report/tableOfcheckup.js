@@ -79,7 +79,7 @@ const PDF=(data,profile,databrand)=>{
   doc.setFont('custom');
   doc.setFontSize(24);
 
-  doc.text('ใบประวัติการผสมพันธุ์', 85, finalY + 15)
+  doc.text('ใบประวัติการตรวจท้อง', 85, finalY + 15)
   doc.setFontSize(18)
   doc.text('ชื่อฟาร์ม:'+databrand.farm_name_TH, 14, finalY + 25)
   doc.text('หมายเลขโค:'+profile.cattle_id, 14, finalY + 35)
@@ -118,7 +118,7 @@ const PDF=(data,profile,databrand)=>{
 
 
 const queryDataExcel=async(id,index)=>{
-  const res=await axios.get("http://localhost:4000/synchronize/history/" +props.UID+"/"+id)
+  const res=await axios.get("http://localhost:4000/abdominal/history/" +props.UID+"/"+id)
    const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
    const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
      
@@ -133,13 +133,16 @@ const queryDataExcel=async(id,index)=>{
    res.data.map(i=>{
     const newSet=[
       {
-        value: i.datepro ,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top',}}
+        value: i.dateabd ,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top',}}
+      },
+      {
+        value: i.result,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
       },
       {
         value: i.operator,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
       },
       {
-        value: i.program_sync,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
+        value: i.note,style: {border: borders,alignment: {wrapText: true, horizontal: 'left', vertical: 'top'}}
       },
      
     ]
@@ -192,7 +195,7 @@ const multiDataSet=[
     xSteps:0,
     ySteps:0,
     columns: [
-      {title: "ใบประวัติการผสมพันธุ์"},//pixels width 
+      {title: "ใบประวัติการตรวจท้อง"},//pixels width 
   ],
   data:[]
   },
@@ -231,8 +234,9 @@ const multiDataSet=[
     ySteps:1,
     columns: [
       {title: "วันที่", width: {wpx:150}, style: { border: borders, font: { bold: true }},},//pixels width 
-      {title:"ผู้ปฏิบัติ", width: {wpx:150}, style: { border: borders, font: { bold: true }},},//char width 
-      {title: "โปรแกรมเหนี่ยวนำ", width: {wpx:150}, style: { border: borders, font: { bold: true }},},
+      {title:"ผลการตรวจ", width: {wpx:150}, style: { border: borders, font: { bold: true }},},//char width 
+      {title: "ผู้ตรวจ", width: {wpx:150}, style: { border: borders, font: { bold: true }},},
+      {title: "หมายเหตุ", width: {wpx:150}, style: { border: borders, font: { bold: true }},},
   ],
   data:data
   }
@@ -296,7 +300,7 @@ const date=()=>{
         </Button>
         {dataExcel != null&&index===indexCheck ? 
                  <ExcelFile element={<button>Download Data With Styles</button>}  hideElement={true}>
-                 <ExcelSheet dataSet={dataExcel} name="ใบประวัติการรักษา"/>
+                 <ExcelSheet dataSet={dataExcel} name="ใบประวัติการตรวจท้อง"/>
              </ExcelFile>:null
             }   
         
@@ -364,7 +368,7 @@ const date=()=>{
               </Button>
               {dataExcel != null&&selectedId!=="" ? 
                <ExcelFile element={<button>Download Data With Styles</button>} hideElement={true}>
-               <ExcelSheet dataSet={dataExcel} name="ใบประวัติการรักษา"/>
+               <ExcelSheet dataSet={dataExcel} name="ใบประวัติการตรวจท้อง"/>
            </ExcelFile>:null
               
             }   
