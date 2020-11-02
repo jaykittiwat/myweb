@@ -1,33 +1,10 @@
 import React, { useState ,useEffect} from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import Button from "@material-ui/core/Button";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import TextField from "@material-ui/core/TextField";
 import "date-fns";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormLabel from "@material-ui/core/FormLabel";
-import { Grid } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import {TextareaAutosize,CircularProgress,Table,TableBody,Button,Grid,FormLabel,FormGroup,Select,FormControl,TextField,Checkbox, Paper,Typography,Toolbar,TableRow,TablePagination,TableHead, TableContainer,TableCell,FormControlLabel,Switch} from "@material-ui/core";
 import axios from "axios";
-//เปลี่ยนตัวหนังสือ  บรรทัด310
-
 export default function TableBreed(props) {
   let key = props.posts.keydata;
   let rows = props.posts.data;

@@ -1,8 +1,8 @@
 import React from 'react';
 import Scheduler, { Resource } from 'devextreme-react/scheduler';
-import { Paper } from '@material-ui/core';
+import { Paper,Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
+
 
 import Appointment from './appointment.js';
 const useStyles = makeStyles((theme) => ({

@@ -1,14 +1,6 @@
 import React, { useEffect } from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import Creact from "@material-ui/icons/Create";
 import Save from "@material-ui/icons/Save";
-import { TextField } from "@material-ui/core";
 import update from "immutability-helper";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,8 +9,8 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import PropTypes from "prop-types";
-import TableFooter from "@material-ui/core/TableFooter";
-import TablePagination from "@material-ui/core/TablePagination";
+import {TableFooter,Table,TableBody,TextField, Paper,TableRow,TablePagination,TableHead, TableContainer,TableCell} from "@material-ui/core";
+
 import axios from "axios";
 const useStyles1 = makeStyles((theme) => ({
   root: {

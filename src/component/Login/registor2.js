@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../styleWebpage.css";
-
 import FormData from "./Form2";
 import axios from 'axios'
 import Header from "./../../Header";

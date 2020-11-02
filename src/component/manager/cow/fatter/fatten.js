@@ -48,7 +48,8 @@ class Fatten extends Component {
                     data[i].status === "คลอดแล้ว" ||
                     data[i].status === "โคแท้ง" ||
                     data[i].status === "ไม่ท้อง" ||
-                    data[i].status === " "
+                    data[i].status === ""||
+                    data[i].status === " " 
                   ) {
                     
                     keyInduction.push(key[i]);

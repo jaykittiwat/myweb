@@ -1,15 +1,6 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormLabel from "@material-ui/core/FormLabel";
+import {Paper,Grid,Button,TextField,FormGroup,FormLabel,Select,FormControl,TextareaAutosize,CircularProgress} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Select from "@material-ui/core/Select";
-import { FormControl } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 

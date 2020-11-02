@@ -1,13 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Icondoor from '@material-ui/icons/MeetingRoom';
 import firebase from "./backEnd/firebase/index";
-import Avatar from "@material-ui/core/Avatar";
+import {Avatar, ListItemText,ListItemIcon,MenuItem,Menu} from "@material-ui/core";
 import Iconreoder from "@material-ui/icons/Reorder";
+
 import { Link } from "react-router-dom";
 const logout = e => {
     firebase.auth().signOut();

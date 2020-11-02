@@ -1,8 +1,6 @@
 import React,{useEffect,useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {AppBar} from "@material-ui/core";
-import Toolbar from "@material-ui/core/Toolbar";
-import { Grid } from "@material-ui/core";
+import {AppBar,Grid,Toolbar} from "@material-ui/core";
 import { B1, B2, B3, B4, B5, B6, B7, B8, B9 } from "./buttonNav";
 import axios from 'axios'
 import firebase from "./backEnd/firebase"

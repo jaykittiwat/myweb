@@ -147,7 +147,7 @@ const queryDataExcel=async(id,index)=>{
      
     ]
 
-  data.push(newSet)
+  return data.push(newSet)
    })
   /* const data2=[]
    const data3=[]

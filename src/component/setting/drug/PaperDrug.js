@@ -1,31 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles,withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import { Paper } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import {AppBar,Tabs,Tab,Typography,Box,Paper,Grid,TextField,Button,TextareaAutosize,IconButton,TableContainer,TableBody,TableCell,TableRow,Input,InputAdornment,Table} from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import update from "immutability-helper";
 import axios from "axios";
 import TableList from "./tableList";
-import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
-
 const StyledTableRow = withStyles(theme => ({
   root: {
     "&:nth-of-type(odd)": {

@@ -1,11 +1,5 @@
 import React from "react";
-import { Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Tablemom from "./tableOfmom";
@@ -17,6 +11,7 @@ import Tablecheckup from "./tableOfcheckup";
 import Tablecalve from "./tableOfclave";
 import Tableabortion from "./tableOfabortion";
 import Tabletreat from "./tableOftreatment";
+import { Paper,List,ListItem,ListItemText,Divider,Collapse,Grid} from "@material-ui/core";
 
 
 

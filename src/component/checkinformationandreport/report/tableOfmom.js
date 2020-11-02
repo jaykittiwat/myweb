@@ -1,16 +1,9 @@
 import React from "react";
-import { Table, TableFooter, TablePagination, Button } from "@material-ui/core";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-//import { setData } from "./Data";
+
 import Delete from "@material-ui/icons/Delete";
 import Creact from "@material-ui/icons/Create";
 import Save from "@material-ui/icons/Save";
-import { TextField, Grid } from "@material-ui/core";
+
 import update from "immutability-helper";
 import PropTypes from "prop-types";
 import { useTheme, makeStyles } from "@material-ui/core/styles";
@@ -19,7 +12,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
-import CircularProgress from "@material-ui/core/CircularProgress";
+
+import {CircularProgress,Table,TableBody,Button,Grid,TextField, Paper,TableRow,TablePagination,TableHead, TableContainer,TableCell,TableFooter} from "@material-ui/core";
+
 import ReactExport from "react-export-excel";
 import jsPDF from "jspdf";
 import {font} from './conten'

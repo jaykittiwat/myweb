@@ -5,11 +5,9 @@ import {
   FormLabel,
   TextField,
   Button,
-  Grid
+  Grid,FormControl,Select
 } from "@material-ui/core";
 import ImageUploader from "react-images-upload";
-import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
 import firebase from "../../backEnd/firebase";
 import axios from "axios";
 const startStatecalf = {

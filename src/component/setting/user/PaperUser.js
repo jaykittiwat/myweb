@@ -1,11 +1,7 @@
 import React from "react";
 import "./../styleSetting.css";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import {Paper,Grid,Button,CircularProgress,FormLabel, FormGroup, TextField} from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { FormLabel, FormGroup, TextField } from "@material-ui/core";
 import update from "immutability-helper";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";

@@ -1,13 +1,8 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
 import "./styleAbor.css";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import { FormGroup, FormLabel } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import "./../CowStyle.css";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import {CircularProgress,Button,Grid,FormLabel,FormGroup,TextField,Paper} from "@material-ui/core";
 import axios from "axios";
 
 export default function TableAbortion(props) {

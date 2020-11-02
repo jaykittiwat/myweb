@@ -1,7 +1,6 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Demo from "./democalen";
-import { Grid } from "@material-ui/core";
+import { Grid,CircularProgress } from "@material-ui/core";
 import {setPicker} from './setDatePicker'
 export default function PaperNotificaion(props) {
   const loading = props.posts.loading;

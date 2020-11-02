@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import "../styleWebpage.css";
-//import {Form} from 'react-bootstrap';
 import FormData from "./Form";
-//import imgcow1 from "../Img/imgcow1.jpg";
-//import FormImg from './FormImg';
-//import { Button } from "react-bootstrap";
 import Header from "./../../Header";
 
 class Registor extends Component {
