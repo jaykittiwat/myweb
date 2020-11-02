@@ -2,6 +2,7 @@ export const setPicker = (props) => {
   const newDate = new Date();
   const data = [];
   props.map((item) => {
+
     let setDate = new Date(item.date);
     let day = setDate.getDate();
     let mount = setDate.getMonth();
@@ -62,6 +63,7 @@ export const setPicker = (props) => {
       };
       data.push(set)
     }
+    return 0;
   });
   return(data)
 };

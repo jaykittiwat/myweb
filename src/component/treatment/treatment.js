@@ -60,7 +60,7 @@ class Treatment extends Component {
                         ? item[key]
                         : item["cattle_id"];
                       delete item[key];
-                      setId.push(item);
+                     return setId.push(item);
                     });
                     this.setState({ ...this.state, setAllcow: setId });
                   })
@@ -83,7 +83,7 @@ class Treatment extends Component {
                       item["drugId"] = item[key]? item[key]: item["common_vaccine"];
                       item[key]?delete item[key]: delete item["common_vaccine"]
                       delete item[key];
-                      Medicname.push(item);
+                   return   Medicname.push(item);
                     });
                     this.setState({...this.state,drug:Medicname,loading:false})
                   })
