@@ -89,15 +89,15 @@ export default function PaperBrand(props) {
     const newObj = update(collection, { 0: { [ID]: { $set: v } } });
     setData(newObj);
   };
-const callImg = () =>{
-  firebase.storage().ref("Photo/"+props.posts.UID+"/").child("logo").getDownloadURL().then((url) =>{
-    // Or inserted into an <img> element:
-    setpicturesURL([url])
-  }).catch((error)=> {
-    setpicturesURL(["https://www.flaticon.com/svg/static/icons/svg/685/685686.svg"])
-  });
-}
+
   useEffect(() => {
+    const callImg = () =>{
+      firebase.storage().ref("Photo/"+props.posts.UID+"/").child("logo").getDownloadURL().then((url) =>{
+        setpicturesURL([url])
+      }).catch((error)=> {
+        setpicturesURL(["https://www.flaticon.com/svg/static/icons/svg/685/685686.svg"])
+      });
+    }
     callImg()
     setData(props.posts.data);
   }, [props]);

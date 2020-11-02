@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-  const [currentUser, setCurrentUser] = useState("");
+
   const [dataNoti, setDataNoti] = useState(null);
 const [uid,setUid]= useState("");
   useEffect(() => {
@@ -31,7 +31,7 @@ const [uid,setUid]= useState("");
           axios
             .get("http://localhost:4000/user/logIn/" + user.email)
             .then(res => {
-             setCurrentUser (res.data[0].adminfarm||res.data[0].user) 
+           
              setUid(res.data[0].user)
               return res.data[0].adminfarm||res.data[0].user;
             }).then(async(UID)=>{

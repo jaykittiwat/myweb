@@ -36,7 +36,7 @@ class Fatten extends Component {
             axios
               .get("http://localhost:4000/cattle/show/" + this.state.UID)
               .then(res => {
-                console.log(res.data);
+              
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
                 const keyInduction = [];

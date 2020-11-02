@@ -149,10 +149,10 @@ const  queryDataPDF= ()=>{
  const setData=[]
  const setData2=[]
 rows.map(i=>{
-setData.push([i.cattle_id||"-",i.status||"-",i.breed||"-",i.color||"-",i.birth_date||"-",i.sex||"-",i.breed_method||"-",i.sire_id||"-",i.dam_id||"-",i.birth_weight||"-"])
+ setData.push([i.cattle_id||"-",i.status||"-",i.breed||"-",i.color||"-",i.birth_date||"-",i.sex||"-",i.breed_method||"-",i.sire_id||"-",i.dam_id||"-",i.birth_weight||"-"])
 setData2.push([i.wean_weight||"-",i.year_weight||"-",i.year_hip_hight||"-",i.birth_chest_head_ratio||"-",i.wean_chest_head_ratio||"-",i.wean_date||"-",i.number_of_breeding||"-",i.bigcorral||"-",i.corral||"-",i.herd_no||"-"])
 })
-PDF(setData,setData2)
+ PDF(setData,setData2)
 }
 
 

@@ -34,8 +34,6 @@ class Notification extends Component {
           const data=data1.concat(data2)
           
                 this.setState({...this.state,dataNoti:data,loading:false})
-          }).then(()=>{
-            console.log(this.state.dataNoti);
           })
         }
     })

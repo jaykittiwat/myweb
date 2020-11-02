@@ -15,8 +15,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import "date-fns";
 import FormControl from "@material-ui/core/FormControl";

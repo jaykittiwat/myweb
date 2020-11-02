@@ -9,7 +9,7 @@ export const setPicker = (props) => {
     let Difference_In_Time = newDate.getTime() - setDate.getTime();
     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     //console.log(day+"/"+mount+"/"+years);
-    console.log( Difference_In_Days);
+   
     if (Difference_In_Days >-1 && Difference_In_Days <1) {
       const set = {
         text: item.type+" "+item.id_cattle+"(วันนี้)",

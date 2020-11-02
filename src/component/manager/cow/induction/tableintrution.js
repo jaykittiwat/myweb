@@ -105,7 +105,7 @@ export default function TableInduction(props) {
       };
       const newsetData = [];
       calDate.map((list) => {
-        newsetData.push({ ...list, ...x });
+         return newsetData.push({ ...list, ...x });
       });
           axios
             .post(
@@ -501,7 +501,7 @@ export default function TableInduction(props) {
       setPrigramSync(index); //ชื่อโโปรแกรม
       const arrayDataset = [];
       pro_sync[index].medic.map((item, indexmedic) => {
-        //console.log(item.num_day);
+        
         const date = new Date(selectedDate);
         const newdate = new Date(date);
         newdate.setDate(newdate.getDate() + parseInt(item.num_day));
@@ -522,9 +522,9 @@ export default function TableInduction(props) {
           type: item.item,
           time: item.time,
         };
-        arrayDataset.push(dataset);
+       return arrayDataset.push(dataset);
       });
-      setCalDate(arrayDataset);
+     setCalDate(arrayDataset);
     }
   };
 

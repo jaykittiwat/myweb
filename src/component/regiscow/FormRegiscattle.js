@@ -5,7 +5,7 @@ import {
   FormLabel,
   TextField,
   Button,
-  FormHelperText,Grid
+  Grid
 } from "@material-ui/core";
 import ImageUploader from "react-images-upload";
 import Select from "@material-ui/core/Select";
@@ -53,7 +53,7 @@ export default function FormRegiscalf(props) {
   const [herd_no, setherd_no] = React.useState([]);
 const [checkAge,setCheckAge] =React.useState("cattle")
 const [dataCalf,setDataCalf]=React.useState({birth_weight:""})
-const [ageShow,setAgeShow]=React.useState("")
+const [setAgeShow]=React.useState("")
   React.useEffect(() => {
     setUID(props.posts.UID);
     setColor(props.posts.color);
