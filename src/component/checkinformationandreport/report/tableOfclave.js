@@ -49,9 +49,9 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 const  queryDataPDF= async(id)=>{
 
-          const res=await axios.get("http://localhost:4000/delivery/history/" +props.UID+"/"+id)
-          const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
-          const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
+          const res=await axios.get("http://localhost:24559/delivery/history/" +props.UID+"/"+id)
+          const res2=await axios.get("http://localhost:24559/cattle/checkClave/" +props.UID+"/"+id)
+          const res3= await axios.get("http://localhost:24559/settingbrand/brand/" +props.UID)
           const databrand=Object.values(res3.data)
          let dataSet=[]
          let data=res.data;
@@ -117,9 +117,9 @@ const PDF=(data,profile,databrand)=>{
 
 
 const queryDataExcel=async(id,index)=>{
-  const res=await axios.get("http://localhost:4000/delivery/history/" +props.UID+"/"+id)
-   const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
-   const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
+  const res=await axios.get("http://localhost:24559/delivery/history/" +props.UID+"/"+id)
+   const res2=await axios.get("http://localhost:24559/cattle/checkClave/" +props.UID+"/"+id)
+   const res3= await axios.get("http://localhost:24559/settingbrand/brand/" +props.UID)
      
    const databrand=Object.values(res3.data)
    const data=[]

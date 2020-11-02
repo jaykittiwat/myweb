@@ -27,14 +27,14 @@ class Fatten extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:4000/user/logIn/" + user.email)
+          .get("http://localhost:24559/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname });
             
           })
           .then(() => {
             axios
-              .get("http://localhost:4000/cattle/show/" + this.state.UID)
+              .get("http://localhost:24559/cattle/show/" + this.state.UID)
               .then(res => {
               
                 const key = Object.keys(res.data);
@@ -79,7 +79,7 @@ class Fatten extends Component {
     
                 axios
                   .get(
-                    "http://localhost:4000/notification/" +
+                    "http://localhost:24559/notification/" +
                       this.state.UID +
                       "/" +
                       fullToday
@@ -103,7 +103,7 @@ class Fatten extends Component {
                       dataNoti: array[1],
                     
                     });
-                    axios.get("http://localhost:4000/settingprogram_maintain/program_maintain/"+this.state.UID).then(res=>{
+                    axios.get("http://localhost:24559/settingprogram_maintain/program_maintain/"+this.state.UID).then(res=>{
                       this.setState({
                         ...this.state,
                        loading:false,

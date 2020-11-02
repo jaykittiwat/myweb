@@ -25,12 +25,12 @@ class Header extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if(user){
         axios
-          .get("http://localhost:4000/user/logIn/" + user.email)
+          .get("http://localhost:24559/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state, UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm ,owner:res.data[0].fname+ ' '+res.data[0].lname });
           }).then( async()=>{
-           const datacattle = await axios.get("http://localhost:4000/cattle/showAll/" +this.state.UID)
-           const datacalf = await axios.get("http://localhost:4000/calf/calfshowAll/" +this.state.UID)
+           const datacattle = await axios.get("http://localhost:24559/cattle/showAll/" +this.state.UID)
+           const datacalf = await axios.get("http://localhost:24559/calf/calfshowAll/" +this.state.UID)
            this.setState({...this.state,datacattle:datacattle.data[1],keycattle:datacattle.data[0],datacalf:datacalf.data[1],keycalf:datacalf.data[0],loading:false})
           })
       }

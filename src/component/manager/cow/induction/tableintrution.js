@@ -88,11 +88,11 @@ export default function TableInduction(props) {
       });
           axios
             .post(
-              "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+              "http://localhost:24559/cattle/status/" + UID + "/" + selected[a],
               { status: "เหนี่ยวนำแล้ว", process_date: selectedDate }
             )
             .then(() => {
-              axios.post("http://localhost:4000/history/" + UID, {
+              axios.post("http://localhost:24559/history/" + UID, {
                 dam_id: selectedDamId[a],
                 date: selectedDate,
                 time: time,
@@ -100,7 +100,7 @@ export default function TableInduction(props) {
               });
             })
             .then(() => {
-              axios.post("http://localhost:4000/synchronize/" + UID, {
+              axios.post("http://localhost:24559/synchronize/" + UID, {
                 dam_id: selectedDamId[a],
                 datepro: selectedDate,
                 program_sync: props.posts.program_sync[programSync].pro_sync,
@@ -110,7 +110,7 @@ export default function TableInduction(props) {
             })
             .then(() => {
               axios.post(
-                "http://localhost:4000/notification/" + UID + "/" + dateBreed,
+                "http://localhost:24559/notification/" + UID + "/" + dateBreed,
                 {
                   date: dateBreed,
                   id_cattle: selectedDamId[a],
@@ -120,7 +120,7 @@ export default function TableInduction(props) {
             })
             .then( () => {
                axios.delete(
-                "http://localhost:4000/notification/delete/" +
+                "http://localhost:24559/notification/delete/" +
                   UID +
                   "/" +
                   dateNoti[a].date +
@@ -129,7 +129,7 @@ export default function TableInduction(props) {
               );
             }).then(() => {
               axios
-              .post("http://localhost:4000/synchronize/notisync/" + UID, newsetData)
+              .post("http://localhost:24559/synchronize/notisync/" + UID, newsetData)
             })
             .then(()=>{
               if (a + 1 === selected.length) {

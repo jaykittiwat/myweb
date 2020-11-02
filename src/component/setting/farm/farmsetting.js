@@ -31,26 +31,26 @@ class Paperfarm extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:4000/user/logIn/" + user.email)
+          .get("http://localhost:24559/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state,  UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm });
           })
           .then(async () => {
             const bigco = await axios.get(
-              "http://localhost:4000/settingbigcorral/bigcorral/" +
+              "http://localhost:24559/settingbigcorral/bigcorral/" +
                 this.state.UID
             );
             const cor = await axios.get(
-              "http://localhost:4000/settingcorral/corral/" + this.state.UID
+              "http://localhost:24559/settingcorral/corral/" + this.state.UID
             );
             const herd = await axios.get(
-              "http://localhost:4000/settingherd_num/herd_num/" + this.state.UID
+              "http://localhost:24559/settingherd_num/herd_num/" + this.state.UID
             );
             const col = await axios.get(
-              "http://localhost:4000/settingcolor/color/" + this.state.UID
+              "http://localhost:24559/settingcolor/color/" + this.state.UID
             );
             const str = await axios.get(
-              "http://localhost:4000/settingstrian/strian/" + this.state.UID
+              "http://localhost:24559/settingstrian/strian/" + this.state.UID
             );
             this.setState({
               ...this.state,

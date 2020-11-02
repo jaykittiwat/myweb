@@ -63,21 +63,21 @@ export default function AlertDialog(props) {
   const saveData = () => {
     axios
       .post(
-        "http://localhost:4000/cattle/status/" +
+        "http://localhost:24559/cattle/status/" +
           UID +
           "/" +
           keycattle[selectedIndexMom],
         { status: "คลอดแล้ว", process_date: dateofClave } //ไม่มีปัญหา
       )
       .then(() => {
-        axios.post("http://localhost:4000/history/" + UID, {
+        axios.post("http://localhost:24559/history/" + UID, {
           dam_id: Rows[selectedIndexMom].cattle_id, //Rows[selectedIndexMom].id_cattle ไม่มา
           date: dateofClave,
           type: "คลอดแล้ว"
         });
       })
       .then(() => {
-        axios.post("http://localhost:4000/delivery/" + UID, {
+        axios.post("http://localhost:24559/delivery/" + UID, {
           count_calf: Count_calf,
           dam_id: dam_id,
           date: dateofClave,
@@ -90,7 +90,7 @@ export default function AlertDialog(props) {
       })
       .then(() => {
         axios.post(
-          "http://localhost:4000/notification/" + UID + "/" + dateFatten,
+          "http://localhost:24559/notification/" + UID + "/" + dateFatten,
           {
             date: dateFatten,
             id_cattle: Rows[selectedIndexMom].cattle_id, //ไม่มา
@@ -100,7 +100,7 @@ export default function AlertDialog(props) {
       })
       .then(() => {
         axios.post(
-          "http://localhost:4000/notification/" + UID + "/" + dateHeal,
+          "http://localhost:24559/notification/" + UID + "/" + dateHeal,
           {
             date: dateHeal,
             id_cattle: Rows[selectedIndexMom].cattle_id, //ไม่มา
@@ -110,7 +110,7 @@ export default function AlertDialog(props) {
       })
       .then(() => {
         axios.delete(
-          "http://localhost:4000/notification/delete/" +
+          "http://localhost:24559/notification/delete/" +
             UID +
             "/" +
             dataNoti[selectedIndexMom].date +
@@ -121,10 +121,10 @@ export default function AlertDialog(props) {
       .then(async () => {
         //ลงทะเบียนลูกโค
         for (let i = 0; i < numberCalf.length; i++) {
-          await axios.post("http://localhost:4000/user/calf/registorCalf/" + UID,numberCalf[i]);
-          await axios.post("http://localhost:4000/branding/" + UID,  { birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id , datebran: "",note: "",operator: "", recoder: "",wid: "",})
-          await axios.post("http://localhost:4000/dishorn/" + UID, {birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datedishorn: "",method: "",note: "",operator: "",recoder: "",})
-          await  axios.post("http://localhost:4000/wean/" + UID,{ birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datewean: "",note: "",operator: "",recoder: "",wean_chest_head_ratio: "",wean_hip_hight: "",weanweight: "",
+          await axios.post("http://localhost:24559/user/calf/registorCalf/" + UID,numberCalf[i]);
+          await axios.post("http://localhost:24559/branding/" + UID,  { birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id , datebran: "",note: "",operator: "", recoder: "",wid: "",})
+          await axios.post("http://localhost:24559/dishorn/" + UID, {birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datedishorn: "",method: "",note: "",operator: "",recoder: "",})
+          await  axios.post("http://localhost:24559/wean/" + UID,{ birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datewean: "",note: "",operator: "",recoder: "",wean_chest_head_ratio: "",wean_hip_hight: "",weanweight: "",
           })
         }
       }).then(()=>{

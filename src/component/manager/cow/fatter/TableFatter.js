@@ -91,11 +91,11 @@ setpro_maintain(props.posts.pro_maintain)
     for (let a = 0; a < x; a++) {
       axios
         .post(
-          "http://localhost:4000/cattle/status/" + UID + "/" + selected[a],
+          "http://localhost:24559/cattle/status/" + UID + "/" + selected[a],
           { status: "บำรุงแล้ว", process_date: selectedDate }
         )
         .then(() => {
-          axios.post("http://localhost:4000/history/" + UID, {
+          axios.post("http://localhost:24559/history/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
             type: "บำรุงแม่พันธุ์",
@@ -103,7 +103,7 @@ setpro_maintain(props.posts.pro_maintain)
           });
         })
         .then(() => {
-          axios.post("http://localhost:4000/maintain/" + UID, {
+          axios.post("http://localhost:24559/maintain/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
             type: "บำรุง",
@@ -115,7 +115,7 @@ setpro_maintain(props.posts.pro_maintain)
         })
         .then(async () => {
           axios.post(
-            "http://localhost:4000/notification/" + UID + "/" + dateInduction,
+            "http://localhost:24559/notification/" + UID + "/" + dateInduction,
             {
               date: dateInduction,
               id_cattle: selectedDamId[a],
@@ -125,7 +125,7 @@ setpro_maintain(props.posts.pro_maintain)
         }).then(()=>{
           for(let i = 0 ; i<keyDate.length;i++){
             if(selectedDamId[a]===dataNoti[i].id_cattle){
-              axios.delete("http://localhost:4000/notification/delete/"+UID+"/"+dataNoti[i].date+"/"+keyDate[i])
+              axios.delete("http://localhost:24559/notification/delete/"+UID+"/"+dataNoti[i].date+"/"+keyDate[i])
             }
           }
         })

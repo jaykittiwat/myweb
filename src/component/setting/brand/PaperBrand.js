@@ -48,7 +48,7 @@ export default function PaperBrand(props) {
     if (pictures === []) {
       axios
       .post(
-        "http://localhost:4000/settingbrand/brandUpdata/" +
+        "http://localhost:24559/settingbrand/brandUpdata/" +
           props.posts.UID +
           "/" +
           props.posts.key,
@@ -67,7 +67,7 @@ export default function PaperBrand(props) {
       .put(pictures[0]).then(()=>{
         axios
         .post(
-          "http://localhost:4000/settingbrand/brandUpdata/" +
+          "http://localhost:24559/settingbrand/brandUpdata/" +
             props.posts.UID +
             "/" +
             props.posts.key,

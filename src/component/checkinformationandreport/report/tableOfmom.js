@@ -272,7 +272,7 @@ const Download=()=>{
 
 
   const SAVE = (index) => {
-    axios.post("http://localhost:4000/cattle/status/"+props.UID+"/"+props.keydata[index],rows[index])
+    axios.post("http://localhost:24559/cattle/status/"+props.UID+"/"+props.keydata[index],rows[index])
     .then(()=>{
       setStartEdit(!startEdit);
       alert("บันทึกสำเร็จ")

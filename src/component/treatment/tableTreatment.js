@@ -63,7 +63,7 @@ export default function TableTreatment(props) {
     setSelectedId(newValue);
   };
   const SaveData = () => {
-    axios.post("http://localhost:4000/treatment/" + props.posts.UID, {
+    axios.post("http://localhost:24559/treatment/" + props.posts.UID, {
       datediagnose: datenoti||"",
       id: seletedId||"",
       noti_treatment: 1,
@@ -76,7 +76,7 @@ export default function TableTreatment(props) {
       typetreatment:typetreatment||"",
       note:note||""
     }).then(()=>{
-      axios.post("http://localhost:4000/treatment/noti/" + props.posts.UID+"/"+datenoti, {
+      axios.post("http://localhost:24559/treatment/noti/" + props.posts.UID+"/"+datenoti, {
         date: datenoti,id_cattle:seletedId,type: "ติดตามการรักษา",
       }).then(()=>{
         alert("บันทึกสำเร็จ")

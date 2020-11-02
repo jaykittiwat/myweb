@@ -99,7 +99,7 @@ export default function PaperDrug(props) {
     const data = { [keyObjecselected]: input };
     axios
       .post(
-        "http://localhost:4000/setting" +
+        "http://localhost:24559/setting" +
           keyObjecselected +
           "/" +
           keyObjecselected +

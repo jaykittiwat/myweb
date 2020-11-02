@@ -25,13 +25,13 @@ componentDidMount(){
   firebase.auth().onAuthStateChanged(user =>{
     if(user){
       axios
-      .get("http://localhost:4000/user/logIn/" + user.email)
+      .get("http://localhost:24559/user/logIn/" + user.email)
       .then(res => {
         this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname });
        
       }).then(async()=>{
     
-      const result =await axios.get("http://localhost:4000/notification/notiAll/"+this.state.UID )
+      const result =await axios.get("http://localhost:24559/notification/notiAll/"+this.state.UID )
      // console.log(result.data)
       const data = [Object.keys(result.data),Object.values(result.data)];
        return data

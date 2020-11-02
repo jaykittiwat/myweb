@@ -20,13 +20,13 @@ class Header extends Component {
     firebase.auth().onAuthStateChanged((user)=>{
       if(user){
         axios
-        .get("http://localhost:4000/user/logIn/" + user.email).then(res=>{
+        .get("http://localhost:24559/user/logIn/" + user.email).then(res=>{
           this.setState({...this.state,UID: res.data[0].user });
         }).then(()=>{
-          axios.get("http://localhost:4000/settingcolor/color/"+this.state.UID).then(res=>{
+          axios.get("http://localhost:24559/settingcolor/color/"+this.state.UID).then(res=>{
             this.setState({...this.state,color:res.data[1] });
           }).then(()=>{
-            axios.get("http://localhost:4000/settingstrian/strian/"+this.state.UID).then(res=>{
+            axios.get("http://localhost:24559/settingstrian/strian/"+this.state.UID).then(res=>{
               this.setState({...this.state,strian:res.data[1],loading:false });
             })
           })

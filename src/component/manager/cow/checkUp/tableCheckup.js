@@ -159,12 +159,12 @@ export default function TableCheckUp(props) {
     for (let i = 0; i < x; i++) {
       axios
         .post(
-          "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
+          "http://localhost:24559/cattle/status/" + UID + "/" + selected[i],
           { status: "ตรวจท้องแล้ว", process_date: dateCheckup }
         )
         .then(() => {
           axios.post(
-            "http://localhost:4000/notification/" +
+            "http://localhost:24559/notification/" +
               UID +
               "/" +
               show_Before_7Day[i],
@@ -177,7 +177,7 @@ export default function TableCheckUp(props) {
         })
         .then(() => {
           axios.delete(
-            "http://localhost:4000/notification/delete/" +
+            "http://localhost:24559/notification/delete/" +
               UID +
               "/" +
               dateNoti[i].date +
@@ -186,14 +186,14 @@ export default function TableCheckUp(props) {
           );
         })
         .then(() => {
-          axios.post("http://localhost:4000/history/" + UID, {
+          axios.post("http://localhost:24559/history/" + UID, {
             dam_id: selectedDamId[i],
             date: dateCheckup,
             type: "ตรวจท้อง",
           });
         })
         .then(async () => {
-          await axios.post("http://localhost:4000/abdominal/" + UID, {
+          await axios.post("http://localhost:24559/abdominal/" + UID, {
             alert_after_7D: show_Affter_7Day[i],
             alert_befor_7D: show_Before_7Day[i],
             alert_sync: show_Syncday,
@@ -222,12 +222,12 @@ export default function TableCheckUp(props) {
     for (let i = 0; i < x; i++) {
       axios
         .post(
-          "http://localhost:4000/cattle/status/" + UID + "/" + selected[i],
+          "http://localhost:24559/cattle/status/" + UID + "/" + selected[i],
           { status: "ไม่ท้อง", process_date: dateCheckup }
         )
         .then(() => {
           axios.post(
-            "http://localhost:4000/notification/" + UID + "/" + show_Syncday,
+            "http://localhost:24559/notification/" + UID + "/" + show_Syncday,
             {
               date: show_Syncday,
               id_cattle: selectedDamId[i],
@@ -237,7 +237,7 @@ export default function TableCheckUp(props) {
         })
         .then(() => {
           axios.delete(
-            "http://localhost:4000/notification/delete/" +
+            "http://localhost:24559/notification/delete/" +
               UID +
               "/" +
               dateNoti[i].date +
@@ -246,14 +246,14 @@ export default function TableCheckUp(props) {
           );
         })
         .then(() => {
-          axios.post("http://localhost:4000/history/" + UID, {
+          axios.post("http://localhost:24559/history/" + UID, {
             dam_id: selectedDamId[i],
             date: dateCheckup,
             type: "ตรวจท้อง",
           });
         })
         .then(() => {
-          axios.post("http://localhost:4000/abdominal/" + UID, {
+          axios.post("http://localhost:24559/abdominal/" + UID, {
             alert_after_7D: show_Affter_7Day[i],
             alert_befor_7D: show_Before_7Day[i],
             alert_sync: show_Syncday,

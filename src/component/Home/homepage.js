@@ -23,7 +23,7 @@ class Home extends Component {
   async componentDidMount() {
     await axios
       .get(
-        "http://localhost:4000/user/logIn/" + this.state.param.currentUser.email
+        "http://localhost:24559/user/logIn/" + this.state.param.currentUser.email
       )
       .then(res => {
         const getUser = res.data[0];
