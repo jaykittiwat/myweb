@@ -32,7 +32,7 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
       const key = "birth_id";
       item["cattle_id"] = item[key] ? item[key] : item["cattle_id"];
       delete item[key];
-      setId.push(item);
+      return setId.push(item);
     });
     setList(setId);
   };
@@ -152,7 +152,7 @@ const queryDataExcel=async(id,index)=>{
      
     ]
 
-  data.push(newSet)
+  return  data.push(newSet)
    })
   /* const data2=[]
    const data3=[]

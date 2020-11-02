@@ -113,14 +113,11 @@ const PDF=(data,profile,databrand)=>{
 }
 
 
-
-
-
 const queryDataExcel=async(id,index)=>{
   const res=await axios.get("http://localhost:4000/synchronize/history/" +props.UID+"/"+id)
    const res2=await axios.get("http://localhost:4000/cattle/checkClave/" +props.UID+"/"+id)
    const res3= await axios.get("http://localhost:4000/settingbrand/brand/" +props.UID)
-     
+    
    const databrand=Object.values(res3.data)
    const data=[]
    const borders = {
