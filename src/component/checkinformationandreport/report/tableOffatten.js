@@ -32,7 +32,8 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
       const key = "birth_id";
       item["cattle_id"] = item[key] ? item[key] : item["cattle_id"];
       delete item[key];
-      setId.push(item);
+return setId.push(item);
+
     });
     setList(setId);
   };
@@ -61,9 +62,9 @@ const  queryDataPDF= async(id)=>{
          const a=[]
          arrData[2].map((j) => {
          const s = Object.values(j)
-         a.push(s+"\n")
+         return a.push(s+"\n")
          })
-         dataSet.push([arrData[1],arrData[5],arrData[3],a])
+         return  dataSet.push([arrData[1],arrData[5],arrData[3],a])
           })
       
       PDF(dataSet,res2.data[1],databrand[0])
@@ -120,7 +121,7 @@ const mapDrug=(data)=>{
 
 let value=""
 data.map(i=>{
-value=value+" -"+i.item+"\n"
+  return value=value+" -"+i.item+"\n"
 })
 return value
 }
@@ -156,7 +157,7 @@ const queryDataExcel=async(id,index)=>{
       }
     ]
 
-  data.push(newSet)
+    return data.push(newSet)
    })
   /* const data2=[]
    const data3=[]

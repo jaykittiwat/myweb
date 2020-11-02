@@ -32,7 +32,7 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
       const key = "birth_id";
       item["cattle_id"] = item[key] ? item[key] : item["cattle_id"];
       delete item[key];
-      setId.push(item);
+     return setId.push(item);
     });
     setList(setId);
   };
@@ -113,14 +113,7 @@ const PDF=(data,profile,databrand)=>{
 }
 
 
-const mapDrug=(data)=>{
 
-let value=""
-data.map(i=>{
-value=value+" -"+i.item+"\n"
-})
-return value
-}
 
 
 const queryDataExcel=async(id,index)=>{
@@ -150,7 +143,7 @@ const queryDataExcel=async(id,index)=>{
      
     ]
 
-  data.push(newSet)
+  return data.push(newSet)
    })
   /* const data2=[]
    const data3=[]
