@@ -103,7 +103,7 @@ const PDF=(data,profile,databrand,base64)=>{
   doc.setFontSize(24);
 
   doc.text('ใบประวัติการรักษา', 85, finalY + 15)
-  doc.addImage(base64,14,finalY + 15,20,20)
+  doc.addImage(base64,14,  10,20,20)
   doc.setFontSize(18)
   doc.text('ชื่อฟาร์ม:'+databrand.farm_name_TH, 14, finalY + 25)
   doc.text('หมายเลขโค:'+profile.cattle_id, 14, finalY + 35)
