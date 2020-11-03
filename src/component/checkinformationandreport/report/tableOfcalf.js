@@ -125,7 +125,6 @@ const [logo,setLogo]= React.useState(null);
 
   React.useEffect(() => {
     firebase.storage().ref("Photos/"+props.UID+"/").child("Logo").getDownloadURL().then((url) =>{
-      console.log(url);
      setLogo(url)
     })
   setRows(props.data)
@@ -169,7 +168,7 @@ const [logo,setLogo]= React.useState(null);
       doc.setFont('custom');
      doc.addImage(base64,15,finalY + 5,30,30)
       doc.autoTable({
-        startY: finalY + 5,
+        startY: finalY + 15,
         head: [['ชื่อโค', 'หมายเลขโค','เพศ', 'สี','สายพันธุ์','น้ำหนักแรกเกิด','พ่อพันธุ์','แม่พันธุ์','สี',"สุญเขา","ตีเบอร์",'อย่านม']],
         columnStyles: {
           0: {cellWidth:30},

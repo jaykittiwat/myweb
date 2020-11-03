@@ -6,10 +6,11 @@ import jsPDF from "jspdf";
 import {font} from './conten'
 import "jspdf-autotable";
 import ReactExport from 'react-data-export';
-
+import firebase from "./../../../backEnd/firebase";
 
 
 export default function TableOfmom(props) {
+  const [logo,setLogo]= React.useState(null);
   const [list, setList] = React.useState([]);
   const [Owner,setOwner]=React.useState("")
   const [selectedId, setSelectedId] = React.useState("");
@@ -40,6 +41,9 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 
   React.useEffect(() => {
+    firebase.storage().ref("Photos/"+props.UID+"/").child("Logo").getDownloadURL().then((url) =>{
+      setLogo(url)
+     })
     concatData(props.data1, props.data2);
     setOwner(props.owner)
   }, [props]);
@@ -66,14 +70,30 @@ const  queryDataPDF= async(id)=>{
         return dataSet.push([arrData[0],arrData[3],arrData[8],a])
           })
       
-      PDF(dataSet,res2.data[1],databrand[0])
+          toDataUrl(logo, (myBase64) => {
+            console.log(myBase64); // myBase64 is the base64 string
+            PDF(dataSet,res2.data[1],databrand[0],myBase64)
+          });
+      
 }
 
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+          callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+};
 
 
 
-
-const PDF=(data,profile,databrand)=>{
+const PDF=(data,profile,databrand,base64)=>{
   const doc = new jsPDF()
   const content=font
   const finalY = doc.lastAutoTable.finalY || 10
@@ -83,6 +103,7 @@ const PDF=(data,profile,databrand)=>{
   doc.setFontSize(24);
 
   doc.text('ใบประวัติการรักษา', 85, finalY + 15)
+  doc.addImage(base64,14,finalY + 15,20,20)
   doc.setFontSize(18)
   doc.text('ชื่อฟาร์ม:'+databrand.farm_name_TH, 14, finalY + 25)
   doc.text('หมายเลขโค:'+profile.cattle_id, 14, finalY + 35)
