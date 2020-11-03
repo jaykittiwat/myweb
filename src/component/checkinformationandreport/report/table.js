@@ -224,7 +224,7 @@ export default function App(props) {
           {seletedList === 0 ? (
             <Tablemom  keydata={props.posts.keycattle} data={props.posts.datacattle} load={props.posts.loading} UID={props.posts.UID} />
           ) : seletedList === 1 ? (
-            <Tableclaf  keydata={props.posts.keycalf} data={props.posts.datacalf} load={props.posts.loading}/>
+            <Tableclaf  keydata={props.posts.keycalf} data={props.posts.datacalf} load={props.posts.loading} UID={props.posts.UID} />
           )  : seletedList === 3 ? (
             <Tablefatten  keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           ) : seletedList === 4 ? (

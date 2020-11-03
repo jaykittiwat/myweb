@@ -68,36 +68,41 @@ const [setAgeShow]=React.useState("")
   };
 
   const saveDataCattleToDatabase = () => {
-   
-    if (pictures === []) {
-      axios
-        .post("https://aipcattle.herokuapp.com/user/cow/registor/" + UID, dataCattle)
-        .then(() => {
-          alert("บันทึกสำเร็จ");
-        })
-        .then(() => {
-          setDataCattle(startStatecalf);
-        });
+    if(dataCattle.name_cow===""||dataCattle.cattle_id===""){
+      alert("กรุณากรอกข้อมูลให้ครบ")
     }
-    if (pictures !== []) {
-      firebase
-        .storage()
-        .ref("Photo/" + UID + "/pedigree/")
-        .child(dataCattle.cattle_id)
-        .put(pictures[0])
-        .then(() => {
-          axios.post(
-            "https://aipcattle.herokuapp.com/user/cow/registor/" + UID,
-            dataCattle
-          );
-        })
-        .then(() => {
-          alert("บันทึกสำเร็จ");
-        })
-        .then(() => {
-          window.location.reload();
-        });
+    if(dataCattle.name_cow!==""||dataCattle.cattle_id!==""){
+      if (pictures === []) {
+        axios
+          .post("https://aipcattle.herokuapp.com/user/cow/registor/" + UID, dataCattle)
+          .then(() => {
+            alert("บันทึกสำเร็จ");
+          })
+          .then(() => {
+            setDataCattle(startStatecalf);
+          });
+      }
+      if (pictures !== []) {
+        firebase
+          .storage()
+          .ref("Photo/" + UID + "/pedigree/")
+          .child(dataCattle.cattle_id)
+          .put(pictures[0])
+          .then(() => {
+            axios.post(
+              "https://aipcattle.herokuapp.com/user/cow/registor/" + UID,
+              dataCattle
+            );
+          })
+          .then(() => {
+            alert("บันทึกสำเร็จ");
+          })
+          .then(() => {
+            window.location.reload();
+          });
+      }
     }
+ 
   };
 
   const saveDataCalfToDatabase = () => {

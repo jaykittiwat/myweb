@@ -13,6 +13,12 @@ import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
 import ReactExport from "react-export-excel";
 import {CircularProgress,Table,TableBody,Button,Grid,TextField, Paper,TableRow,TablePagination,TableHead, TableContainer,TableCell,TableFooter} from "@material-ui/core";
+import axios from 'axios'
+import jsPDF from "jspdf";
+import {font} from './conten'
+import "jspdf-autotable";
+import firebase from "./../../../backEnd/firebase";
+
 const useStyles1 = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -95,7 +101,7 @@ TablePaginationActions.propTypes = {
 };
 export default function TableOfmom(props) {
   const classes = useStyles1();
-
+const [logo,setLogo]= React.useState(null);
   const [rows, setRows] = React.useState(setData);
   const [startEdit, setStartEdit] = React.useState(false);
   const [indexRow, setIndexRow] = React.useState(-1);
@@ -118,10 +124,75 @@ export default function TableOfmom(props) {
   ];
 
   React.useEffect(() => {
+    firebase.storage().ref("Photos/"+props.UID+"/").child("Logo").getDownloadURL().then((url) =>{
+      console.log(url);
+     setLogo(url)
+    })
   setRows(props.data)
     }, [props]);
 
+    const  queryDataPDF= ()=>{
 
+      const setData=[]
+      const setData2=[]
+     rows.map(i=>{
+      setData.push([i.name_cattle||"-",i.birth_id||"-",i.sex||"-",i.breed||"-",i.birth_weight||"-",i.sire_id||"-",i.dam_id||"-",i.color||"-",i.horndetering||"-",i.branding||"-",i.wean||"-"])
+   
+     })
+      
+   toDataUrl(logo, (myBase64) => {
+              console.log(myBase64); // myBase64 is the base64 string
+              PDF(setData,setData2,myBase64)
+            });
+     }
+
+   const toDataUrl = (url, callback) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+              callback(reader.result);
+          };
+          reader.readAsDataURL(xhr.response);
+      };
+      xhr.open('GET', url);
+      xhr.responseType = 'blob';
+      xhr.send();
+    };
+
+     const PDF=(data,data2,base64)=>{
+      const doc = new jsPDF('l', 'mm', 'a4')
+      const content=font
+      const finalY = doc.lastAutoTable.finalY || 10
+      doc.addFileToVFS('THSarabunNew.ttf',content)
+      doc.addFont('THSarabunNew.ttf', 'custom', 'normal');
+      doc.setFont('custom');
+     doc.addImage(base64,15,finalY + 5,30,30)
+      doc.autoTable({
+        startY: finalY + 5,
+        head: [['ชื่อโค', 'หมายเลขโค','เพศ', 'สี','สายพันธุ์','น้ำหนักแรกเกิด','พ่อพันธุ์','แม่พันธุ์','สี',"สุญเขา","ตีเบอร์",'อย่านม']],
+        columnStyles: {
+          0: {cellWidth:30},
+          1: {cellWidth: 30},
+          2: {cellWidth: 15},
+          3: {cellWidth: 15},
+          4: {cellWidth: 20},
+          5: {cellWidth: 15},
+          6: {cellWidth: 20},
+          7: {cellWidth: 20},
+          8: {cellWidth: 20},
+          9: {cellWidth: 15},
+          10: {cellWidth:15},
+      },
+        body:data,
+        headStyles: { font: "custom",fontSize:18,fillColor: [85,157,251]},
+        bodyStyles: { font: "custom",fontSize:16},
+        theme: 'grid',
+    
+      })
+
+      doc.save("table.pdf");
+    }
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -142,7 +213,11 @@ export default function TableOfmom(props) {
     setRows(newUpdate);
   };
   const SAVE = (index) => {
-    setStartEdit(!startEdit);
+    axios.post("https://aipcattle.herokuapp.com/calf/update/"+props.UID+"/"+props.keydata[index],rows[index])
+    .then(()=>{
+      setStartEdit(!startEdit);
+      alert("บันทึกสำเร็จ")
+    })
   };
   const SETVALUES = (event, index) => {
     const key = event.target.id;
@@ -160,13 +235,13 @@ const Download=()=>{
     <ExcelFile element={  <Button
       style={{
         color: "#fff",
-        backgroundColor: "#64dd17",
+        backgroundColor: "green",
         fontSize: "16px",
         width: "auto",
         margin: "0px"
       }}
     >
-      DOWNLOAD EXCEL
+      EXCEL
     </Button>}>
         <ExcelSheet data={rows} name="calf_List" >
             <ExcelColumn label="ชื่อโค" value="name_cattle"   />
@@ -205,7 +280,13 @@ if(props.load){
           <Grid item xs={6} style={{textAlign:"right"}}>
            
           {Download()}
-         
+          <Button style={{
+        color: "#fff",
+        backgroundColor: "red",
+        fontSize: "16px",
+        width: "auto",
+        margin: "0px"
+      }} onClick={() =>queryDataPDF()}>PDF</Button>
           </Grid>
         </Grid>
       </Paper>

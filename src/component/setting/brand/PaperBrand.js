@@ -62,8 +62,8 @@ export default function PaperBrand(props) {
     if (pictures !== []) {
       firebase
       .storage()
-      .ref("Photo/" +props.posts.UID +"/")
-      .child("logo")
+      .ref("Photos/" +props.posts.UID +"/")
+      .child("Logo")
       .put(pictures[0]).then(()=>{
         axios
         .post(
@@ -92,7 +92,8 @@ export default function PaperBrand(props) {
 
   useEffect(() => {
     const callImg = () =>{
-      firebase.storage().ref("Photo/"+props.posts.UID+"/").child("logo").getDownloadURL().then((url) =>{
+      firebase.storage().ref("Photos/"+props.posts.UID+"/").child("Logo").getDownloadURL().then((url) =>{
+        
         setpicturesURL([url])
       }).catch((error)=> {
         setpicturesURL(["https://www.flaticon.com/svg/static/icons/svg/685/685686.svg"])
