@@ -29,23 +29,23 @@ class Paperdrug extends Component{
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           axios
-            .get("http://localhost:24559/user/logIn/" + user.email)
+            .get("http://localhost:38844/user/logIn/" + user.email)
             .then(res => {
               this.setState({ ...this.state,  UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm });
             })
             .then(async () => {
               const dr = await axios.get(
-                "http://localhost:24559/settingdrug/drug/" +
+                "http://localhost:38844/settingdrug/drug/" +
                   this.state.UID
               );
               const vac = await axios.get(
-                "http://localhost:24559/settingvaccine/vaccine/" + this.state.UID
+                "http://localhost:38844/settingvaccine/vaccine/" + this.state.UID
               );
               const p_maintain = await axios.get(
-                "http://localhost:24559/settingprogram_maintain/program_maintain/" + this.state.UID
+                "http://localhost:38844/settingprogram_maintain/program_maintain/" + this.state.UID
               );
               const p_sync = await axios.get(
-                "http://localhost:24559/settingprogram_sync/program_sync/" + this.state.UID
+                "http://localhost:38844/settingprogram_sync/program_sync/" + this.state.UID
               );
            
               this.setState({

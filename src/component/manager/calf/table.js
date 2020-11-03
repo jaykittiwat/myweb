@@ -154,7 +154,7 @@ export default function SimpleTable(props) {
   const SAVE = (index) => {
     axios
       .post(
-        "http://localhost:24559/dishorn/update/" + UID + "/" + keydishorn[index],
+        "http://localhost:38844/dishorn/update/" + UID + "/" + keydishorn[index],
         {
           birth_id: rows[index].name_cattle,
           dam_id: rows[index].dam_id,
@@ -168,7 +168,7 @@ export default function SimpleTable(props) {
       .then(() => {
         axios
           .post(
-            "http://localhost:24559/branding/update/" +
+            "http://localhost:38844/branding/update/" +
               UID +
               "/" +
               keybranding[index],
@@ -184,7 +184,7 @@ export default function SimpleTable(props) {
           .then(() => {
             axios
               .post(
-                "http://localhost:24559/wean/update/" +
+                "http://localhost:38844/wean/update/" +
                   UID +
                   "/" +
                   keywean[index],
@@ -199,7 +199,7 @@ export default function SimpleTable(props) {
               )
               .then(() => {
                 axios.post(
-                  "http://localhost:24559/calf/update/" +
+                  "http://localhost:38844/calf/update/" +
                     UID +
                     "/" +
                     keyrows[index],

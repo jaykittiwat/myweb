@@ -87,11 +87,11 @@ useEffect(() => {
     for (let a = 0; a < x; a++) {
       axios
         .post(
-          "http://localhost:24559/cattle/status/" + UID + "/" + selected[a],
+          "http://localhost:38844/cattle/status/" + UID + "/" + selected[a],
           { status: "ผสมพันธุ์แล้ว", process_date: selectedDate ,number_of_breeding:rows[a].number_of_breeding?rows[a].number_of_breeding+1:1}
         )
         .then(() => {
-          axios.post("http://localhost:24559/history/" + UID, {
+          axios.post("http://localhost:38844/history/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
             type: "ผสมพันธุ์"
@@ -99,7 +99,7 @@ useEffect(() => {
         })
         .then(() => {
           if (HowTobreed === "พ่อพันธุ์") {
-            axios.post("http://localhost:24559/breed/" + UID, {
+            axios.post("http://localhost:38844/breed/" + UID, {
               dam_id: selectedDamId[a],
               date_breeding: selectedDate,
               note:theNote,
@@ -115,7 +115,7 @@ useEffect(() => {
             });
           }
           if (HowTobreed === "หลอดน้ำเชื้อ") {
-            axios.post("http://localhost:24559/breed/" + UID, {
+            axios.post("http://localhost:38844/breed/" + UID, {
               dam_id: selectedDamId[a],
               date_breeding: selectedDate,
               note: theNote,
@@ -131,7 +131,7 @@ useEffect(() => {
             });
           }
           if (HowTobreed === "ฝากถ่ายตัวอ่อน(ET)") {
-            axios.post("http://localhost:24559/breed/" + UID, {
+            axios.post("http://localhost:38844/breed/" + UID, {
               dam_id: selectedDamId[a],
               date_breeding: selectedDate,
               note: theNote,
@@ -151,7 +151,7 @@ useEffect(() => {
         })
         .then(() => {
           axios.post(
-            "http://localhost:24559/notification/" + UID + "/" + dateCheckup,
+            "http://localhost:38844/notification/" + UID + "/" + dateCheckup,
             {
               date: dateCheckup,
               id_cattle: selectedDamId[a],
@@ -161,7 +161,7 @@ useEffect(() => {
         })
         .then(async () => {
           await axios.delete(
-            "http://localhost:24559/notification/delete/" +
+            "http://localhost:38844/notification/delete/" +
               UID +
               "/" +
               dateNoti[a].date +

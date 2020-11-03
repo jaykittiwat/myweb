@@ -63,7 +63,7 @@ export default function TableListEachSetting(props) {
   const deleteDataList = index => {
     axios
       .delete(
-        "http://localhost:24559/setting" +
+        "http://localhost:38844/setting" +
           props.keyObjecselected +
           "/" +
           props.keyObjecselected +

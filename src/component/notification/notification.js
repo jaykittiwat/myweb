@@ -20,14 +20,14 @@ class Notification extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:24559/user/logIn/" + user.email)
+          .get("http://localhost:38844/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state, UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm});
             
           }).then(async()=>{
         
-          const result =await axios.get("http://localhost:24559/notification/notiAll/"+this.state.UID )
-          const result2 =await axios.get("http://localhost:24559/treatment/notiAll/"+this.state.UID  )
+          const result =await axios.get("http://localhost:38844/notification/notiAll/"+this.state.UID )
+          const result2 =await axios.get("http://localhost:38844/treatment/notiAll/"+this.state.UID  )
           const data1 = Object.values(result.data);
           const data2 = Object.values(result2.data);
       

@@ -45,7 +45,7 @@ export default function TableAbortion(props) {
   const setid = (newValue) => {
     axios
       .get(
-        "http://localhost:24559/cattle/checkClave/" +
+        "http://localhost:38844/cattle/checkClave/" +
           props.posts.UID +
           "/" +
           newValue
@@ -56,7 +56,7 @@ export default function TableAbortion(props) {
       .then(() => {
         axios
           .get(
-            "http://localhost:24559/breed/lasttime/" +
+            "http://localhost:38844/breed/lasttime/" +
               props.posts.UID +
               "/" +
               newValue
@@ -68,7 +68,7 @@ export default function TableAbortion(props) {
           .then(() => {
             axios
               .get(
-                "http://localhost:24559/abortion/history/" +
+                "http://localhost:38844/abortion/history/" +
                   props.posts.UID +
                   "/" +
                   newValue
@@ -84,7 +84,7 @@ export default function TableAbortion(props) {
   const saveDataToInduction = () => {
    
     axios
-      .post("http://localhost:24559/abortion/" + props.posts.UID, {
+      .post("http://localhost:38844/abortion/" + props.posts.UID, {
         alert_sync: "61",
         dam_id: selectedId,
         date: dateAbortion,
@@ -95,7 +95,7 @@ export default function TableAbortion(props) {
       })
       .then(() => {
         axios.post(
-          "http://localhost:24559/notification/" +
+          "http://localhost:38844/notification/" +
             props.posts.UID +
             "/" +
             dateInduction,
@@ -105,11 +105,11 @@ export default function TableAbortion(props) {
             type: "เหนี่ยวนำกลับสัด",
           }
         ).then(() => {
-          axios.post("http://localhost:24559/cattle/status2/" + props.posts.UID+"/"+selectedId, {
+          axios.post("http://localhost:38844/cattle/status2/" + props.posts.UID+"/"+selectedId, {
             status: "โคแท้ง",
             process_date: dateAbortion,
           }).then(()=>{
-            axios.delete("http://localhost:24559/notification/delete2/"+props.posts.UID+"/"+selectedId)
+            axios.delete("http://localhost:38844/notification/delete2/"+props.posts.UID+"/"+selectedId)
           })
         });
       })

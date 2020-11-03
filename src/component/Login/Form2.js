@@ -31,7 +31,7 @@ export default function FormData(props) {
   const handleSubmit = () => {
   
     axios
-      .post(`http://localhost:24559/user/registor`, {
+      .post(`http://localhost:38844/user/registor`, {
         adminfarm:account.adminfarm ,
         user: account.user,
         pass: account.pass,

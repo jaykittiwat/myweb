@@ -24,20 +24,20 @@ class Treatment extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         axios
-          .get("http://localhost:24559/user/logIn/" + user.email)
+          .get("http://localhost:38844/user/logIn/" + user.email)
           .then((res) => {
             this.setState({ ...this.state,  UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname });
           })
           .then(() => {
             axios
-              .get("http://localhost:24559/cattle/showAll/" + this.state.UID)
+              .get("http://localhost:38844/cattle/showAll/" + this.state.UID)
               .then((res) => {
                 this.setState({ ...this.state, cattle_id: res.data[1] });
               })
               .then(() => {
                 axios
                   .get(
-                    "http://localhost:24559/calf/calfshowAll/" + this.state.UID
+                    "http://localhost:38844/calf/calfshowAll/" + this.state.UID
                   )
                   .then((res) => {
                     this.setState({ ...this.state, calf_id: res.data[1] });
@@ -66,11 +66,11 @@ class Treatment extends Component {
                   })
                   .then(async() => {
                     const dr = await axios.get(
-                      "http://localhost:24559/settingdrug/drug/" +
+                      "http://localhost:38844/settingdrug/drug/" +
                         this.state.UID
                     );
                     const vac = await axios.get(
-                      "http://localhost:24559/settingvaccine/vaccine/" + this.state.UID
+                      "http://localhost:38844/settingvaccine/vaccine/" + this.state.UID
                     );
                     const children = dr.data[1].concat(vac.data[1])
                     const Medicname = [];

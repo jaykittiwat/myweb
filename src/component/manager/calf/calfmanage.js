@@ -31,7 +31,7 @@ class Notification extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         axios
-          .get("http://localhost:24559/user/logIn/" + user.email)
+          .get("http://localhost:38844/user/logIn/" + user.email)
           .then((res) => {
             this.setState({
               ...this.state,
@@ -44,7 +44,7 @@ class Notification extends Component {
           })
           .then(() => {
             axios
-              .get("http://localhost:24559/calf/calfshowAll/" + this.state.UID)
+              .get("http://localhost:38844/calf/calfshowAll/" + this.state.UID)
               .then((res) => {
                 this.setState({
                   ...this.state,
@@ -54,7 +54,7 @@ class Notification extends Component {
               })
               .then(() => {
                 axios
-                  .get("http://localhost:24559/dishorn/" + this.state.UID)
+                  .get("http://localhost:38844/dishorn/" + this.state.UID)
                   .then((res) => {
                     this.setState({
                       ...this.state,
@@ -64,7 +64,7 @@ class Notification extends Component {
                   })
                   .then(() => {
                     axios
-                      .get("http://localhost:24559/branding/" + this.state.UID)
+                      .get("http://localhost:38844/branding/" + this.state.UID)
                       .then((res) => {
                         this.setState({
                           ...this.state,
@@ -75,7 +75,7 @@ class Notification extends Component {
                       })
                       .then(() => {
                         axios
-                          .get("http://localhost:24559/wean/" + this.state.UID)
+                          .get("http://localhost:38844/wean/" + this.state.UID)
                           .then((res) => {
                            // console.log(res.data[1]);
                             this.setState({

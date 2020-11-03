@@ -27,15 +27,15 @@ const [uid,setUid]= useState("");
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
           axios
-            .get("http://localhost:24559/user/logIn/" + user.email)
+            .get("http://localhost:38844/user/logIn/" + user.email)
             .then(res => {
            
              setUid(res.data[0].user)
               return res.data[0].adminfarm||res.data[0].user;
             }).then(async(UID)=>{
           
-              const result =await axios.get("http://localhost:24559/notification/notiAll/"+UID )
-              const result2 =await axios.get("http://localhost:24559/treatment/notiAll/"+UID )
+              const result =await axios.get("http://localhost:38844/notification/notiAll/"+UID )
+              const result2 =await axios.get("http://localhost:38844/treatment/notiAll/"+UID )
               const data1 = Object.values(result.data);
               const data2 = Object.values(result2.data);
               const data=data1.concat(data2)

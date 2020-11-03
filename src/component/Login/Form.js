@@ -29,7 +29,7 @@ export default function FormData() {
   const [validated] = useState(false);
   const handleSubmit = () => {
     axios
-      .post(`http://localhost:24559/user/registor`, {
+      .post(`http://localhost:38844/user/registor`, {
         user: account.user,
         pass: account.pass,
         question: account.question,
@@ -46,7 +46,7 @@ export default function FormData() {
         privilege: account.privilege,
       })
       .then((res) => {
-        axios.post("http://localhost:24559/settingbrand/brand/" + account.user, {
+        axios.post("http://localhost:38844/settingbrand/brand/" + account.user, {
           farm_address: account.address,
           farm_initial: "",
           farm_name_EN: account.user,

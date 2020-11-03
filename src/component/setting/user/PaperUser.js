@@ -34,7 +34,7 @@ export default function PaperUser(props) {
   };
   //<<<---------------------------<<<ยังไม่เสร็จ
   const handleClicktrue = (event) => {
-    axios.post("http://localhost:24559/user/updataProfile", data).then(() => {
+    axios.post("http://localhost:38844/user/updataProfile", data).then(() => {
       alert("บันทึกสำเร็จ");
     });
     setEnabled(true);
@@ -52,7 +52,7 @@ export default function PaperUser(props) {
     setData(props.posts.data);
   }, [props]);
 const upDateStatus=(index)=>{
-  axios.post("http://localhost:24559/user/status/employee",{
+  axios.post("http://localhost:38844/user/status/employee",{
     key:props.posts.employeeKey[index],privilege:props.posts.employeeData[index].vacancy
   }).then(()=>{
     window.location.reload()

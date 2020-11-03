@@ -30,7 +30,7 @@ class Induction extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:24559/user/logIn/" + user.email)
+          .get("http://localhost:38844/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state, UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname,statusUser:res.data[0].privilege,admin:res.data[0].adminfarm   });
            
@@ -50,7 +50,7 @@ class Induction extends Component {
 
             axios
               .get(
-                "http://localhost:24559/notification/" +
+                "http://localhost:38844/notification/" +
                   this.state.UID +
                   "/" +
                   fullToday
@@ -81,7 +81,7 @@ class Induction extends Component {
                 const cattleListData = [];
                 for (let i = 0; i < this.state.keysDate.length; i++) {
                   let res = await axios.get(
-                    "http://localhost:24559/cattle/show/" +
+                    "http://localhost:38844/cattle/show/" +
                       this.state.UID +
                       "/" +
                       this.state.dataNoti[i].id_cattle
@@ -104,7 +104,7 @@ class Induction extends Component {
               this.setState({...this.state,keydata:setKeyCattle,data:setdata})
               }).then(()=>{
                 axios.get(
-                  "http://localhost:24559/settingprogram_sync/program_sync/" + this.state.UID
+                  "http://localhost:38844/settingprogram_sync/program_sync/" + this.state.UID
                 ).then(res=>{
                   this.setState({...this.state,program_sync:res.data[1],loading:false})
                 })

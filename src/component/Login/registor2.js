@@ -13,7 +13,7 @@ class Registor2 extends Component {
     };
   }
   async  componentDidMount (){
- const res=await axios.get("http://localhost:24559/user/checkAdmin")
+ const res=await axios.get("http://localhost:38844/user/checkAdmin")
  this.setState({...this.state,admin:res.data})
 }
 
