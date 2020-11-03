@@ -236,7 +236,7 @@ export default function App(props) {
           ) : seletedList === 7 ? (
             <Tablecalve  keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           ) : seletedList === 8 ? (
-            <Tableabortion  keydata={props.posts} data={props.posts} load={props.posts.loading}/>
+            <Tableabortion  keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           ) :  (
             <Tabletreat  keydata={props.posts} data1={props.posts.datacattle}  data2={[]} load={props.posts.loading} UID={props.posts.UID} owner={props.posts.owner}/>
           )
