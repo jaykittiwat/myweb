@@ -91,11 +91,11 @@ setpro_maintain(props.posts.pro_maintain)
     for (let a = 0; a < x; a++) {
       axios
         .post(
-          "http://localhost:38844/cattle/status/" + UID + "/" + selected[a],
+          "https://aipcattle.herokuapp.com/cattle/status/" + UID + "/" + selected[a],
           { status: "บำรุงแล้ว", process_date: selectedDate }
         )
         .then(() => {
-          axios.post("http://localhost:38844/history/" + UID, {
+          axios.post("https://aipcattle.herokuapp.com/history/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
             type: "บำรุงแม่พันธุ์",
@@ -103,7 +103,7 @@ setpro_maintain(props.posts.pro_maintain)
           });
         })
         .then(() => {
-          axios.post("http://localhost:38844/maintain/" + UID, {
+          axios.post("https://aipcattle.herokuapp.com/maintain/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
             type: "บำรุง",
@@ -115,7 +115,7 @@ setpro_maintain(props.posts.pro_maintain)
         })
         .then(async () => {
           axios.post(
-            "http://localhost:38844/notification/" + UID + "/" + dateInduction,
+            "https://aipcattle.herokuapp.com/notification/" + UID + "/" + dateInduction,
             {
               date: dateInduction,
               id_cattle: selectedDamId[a],
@@ -125,7 +125,7 @@ setpro_maintain(props.posts.pro_maintain)
         }).then(()=>{
           for(let i = 0 ; i<keyDate.length;i++){
             if(selectedDamId[a]===dataNoti[i].id_cattle){
-              axios.delete("http://localhost:38844/notification/delete/"+UID+"/"+dataNoti[i].date+"/"+keyDate[i])
+              axios.delete("https://aipcattle.herokuapp.com/notification/delete/"+UID+"/"+dataNoti[i].date+"/"+keyDate[i])
             }
           }
         })

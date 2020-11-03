@@ -149,7 +149,7 @@ export default function PaperDrug(props) {
   async function saveData() {
     if (value === 0) {
       const res = await axios.post(
-        "http://localhost:38844/setting" +
+        "https://aipcattle.herokuapp.com/setting" +
           keyObjecselected +
           "/" +
           keyObjecselected +
@@ -164,7 +164,7 @@ export default function PaperDrug(props) {
     }
     if (value === 1) {
       const res = await axios.post(
-        "http://localhost:38844/setting" +
+        "https://aipcattle.herokuapp.com/setting" +
           keyObjecselected +
           "/" +
           keyObjecselected +
@@ -179,7 +179,7 @@ export default function PaperDrug(props) {
     }
     if (value === 2) {
       const res = await axios.post(
-        "http://localhost:38844/setting" +
+        "https://aipcattle.herokuapp.com/setting" +
           keyObjecselected +
           "/" +
           keyObjecselected +
@@ -196,7 +196,7 @@ export default function PaperDrug(props) {
     
       const sync={...prosync,medic}
       const res = await axios.post(
-        "http://localhost:38844/setting" +
+        "https://aipcattle.herokuapp.com/setting" +
           keyObjecselected +
           "/" +
           keyObjecselected +

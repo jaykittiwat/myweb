@@ -63,7 +63,7 @@ export default function TableListEachSetting(props) {
   const deleteDataList = index => {
     axios
       .delete(
-        "http://localhost:38844/setting" +
+        "https://aipcattle.herokuapp.com/setting" +
           props.keyObjecselected +
           "/" +
           props.keyObjecselected +

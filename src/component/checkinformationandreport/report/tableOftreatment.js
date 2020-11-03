@@ -49,9 +49,9 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 const  queryDataPDF= async(id)=>{
 
-          const res=await axios.get("http://localhost:38844/treatment/history/" +props.UID+"/"+id)
-          const res2=await axios.get("http://localhost:38844/cattle/checkClave/" +props.UID+"/"+id)
-          const res3= await axios.get("http://localhost:38844/settingbrand/brand/" +props.UID)
+          const res=await axios.get("https://aipcattle.herokuapp.com/treatment/history/" +props.UID+"/"+id)
+          const res2=await axios.get("https://aipcattle.herokuapp.com/cattle/checkClave/" +props.UID+"/"+id)
+          const res3= await axios.get("https://aipcattle.herokuapp.com/settingbrand/brand/" +props.UID)
      
           const databrand=Object.values(res3.data)
           const dataSet=[]
@@ -127,9 +127,9 @@ return value
 
 
 const queryDataExcel=async(id,index)=>{
-   const res=await axios.get("http://localhost:38844/treatment/history/" +props.UID+"/"+id)
-   const res2=await axios.get("http://localhost:38844/cattle/checkClave/" +props.UID+"/"+id)
-   const res3= await axios.get("http://localhost:38844/settingbrand/brand/" +props.UID)
+   const res=await axios.get("https://aipcattle.herokuapp.com/treatment/history/" +props.UID+"/"+id)
+   const res2=await axios.get("https://aipcattle.herokuapp.com/cattle/checkClave/" +props.UID+"/"+id)
+   const res3= await axios.get("https://aipcattle.herokuapp.com/settingbrand/brand/" +props.UID)
      
    const databrand=Object.values(res3.data)
    const data=[]

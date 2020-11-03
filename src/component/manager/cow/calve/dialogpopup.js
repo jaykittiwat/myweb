@@ -63,21 +63,21 @@ export default function AlertDialog(props) {
   const saveData = () => {
     axios
       .post(
-        "http://localhost:38844/cattle/status/" +
+        "https://aipcattle.herokuapp.com/cattle/status/" +
           UID +
           "/" +
           keycattle[selectedIndexMom],
         { status: "คลอดแล้ว", process_date: dateofClave } //ไม่มีปัญหา
       )
       .then(() => {
-        axios.post("http://localhost:38844/history/" + UID, {
+        axios.post("https://aipcattle.herokuapp.com/history/" + UID, {
           dam_id: Rows[selectedIndexMom].cattle_id, //Rows[selectedIndexMom].id_cattle ไม่มา
           date: dateofClave,
           type: "คลอดแล้ว"
         });
       })
       .then(() => {
-        axios.post("http://localhost:38844/delivery/" + UID, {
+        axios.post("https://aipcattle.herokuapp.com/delivery/" + UID, {
           count_calf: Count_calf,
           dam_id: dam_id,
           date: dateofClave,
@@ -90,7 +90,7 @@ export default function AlertDialog(props) {
       })
       .then(() => {
         axios.post(
-          "http://localhost:38844/notification/" + UID + "/" + dateFatten,
+          "https://aipcattle.herokuapp.com/notification/" + UID + "/" + dateFatten,
           {
             date: dateFatten,
             id_cattle: Rows[selectedIndexMom].cattle_id, //ไม่มา
@@ -100,7 +100,7 @@ export default function AlertDialog(props) {
       })
       .then(() => {
         axios.post(
-          "http://localhost:38844/notification/" + UID + "/" + dateHeal,
+          "https://aipcattle.herokuapp.com/notification/" + UID + "/" + dateHeal,
           {
             date: dateHeal,
             id_cattle: Rows[selectedIndexMom].cattle_id, //ไม่มา
@@ -110,7 +110,7 @@ export default function AlertDialog(props) {
       })
       .then(() => {
         axios.delete(
-          "http://localhost:38844/notification/delete/" +
+          "https://aipcattle.herokuapp.com/notification/delete/" +
             UID +
             "/" +
             dataNoti[selectedIndexMom].date +
@@ -121,10 +121,10 @@ export default function AlertDialog(props) {
       .then(async () => {
         //ลงทะเบียนลูกโค
         for (let i = 0; i < numberCalf.length; i++) {
-          await axios.post("http://localhost:38844/user/calf/registorCalf/" + UID,numberCalf[i]);
-          await axios.post("http://localhost:38844/branding/" + UID,  { birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id , datebran: "",note: "",operator: "", recoder: "",wid: "",})
-          await axios.post("http://localhost:38844/dishorn/" + UID, {birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datedishorn: "",method: "",note: "",operator: "",recoder: "",})
-          await  axios.post("http://localhost:38844/wean/" + UID,{ birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datewean: "",note: "",operator: "",recoder: "",wean_chest_head_ratio: "",wean_hip_hight: "",weanweight: "",
+          await axios.post("https://aipcattle.herokuapp.com/user/calf/registorCalf/" + UID,numberCalf[i]);
+          await axios.post("https://aipcattle.herokuapp.com/branding/" + UID,  { birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id , datebran: "",note: "",operator: "", recoder: "",wid: "",})
+          await axios.post("https://aipcattle.herokuapp.com/dishorn/" + UID, {birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datedishorn: "",method: "",note: "",operator: "",recoder: "",})
+          await  axios.post("https://aipcattle.herokuapp.com/wean/" + UID,{ birth_id:numberCalf[i].birth_id,dam_id:numberCalf[i].dam_id,datewean: "",note: "",operator: "",recoder: "",wean_chest_head_ratio: "",wean_hip_hight: "",weanweight: "",
           })
         }
       }).then(()=>{

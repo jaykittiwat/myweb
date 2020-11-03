@@ -23,13 +23,13 @@ class Paperbrand extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:38844/user/logIn/" + user.email)
+          .get("https://aipcattle.herokuapp.com/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state, UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm  });
           })
           .then(() => {
             axios
-              .get("http://localhost:38844/settingbrand/brand/" + this.state.UID)
+              .get("https://aipcattle.herokuapp.com/settingbrand/brand/" + this.state.UID)
               .then(res => {   
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);

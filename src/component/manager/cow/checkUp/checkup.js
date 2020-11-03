@@ -26,7 +26,7 @@ class CheckUp extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:38844/user/logIn/" + user.email)
+          .get("https://aipcattle.herokuapp.com/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname});
            
@@ -46,7 +46,7 @@ class CheckUp extends Component {
 
             axios
               .get(
-                "http://localhost:38844/notification/CheckUp/" +
+                "https://aipcattle.herokuapp.com/notification/CheckUp/" +
                   this.state.UID +
                   "/" +
                   fullToday
@@ -79,7 +79,7 @@ class CheckUp extends Component {
                   const cattleListData = [];
                   for (let i = 0; i < this.state.keysDate.length; i++) {
                     let res = await axios.get(
-                      "http://localhost:38844/cattle/show/" +
+                      "https://aipcattle.herokuapp.com/cattle/show/" +
                         this.state.UID +
                         "/" +
                         this.state.dataNoti[i].id_cattle

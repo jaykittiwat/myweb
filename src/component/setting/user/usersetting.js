@@ -24,7 +24,7 @@ class Paperuser extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:38844/user/profile/" + user.email)
+          .get("https://aipcattle.herokuapp.com/user/profile/" + user.email)
           .then(res => {
             this.setState({
               data: res.data,
@@ -34,7 +34,7 @@ class Paperuser extends Component {
             });
           }).then(()=>{
             axios
-            .get("http://localhost:38844/user/checkemployee/" +this.state.UIDowner).then(res=>{
+            .get("https://aipcattle.herokuapp.com/user/checkemployee/" +this.state.UIDowner).then(res=>{
                 this.setState({...this.state,loading: false, employeeData:res.data[1],employeeKey:res.data[0]})
             })
           })

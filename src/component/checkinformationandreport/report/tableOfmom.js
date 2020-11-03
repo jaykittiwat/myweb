@@ -272,7 +272,7 @@ const Download=()=>{
 
 
   const SAVE = (index) => {
-    axios.post("http://localhost:38844/cattle/status/"+props.UID+"/"+props.keydata[index],rows[index])
+    axios.post("https://aipcattle.herokuapp.com/cattle/status/"+props.UID+"/"+props.keydata[index],rows[index])
     .then(()=>{
       setStartEdit(!startEdit);
       alert("บันทึกสำเร็จ")

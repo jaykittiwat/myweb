@@ -31,26 +31,26 @@ class Paperfarm extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         axios
-          .get("http://localhost:38844/user/logIn/" + user.email)
+          .get("https://aipcattle.herokuapp.com/user/logIn/" + user.email)
           .then(res => {
             this.setState({ ...this.state,  UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm });
           })
           .then(async () => {
             const bigco = await axios.get(
-              "http://localhost:38844/settingbigcorral/bigcorral/" +
+              "https://aipcattle.herokuapp.com/settingbigcorral/bigcorral/" +
                 this.state.UID
             );
             const cor = await axios.get(
-              "http://localhost:38844/settingcorral/corral/" + this.state.UID
+              "https://aipcattle.herokuapp.com/settingcorral/corral/" + this.state.UID
             );
             const herd = await axios.get(
-              "http://localhost:38844/settingherd_num/herd_num/" + this.state.UID
+              "https://aipcattle.herokuapp.com/settingherd_num/herd_num/" + this.state.UID
             );
             const col = await axios.get(
-              "http://localhost:38844/settingcolor/color/" + this.state.UID
+              "https://aipcattle.herokuapp.com/settingcolor/color/" + this.state.UID
             );
             const str = await axios.get(
-              "http://localhost:38844/settingstrian/strian/" + this.state.UID
+              "https://aipcattle.herokuapp.com/settingstrian/strian/" + this.state.UID
             );
             this.setState({
               ...this.state,

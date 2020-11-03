@@ -23,7 +23,7 @@ class Home extends Component {
   async componentDidMount() {
     await axios
       .get(
-        "http://localhost:38844/user/logIn/" + this.state.param.currentUser.email
+        "https://aipcattle.herokuapp.com/user/logIn/" + this.state.param.currentUser.email
       )
       .then(res => {
         const getUser = res.data[0];

@@ -159,12 +159,12 @@ export default function TableCheckUp(props) {
     for (let i = 0; i < x; i++) {
       axios
         .post(
-          "http://localhost:38844/cattle/status/" + UID + "/" + selected[i],
+          "https://aipcattle.herokuapp.com/cattle/status/" + UID + "/" + selected[i],
           { status: "ตรวจท้องแล้ว", process_date: dateCheckup }
         )
         .then(() => {
           axios.post(
-            "http://localhost:38844/notification/" +
+            "https://aipcattle.herokuapp.com/notification/" +
               UID +
               "/" +
               show_Before_7Day[i],
@@ -177,7 +177,7 @@ export default function TableCheckUp(props) {
         })
         .then(() => {
           axios.delete(
-            "http://localhost:38844/notification/delete/" +
+            "https://aipcattle.herokuapp.com/notification/delete/" +
               UID +
               "/" +
               dateNoti[i].date +
@@ -186,14 +186,14 @@ export default function TableCheckUp(props) {
           );
         })
         .then(() => {
-          axios.post("http://localhost:38844/history/" + UID, {
+          axios.post("https://aipcattle.herokuapp.com/history/" + UID, {
             dam_id: selectedDamId[i],
             date: dateCheckup,
             type: "ตรวจท้อง",
           });
         })
         .then(async () => {
-          await axios.post("http://localhost:38844/abdominal/" + UID, {
+          await axios.post("https://aipcattle.herokuapp.com/abdominal/" + UID, {
             alert_after_7D: show_Affter_7Day[i],
             alert_befor_7D: show_Before_7Day[i],
             alert_sync: show_Syncday,
@@ -222,12 +222,12 @@ export default function TableCheckUp(props) {
     for (let i = 0; i < x; i++) {
       axios
         .post(
-          "http://localhost:38844/cattle/status/" + UID + "/" + selected[i],
+          "https://aipcattle.herokuapp.com/cattle/status/" + UID + "/" + selected[i],
           { status: "ไม่ท้อง", process_date: dateCheckup }
         )
         .then(() => {
           axios.post(
-            "http://localhost:38844/notification/" + UID + "/" + show_Syncday,
+            "https://aipcattle.herokuapp.com/notification/" + UID + "/" + show_Syncday,
             {
               date: show_Syncday,
               id_cattle: selectedDamId[i],
@@ -237,7 +237,7 @@ export default function TableCheckUp(props) {
         })
         .then(() => {
           axios.delete(
-            "http://localhost:38844/notification/delete/" +
+            "https://aipcattle.herokuapp.com/notification/delete/" +
               UID +
               "/" +
               dateNoti[i].date +
@@ -246,14 +246,14 @@ export default function TableCheckUp(props) {
           );
         })
         .then(() => {
-          axios.post("http://localhost:38844/history/" + UID, {
+          axios.post("https://aipcattle.herokuapp.com/history/" + UID, {
             dam_id: selectedDamId[i],
             date: dateCheckup,
             type: "ตรวจท้อง",
           });
         })
         .then(() => {
-          axios.post("http://localhost:38844/abdominal/" + UID, {
+          axios.post("https://aipcattle.herokuapp.com/abdominal/" + UID, {
             alert_after_7D: show_Affter_7Day[i],
             alert_befor_7D: show_Before_7Day[i],
             alert_sync: show_Syncday,

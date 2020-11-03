@@ -154,7 +154,7 @@ export default function SimpleTable(props) {
   const SAVE = (index) => {
     axios
       .post(
-        "http://localhost:38844/dishorn/update/" + UID + "/" + keydishorn[index],
+        "https://aipcattle.herokuapp.com/dishorn/update/" + UID + "/" + keydishorn[index],
         {
           birth_id: rows[index].name_cattle,
           dam_id: rows[index].dam_id,
@@ -168,7 +168,7 @@ export default function SimpleTable(props) {
       .then(() => {
         axios
           .post(
-            "http://localhost:38844/branding/update/" +
+            "https://aipcattle.herokuapp.com/branding/update/" +
               UID +
               "/" +
               keybranding[index],
@@ -184,7 +184,7 @@ export default function SimpleTable(props) {
           .then(() => {
             axios
               .post(
-                "http://localhost:38844/wean/update/" +
+                "https://aipcattle.herokuapp.com/wean/update/" +
                   UID +
                   "/" +
                   keywean[index],
@@ -199,7 +199,7 @@ export default function SimpleTable(props) {
               )
               .then(() => {
                 axios.post(
-                  "http://localhost:38844/calf/update/" +
+                  "https://aipcattle.herokuapp.com/calf/update/" +
                     UID +
                     "/" +
                     keyrows[index],

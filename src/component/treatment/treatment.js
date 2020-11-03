@@ -24,20 +24,20 @@ class Treatment extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         axios
-          .get("http://localhost:38844/user/logIn/" + user.email)
+          .get("https://aipcattle.herokuapp.com/user/logIn/" + user.email)
           .then((res) => {
             this.setState({ ...this.state,  UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname });
           })
           .then(() => {
             axios
-              .get("http://localhost:38844/cattle/showAll/" + this.state.UID)
+              .get("https://aipcattle.herokuapp.com/cattle/showAll/" + this.state.UID)
               .then((res) => {
                 this.setState({ ...this.state, cattle_id: res.data[1] });
               })
               .then(() => {
                 axios
                   .get(
-                    "http://localhost:38844/calf/calfshowAll/" + this.state.UID
+                    "https://aipcattle.herokuapp.com/calf/calfshowAll/" + this.state.UID
                   )
                   .then((res) => {
                     this.setState({ ...this.state, calf_id: res.data[1] });
@@ -66,11 +66,11 @@ class Treatment extends Component {
                   })
                   .then(async() => {
                     const dr = await axios.get(
-                      "http://localhost:38844/settingdrug/drug/" +
+                      "https://aipcattle.herokuapp.com/settingdrug/drug/" +
                         this.state.UID
                     );
                     const vac = await axios.get(
-                      "http://localhost:38844/settingvaccine/vaccine/" + this.state.UID
+                      "https://aipcattle.herokuapp.com/settingvaccine/vaccine/" + this.state.UID
                     );
                     const children = dr.data[1].concat(vac.data[1])
                     const Medicname = [];

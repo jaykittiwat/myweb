@@ -49,7 +49,7 @@ export default function FormRegiscalf(props) {
   const saveDataCalfToDatabase = () => {
     if (pictures === []) {
       axios
-        .post("http://localhost:38844/user/calf/registorCalf/" + UID, dataCalf)
+        .post("https://aipcattle.herokuapp.com/user/calf/registorCalf/" + UID, dataCalf)
         .then(() => {
           const setBranding = {
             birth_id: dataCalf.birth_id,
@@ -61,7 +61,7 @@ export default function FormRegiscalf(props) {
             wid: "",
           };
           axios
-            .post("http://localhost:38844/branding/" + UID, setBranding)
+            .post("https://aipcattle.herokuapp.com/branding/" + UID, setBranding)
             .then(() => {
               const setHorndetering = {
                 birth_id: dataCalf.birth_id,
@@ -73,7 +73,7 @@ export default function FormRegiscalf(props) {
                 recoder: "",
               };
               axios
-                .post("http://localhost:38844/dishorn/" + UID, setHorndetering)
+                .post("https://aipcattle.herokuapp.com/dishorn/" + UID, setHorndetering)
                 .then(() => {
                  
                   const setWean = {
@@ -88,7 +88,7 @@ export default function FormRegiscalf(props) {
                     weanweight: "",
                   }
                   axios
-                    .post("http://localhost:38844/wean/" + UID, setWean)
+                    .post("https://aipcattle.herokuapp.com/wean/" + UID, setWean)
                     .then(() => {
                       setDataCalf(startStatecalf);
                     })
@@ -112,7 +112,7 @@ export default function FormRegiscalf(props) {
         .put(pictures[0])
         .then(() => {
           axios.post(
-            "http://localhost:38844/user/calf/registorCalf/" + UID,dataCalf
+            "https://aipcattle.herokuapp.com/user/calf/registorCalf/" + UID,dataCalf
           ).then(() => {
             const setBranding = {
               birth_id: dataCalf.birth_id,
@@ -124,7 +124,7 @@ export default function FormRegiscalf(props) {
               wid: "",
             };
             axios
-              .post("http://localhost:38844/branding/" + UID, setBranding)
+              .post("https://aipcattle.herokuapp.com/branding/" + UID, setBranding)
               .then(() => {
                 const setHorndetering = {
                   birth_id: dataCalf.birth_id,
@@ -136,7 +136,7 @@ export default function FormRegiscalf(props) {
                   recoder: "",
                 };
                 axios
-                  .post("http://localhost:38844/dishorn/" + UID, setHorndetering)
+                  .post("https://aipcattle.herokuapp.com/dishorn/" + UID, setHorndetering)
                   .then(() => {
                     const setWean = {
                       birth_id: dataCalf.birth_id,
@@ -150,7 +150,7 @@ export default function FormRegiscalf(props) {
                       weanweight: "",
                     };
                     axios
-                      .post("http://localhost:38844/wean/" + UID, setWean)
+                      .post("https://aipcattle.herokuapp.com/wean/" + UID, setWean)
                       .then(() => {
                         setDataCalf(startStatecalf);
                       })

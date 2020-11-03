@@ -88,11 +88,11 @@ export default function TableInduction(props) {
       });
           axios
             .post(
-              "http://localhost:38844/cattle/status/" + UID + "/" + selected[a],
+              "https://aipcattle.herokuapp.com/cattle/status/" + UID + "/" + selected[a],
               { status: "เหนี่ยวนำแล้ว", process_date: selectedDate }
             )
             .then(() => {
-              axios.post("http://localhost:38844/history/" + UID, {
+              axios.post("https://aipcattle.herokuapp.com/history/" + UID, {
                 dam_id: selectedDamId[a],
                 date: selectedDate,
                 time: time,
@@ -100,7 +100,7 @@ export default function TableInduction(props) {
               });
             })
             .then(() => {
-              axios.post("http://localhost:38844/synchronize/" + UID, {
+              axios.post("https://aipcattle.herokuapp.com/synchronize/" + UID, {
                 dam_id: selectedDamId[a],
                 datepro: selectedDate,
                 program_sync: props.posts.program_sync[programSync].pro_sync,
@@ -110,7 +110,7 @@ export default function TableInduction(props) {
             })
             .then(() => {
               axios.post(
-                "http://localhost:38844/notification/" + UID + "/" + dateBreed,
+                "https://aipcattle.herokuapp.com/notification/" + UID + "/" + dateBreed,
                 {
                   date: dateBreed,
                   id_cattle: selectedDamId[a],
@@ -120,7 +120,7 @@ export default function TableInduction(props) {
             })
             .then( () => {
                axios.delete(
-                "http://localhost:38844/notification/delete/" +
+                "https://aipcattle.herokuapp.com/notification/delete/" +
                   UID +
                   "/" +
                   dateNoti[a].date +
@@ -129,7 +129,7 @@ export default function TableInduction(props) {
               );
             }).then(() => {
               axios
-              .post("http://localhost:38844/synchronize/notisync/" + UID, newsetData)
+              .post("https://aipcattle.herokuapp.com/synchronize/notisync/" + UID, newsetData)
             })
             .then(()=>{
               if (a + 1 === selected.length) {

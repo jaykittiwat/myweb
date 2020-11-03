@@ -31,7 +31,7 @@ export default function FormData(props) {
   const handleSubmit = () => {
   
     axios
-      .post(`http://localhost:38844/user/registor`, {
+      .post(`https://aipcattle.herokuapp.com/user/registor`, {
         adminfarm:account.adminfarm ,
         user: account.user,
         pass: account.pass,

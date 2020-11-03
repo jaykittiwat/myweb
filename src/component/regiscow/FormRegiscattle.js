@@ -71,7 +71,7 @@ const [setAgeShow]=React.useState("")
    
     if (pictures === []) {
       axios
-        .post("http://localhost:38844/user/cow/registor/" + UID, dataCattle)
+        .post("https://aipcattle.herokuapp.com/user/cow/registor/" + UID, dataCattle)
         .then(() => {
           alert("บันทึกสำเร็จ");
         })
@@ -87,7 +87,7 @@ const [setAgeShow]=React.useState("")
         .put(pictures[0])
         .then(() => {
           axios.post(
-            "http://localhost:38844/user/cow/registor/" + UID,
+            "https://aipcattle.herokuapp.com/user/cow/registor/" + UID,
             dataCattle
           );
         })
@@ -103,7 +103,7 @@ const [setAgeShow]=React.useState("")
   const saveDataCalfToDatabase = () => {
     if (pictures === []) {
       axios
-        .post("http://localhost:38844/user/calf/registorCalf/" + UID, {
+        .post("https://aipcattle.herokuapp.com/user/calf/registorCalf/" + UID, {
           birth_id: dataCattle.cattle_id,
           birth_weight: dataCattle.birth_weight,
           branding: false,
@@ -127,7 +127,7 @@ const [setAgeShow]=React.useState("")
             wid: "",
           };
           axios
-            .post("http://localhost:38844/branding/" + UID, setBranding)
+            .post("https://aipcattle.herokuapp.com/branding/" + UID, setBranding)
             .then(() => {
               const setHorndetering = {
                 birth_id:dataCattle.name_cow,
@@ -139,7 +139,7 @@ const [setAgeShow]=React.useState("")
                 recoder: "",
               };
               axios
-                .post("http://localhost:38844/dishorn/" + UID, setHorndetering)
+                .post("https://aipcattle.herokuapp.com/dishorn/" + UID, setHorndetering)
                 .then(() => {
                  
                   const setWean = {
@@ -154,7 +154,7 @@ const [setAgeShow]=React.useState("")
                     weanweight: "",
                   }
                   axios
-                    .post("http://localhost:38844/wean/" + UID, setWean)
+                    .post("https://aipcattle.herokuapp.com/wean/" + UID, setWean)
                     .then(() => {
                       setDataCalf(startStatecalf);
                     })
@@ -178,7 +178,7 @@ const [setAgeShow]=React.useState("")
         .put(pictures[0])
         .then(() => {
           axios.post(
-            "http://localhost:38844/user/calf/registorCalf/" + UID,{ birth_id: dataCattle.cattle_id,
+            "https://aipcattle.herokuapp.com/user/calf/registorCalf/" + UID,{ birth_id: dataCattle.cattle_id,
             birth_weight: dataCattle.birth_weight,
             branding: false,
             breed: dataCattle.breed_method,
@@ -200,7 +200,7 @@ const [setAgeShow]=React.useState("")
               wid: "",
             };
             axios
-              .post("http://localhost:38844/branding/" + UID, setBranding)
+              .post("https://aipcattle.herokuapp.com/branding/" + UID, setBranding)
               .then(() => {
                 const setHorndetering = {
                   birth_id:dataCattle.name_cow,
@@ -212,7 +212,7 @@ const [setAgeShow]=React.useState("")
                   recoder: "",
                 };
                 axios
-                  .post("http://localhost:38844/dishorn/" + UID, setHorndetering)
+                  .post("https://aipcattle.herokuapp.com/dishorn/" + UID, setHorndetering)
                   .then(() => {
                     const setWean = {
                       birth_id: dataCattle.name_cow,
@@ -226,7 +226,7 @@ const [setAgeShow]=React.useState("")
                     weanweight: "",
                     };
                     axios
-                      .post("http://localhost:38844/wean/" + UID, setWean)
+                      .post("https://aipcattle.herokuapp.com/wean/" + UID, setWean)
                       .then(() => {
                         setDataCattle(startStatecalf);
                       })
