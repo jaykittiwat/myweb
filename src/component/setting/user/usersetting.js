@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import HeaderLogin from "./../../../HeaderLogin";
 import NavbarLogin from "./../../../demo";
-import PaperUser from "./PaperUser";
+import PaperUser from "./PaperUser2";
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
 import Footerversion from "./../../../footerversion";

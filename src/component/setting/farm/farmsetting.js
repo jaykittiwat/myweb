@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import HeaderLogin from "./../../../HeaderLogin";
 import NavbarLogin from "./../../../demo";
-import PaperFarm from "./PaperFarmNew";
+import PaperFarm from "./PaperFarmNew2";
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
 

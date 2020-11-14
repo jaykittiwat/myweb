@@ -2,7 +2,7 @@
 import React,{Component} from 'react';
 import HeaderLogin from './../../../HeaderLogin';
 import NavbarLogin from './../../../demo';
-import PaperDrug from './PaperDrug';
+import PaperDrug from './PaperDrug2';
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
 import Footerversion from "./../../../footerversion";
@@ -74,7 +74,7 @@ class Paperdrug extends Component{
       <div className="row Nav-shadow posi">
         <NavbarLogin />
       </div>
-      <PaperDrug  posts={this.state}/>
+      <PaperDrug  posts={this.state} storage={localStorage.getItem('selectSetting')||""}/>
       <div className="row mar"></div>
 
       <Footerversion/>

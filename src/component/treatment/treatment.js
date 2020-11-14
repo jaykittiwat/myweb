@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import HeaderLogin from "./../../HeaderLogin";
 import NavbarLogin from "./../../demo";
-import TableTeatment from "./tableTreatment";
+import TableTeatment from "./tableTreatment2";
 import axios from "axios";
 import firebase from "../../backEnd/firebase";
 class Treatment extends Component {

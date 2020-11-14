@@ -140,7 +140,7 @@ const [logo,setLogo]= React.useState(null);
      })
       
    toDataUrl(logo, (myBase64) => {
-              console.log(myBase64); // myBase64 is the base64 string
+         
               PDF(setData,setData2,myBase64)
             });
      }
