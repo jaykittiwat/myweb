@@ -41,21 +41,21 @@ const useStyles = makeStyles({
   },
 });
 export default function Bigcorral(props) {
-  
+  console.log(props);
   const classes = useStyles();
   const [openDelete, setOpenDelete] = React.useState(false);
   const [indexForDelete, setIndexforDelete] = React.useState(null);
-  const [corral,setcorral] = React.useState("");
+  const [herd,setherd] = React.useState("");
   const handleCloseDelete = () => {
     setOpenDelete(false);
   };
   const saveIntoDataBase = () => {
-    if(corral!==""){  axios
+    if(herd!==""){  axios
       .post(
-        "https://aipcattle.herokuapp.com/settingcorral/corral/" +
+        "https://aipcattle.herokuapp.com/settingherd_num/herd_num/" +
           props.UID,
         {
-          corral:corral,
+          herd_num:herd,
         }
       )
       .then(() => {
@@ -70,7 +70,7 @@ export default function Bigcorral(props) {
   const DeleteData = () => {
     axios
       .delete(
-        "https://aipcattle.herokuapp.com/settingcorral/corral/" +
+        "https://aipcattle.herokuapp.com/settingherd_num/herd_num/" +
           props.UID +
           "/" +
           props.keys[indexForDelete]
@@ -90,13 +90,13 @@ export default function Bigcorral(props) {
       <Paper variant="outlined">
         <Grid container spacing={3} style={{ marginTop: "15px" }}>
           <Grid item xs={4} style={{ textAlign: "right", fontSize: "20px" }}>
-            ชื่อคอก
+            ชื่อฝุง
           </Grid>
           <Grid item xs={4}>
             <TextField
-            value={corral}
-            onChange={e=>setcorral(e.target.value)}
-              placeholder="กรอกชื่อคอก"
+            value={herd}
+            onChange={e=>setherd(e.target.value)}
+              placeholder="กรอกชื่อฝุง"
               variant="outlined"
               size="small"
               style={{ width: "100%", margin: "0" }}
@@ -152,7 +152,7 @@ export default function Bigcorral(props) {
                  className={classes.tableRightBorder}
                  style={{ fontSize: "18px", width: "60%", padding: "10px" }}
                >
-                 ชื่อคอก
+                 ชื่อฝุง
                </TableCell>
                <TableCell
                  align="center"
@@ -187,7 +187,7 @@ export default function Bigcorral(props) {
                      }}
                      className={classes.tableRightBorder}
                    >
-                     {i.corral}
+                     {i.herd_num}
                    </TableCell>
                    <TableCell
                      align="center"

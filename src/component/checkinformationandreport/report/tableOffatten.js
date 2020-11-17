@@ -6,9 +6,6 @@ import jsPDF from "jspdf";
 import {font} from './conten'
 import "jspdf-autotable";
 import ReactExport from 'react-data-export';
-
-
-
 export default function TableOfmom(props) {
   const [list, setList] = React.useState([]);
   const [Owner,setOwner]=React.useState("")

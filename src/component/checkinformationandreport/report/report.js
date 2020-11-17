@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import HeaderLogin from "../../../HeaderLogin";
 import NavbarLogin from "../../../demo";
-import Showtable from "./table";
+import Showtable from "./Table2";
 import Footerversion from "./../../../footerversion";
 import firebase from "./../../../backEnd/firebase";
 import axios from "axios";
@@ -15,7 +15,8 @@ class Header extends Component {
       keycattle: [],
       datacalf: [],
       keycalf: [],
-      owner:""
+      owner:"",
+      rows:[]
      
     };
     
@@ -32,6 +33,10 @@ class Header extends Component {
            const datacattle = await axios.get("https://aipcattle.herokuapp.com/cattle/showAll/" +this.state.UID)
            const datacalf = await axios.get("https://aipcattle.herokuapp.com/calf/calfshowAll/" +this.state.UID)
            this.setState({...this.state,datacattle:datacattle.data[1],keycattle:datacattle.data[0],datacalf:datacalf.data[1],keycalf:datacalf.data[0],loading:false})
+          }).then(()=>{
+    
+      
+
           })
       }
     })
@@ -43,7 +48,7 @@ class Header extends Component {
         <div className="row Nav-shadow posi">
           <NavbarLogin />
         </div>
-        <Showtable posts={this.state}/>
+        <Showtable posts={this.state} storage={localStorage.getItem('selectSettingReport')||""}/>
 
         <div style={{ height: "30px" }}> </div>
         <Footerversion />

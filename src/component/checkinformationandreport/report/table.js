@@ -13,9 +13,6 @@ import Tableabortion from "./tableOfabortion";
 import Tabletreat from "./tableOftreatment";
 import { Paper,List,ListItem,ListItemText,Divider,Collapse,Grid} from "@material-ui/core";
 
-
-
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",

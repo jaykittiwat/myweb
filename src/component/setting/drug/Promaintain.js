@@ -60,7 +60,8 @@ export default function Promaintain(props) {
     setOpenDelete(false);
   };
   const saveIntoDataBase = () => {
-    axios
+    if(maintain!==""){  
+      axios
       .post(
         "https://aipcattle.herokuapp.com/settingprogram_maintain/program_maintain/" +
           props.UID,
@@ -73,6 +74,11 @@ export default function Promaintain(props) {
         alert("บันทึกสำเร็จ");
         window.location.reload();
       });
+    }
+      else{
+        alert("กรูณากรอกข้อมูลให้ครบ")
+      }
+  
   };
   const DeleteData = () => {
     axios

@@ -21,7 +21,7 @@ import update from "immutability-helper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
-
+import axios from 'axios'
 const useStyles = makeStyles({
   HeaderTable: {
     height: "49px",
@@ -57,6 +57,8 @@ export default function Prosync(props) {
   const [openIndex, setOpenIndex] = React.useState(null);
   const [openDelete, setOpenDelete] = React.useState(false);
   const [indexForDelete, setIndexforDelete] = React.useState(null);
+  const [pro_sync,setpro_sync]= React.useState("");
+ 
   const classes = useStyles();
 
   React.useEffect(() => {
@@ -99,11 +101,41 @@ export default function Prosync(props) {
     setMedic(newObj);
   };
   const saveIntoDataBase = () => {
-    console.log(medic);
+  if(pro_sync!==""){  axios
+    .post(
+      "https://aipcattle.herokuapp.com/settingprogram_sync/program_sync/" +
+        props.UID,
+      {
+        pro_sync:pro_sync,
+        note:"",
+        medic:medic
+      }
+    )
+    .then(() => {
+      alert("บันทึกสำเร็จ");
+      window.location.reload();
+    });}
+  else{
+    alert("กรุณากรอกข้อมูลให้ครบ");
+  }
+  
   };
   const DeleteData = () => {
-    console.log(indexForDelete);
+    axios
+    .delete(
+      "https://aipcattle.herokuapp.com/settingprogram_sync/program_sync/" +
+        props.UID +
+        "/" +
+        props.keydrug[indexForDelete]
+    )
+    .then((res) => {
+      alert("สำเร็จ");
+      setOpenDelete(false);
+      window.location.reload();
+    });
   };
+  
+
   return (
     <div style={{ marginTop: "10px" }}>
       <Paper
@@ -131,6 +163,8 @@ export default function Prosync(props) {
             >
               ชื่อโปรแกรมการเหนี่ยวนำ
               <TextField
+              value={pro_sync}
+              onChange={e=>setpro_sync(e.target.value)}
                 size="small"
                 variant="outlined"
                 placeholder="กรอกชื่อโปรแกรมการเหนี่ยวนำ"
@@ -208,8 +242,9 @@ export default function Prosync(props) {
                           >
                             <TextField
                               id="num_day"
+                              onChange={(event)=> setDetaisync(event,index)}
                               value={i.num_day}
-                              onChange={(event) => setDetaisync(event, index)}
+                           
                               size="small"
                               style={{ width: "100%", margin: "0" }}
                               variant="outlined"
@@ -226,7 +261,8 @@ export default function Prosync(props) {
                           >
                             <TextField
                               id="item"
-                              onChange={(event) => setDetaisync(event, index)}
+                              onChange={(event)=> setDetaisync(event,index)}
+                           
                               size="small"
                               style={{ width: "100%", margin: "0" }}
                               variant="outlined"
@@ -437,29 +473,42 @@ export default function Prosync(props) {
                         <DialogContent>
                           <Grid container spacing={3}>
                             <Grid item xs={2} style={{ textAlign: "center" }}>
-                             <strong>วันที่ดำเนินการ</strong> 
+                              <strong>วันที่ดำเนินการ</strong>
                             </Grid>
                             <Grid item xs={8} style={{ textAlign: "center" }}>
-                            <strong>รายละเอียด</strong> 
+                              <strong>รายละเอียด</strong>
                             </Grid>
                             <Grid item xs={2} style={{ textAlign: "center" }}>
-                            <strong>เวลา</strong> 
+                              <strong>เวลา</strong>
                             </Grid>
                             <Grid item xs={12}>
-                            {i.medic.map((item,index2)=>{
-                              return(<Grid container spacing={3} key={index2}>
-                              <Grid item xs={2} style={{ textAlign: "center" }} >
-                            {item.num_day}
-                            </Grid>
-                            <Grid item xs={8} style={{ textAlign: "center" }} >
-                            {item.item}
-                            </Grid>
-                            <Grid item xs={2} style={{ textAlign: "center" }} >
-                            {item.time||"-"}
-                            </Grid>
-                              
-                              </Grid>)
-                            })}
+                              {i.medic.map((item, index2) => {
+                                return (
+                                  <Grid container spacing={3} key={index2}>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={{ textAlign: "center" }}
+                                    >
+                                      {item.num_day}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={8}
+                                      style={{ textAlign: "center" }}
+                                    >
+                                      {item.item}
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={2}
+                                      style={{ textAlign: "center" }}
+                                    >
+                                      {item.time || "-"}
+                                    </Grid>
+                                  </Grid>
+                                );
+                              })}
                             </Grid>
                           </Grid>
                         </DialogContent>

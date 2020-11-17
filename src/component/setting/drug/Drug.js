@@ -84,35 +84,51 @@ export default function Drug(props) {
   };
 
   const saveIntoDataBase = () => {
-    axios
-      .post("https://aipcattle.herokuapp.com/settingdrug/drug/" + props.UID, {
-        group: group,
-        drug_name_buy: drug_name_buy,
-        common_drug: common_drug,
-        dosage: "ไม่ระบุ",
-        drug_name: drug_name,
-        exp_date: exp_date,
-        mfd_date: mfd_date,
-        dettail: detail,
-        properties: properties,
-        method: method,
-        warning: warning,
-        note: note,
-      })
-      .then(() => {
-        alert("บันทึกสำเร็จ");
-        window.location.reload();
-      });
+    if (
+      group !== "" &&
+      drug_name_buy !== "" &&
+      common_drug !== "" &&
+      drug_name !== "" &&
+      exp_date !== "" &&
+      mfd_date !== ""
+    ) {
+      axios
+        .post("https://aipcattle.herokuapp.com/settingdrug/drug/" + props.UID, {
+          group: group,
+          drug_name_buy: drug_name_buy,
+          common_drug: common_drug,
+          dosage: "ไม่ระบุ",
+          drug_name: drug_name,
+          exp_date: exp_date,
+          mfd_date: mfd_date,
+          dettail: detail,
+          properties: properties,
+          method: method,
+          warning: warning,
+          note: note,
+        })
+        .then(() => {
+          alert("บันทึกสำเร็จ");
+          window.location.reload();
+        });
+    } else {
+      alert("กรุณากรอกข้อมูลให้ครบ");
+    }
   };
 
   const DeleteData = () => {
-    axios.delete( "https://aipcattle.herokuapp.com/settingdrug/drug/"+props.UID+"/"+props.keydrug[indexForDelete]).then((res)=>{
-     
-    alert("สำเร็จ")
-    setOpenDelete(false);
-      window.location.reload()
-    })
-    
+    axios
+      .delete(
+        "https://aipcattle.herokuapp.com/settingdrug/drug/" +
+          props.UID +
+          "/" +
+          props.keydrug[indexForDelete]
+      )
+      .then((res) => {
+        alert("สำเร็จ");
+        setOpenDelete(false);
+        window.location.reload();
+      });
   };
 
   const classes = useStyles();
@@ -301,7 +317,10 @@ export default function Drug(props) {
               />
             </Grid>
           </Grid>
-          <Paper elevation={0} style={{ textAlign: "center",marginTop:"10px" }}>
+          <Paper
+            elevation={0}
+            style={{ textAlign: "center", marginTop: "10px" }}
+          >
             {" "}
             <Button
               variant="contained"
@@ -309,7 +328,7 @@ export default function Drug(props) {
                 backgroundColor: "#251CA6",
                 color: "#fff",
                 fontSize: "18px",
-                width:"150px"
+                width: "150px",
               }}
               onClick={() => saveIntoDataBase()}
             >
@@ -499,9 +518,7 @@ export default function Drug(props) {
                         open={index === openIndex ? open : false}
                         onClose={handleClose}
                       >
-                        <DialogTitle >
-                          รายละเอียดยา
-                        </DialogTitle>
+                        <DialogTitle>รายละเอียดยา</DialogTitle>
                         <DialogContent>
                           <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
@@ -556,7 +573,7 @@ export default function Drug(props) {
                             style={{
                               backgroundColor: "#251CA6",
                               color: "#fff",
-                              outline:"none"
+                              outline: "none",
                             }}
                           >
                             ตกลง

@@ -10,9 +10,12 @@ import {
   Table,
   TableHead,
   TableRow,
-  Select,
-  FormControl,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  CircularProgress,
 } from "@material-ui/core";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   HeaderTable: {
@@ -37,57 +40,208 @@ const useStyles = makeStyles({
     borderStyle: "solid",
   },
 });
-export default function Color() {
-  const classes = useStyles();
-  return (
-    <div  style={{ marginTop: "20px" }}>
-    <Paper variant="outlined"> 
-<Grid container spacing={3} style={{marginTop:"15px"}}>
-    <Grid item xs={4} style={{textAlign:"right",fontSize:"20px"}}>ชื่อสี</Grid>
-    <Grid item xs={4}>
-        <TextField
-            placeholder="กรอกชื่อสี"
-            variant="outlined"
-            size="small"
-            style={{ width: "100%", margin: "0" }}
-          />
-          </Grid>
-    <Grid item xs={4} style={{textAlign:"left"}}><Button variant="contained" style={{backgroundColor:"#1A911E",color:"#fff",fontSize:"20px",width:"100px",height:"40px"}}>เพิ่ม</Button></Grid>
-</Grid>
+export default function Bigcorral(props) {
 
-<Paper style={{ paddingLeft:"10%",paddingRight:"10%" ,marginTop:"20px"}}>
-<TableContainer >
-              <Table>
-                <TableHead>
-                  <TableRow style={{ backgroundColor: "#FFF" }}>
-                    <TableCell
-                      align="center"
-                      className={classes.tableRightBorder}
-                      style={{ fontSize: "18px", width: "20%",padding:"10px"}}
-                    >
-                      รายการที่
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableRightBorder}
-                      style={{ fontSize: "18px", width: "60%",padding:"10px" }}
-                    >
-                     ชื่อสี
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      className={classes.tableRightBorder}
-                      style={{ fontSize: "18px", width: "20%",padding:"10px" }}
-                    >
-                     จัดการ
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody></TableBody>
-              </Table>
-            </TableContainer>
-            </Paper>
-    </Paper>
+  const classes = useStyles();
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [indexForDelete, setIndexforDelete] = React.useState(null);
+  const [color,setcolor] = React.useState("");
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
+  const saveIntoDataBase = () => {
+    if(color!==""){  axios
+      .post(
+        "https://aipcattle.herokuapp.com/settingcolor/color/" +
+          props.UID,
+        {
+          color:color,
+        }
+      )
+      .then(() => {
+        alert("บันทึกสำเร็จ");
+        window.location.reload();
+      });}
+    else{
+      alert("กรุณากรอกข้อมูลให้ครับ");
+    }
+    
+    };
+  const DeleteData = () => {
+    axios
+      .delete(
+        "https://aipcattle.herokuapp.com/settingcolor/color/" +
+          props.UID +
+          "/" +
+          props.keys[indexForDelete]
+      )
+      .then((res) => {
+        alert("สำเร็จ");
+        setOpenDelete(false);
+        window.location.reload();
+      });
+  };
+  const alertDelete = (index) => {
+    setIndexforDelete(index);
+    setOpenDelete(true);
+  };
+  return (
+    <div style={{ marginTop: "20px" }}>
+      <Paper variant="outlined">
+        <Grid container spacing={3} style={{ marginTop: "15px" }}>
+          <Grid item xs={4} style={{ textAlign: "right", fontSize: "20px" }}>
+            ชื่อสี
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+            value={color}
+            onChange={e=>setcolor(e.target.value)}
+              placeholder="กรอกชื่อสี"
+              variant="outlined"
+              size="small"
+              style={{ width: "100%", margin: "0" }}
+            />
+          </Grid>
+          <Grid item xs={4} style={{ textAlign: "left" }}>
+            <Button
+            onClick={()=>saveIntoDataBase()}
+              variant="contained"
+              style={{
+                backgroundColor: "#1A911E",
+                color: "#fff",
+                fontSize: "20px",
+                width: "100px",
+                height: "40px",
+                outline: "none",
+              }}
+            >
+              เพิ่ม
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Paper
+          elevation={0}
+          style={{
+            paddingLeft: "10%",
+            paddingRight: "10%",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          {props.loading ? 
+          <div
+            className="container-fluid text-center"
+            style={{ padding: "10px" }}
+          >
+            <CircularProgress size={30} />
+          </div>
+         : <TableContainer>
+         <Table>
+           <TableHead>
+             <TableRow style={{ backgroundColor: "#FFF" }}>
+               <TableCell
+                 align="center"
+                 className={classes.tableRightBorder}
+                 style={{ fontSize: "18px", width: "20%", padding: "10px" }}
+               >
+                 รายการที่
+               </TableCell>
+               <TableCell
+                 align="center"
+                 className={classes.tableRightBorder}
+                 style={{ fontSize: "18px", width: "60%", padding: "10px" }}
+               >
+                 สี
+               </TableCell>
+               <TableCell
+                 align="center"
+                 className={classes.tableRightBorder}
+                 style={{ fontSize: "18px", width: "20%", padding: "10px" }}
+               >
+                 จัดการ
+               </TableCell>
+             </TableRow>
+           </TableHead>
+           <TableBody>
+             {props.data.map((i, index) => {
+               return (
+                 <TableRow key={index}>
+                   <TableCell
+                     className={classes.tableRightBorder}
+                     align="center"
+                     style={{
+                       fontSize: "18px",
+                       margin: "0",
+                       padding: "5px",
+                     }}
+                   >
+                     {index + 1}
+                   </TableCell>
+                   <TableCell
+                     align="center"
+                     style={{
+                       fontSize: "18px",
+                       margin: "0",
+                       padding: "5px",
+                     }}
+                     className={classes.tableRightBorder}
+                   >
+                     {i.color}
+                   </TableCell>
+                   <TableCell
+                     align="center"
+                     className={classes.tableRightBorder}
+                     style={{
+                       fontSize: "18px",
+                       margin: "0",
+                       padding: "5px",
+                     }}
+                   >
+                     <Button
+                       variant="contained"
+                       style={{
+                         color: "#fff",
+                         backgroundColor: "red",
+                         outline: "none",
+                       }}
+                       onClick={() => alertDelete(index)}
+                     >
+                       ลบ
+                     </Button>
+                   </TableCell>
+                 </TableRow>
+               );
+             })}
+           </TableBody>
+         </Table>
+       </TableContainer>}
+         
+        </Paper>
+      </Paper>
+      <Dialog open={openDelete} onClose={handleCloseDelete}>
+        <DialogTitle id="alert-dialog-title">
+          {"คุณต้องการลบหรือไม่?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={() => DeleteData()}
+            color="primary"
+            variant="contained"
+            style={{ outline: "none" }}
+          >
+            ตกลง
+          </Button>
+          <Button
+            onClick={() => handleCloseDelete()}
+            color="secondary"
+            variant="contained"
+            style={{ outline: "none" }}
+          >
+            ยกเลิก
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

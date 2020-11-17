@@ -80,7 +80,7 @@ class Paperfarm extends Component {
         <div className="row Nav-shadow posi">
           <NavbarLogin />
         </div>
-        <PaperFarm posts={this.state} />
+        <PaperFarm posts={this.state} storage={localStorage.getItem('selectSettingFarm')||""} />
         <div className="row mar"></div>
         <Footerversion/>
       </div>

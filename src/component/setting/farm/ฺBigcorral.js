@@ -10,9 +10,12 @@ import {
   Table,
   TableHead,
   TableRow,
-  Select,
-  FormControl,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  CircularProgress,
 } from "@material-ui/core";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   HeaderTable: {
@@ -39,7 +42,48 @@ const useStyles = makeStyles({
 });
 export default function Bigcorral(props) {
   const classes = useStyles();
-
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [indexForDelete, setIndexforDelete] = React.useState(null);
+  const [bigcorral,setbigcorral] = React.useState("");
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
+  const saveIntoDataBase = () => {
+    if(bigcorral!==""){  axios
+      .post(
+        "https://aipcattle.herokuapp.com/settingbigcorral/bigcorral/" +
+          props.UID,
+        {
+          bigcorral:bigcorral,
+        }
+      )
+      .then(() => {
+        alert("บันทึกสำเร็จ");
+        window.location.reload();
+      });}
+    else{
+      alert("กรุณากรอกข้อมูลให้ครับ");
+    }
+    
+    };
+  const DeleteData = () => {
+    axios
+      .delete(
+        "https://aipcattle.herokuapp.com/settingbigcorral/bigcorral/" +
+          props.UID +
+          "/" +
+          props.keys[indexForDelete]
+      )
+      .then((res) => {
+        alert("สำเร็จ");
+        setOpenDelete(false);
+        window.location.reload();
+      });
+  };
+  const alertDelete = (index) => {
+    setIndexforDelete(index);
+    setOpenDelete(true);
+  };
   return (
     <div style={{ marginTop: "20px" }}>
       <Paper variant="outlined">
@@ -49,6 +93,8 @@ export default function Bigcorral(props) {
           </Grid>
           <Grid item xs={4}>
             <TextField
+            value={bigcorral}
+            onChange={e=>setbigcorral(e.target.value)}
               placeholder="กรอกชื่อโรงเรือน"
               variant="outlined"
               size="small"
@@ -57,6 +103,7 @@ export default function Bigcorral(props) {
           </Grid>
           <Grid item xs={4} style={{ textAlign: "left" }}>
             <Button
+            onClick={()=>saveIntoDataBase()}
               variant="contained"
               style={{
                 backgroundColor: "#1A911E",
@@ -64,6 +111,7 @@ export default function Bigcorral(props) {
                 fontSize: "20px",
                 width: "100px",
                 height: "40px",
+                outline: "none",
               }}
             >
               เพิ่ม
@@ -72,47 +120,127 @@ export default function Bigcorral(props) {
         </Grid>
 
         <Paper
-        elevation={0}
-          style={{ paddingLeft: "10%", paddingRight: "10%", marginTop: "20px",marginBottom:"20px" }}
+          elevation={0}
+          style={{
+            paddingLeft: "10%",
+            paddingRight: "10%",
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
         >
-          <TableContainer >
-            <Table>
-              <TableHead>
-                <TableRow style={{ backgroundColor: "#FFF" }}>
-                  <TableCell
-                    align="center"
-                    className={classes.tableRightBorder}
-                    style={{ fontSize: "18px", width: "20%", padding: "10px" }}
-                  >
-                    รายการที่
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    className={classes.tableRightBorder}
-                    style={{ fontSize: "18px", width: "60%", padding: "10px" }}
-                  >
-                    ชื่อโรงเรือน
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    className={classes.tableRightBorder}
-                    style={{ fontSize: "18px", width: "20%", padding: "10px" }}
-                  >
-                    จัดการ
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {props.data.map((i,index)=>{
-                return <TableRow ><TableCell className={classes.tableRightBorder} align="center" style={{fontSize: "18px",margin: "0",padding: "5px"}}>{index+1}</TableCell><TableCell align="center" style={{fontSize: "18px",margin: "0",padding: "5px"}} className={classes.tableRightBorder}>{i.bigcorral}</TableCell><TableCell align="center" className={classes.tableRightBorder} style={{fontSize: "18px",margin: "0",padding: "5px"}}><Button variant="contained" style={{color:"#fff",backgroundColor:"red"}}>ลบ</Button></TableCell></TableRow>
-              })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {props.loading ? 
+          <div
+            className="container-fluid text-center"
+            style={{ padding: "10px" }}
+          >
+            <CircularProgress size={30} />
+          </div>
+         : <TableContainer>
+         <Table>
+           <TableHead>
+             <TableRow style={{ backgroundColor: "#FFF" }}>
+               <TableCell
+                 align="center"
+                 className={classes.tableRightBorder}
+                 style={{ fontSize: "18px", width: "20%", padding: "10px" }}
+               >
+                 รายการที่
+               </TableCell>
+               <TableCell
+                 align="center"
+                 className={classes.tableRightBorder}
+                 style={{ fontSize: "18px", width: "60%", padding: "10px" }}
+               >
+                 ชื่อโรงเรือน
+               </TableCell>
+               <TableCell
+                 align="center"
+                 className={classes.tableRightBorder}
+                 style={{ fontSize: "18px", width: "20%", padding: "10px" }}
+               >
+                 จัดการ
+               </TableCell>
+             </TableRow>
+           </TableHead>
+           <TableBody>
+             {props.data.map((i, index) => {
+               return (
+                 <TableRow key={index}>
+                   <TableCell
+                     className={classes.tableRightBorder}
+                     align="center"
+                     style={{
+                       fontSize: "18px",
+                       margin: "0",
+                       padding: "5px",
+                     }}
+                   >
+                     {index + 1}
+                   </TableCell>
+                   <TableCell
+                     align="center"
+                     style={{
+                       fontSize: "18px",
+                       margin: "0",
+                       padding: "5px",
+                     }}
+                     className={classes.tableRightBorder}
+                   >
+                     {i.bigcorral}
+                   </TableCell>
+                   <TableCell
+                     align="center"
+                     className={classes.tableRightBorder}
+                     style={{
+                       fontSize: "18px",
+                       margin: "0",
+                       padding: "5px",
+                     }}
+                   >
+                     <Button
+                       variant="contained"
+                       style={{
+                         color: "#fff",
+                         backgroundColor: "red",
+                         outline: "none",
+                       }}
+                       onClick={() => alertDelete(index)}
+                     >
+                       ลบ
+                     </Button>
+                   </TableCell>
+                 </TableRow>
+               );
+             })}
+           </TableBody>
+         </Table>
+       </TableContainer>}
          
         </Paper>
-        
       </Paper>
+      <Dialog open={openDelete} onClose={handleCloseDelete}>
+        <DialogTitle id="alert-dialog-title">
+          {"คุณต้องการลบหรือไม่?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={() => DeleteData()}
+            color="primary"
+            variant="contained"
+            style={{ outline: "none" }}
+          >
+            ตกลง
+          </Button>
+          <Button
+            onClick={() => handleCloseDelete()}
+            color="secondary"
+            variant="contained"
+            style={{ outline: "none" }}
+          >
+            ยกเลิก
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
