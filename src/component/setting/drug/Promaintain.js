@@ -49,9 +49,7 @@ export default function Promaintain(props) {
   const [openDelete, setOpenDelete] = React.useState(false);
   const [indexForDelete, setIndexforDelete] = React.useState(null);
   const classes = useStyles();
-  React.useEffect(() => {
-    console.log(props);
-  }, [props]);
+
   const handleClickOpenDelete = (index) => {
     setOpenDelete(true);
     setIndexforDelete(index);

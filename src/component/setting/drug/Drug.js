@@ -64,10 +64,7 @@ export default function Drug(props) {
   const [openIndex, setOpenIndex] = React.useState(null);
   const [openDelete, setOpenDelete] = React.useState(false);
   const [indexForDelete, setIndexforDelete] = React.useState(null);
-  React.useEffect(() => {
-    console.log(props);
-  }, [props]);
-
+ 
   const handleClickOpen = (index) => {
     setOpenIndex(index);
     setOpen(true);

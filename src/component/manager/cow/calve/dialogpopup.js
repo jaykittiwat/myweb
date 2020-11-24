@@ -21,6 +21,7 @@ export default function AlertDialog(props) {
   const [dam_id, setDam_id] = React.useState("");
   const [sire_id, setSir_id] = React.useState("");
   const [dataNoti, setDataNoti] = React.useState([]);
+  const [howTo,sethowTo] = React.useState("");
   /*const handleClickOpen = () => {
     setOpen(true);
   };*/
@@ -48,6 +49,7 @@ export default function AlertDialog(props) {
     setDam_id(props.damOfclaf);
     setSir_id(props.sirOfclaf);
     setDataNoti(props.dataNoti);
+    sethowTo(props.howclave)
   }, [props]);
 
   const recordDataOfCalf = (event, i) => {
@@ -85,7 +87,8 @@ export default function AlertDialog(props) {
           recoder: recorder,
           sire_id: sire_id,
           time: timeClave,
-          node: node
+          node: node,
+          howto:howTo
         });
       })
       .then(() => {

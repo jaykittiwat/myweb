@@ -126,7 +126,7 @@ export default function TableFatter(props) {
           axios.post("https://aipcattle.herokuapp.com/maintain/" + UID, {
             dam_id: selectedDamId[a],
             date: selectedDate,
-            type: "บำรุง",
+            type_of_maintain:  medic[0].item,
             recorder: recoder,
             operator: operator,
             time: time,

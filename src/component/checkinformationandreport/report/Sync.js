@@ -35,7 +35,7 @@ export default function Maintain(props) {
   const [mode, setMode] = React.useState("");
   const [valuesFillter, setValuseFillter] = React.useState("");
 
-  const queryDataPDF = async (id) => {
+  const queryDataPDF = async () => {
     const res3 = await axios.get(
       "https://aipcattle.herokuapp.com/settingbrand/brand/" + props.UID
     );
@@ -80,9 +80,8 @@ export default function Maintain(props) {
       return data.push([
         index + 1,
         i.dam_id,
-        i.type_of_maintain,
-        i.date,
-        i.time,
+        i.program_sync,
+        i.datepro,
         i.operator,
       ]);
     });
@@ -100,7 +99,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+          "https://aipcattle.herokuapp.com/synchronize/historyAllSynchronize/" +
             props.UID
         )
         .then((res) => {
@@ -118,7 +117,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+          "https://aipcattle.herokuapp.com/synchronize/historyAllSynchronize/" +
             props.UID +
             "/" +
             startDate +
@@ -133,7 +132,7 @@ export default function Maintain(props) {
 
     if (
       (mode === "dam_id" ||
-        mode === "type_of_maintain" ||
+        mode === "program_sync" ||
         mode === "operator") &&
       valuesFillter !== "" &&
       startDate === "" &&
@@ -142,7 +141,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/form01/" +
+          "https://aipcattle.herokuapp.com/synchronize/historyAllSynchronize/form01/" +
             props.UID +
             "/" +
             valuesFillter +
@@ -157,7 +156,7 @@ export default function Maintain(props) {
 
     if (
       (mode === "dam_id" ||
-        mode === "type_of_maintain" ||
+        mode === "program_sync" ||
         mode === "operator") &&
       valuesFillter !== "" &&
       startDate !== "" &&
@@ -166,7 +165,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/form02/" +
+          "https://aipcattle.herokuapp.com/synchronize/historyAllSynchronize/form02/" +
             props.UID +
             "/" +
             valuesFillter +
@@ -185,6 +184,7 @@ export default function Maintain(props) {
   };
 
   const reset = () => {
+    
     setMode("");
     setValuseFillter("");
     setStartDate("");
@@ -198,7 +198,7 @@ export default function Maintain(props) {
     doc.addFont("THSarabunNew.ttf", "custom", "normal");
     doc.setFont("custom");
     doc.setFontSize(26);
-    doc.text("ใบประวัติการบำรุง", 85, finalY + 23);
+    doc.text("ใบประวัติการเหนี่ยวนำ", 85, finalY + 23);
     doc.addImage(base64, 15, 5, 20, 20);
     doc.setFontSize(20);
     doc.text("ชื่อฟาร์ม:" + databrand.farm_name_TH, 14, finalY + 31);
@@ -209,19 +209,17 @@ export default function Maintain(props) {
         [
           "รายการ",
           "หมายเลขโค",
-          "โปรแกรมการบำรุง",
+          "โปรแกรมการเหนี่ยวนำ",
           "วันที่",
-          "เวลา",
           "ผู้ปฎิบัติ",
         ],
       ],
       columnStyles: {
         0: { cellWidth: 19 },
         1: { cellWidth: 40 },
-        2: { cellWidth: 40 },
+        2: { cellWidth: 50 },
         3: { cellWidth: 25 },
-        4: { cellWidth: 25 },
-        5: { cellWidth: 33 },
+        4: { cellWidth: 48 },
       },
       body: DataToPDF(),
       headStyles: {
@@ -236,17 +234,17 @@ export default function Maintain(props) {
     doc.text(
       "ลงชื่อ...........................................................",
       120,
-      doc.lastAutoTable.finalY + 200
+      doc.lastAutoTable.finalY + 190
     );
     doc.text(
       "       (      " + owner + "      )",
       120,
-      doc.lastAutoTable.finalY + 209
+      doc.lastAutoTable.finalY + 199
     );
     doc.text(
       "                     " + date() + "            ",
       120,
-      doc.lastAutoTable.finalY + 218
+      doc.lastAutoTable.finalY + 208
     );
     doc.save("table.pdf");
   };
@@ -262,7 +260,7 @@ export default function Maintain(props) {
          
           axios
             .get(
-              "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+              "https://aipcattle.herokuapp.com/synchronize/historyAllSynchronize/" +
                 props.UID
             )
             .then((res) => {
@@ -318,26 +316,20 @@ export default function Maintain(props) {
           },
         },
         {
-          value: i.type_of_maintain,
+          value: i.program_sync,
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
           },
         },
         {
-          value: convertDate(i.date),
+          value: convertDate(i.datepro),
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
           },
         },
-        {
-          value: i.time,
-          style: {
-            border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
-          },
-        },
+        
         {
           value: i.operator,
           style: {
@@ -354,7 +346,7 @@ export default function Maintain(props) {
         xSteps: 0,
         ySteps: 0,
         columns: [
-          { title: "ใบประวัติการการบำรุง" }, //pixels width
+          { title: "ใบประวัติการการเหนี่ยวนำ" }, //pixels width
         ],
         data: [],
       },
@@ -376,17 +368,12 @@ export default function Maintain(props) {
             style: { border: borders, font: { bold: true } },
           }, //pixels width
           {
-            title: "โปรแกรมการบำรุง",
+            title: "โปรแกรมการเหนี่ยวนำ",
             width: { wpx: 150 },
             style: { border: borders, font: { bold: true } },
           }, //char width
           {
             title: "วันที่",
-            width: { wpx: 100 },
-            style: { border: borders, font: { bold: true } },
-          },
-          {
-            title: "เวลา",
             width: { wpx: 100 },
             style: { border: borders, font: { bold: true } },
           },
@@ -419,7 +406,7 @@ export default function Maintain(props) {
               >
                 <option value="">ทั้งหมด</option>
                 <option value="dam_id">หมายเลขโค</option>
-                <option value="type_of_maintain">โปรแกรมการบำรุง</option>
+                <option value="program_sync">โปรแกรมการเหนี่ยวนำ</option>
                 <option value="operator">ชื่อผู้ปฎิบัติ</option>
               </Select>
             </FormControl>
@@ -525,9 +512,6 @@ export default function Maintain(props) {
                       วันที่
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
-                      เวลา
-                    </TableCell>
-                    <TableCell align="center" style={{ fontSize: "18px" }}>
                       ผู้ปฏิบัติ
                     </TableCell>
                   </TableRow>
@@ -543,13 +527,10 @@ export default function Maintain(props) {
                           {i.dam_id}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {i.type_of_maintain}
+                          {i.program_sync}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {convertDate(i.date)}
-                        </TableCell>
-                        <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {i.time}
+                          {convertDate(i.datepro)}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
                           {i.operator}
@@ -581,7 +562,7 @@ export default function Maintain(props) {
                   element={<button>Download Data With Styles</button>}
                   hideElement={true}
                 >
-                  <ExcelSheet dataSet={dataExcel} name="ใบประวัติการบำรุง" />
+                  <ExcelSheet dataSet={dataExcel} name="ใบประวัติการเหนี่ยวนำ" />
                 </ExcelFile>
               ) : null}
               <Button

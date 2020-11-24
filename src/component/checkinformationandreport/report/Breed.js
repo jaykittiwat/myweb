@@ -80,9 +80,12 @@ export default function Maintain(props) {
       return data.push([
         index + 1,
         i.dam_id,
-        i.type_of_maintain,
-        i.date,
-        i.time,
+        i.sire_id!==undefined&&i.semen!==undefined?i.transfer:i.sire_id||i.semen,
+        convertDate(i.date_breeding),
+        i.time2,
+        i.time3,
+        i.time_breeding,
+        i.number_of_breeding,
         i.operator,
       ]);
     });
@@ -100,7 +103,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+          "https://aipcattle.herokuapp.com/breed/historyAllBreed/line2/" +
             props.UID
         )
         .then((res) => {
@@ -118,7 +121,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+          "https://aipcattle.herokuapp.com/breed/historyAllBreed/" +
             props.UID +
             "/" +
             startDate +
@@ -133,7 +136,7 @@ export default function Maintain(props) {
 
     if (
       (mode === "dam_id" ||
-        mode === "type_of_maintain" ||
+        mode === "number_of_breeding" ||
         mode === "operator") &&
       valuesFillter !== "" &&
       startDate === "" &&
@@ -142,7 +145,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/form01/" +
+          "https://aipcattle.herokuapp.com/breed/historyAllBreed/form01/" +
             props.UID +
             "/" +
             valuesFillter +
@@ -157,7 +160,7 @@ export default function Maintain(props) {
 
     if (
       (mode === "dam_id" ||
-        mode === "type_of_maintain" ||
+        mode === "number_of_breeding" ||
         mode === "operator") &&
       valuesFillter !== "" &&
       startDate !== "" &&
@@ -166,7 +169,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/form02/" +
+          "https://aipcattle.herokuapp.com/breed/historyAllBreed/form02/" +
             props.UID +
             "/" +
             valuesFillter +
@@ -191,14 +194,14 @@ export default function Maintain(props) {
     setEndDate("");
   };
   const PDF = (databrand, base64) => {
-    const doc = new jsPDF();
+    const doc = new jsPDF('l');
     const content = font;
     const finalY = doc.lastAutoTable.finalY || 10;
     doc.addFileToVFS("THSarabunNew.ttf", content);
     doc.addFont("THSarabunNew.ttf", "custom", "normal");
     doc.setFont("custom");
     doc.setFontSize(26);
-    doc.text("ใบประวัติการบำรุง", 85, finalY + 23);
+    doc.text("ใบประวัติการผสมพันธุ์", 120, finalY + 23);
     doc.addImage(base64, 15, 5, 20, 20);
     doc.setFontSize(20);
     doc.text("ชื่อฟาร์ม:" + databrand.farm_name_TH, 14, finalY + 31);
@@ -209,19 +212,26 @@ export default function Maintain(props) {
         [
           "รายการ",
           "หมายเลขโค",
-          "โปรแกรมการบำรุง",
+          "วิธีการผสม",
           "วันที่",
-          "เวลา",
-          "ผู้ปฎิบัติ",
+          "เวลาเป็นสัด",
+          "เวลานิ่ง",
+          "เวลาผสม",
+          "ครั้งที่ผสม",
+          "ผู้ทำการผสม",
         ],
       ],
       columnStyles: {
         0: { cellWidth: 19 },
         1: { cellWidth: 40 },
-        2: { cellWidth: 40 },
+        2: { cellWidth: 45 },
         3: { cellWidth: 25 },
-        4: { cellWidth: 25 },
-        5: { cellWidth: 33 },
+        4: { cellWidth: 30 },
+        5: { cellWidth: 25 },
+        6: { cellWidth: 25 },
+        7: { cellWidth: 20 },
+        8: { cellWidth: 40 },
+     
       },
       body: DataToPDF(),
       headStyles: {
@@ -235,18 +245,18 @@ export default function Maintain(props) {
     });
     doc.text(
       "ลงชื่อ...........................................................",
-      120,
-      doc.lastAutoTable.finalY + 200
+      200,
+      doc.lastAutoTable.finalY + 100
     );
     doc.text(
       "       (      " + owner + "      )",
-      120,
-      doc.lastAutoTable.finalY + 209
+      200,
+      doc.lastAutoTable.finalY + 109
     );
     doc.text(
       "                     " + date() + "            ",
-      120,
-      doc.lastAutoTable.finalY + 218
+      200,
+      doc.lastAutoTable.finalY + 118
     );
     doc.save("table.pdf");
   };
@@ -262,10 +272,11 @@ export default function Maintain(props) {
          
           axios
             .get(
-              "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+              "https://aipcattle.herokuapp.com/breed/historyAllBreed/line2/" +
                 props.UID
             )
             .then((res) => {
+              
               setOwner(props.owner);
               setrows(res.data);
               setloading(false);
@@ -318,33 +329,54 @@ export default function Maintain(props) {
           },
         },
         {
-          value: i.type_of_maintain,
+          value:i.sire_id!==undefined&&i.semen!==undefined?i.transfer:i.sire_id||i.semen,
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
           },
         },
         {
-          value: convertDate(i.date),
+          value: convertDate(i.date_breeding),
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
           },
         },
         {
-          value: i.time,
+          value: i.time2,
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
           },
         },
         {
-          value: i.operator,
+          value:i.time3,
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
           },
         },
+        {
+            value:i.time_breeding,
+            style: {
+              border: borders,
+              alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            },
+          },
+          {
+              value:i.number_of_breeding,
+              style: {
+                border: borders,
+                alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+              },
+            },
+            {
+                value:i.operator,
+                style: {
+                  border: borders,
+                  alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+                },
+              }
       ];
 
       return data.push(newSet);
@@ -354,7 +386,7 @@ export default function Maintain(props) {
         xSteps: 0,
         ySteps: 0,
         columns: [
-          { title: "ใบประวัติการการบำรุง" }, //pixels width
+          { title: "ใบประวัติการการผสมพันธุ์" }, //pixels width
         ],
         data: [],
       },
@@ -376,22 +408,37 @@ export default function Maintain(props) {
             style: { border: borders, font: { bold: true } },
           }, //pixels width
           {
-            title: "โปรแกรมการบำรุง",
+            title: " วิธีการผสม",
             width: { wpx: 150 },
             style: { border: borders, font: { bold: true } },
           }, //char width
           {
             title: "วันที่",
-            width: { wpx: 100 },
+            width: { wpx: 80 },
             style: { border: borders, font: { bold: true } },
           },
           {
-            title: "เวลา",
-            width: { wpx: 100 },
+            title: "เวลาเป็นสัด",
+            width: { wpx: 70 },
             style: { border: borders, font: { bold: true } },
           },
           {
-            title: "ผู้ปฏิบัติ",
+            title: "เวลานิ่ง",
+            width: { wpx: 60 },
+            style: { border: borders, font: { bold: true } },
+          },
+          {
+            title: "เวลาผสม",
+            width: { wpx: 70 },
+            style: { border: borders, font: { bold: true } },
+          },
+          {
+            title: "ครั้งที่ผสม",
+            width: { wpx: 70},
+            style: { border: borders, font: { bold: true } },
+          },
+          {
+            title: "ผู้ทำการผสม",
             width: { wpx: 150 },
             style: { border: borders, font: { bold: true } },
           },
@@ -419,8 +466,8 @@ export default function Maintain(props) {
               >
                 <option value="">ทั้งหมด</option>
                 <option value="dam_id">หมายเลขโค</option>
-                <option value="type_of_maintain">โปรแกรมการบำรุง</option>
-                <option value="operator">ชื่อผู้ปฎิบัติ</option>
+                <option value="number_of_breeding">ครั้งที่ผสม</option>
+                <option value="operator">ชื่อผู้ผสม</option>
               </Select>
             </FormControl>
           </Grid>
@@ -519,16 +566,25 @@ export default function Maintain(props) {
                       หมายเลขโค
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
-                      โปรแกรมการบำรุง
+                      วิธีการผสม
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
                       วันที่
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
-                      เวลา
+                    เวลาเป็นสัด
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
-                      ผู้ปฏิบัติ
+                    เวลานิ่ง
+                    </TableCell>
+                    <TableCell align="center" style={{ fontSize: "18px" }}>
+                    เวลาผสม
+                    </TableCell>
+                    <TableCell align="center" style={{ fontSize: "18px" }}>
+                    ครั้งที่ผสม
+                    </TableCell>
+                    <TableCell align="center" style={{ fontSize: "18px" }}>
+                    ผู้ทำการผสม
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -543,13 +599,22 @@ export default function Maintain(props) {
                           {i.dam_id}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {i.type_of_maintain}
+                          {i.sire_id!==undefined&&i.semen!==undefined?i.transfer:i.sire_id||i.semen}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {convertDate(i.date)}
+                          {convertDate(i.date_breeding)}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {i.time}
+                          {i.time2}
+                        </TableCell>
+                        <TableCell align="center" style={{ fontSize: "16px" }}>
+                          {i.time3}
+                        </TableCell>
+                        <TableCell align="center" style={{ fontSize: "16px" }}>
+                          {i.time_breeding}
+                        </TableCell>
+                        <TableCell align="center" style={{ fontSize: "16px" }}>
+                          {i.number_of_breeding}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
                           {i.operator}
@@ -581,7 +646,7 @@ export default function Maintain(props) {
                   element={<button>Download Data With Styles</button>}
                   hideElement={true}
                 >
-                  <ExcelSheet dataSet={dataExcel} name="ใบประวัติการบำรุง" />
+                  <ExcelSheet dataSet={dataExcel} name="ใบประวัติการผสมพันธุ์" />
                 </ExcelFile>
               ) : null}
               <Button

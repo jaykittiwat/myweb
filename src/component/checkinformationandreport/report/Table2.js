@@ -2,6 +2,10 @@ import React from "react";
 import { Paper, Select, FormControl } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Maintain from "./Maintain";
+import Sync from './Sync'
+import Breed from './Breed'
+import Check from './Check'
+import Clave from './Clave'
 const useStyles = makeStyles({
   HeaderTable: {
     height: "40px",
@@ -81,15 +85,36 @@ export default function PaperDrug2(props) {
             keyData={props.posts.keycattle}
             data={props.posts.datacattle}
             UID={props.posts.UID}
+            owner={props.posts.owner}
           />
         ) : seletedSetting === "ออกรายงานการเหนี่ยวนำ" ? (
-          "sync"
+          <Sync
+            keyData={props.posts.keycattle}
+            data={props.posts.datacattle}
+            UID={props.posts.UID}
+            owner={props.posts.owner}
+          />
         ) : seletedSetting === "ออกรายงานการผสม" ? (
-          "breed"
+          <Breed
+            keyData={props.posts.keycattle}
+            data={props.posts.datacattle}
+            UID={props.posts.UID}
+            owner={props.posts.owner}
+          />
         ) : seletedSetting === "ออกรายงานการตรวจท้อง" ? (
-          "check"
+          <Check 
+            keyData={props.posts.keycattle}
+            data={props.posts.datacattle}
+            UID={props.posts.UID}
+            owner={props.posts.owner}
+          />
         ) : seletedSetting === "ออกรายงานคลอด" ? (
-          "clave"
+          <Clave
+          keyData={props.posts.keycattle}
+          data={props.posts.datacattle}
+          UID={props.posts.UID}
+          owner={props.posts.owner}
+          />
         ) : seletedSetting === "ออกรายงานโคแท้ง" ? (
           "abordtion"
         ) : seletedSetting === "ออกรายงานการักษา" ? (
