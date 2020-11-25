@@ -81,7 +81,7 @@ export default function Maintain(props) {
         index + 1,
         i.dam_id,
         i.program_sync,
-        i.datepro,
+        convertDate(i.datepro),
         i.operator,
       ]);
     });

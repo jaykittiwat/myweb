@@ -6,6 +6,8 @@ import Sync from './Sync'
 import Breed from './Breed'
 import Check from './Check'
 import Clave from './Clave'
+import Abordtion from './Abortion'
+import Treatment from './Treatment'
 const useStyles = makeStyles({
   HeaderTable: {
     height: "40px",
@@ -116,9 +118,19 @@ export default function PaperDrug2(props) {
           owner={props.posts.owner}
           />
         ) : seletedSetting === "ออกรายงานโคแท้ง" ? (
-          "abordtion"
+          <Abordtion
+          keyData={props.posts.keycattle}
+          data={props.posts.datacattle}
+          UID={props.posts.UID}
+          owner={props.posts.owner}
+          />
         ) : seletedSetting === "ออกรายงานการักษา" ? (
-          "treatmain"
+          <Treatment
+          keyData={props.posts.keycattle}
+          data={props.posts.datacattle}
+          UID={props.posts.UID}
+          owner={props.posts.owner}
+          />
         ) : (
           ""
         )}

@@ -80,9 +80,9 @@ export default function Maintain(props) {
       return data.push([
         index + 1,
         i.dam_id,
-        i.type_of_maintain,
+        i.number_of_breeding,
         convertDate(i.date),
-        i.time,
+        i.note,
         i.operator,
       ]);
     });
@@ -100,7 +100,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+          "https://aipcattle.herokuapp.com/abortion/historyAllAbortion/" +
             props.UID
         )
         .then((res) => {
@@ -118,7 +118,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
+          "https://aipcattle.herokuapp.com/abortion/historyAllAbortion/" +
             props.UID +
             "/" +
             startDate +
@@ -133,7 +133,7 @@ export default function Maintain(props) {
 
     if (
       (mode === "dam_id" ||
-        mode === "type_of_maintain" ||
+        mode === "number_of_breeding" ||
         mode === "operator") &&
       valuesFillter !== "" &&
       startDate === "" &&
@@ -142,7 +142,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/form01/" +
+          "https://aipcattle.herokuapp.com/abortion/historyAllAbortion/form01/" +
             props.UID +
             "/" +
             valuesFillter +
@@ -157,7 +157,7 @@ export default function Maintain(props) {
 
     if (
       (mode === "dam_id" ||
-        mode === "type_of_maintain" ||
+        mode === "number_of_breeding" ||
         mode === "operator") &&
       valuesFillter !== "" &&
       startDate !== "" &&
@@ -166,7 +166,7 @@ export default function Maintain(props) {
       setloading(true);
       axios
         .get(
-          "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/form02/" +
+          "https://aipcattle.herokuapp.com/abortion/historyAllAbortion/form02/" +
             props.UID +
             "/" +
             valuesFillter +
@@ -198,7 +198,7 @@ export default function Maintain(props) {
     doc.addFont("THSarabunNew.ttf", "custom", "normal");
     doc.setFont("custom");
     doc.setFontSize(26);
-    doc.text("ใบประวัติการบำรุง", 85, finalY + 23);
+    doc.text("ใบประวัติโคแท้ง", 85, finalY + 23);
     doc.addImage(base64, 15, 5, 20, 20);
     doc.setFontSize(20);
     doc.text("ชื่อฟาร์ม:" + databrand.farm_name_TH, 14, finalY + 31);
@@ -209,18 +209,18 @@ export default function Maintain(props) {
         [
           "รายการ",
           "หมายเลขโค",
-          "โปรแกรมการบำรุง",
+          "ครั้งที่ท้อง",
           "วันที่",
-          "เวลา",
+          "สาหตุ",
           "ผู้ปฎิบัติ",
         ],
       ],
       columnStyles: {
         0: { cellWidth: 19 },
         1: { cellWidth: 40 },
-        2: { cellWidth: 40 },
+        2: { cellWidth: 25 },
         3: { cellWidth: 25 },
-        4: { cellWidth: 25 },
+        4: { cellWidth: 40 },
         5: { cellWidth: 33 },
       },
       body: DataToPDF(),
@@ -262,8 +262,8 @@ export default function Maintain(props) {
          
           axios
             .get(
-              "https://aipcattle.herokuapp.com/maintain/historyAllMaintain/" +
-                props.UID
+              "https://aipcattle.herokuapp.com/abortion/historyAllAbortion/" +
+                "Frame"
             )
             .then((res) => {
               setOwner(props.owner);
@@ -318,7 +318,7 @@ export default function Maintain(props) {
           },
         },
         {
-          value: i.type_of_maintain,
+          value: i.number_of_breeding,
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
@@ -332,7 +332,7 @@ export default function Maintain(props) {
           },
         },
         {
-          value: i.time,
+          value: i.note,
           style: {
             border: borders,
             alignment: { wrapText: true, horizontal: "left", vertical: "top" },
@@ -354,7 +354,7 @@ export default function Maintain(props) {
         xSteps: 0,
         ySteps: 0,
         columns: [
-          { title: "ใบประวัติการบำรุง" }, //pixels width
+          { title: "ใบประวัติโคแท้ง" }, //pixels width
         ],
         data: [],
       },
@@ -376,7 +376,7 @@ export default function Maintain(props) {
             style: { border: borders, font: { bold: true } },
           }, //pixels width
           {
-            title: "โปรแกรมการบำรุง",
+            title: "ครั้งที่ท้อง",
             width: { wpx: 150 },
             style: { border: borders, font: { bold: true } },
           }, //char width
@@ -386,7 +386,7 @@ export default function Maintain(props) {
             style: { border: borders, font: { bold: true } },
           },
           {
-            title: "เวลา",
+            title: "สาเหตุ",
             width: { wpx: 100 },
             style: { border: borders, font: { bold: true } },
           },
@@ -419,7 +419,7 @@ export default function Maintain(props) {
               >
                 <option value="">ทั้งหมด</option>
                 <option value="dam_id">หมายเลขโค</option>
-                <option value="type_of_maintain">โปรแกรมการบำรุง</option>
+                <option value="number_of_breeding">ครั้งที่ท้อง</option>
                 <option value="operator">ชื่อผู้ปฎิบัติ</option>
               </Select>
             </FormControl>
@@ -519,13 +519,13 @@ export default function Maintain(props) {
                       หมายเลขโค
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
-                      โปรแกรมการบำรุง
+                      ครั้งที่ท้อง
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
                       วันที่
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
-                      เวลา
+                      สาเหตุ
                     </TableCell>
                     <TableCell align="center" style={{ fontSize: "18px" }}>
                       ผู้ปฏิบัติ
@@ -543,13 +543,13 @@ export default function Maintain(props) {
                           {i.dam_id}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {i.type_of_maintain}
+                          {i.number_of_breeding}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
                           {convertDate(i.date)}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
-                          {i.time}
+                          {i.note||"-"}
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
                           {i.operator}
