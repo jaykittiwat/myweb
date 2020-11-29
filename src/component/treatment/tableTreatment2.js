@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import update from "immutability-helper";
-
+import axios from "axios"
 const useStyles = makeStyles({
   HeaderTable: {
     height: "59px",
@@ -173,7 +173,7 @@ export default function SimpleTable(props) {
                 >
                   <option value="">เลือก</option>
                   <option >ฉีดใต้ผิว</option>
-                  <option >กล้ามเนื้อ</option>
+                  <option >ฉีดเข้ากล้ามเนื้อ</option>
                   <option >ทา</option>
                   <option >ราด</option>
                   <option >กิน</option>
@@ -226,6 +226,27 @@ export default function SimpleTable(props) {
   };
 
 
+  const SaveData = () => {
+    axios.post("https://aipcattle.herokuapp.com/treatment/" + props.posts.UID, {
+      datediagnose: date||"",
+      id:id||"",
+      noti_treatment: 1,
+      number_of_treatment: 0,
+      operator: operator||"",
+      recoder: recorder||"",
+      sickness: sickness||"",
+      timediagnose: time||"",
+      drug: rows||"",
+      note:note||""
+    }).then(()=>{
+      axios.post("https://aipcattle.herokuapp.com/treatment/noti/" + props.posts.UID+"/"+dateCheck, {
+        date: dateCheck,id_cattle:id,type: "ติดตามการรักษา",
+      }).then(()=>{
+        alert("บันทึกสำเร็จ")
+        window.location.reload();
+      })
+    })
+  };
 
   const setItem = () => {
     setRows([...rows, { medic: "", typeuse: "", value: "",medicNote:"",medicGroup:"" }]);
@@ -303,7 +324,7 @@ export default function SimpleTable(props) {
               <Grid item xs={12} md={4}>
                 {" "}
                 <TextField
-                value={time}
+              
                  onChange={e=>settime(e.target.value)}
                   placeholder="Placeholder"
                   variant="outlined"
@@ -331,12 +352,12 @@ export default function SimpleTable(props) {
               </Grid>{" "}
               <Grid item xs={12} md={4}>
                 <TextField
-                value={sickness}
-                  placeholder="กรอกชื่อโรค"
+               value={note}
+                  placeholder="กรอกอาการ"
                   variant="outlined"
                   size="small"
                   style={{ width: "100%" }}
-                  onChange={e=>setsickness(e.target.value)}
+                  onChange={e=>setnote(e.target.value)}
                 />
               </Grid>{" "}
               <Grid item xs={12} md={2}  style={{ fontSize: "20px" }}>
@@ -344,11 +365,13 @@ export default function SimpleTable(props) {
               </Grid>{" "}
               <Grid item  xs={12} md={4}>
                 <TextField
-                value={note}
-                  placeholder="กรอกอาการ"
+                 value={sickness}
+                
+                  placeholder="กรอกชื่อโรค"
                   variant="outlined"
                   size="small"
-                  onChange={e=>setnote(e.target.value)}
+               
+                  onChange={e=>setsickness(e.target.value)}
                   style={{ width: "100%" }}
                 />
               </Grid>
@@ -483,7 +506,7 @@ export default function SimpleTable(props) {
               marginLeft: "45%",
               width: "200px",
             }}
-            onClick={() => console.log(rows)}
+            onClick={() => SaveData()}
           >
             บันทึก
           </Button>
