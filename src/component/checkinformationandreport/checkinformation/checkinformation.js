@@ -66,8 +66,6 @@ class CheckingInformation extends Component{
                //สายพันธุ์
                
            this.setState({...this.state,data1:dataset,data2:a,loading:false})
-          }).then(()=>{
-            console.log(this.state);
           })
       }
     })
