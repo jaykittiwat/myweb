@@ -275,7 +275,7 @@ export default function TableAbortion(props) {
             </Paper>
           </Grid>
          
-          <Grid item xs={4}>
+          <Grid item xs={12} style={{textAlign:"center"}}>
             <Button
               variant="contained"
               color="primary"
