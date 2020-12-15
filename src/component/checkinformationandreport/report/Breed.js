@@ -200,12 +200,15 @@ export default function Maintain(props) {
     doc.addFileToVFS("THSarabunNew.ttf", content);
     doc.addFont("THSarabunNew.ttf", "custom", "normal");
     doc.setFont("custom");
-    doc.setFontSize(26);
-    doc.text("ใบประวัติการผสมพันธุ์", 120, finalY + 23);
-    doc.addImage(base64, 15, 5, 20, 20);
+    doc.setFontSize(24);
+    doc.text("ใบประวัติการการผสม", 125, finalY + 23);
+    doc.addImage(base64, 140, 4, 21, 21);
     doc.setFontSize(20);
-    doc.text("ชื่อฟาร์ม:" + databrand.farm_name_TH, 14, finalY + 31);
-    doc.text("เจ้าของฟาร์ม:" + owner, 14, finalY + 39);
+    doc.text("ชื่อฟาร์ม(TH):" + databrand.farm_name_TH, 14, finalY + 33);
+    doc.text("ชื่อฟาร์ม(ENG):" + databrand.farm_name_EN, 80, finalY + 33);
+    doc.text("เบอร์โทร:" + databrand.phone_num, 144, finalY + 33);
+    doc.text("เจ้าของฟาร์ม:" + owner, 200, finalY + 33); 
+    doc.text("ที่อยู่:" + databrand.farm_address, 14, finalY + 41); 
     doc.autoTable({
       startY: finalY + 43,
       head: [
@@ -246,17 +249,17 @@ export default function Maintain(props) {
     doc.text(
       "ลงชื่อ...........................................................",
       200,
-      doc.lastAutoTable.finalY + 100
+      doc.lastAutoTable.finalY + 90
     );
     doc.text(
       "       (      " + owner + "      )",
       200,
-      doc.lastAutoTable.finalY + 109
+      doc.lastAutoTable.finalY + 99
     );
     doc.text(
       "                     " + date() + "            ",
       200,
-      doc.lastAutoTable.finalY + 118
+      doc.lastAutoTable.finalY + 108
     );
     doc.save("table.pdf");
   };
@@ -325,56 +328,56 @@ export default function Maintain(props) {
           value: i.dam_id,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value:i.sire_id!==undefined&&i.semen!==undefined?i.transfer:i.sire_id||i.semen,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value: convertDate(i.date_breeding),
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value: i.time2,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value:i.time3,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
             value:i.time_breeding,
             style: {
               border: borders,
-              alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+              alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
             },
           },
           {
               value:i.number_of_breeding,
               style: {
                 border: borders,
-                alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+                alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
               },
             },
             {
                 value:i.operator,
                 style: {
                   border: borders,
-                  alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+                  alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
                 },
               }
       ];
@@ -392,7 +395,7 @@ export default function Maintain(props) {
       },
       {
         xSteps: 0,
-        ySteps: 1,
+        ySteps: 0,
         columns: [
           { title: "ชื่อฟาร์ม:"+dataBrand[0].farm_name_TH, width: { wpx: 90 } }, //pixels width
         ],
@@ -400,47 +403,55 @@ export default function Maintain(props) {
       },
       {
         xSteps: 0,
-        ySteps: 1,
+        ySteps: 0,
         columns: [
           {
             title: "หมายเลขโค",
             width: { wpx: 100 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           }, //pixels width
           {
             title: " วิธีการผสม",
             width: { wpx: 150 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           }, //char width
           {
             title: "วันที่",
             width: { wpx: 80 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           },
           {
             title: "เวลาเป็นสัด",
             width: { wpx: 70 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           },
           {
             title: "เวลานิ่ง",
             width: { wpx: 60 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+            
           },
           {
             title: "เวลาผสม",
             width: { wpx: 70 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+            
           },
           {
             title: "ครั้งที่ผสม",
             width: { wpx: 70},
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+            
           },
           {
             title: "ผู้ทำการผสม",
             width: { wpx: 150 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+           
           },
         ],
         data: data,

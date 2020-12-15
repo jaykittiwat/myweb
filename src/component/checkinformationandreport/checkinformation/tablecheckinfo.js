@@ -8,7 +8,7 @@ import Clave from './clave'
 import Abordtion from './abordtion'
 import Treatment from './treatmain'
 export default function ChartData (props){
-  const [seletedSetting, setseletedSetting] = React.useState("กราฟรายงานการบำรุง");
+  const [seletedSetting, setseletedSetting] = React.useState("กราฟแสดงสถิติการบำรุง");
   return(
     <div style={{padding:"20px",backgroundColor:"#f4f4f4",marginBottom:"50px"}}>
         <Paper style={{height:"85vh",padding:"15px"}}  variant='outlined'>
@@ -28,53 +28,53 @@ export default function ChartData (props){
               style={{ fontSize: "18px" }}
             >
               
-              <option>กราฟรายงานการบำรุง</option>
-              <option>กราฟรายงานการเหนี่ยวนำ</option>
-              <option>กราฟรายงานการผสม</option>
-              <option>กราฟรายงานการตรวจท้อง</option>
-              <option>กราฟรายงานคลอด</option>
-              <option>กราฟรายงานโคแท้ง</option>
-              <option>กราฟรายงานการักษา</option>
+              <option>กราฟแสดงสถิติการบำรุง</option>
+              <option>กราฟแสดงสถิติการเหนี่ยวนำ</option>
+              <option>กราฟแสดงสถิติการผสม</option>
+              <option>กราฟแสดงสถิติการตรวจท้อง</option>
+              <option>กราฟแสดงสถิติการคลอด</option>
+              <option>กราฟแสดงสถิติโคแท้ง</option>
+              <option>กราฟแสดงสถิติการักษา</option>
             </Select>
           </FormControl>{" "}
         </Paper>
-        {seletedSetting === "กราฟรายงานการบำรุง" ? (
+        {seletedSetting === "กราฟแสดงสถิติการบำรุง" ? (
           <Maintain
             
             UID={props.posts.UID}
           
           />
-        ) : seletedSetting === "กราฟรายงานการเหนี่ยวนำ" ? (
+        ) : seletedSetting === "กราฟแสดงสถิติการเหนี่ยวนำ" ? (
           <Sync
           
             UID={props.posts.UID}
            
           />
-        ) : seletedSetting === "กราฟรายงานการผสม" ? (
+        ) : seletedSetting === "กราฟแสดงสถิติการผสม" ? (
           <Breed
          
             UID={props.posts.UID}
            
           />
-        ) : seletedSetting === "กราฟรายงานการตรวจท้อง" ? (
+        ) : seletedSetting === "กราฟแสดงสถิติการตรวจท้อง" ? (
           <Check 
          
             UID={props.posts.UID}
             
           />
-        ) : seletedSetting === "กราฟรายงานคลอด" ? (
+        ) : seletedSetting === "กราฟแสดงสถิติการคลอด" ? (
           <Clave
          
           UID={props.posts.UID}
        
           />
-        ) : seletedSetting === "กราฟรายงานโคแท้ง" ? (
+        ) : seletedSetting === "กราฟแสดงสถิติโคแท้ง" ? (
           <Abordtion
          
           UID={props.posts.UID}
          
           />
-        ) : seletedSetting === "กราฟรายงานการักษา" ? (
+        ) : seletedSetting === "กราฟแสดงสถิติการักษา" ? (
           <Treatment
         
           UID={props.posts.UID}

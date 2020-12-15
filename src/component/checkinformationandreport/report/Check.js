@@ -197,12 +197,15 @@ export default function Maintain(props) {
     doc.addFileToVFS("THSarabunNew.ttf", content);
     doc.addFont("THSarabunNew.ttf", "custom", "normal");
     doc.setFont("custom");
-    doc.setFontSize(26);
-    doc.text("ใบประวัติการตรวจท้อง", 85, finalY + 23);
-    doc.addImage(base64, 15, 5, 20, 20);
+    doc.setFontSize(24);
+    doc.text("ใบประวัติการตรวจท้อง", 80, finalY + 23);
+    doc.addImage(base64, 95, 4, 21, 21);
     doc.setFontSize(20);
-    doc.text("ชื่อฟาร์ม:" + databrand.farm_name_TH, 14, finalY + 31);
-    doc.text("เจ้าของฟาร์ม:" + owner, 14, finalY + 39);
+    doc.text("ชื่อฟาร์ม(TH):" + databrand.farm_name_TH, 14, finalY + 33);
+    doc.text("ชื่อฟาร์ม(ENG):" + databrand.farm_name_EN, 80, finalY + 33);
+    doc.text("เบอร์โทร:" + databrand.phone_num, 144, finalY + 33);
+    doc.text("เจ้าของฟาร์ม:" + owner, 14, finalY + 41); 
+    doc.text("ที่อยู่:" + databrand.farm_address, 90, finalY + 41); 
     doc.autoTable({
       startY: finalY + 43,
       head: [
@@ -314,35 +317,35 @@ export default function Maintain(props) {
           value: i.dam_id,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value: i.result,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value: convertDate(i.dateabd),
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value: i.timeabd,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
         {
           value: i.operator,
           style: {
             border: borders,
-            alignment: { wrapText: true, horizontal: "left", vertical: "top" },
+            alignment: { wrapText: true, horizontal: "center", vertical: "top" },     
           },
         },
       ];
@@ -360,7 +363,7 @@ export default function Maintain(props) {
       },
       {
         xSteps: 0,
-        ySteps: 1,
+        ySteps: 0,
         columns: [
           { title: "ชื่อฟาร์ม:"+dataBrand[0].farm_name_TH, width: { wpx: 90 } }, //pixels width
         ],
@@ -368,32 +371,37 @@ export default function Maintain(props) {
       },
       {
         xSteps: 0,
-        ySteps: 1,
+        ySteps: 0,
         columns: [
           {
             title: "หมายเลขโค",
             width: { wpx: 100 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           }, //pixels width
           {
             title: "ผลการตรวจท้อง",
             width: { wpx: 150 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           }, //char width
           {
             title: "วันที่",
             width: { wpx: 100 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           },
           {
             title: "เวลา",
             width: { wpx: 100 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+
           },
           {
             title: "ผู้ตรวจ",
             width: { wpx: 150 },
-            style: { border: borders, font: { bold: true } },
+            style: { border: borders, font: { bold: true,sz:12 },fill: {patternType: "solid", fgColor: {rgb: "FFCCEEFF"}},alignment: { wrapText: true, horizontal: "center", vertical: "center" }, },
+            
           },
         ],
         data: data,

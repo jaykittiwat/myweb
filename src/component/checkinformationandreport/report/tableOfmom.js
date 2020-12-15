@@ -12,9 +12,8 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import IconButton from "@material-ui/core/IconButton";
-
 import {CircularProgress,Table,TableBody,Button,Grid,TextField, Paper,TableRow,TablePagination,TableHead, TableContainer,TableCell,TableFooter} from "@material-ui/core";
-
+import firebase from "./../../../backEnd/firebase";
 import ReactExport from "react-export-excel";
 import jsPDF from "jspdf";
 import {font} from './conten'
@@ -108,6 +107,8 @@ export default function TableOfmom(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [checkPage, setCheckPage] = React.useState(0);
+  const [owner, setOwner] = React.useState("");
+  const [logo, setLogo] = React.useState(null);
   const Head = [
     { cell: "หมายเลขโค", align: "left" }, // {ชื่อคอลัมล์ซ:" ",จัด(ชิดซ้าย/กลาง/ขวา)}
     { cell: "สถานะ", align: "left" },
@@ -133,33 +134,75 @@ export default function TableOfmom(props) {
   ];
   React.useEffect(() => {
   setRows(props.data)
+
+    setOwner(props.owner);
+    firebase
+    .storage()
+    .ref("Photos/" + props.UID + "/")
+    .child("Logo")
+    .getDownloadURL()
+    .then((url) => {
+      setLogo(url);
+    });
+
   }, [props]);
 
   const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
-const  queryDataPDF= ()=>{
+const  queryDataPDF= async()=>{
+
+  const res3 = await axios.get(
+    "https://aipcattle.herokuapp.com/settingbrand/brand/" + props.UID
+  );
+  const databrand = Object.values(res3.data);
 
  const setData=[]
  const setData2=[]
 rows.map(i=>{
- setData.push([i.cattle_id||"-",i.status||"-",i.breed||"-",i.color||"-",i.birth_date||"-",i.sex||"-",i.breed_method||"-",i.sire_id||"-",i.dam_id||"-",i.birth_weight||"-"])
-return setData2.push([i.wean_weight||"-",i.year_weight||"-",i.year_hip_hight||"-",i.birth_chest_head_ratio||"-",i.wean_chest_head_ratio||"-",i.wean_date||"-",i.number_of_breeding||"-",i.bigcorral||"-",i.corral||"-",i.herd_no||"-"])
+ setData.push([i.cattle_id||"-",i.status||"-",i.breed||"-",i.color||"-",convertDate(i.birth_date)||"-",i.sex||"-",i.breed_method||"-",i.sire_id||"-",i.dam_id||"-",i.birth_weight||"-"])
+return setData2.push([i.wean_weight||"-",i.year_weight||"-",i.year_hip_hight||"-",i.birth_chest_head_ratio||"-",i.wean_chest_head_ratio||"-",convertDate(i.wean_date)||"-",i.number_of_breeding||"-",i.bigcorral||"-",i.corral||"-",i.herd_no||"-"])
 })
- PDF(setData,setData2)
+toDataUrl(logo, (myBase64) => {
+  PDF(setData,setData2,databrand[0],myBase64)
+});
+
 }
 
 
-const PDF=(data,data2)=>{
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open("GET", url);
+  xhr.responseType = "blob";
+  xhr.send();
+};
+
+const PDF=(data,data2,databrand,base64)=>{
   const doc = new jsPDF('l', 'mm', 'a4')
   const content=font
   const finalY = doc.lastAutoTable.finalY || 10
   doc.addFileToVFS('THSarabunNew.ttf',content)
   doc.addFont('THSarabunNew.ttf', 'custom', 'normal');
-  doc.setFont('custom');
+  doc.setFont("custom");
+  doc.setFontSize(24);
+  doc.text("ใบแสดงข้อมูลโค", 133, finalY + 23);
+  doc.addImage(base64, 140, 4, 21, 21);
+  doc.setFontSize(20);
+  doc.text("ชื่อฟาร์ม(TH):" + databrand.farm_name_TH, 14, finalY + 33);
+  doc.text("ชื่อฟาร์ม(ENG):" + databrand.farm_name_EN, 80, finalY + 33);
+  doc.text("เบอร์โทร:" + databrand.phone_num, 144, finalY + 33);
+  doc.text("เจ้าของฟาร์ม:" + owner, 200, finalY + 33); 
+  doc.text("ที่อยู่:" + databrand.farm_address, 14, finalY + 41); 
   doc.autoTable({
-    startY: finalY + 5,
+    startY: finalY + 44,
     head: [['หมายเลขโค', 'สถานะ','สายพันธุ์โค', 'สี','วันที่เกิด','เพศ','การผสม','พ่อ','แม่',"น้ำหนักแรกเกิด(kg.)"]],
     columnStyles: {
       0: {cellWidth:30},
@@ -205,16 +248,30 @@ const PDF=(data,data2)=>{
   doc.save("table.pdf");
 }
 
+const convertDate = (dateEvent) => {
+  var date = new Date(dateEvent);
+  var newdate = new Date(date);
+  var dd = newdate.getDate();
+  var mm = newdate.getMonth() + 1;
+  var yyyy = newdate.getFullYear();
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
 
+  return dd + "/" + mm + "/" + yyyy;
+};
 const Download=()=>{
   return (
     <ExcelFile element={  <Button
       style={{
         color: "#fff",
-        backgroundColor: "green",
-        fontSize: "16px",
-        width: "auto",
-        margin: "0px"
+        backgroundColor: "#1D6F42",
+        fontSize: "18px",
+        width: "100px",
+        outline: "none",
       }}
     >
       EXCEL
@@ -301,28 +358,7 @@ const Download=()=>{
 
   return (
     <Paper square elevation={3}>
-      <Paper className={classes.HeaderSetting} elevation={3} square>
-        <Grid container>
-          <Grid item xs={6}>
-            {" "}
-            <div style={{ fontSize: "22px", marginTop: "2px" }}>
-              ข้อมูลโค
-            </div>
-          </Grid>
-          <Grid item xs={6} style={{textAlign:"right"}}>
-       
-          {Download()}
-          {" "}
-          <Button style={{
-        color: "#fff",
-        backgroundColor: "red",
-        fontSize: "16px",
-        width: "auto",
-        margin: "0px"
-      }} onClick={() =>queryDataPDF()}>PDF</Button>
-          </Grid>
-        </Grid>
-      </Paper>
+   
       <TableContainer component={Paper}>
         <Table >
           <TableHead>
@@ -366,7 +402,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.status||""
+                    row.status||"-"
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -403,7 +439,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.birth_date||""
+                    convertDate (row.birth_date)||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -546,7 +582,7 @@ const Download=()=>{
                       onChange={(event) => SETVALUES(event, index)}
                     ></TextField>
                   ) : (
-                    row.wean_date||""
+                    convertDate(row.wean_date) ||""
                   )}
                 </TableCell>
                 <TableCell style={{ fontSize: "18px" }}>
@@ -645,6 +681,27 @@ const Download=()=>{
           </TableFooter>
         </Table>
       </TableContainer>
+
+      <Paper  elevation={3} square style={{padding:"10px"}}>
+        <Grid container>
+          <Grid item xs={6}>
+           
+          </Grid>
+          <Grid item xs={6} style={{textAlign:"right"}}>
+       
+          {Download()}
+          {" "}
+          <Button  style={{
+                  color: "#fff",
+                  backgroundColor: "#E61F25",
+                  fontSize: "18px",
+                  width: "100px",
+                  outline: "none",
+                }} onClick={() =>queryDataPDF()}>PDF</Button>
+          </Grid>
+        </Grid>
+      </Paper>
+
     </Paper>
   );
 }

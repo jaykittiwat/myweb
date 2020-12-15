@@ -5,7 +5,7 @@ render(){
   return (
      <div className=" row" >
          <div className=" text-center container-fluid  posiFooterVersion"  >
-         Version  (Pre-alpha)
+          Computer Engineering | University of Phayao
          </div>
      </div>
     

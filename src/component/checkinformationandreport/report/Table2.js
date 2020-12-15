@@ -8,6 +8,7 @@ import Check from './Check'
 import Clave from './Clave'
 import Abordtion from './Abortion'
 import Treatment from './Treatment'
+import Mom from './tableOfmom'
 const useStyles = makeStyles({
   HeaderTable: {
     height: "40px",
@@ -69,6 +70,7 @@ export default function PaperDrug2(props) {
               <option>ออกรายงานคลอด</option>
               <option>ออกรายงานโคแท้ง</option>
               <option>ออกรายงานการักษา</option>
+              <option>ข้อมูลโค</option>
             </Select>
           </FormControl>{" "}
         </Paper>
@@ -132,7 +134,15 @@ export default function PaperDrug2(props) {
           owner={props.posts.owner}
           />
         ) : (
-          ""
+          <Mom
+          keydata={props.posts.keycattle} 
+          data={props.posts.datacattle} 
+          load={props.posts.loading} 
+          UID={props.posts.UID}
+          owner={props.posts.owner}
+          >
+        
+          </Mom>
         )}
       </Paper>
     </div>

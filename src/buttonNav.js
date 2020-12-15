@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Iconhome from  "@material-ui/icons/Home";
 import Iconadd from  "@material-ui/icons/NoteAdd";
 import IconDescription from  "@material-ui/icons/Description";
+import IconNote from  "@material-ui/icons/Note";
 import IconDrop from  "@material-ui/icons/ArrowDropDown";
 import IconHealing from  "@material-ui/icons/Healing";
 import Iconnoti from  "@material-ui/icons/NotificationsActive";
@@ -104,7 +105,7 @@ export function B3() {
         }}
         aria-controls="customized-menu"
         aria-haspopup="true"
-        startIcon={<IconDescription/>}
+        startIcon={<IconNote/>}
         endIcon={<IconDrop/>}
         onClick={handleClick}
       >
@@ -143,7 +144,7 @@ export function B3() {
 
         <Link to="/calve" style={{textDecoration:'none'}}>
           <StyledMenuItem>
-            <ListItemText primary="บันทึกวันคลอด" />
+            <ListItemText primary="บันทึกการคลอด" />
           </StyledMenuItem>
         </Link>
 

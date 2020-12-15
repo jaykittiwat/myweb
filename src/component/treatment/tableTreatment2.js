@@ -227,7 +227,11 @@ export default function SimpleTable(props) {
 
 
   const SaveData = () => {
-    axios.post("https://aipcattle.herokuapp.com/treatment/" + props.posts.UID, {
+    if(id===""||date===""||rows===""){
+alert("กรุณากรอกข้อมูล")
+    }
+    else{
+      axios.post("https://aipcattle.herokuapp.com/treatment/" + props.posts.UID, {
       datediagnose: date||"",
       id:id||"",
       noti_treatment: 1,
@@ -246,6 +250,8 @@ export default function SimpleTable(props) {
         window.location.reload();
       })
     })
+    }
+    
   };
 
   const setItem = () => {
@@ -280,7 +286,7 @@ export default function SimpleTable(props) {
           >
             <Grid container spacing={3}>
               <Grid item xs={12} md={2} style={{ fontSize: "20px" }}>
-                หมายเลขโค
+                <span style={{color:"red"}}>*</span>หมายเลขโค
               </Grid>{" "}
               <Grid item xs={12} md={4}>
                 {" "}
@@ -305,7 +311,7 @@ export default function SimpleTable(props) {
             />
               </Grid>{" "}
               <Grid item xs={12} md={2} style={{ fontSize: "20px" }}>
-                วันที่ตรวจ
+              <span style={{color:"red"}}>*</span>วันที่ตรวจ
               </Grid>{" "}
               <Grid item xs={12} md={4}>
                 <TextField
@@ -319,7 +325,7 @@ export default function SimpleTable(props) {
                 />
               </Grid>
               <Grid item xs={12}  md={2}style={{ fontSize: "20px" }}>
-                เวลา
+              <span style={{color:"red"}}>*</span> เวลา
               </Grid>{" "}
               <Grid item xs={12} md={4}>
                 {" "}
@@ -334,7 +340,7 @@ export default function SimpleTable(props) {
                 />
               </Grid>{" "}
               <Grid item md={2} xs={12} style={{ fontSize: "20px" }}>
-                วันติดตามผล
+              <span style={{color:"red"}}>*</span> วันติดตามผล
               </Grid>{" "}
               <Grid item xs={12} md={4}>
                 <TextField
@@ -348,7 +354,7 @@ export default function SimpleTable(props) {
                 />
               </Grid>
               <Grid item xs={12} md={2} style={{ fontSize: "20px" }}>
-                อาการ
+              <span style={{color:"red"}}>*</span> อาการ
               </Grid>{" "}
               <Grid item xs={12} md={4}>
                 <TextField
@@ -361,7 +367,7 @@ export default function SimpleTable(props) {
                 />
               </Grid>{" "}
               <Grid item xs={12} md={2}  style={{ fontSize: "20px" }}>
-                ผลการวินิจฉัย
+              <span style={{color:"red"}}>*</span>ผลการวินิจฉัย
               </Grid>{" "}
               <Grid item  xs={12} md={4}>
                 <TextField
@@ -389,7 +395,7 @@ export default function SimpleTable(props) {
                 />
               </Grid>{" "}
               <Grid item xs={12} md={2}  style={{ fontSize: "20px" }}>
-               ชื่อผู้วินิจฉัย
+              <span style={{color:"red"}}>*</span> ชื่อผู้วินิจฉัย
               </Grid>{" "}
               <Grid item  xs={12} md={4}>
                 <TextField

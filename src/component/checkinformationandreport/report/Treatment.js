@@ -196,12 +196,15 @@ export default function Maintain(props) {
     doc.addFileToVFS("THSarabunNew.ttf", content);
     doc.addFont("THSarabunNew.ttf", "custom", "normal");
     doc.setFont("custom");
-    doc.setFontSize(26);
+    doc.setFontSize(24);
     doc.text("ใบประวัติการรักษา", 85, finalY + 23);
-    doc.addImage(base64, 15, 5, 20, 20);
+    doc.addImage(base64, 95, 4, 21, 21);
     doc.setFontSize(20);
-    doc.text("ชื่อฟาร์ม:" + databrand.farm_name_TH, 14, finalY + 31);
-    doc.text("เจ้าของฟาร์ม:" + owner, 14, finalY + 39);
+    doc.text("ชื่อฟาร์ม(TH):" + databrand.farm_name_TH, 14, finalY + 33);
+    doc.text("ชื่อฟาร์ม(ENG):" + databrand.farm_name_EN, 80, finalY + 33);
+    doc.text("เบอร์โทร:" + databrand.phone_num, 144, finalY + 33);
+    doc.text("เจ้าของฟาร์ม:" + owner, 14, finalY + 41); 
+    doc.text("ที่อยู่:" + databrand.farm_address, 90, finalY + 41); 
     doc.autoTable({
       startY: finalY + 43,
       head: [
@@ -265,6 +268,7 @@ export default function Maintain(props) {
             .then((res) => {
               setOwner(props.owner);
               setrows(res.data);
+              console.log(res.data)
               setloading(false);
             })
             .then(() => {

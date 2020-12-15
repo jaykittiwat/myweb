@@ -66,7 +66,9 @@ class Maintain extends Component {
                             "rgba(65, 120, 120)",
                             "rgba(143, 110, 150)",
                             "rgba(245, 75, 110)",
-                        ],
+                        ]
+                        ,pointStyle:index === 0 ? "dash" : index === 1 ? "circle" : index === 2 ? "cross" : index === 3 ? "triangle"  : index === 4 ? "dash" : index === 5 ? "rect" : index === 6 ? "rect" : index === 7 ? "rectRounded" : index === 8 ? "rectRot" : index === 9 ? "star" : index === 10 ? "triangle" : index === 11 ? "" : index === 12 ? "" : index === 13 ? "" : index === 14 ? "" : "", 
+                        pointRadius:10,
                     }
                     setData.push(setDataset)
                     this.setState({ ...this.state, indexYears: indexYeas })
@@ -121,7 +123,9 @@ class Maintain extends Component {
                             "rgba(65, 120, 120)",
                             "rgba(143, 110, 150)",
                             "rgba(245, 75, 110)",
-                        ],
+                        ]
+                        ,pointStyle:index === 0 ? "dash" : index === 1 ? "circle" : index === 2 ? "cross" : index === 3 ? "triangle"  : index === 4 ? "dash" : index === 5 ? "rect" : index === 6 ? "rect" : index === 7 ? "rectRounded" : index === 8 ? "rectRot" : index === 9 ? "star" : index === 10 ? "triangle" : index === 11 ? "" : index === 12 ? "" : index === 13 ? "" : index === 14 ? "" : "", 
+                        pointRadius:10,
                     }
                     setData.push(setDataset)
                     this.setState({ ...this.state, indexYears: indexYeas })
@@ -184,7 +188,7 @@ class Maintain extends Component {
                                 "rgba(65, 120, 120)",
                                 "rgba(143, 110, 150)",
                                 "rgba(245, 75, 110)",
-                            ],
+                            ]
                         }
                         setData.push(setDataset)
                         this.setState({ ...this.state, indexYears: indexYeas })
@@ -228,11 +232,30 @@ class Maintain extends Component {
                             {this.state.type === "กราฟเส้น" ? <Paper elevation={1}>
                                 <Line
                                     data={this.state.chartData}
-                                    options={{
+                                    options={
+                                        
+                                        
+                                        {
+                                            scales: {
+                                                yAxes: [{
+                                                  scaleLabel: {
+                                                    display: true,
+                                                    labelString: 'จำนวนโค (ตัว)',
+                                                    fontSize: 20
+                                                  }
+                                                }],
+                                                xAxes: [{
+                                                    scaleLabel: {
+                                                      display: true,
+                                                      labelString: 'เดือน',
+                                                      fontSize: 20
+                                                    }
+                                                  }]
+                                              }     ,
                                         responsive: true,
                                         title: {
                                             display: true,
-                                            text: "กราฟการบำรุง",
+                                            text: "กราฟแสดงสถิติการบำรุง",
                                             fontSize: 25,
                                         },
                                         legend: {
@@ -253,7 +276,9 @@ class Maintain extends Component {
                                                 color: 'white'
                                             }
                                         }
-                                    }}
+                                    }
+                                    
+                                }
                                 />
                             </Paper>
                                 :
@@ -261,6 +286,22 @@ class Maintain extends Component {
                                     <Bar
                                         data={this.state.chartData}
                                         options={{
+                                            scales: {
+                                                yAxes: [{
+                                                  scaleLabel: {
+                                                    display: true,
+                                                    labelString: 'จำนวนโค (ตัว)',
+                                                    fontSize: 20
+                                                  }
+                                                }],
+                                                xAxes: [{
+                                                    scaleLabel: {
+                                                      display: true,
+                                                      labelString: 'เดือน',
+                                                      fontSize: 20
+                                                    }
+                                                  }]
+                                              }     ,
                                             responsive: true,
                                             title: {
                                                 display: true,
@@ -298,6 +339,8 @@ class Maintain extends Component {
                         </Select>
                     </FormControl>
                 </Paper>
+
+               
                 <Paper elevation={0} className="container" style={{ textAlign: "center", marginTop: "10px" }}>
                     <FormControl size="small" style={{ width: "350px" }}>
                         <Select
@@ -412,7 +455,7 @@ class Maintain extends Component {
                 <Paper elevation={0} style={{ textAlign: "center" }} className="container" >
                     <Button variant="contained" color="primary" style={{ width: "120px", marginTop: "20px", outline: "none" }} onClick={() => this.setChart()}> ตกลง</Button>
                 </Paper>
-            </div>
+                </div>
         );
     }
 }

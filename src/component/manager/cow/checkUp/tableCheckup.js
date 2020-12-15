@@ -6,6 +6,8 @@ import "date-fns";
 import {TextareaAutosize,CircularProgress,Table,TableBody,Button,Grid,FormLabel,FormGroup,Select,FormControl,TextField,Checkbox, Paper,Typography,Toolbar,TableRow,TablePagination,TableHead, TableContainer,TableCell} from "@material-ui/core";
 import TableClaves from "./table";
 import axios from "axios";
+import ImageUploader from "react-images-upload";
+import firebase from "./../../../../backEnd/firebase";
 
 export default function TableCheckUp(props) {
   let UID = props.posts.UID;
@@ -58,7 +60,8 @@ export default function TableCheckUp(props) {
   const [show_Claveday, set_show_clavedate] = useState([]);
   const [show_Affter_7Day, set_Show_Affter_7Day] = useState([]);
   const [dateNoti, setDateNoti] = useState([]); //เก็บข้อมูลในnoti ที่เลือก
-
+  const [pictures, setpictures] = React.useState([]);
+  const [picturesURL, setpicturesURL] = React.useState([]);
   const manageDateSync = (e) => {
     setDateClave(e);
     setDateCheckup(e.target.value);
@@ -154,6 +157,11 @@ export default function TableCheckUp(props) {
       saveSync();
     }
   };
+  const onDrop = (pictureFile, pictureDataURLs) => {
+    setpictures(pictureFile);
+    setpicturesURL(pictureDataURLs);
+   
+  };
   const saveClave = () => {
     const x = selected.length;
     for (let i = 0; i < x; i++) {
@@ -210,9 +218,30 @@ export default function TableCheckUp(props) {
           });
         })
         .then(() => {
-          if (i + 1 === selected.length) {
-            alert("บันทึกสำเร็จ");
-            window.location.reload();
+          if (pictures !== []&&selectedDamId.length>1) {
+            if (i + 1 === selected.length) {
+              alert("บันทึกภาพโคได้ทีละ 1 ตัว");
+        
+            }
+          }
+
+          if (pictures === []) {
+            if (i + 1 === selected.length) {
+              alert("บันทึกสำเร็จ");
+              window.location.reload();
+            }
+          } 
+          if (pictures !== []&&selectedDamId.length===1) {
+            firebase
+            .storage()
+            .ref("Photos/checkup/" +props.posts.UID +"/")
+            .child(selectedDamId[i]+"/"+dateNoti[i].date)
+            .put(pictures[0]).then(()=>{
+              if (i + 1 === selected.length) {
+                alert("บันทึกสำเร็จ");
+                window.location.reload();
+              }
+            })
           }
         });
     }
@@ -904,6 +933,20 @@ export default function TableCheckUp(props) {
                     onChange={(e) => setNote(e.target.value)}
                   />
                 </FormGroup>
+
+
+
+                <ImageUploader
+      withIcon={false}
+      buttonText="ภาพถ่าย"
+      onChange={onDrop}
+      imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+      maxFileSize={5242880}
+    />
+
+
+
+
               </Grid>
               <Grid item xs={6}>
                 {" "}
