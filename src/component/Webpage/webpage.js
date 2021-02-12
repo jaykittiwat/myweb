@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../styleWebpage.css";
-import imgcow1 from "../Img/cowWave.jpg";
+import imgcow1 from "../Img/cowWave2.jpg";
 import Header from '../../Header';
 
 class Webpage extends Component{
@@ -15,7 +15,7 @@ class Webpage extends Component{
        
        <div className="slide-right "><div style={{fontSize:"3vw"}} className="slide-right-text01">ยินดีต้อนรับเข้าสู่</div><div style={{fontSize:"2vw"}} className="slide-right-text01">เว็บแอปพลิเคชันระบบการจัดการแม่พันธุ์โค</div><div style={{fontSize:"1vw"}} className="slide-right-text01">Webapplication Dam Management System </div></div>
         </div>
-        <div className=" row ">
+        <div className=" row " >
           <div className="row footer-padding container-fluid" >
             <div className="col-md-3" >
               <li className="footer-style2">ผู้พัฒนา</li>
