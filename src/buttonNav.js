@@ -361,7 +361,7 @@ export function B8() {
 
         onClick={handleClick}
       >
-        ตั้งค่าฟาร์ม
+        ตั้งค่า
       </Button>
       <StyledMenu
         id="customized-menu"

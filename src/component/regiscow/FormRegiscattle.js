@@ -42,7 +42,7 @@ export default function FormRegiscalf(props) {
   const [dataCattle, setDataCattle] = React.useState(startStatecalf);
   const [pictures, setpictures] = React.useState([]);
   const [picturesURL, setpicturesURL] = React.useState([
-    "https://www.flaticon.com/svg/static/icons/svg/685/685686.svg",
+    "https://www.flaticon.com/svg/vstatic/svg/1829/1829589.svg?token=exp=1614258428~hmac=b4025a20a7bbcfc1782cb33304258c69",
   ]);
   const [color, setColor] = React.useState([]);
   const [strian, setStrian] = React.useState([]);
