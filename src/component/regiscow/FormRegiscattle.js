@@ -42,7 +42,7 @@ export default function FormRegiscalf(props) {
   const [dataCattle, setDataCattle] = React.useState(startStatecalf);
   const [pictures, setpictures] = React.useState([]);
   const [picturesURL, setpicturesURL] = React.useState([
-    "https://www.flaticon.com/svg/vstatic/svg/1829/1829589.svg?token=exp=1614258428~hmac=b4025a20a7bbcfc1782cb33304258c69",
+    "https://www.flaticon.com/svg/vstatic/svg/685/685681.svg?token=exp=1614330391~hmac=cd046ed216e2f836c77176341ca21295",
   ]);
   const [color, setColor] = React.useState([]);
   const [strian, setStrian] = React.useState([]);
@@ -308,7 +308,7 @@ const [setAgeShow]=React.useState("")
       <img
         src={picturesURL}
         alt="imgpedigree"
-        style={{ width: "250px", height: "250px" }}
+        style={{ width: "200px", height: "200px" }}
       />
     </Paper>
 
@@ -467,7 +467,7 @@ const [setAgeShow]=React.useState("")
         <img
           src={picturesURL}
           alt="imgpedigree"
-          style={{ width: "250px", height: "250px" }}
+          style={{ width: "200px", height: "200px" }}
         />
       </Paper>
 
@@ -633,38 +633,16 @@ const [setAgeShow]=React.useState("")
       </FormGroup>
  </Grid>
 </Grid>
-
-
-    
-
-    
-     
-
-   
-
-     
-
-
-    
-
-    
-
-
-
-
-
-
-
      {checkAge===""?"":checkAge==="cattle"?cattleState():calfState()}
       <Paper
         elevation={0}
-        style={{ width: "100%", textAlign: "center", marginTop: "20px" }}
+        style={{ width: "100%", textAlign: "center", marginTop: "5px" }}
       >
         <Button
           variant="contained"
           color="primary"
           size="large"
-          style={{ width: "250px", margin: "10px", outline: "none" }}
+          style={{ width: "250px", margin: "5px", outline: "none" }}
           onClick={()=>save()}
         >
           บันทึก

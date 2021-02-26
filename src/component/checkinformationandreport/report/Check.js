@@ -34,6 +34,7 @@ export default function Maintain(props) {
   const [logo, setLogo] = React.useState(null);
   const [mode, setMode] = React.useState("");
   const [valuesFillter, setValuseFillter] = React.useState("");
+  const [image, setImage] = React.useState(null);
 
   const queryDataPDF = async (id) => {
     const res3 = await axios.get(
@@ -253,7 +254,12 @@ export default function Maintain(props) {
     );
     doc.save("table.pdf");
   };
+const pdfCheck=(base64)=>{
+  const doc = new jsPDF();
+    doc.addImage(base64);
+    doc.save("image.pdf");
 
+}
   React.useEffect(() => {
     if (props.UID !== "") {
       axios
@@ -286,7 +292,23 @@ export default function Maintain(props) {
         });
     }
   }, [props]);
-
+  const OpneImage=(id)=>{
+    console.log(id);
+    firebase
+    .storage()
+    .ref("Photos/checkup/" + props.UID + "/")
+    .child(id+'.JPG')
+    .getDownloadURL()
+    .then((url) => {
+      const link = document.createElement('a');
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }).catch(error=>{
+      console.log("ไม่มีรูปภาพ");
+    });
+  }
   const convertDate = (dateEvent) => {
     var date = new Date(dateEvent);
     var newdate = new Date(date);
@@ -538,6 +560,9 @@ export default function Maintain(props) {
                     <TableCell align="center" style={{ fontSize: "18px" }}>
                       ผู้ตรวจ
                     </TableCell>
+                    <TableCell align="center" style={{ fontSize: "18px" }}>
+                      รูปผลการตรวจ
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -561,6 +586,9 @@ export default function Maintain(props) {
                         </TableCell>
                         <TableCell align="center" style={{ fontSize: "16px" }}>
                           {i.operator}
+                        </TableCell>
+                        <TableCell align="center" style={{ fontSize: "16px" }}>
+                         <Button variant='contained'  style={{backgroundColor:"#d500f9"}} onClick={()=>OpneImage(i.dam_id)}>ดู</Button>
                         </TableCell>
                       </TableRow>
                     );
