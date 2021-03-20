@@ -8,6 +8,7 @@ import TableClaves from "./table";
 import axios from "axios";
 import ImageUploader from "react-images-upload";
 import firebase from "./../../../../backEnd/firebase";
+import img from"../../../Img/picture.png"
 
 export default function TableCheckUp(props) {
   let UID = props.posts.UID;
@@ -61,7 +62,7 @@ export default function TableCheckUp(props) {
   const [show_Affter_7Day, set_Show_Affter_7Day] = useState([]);
   const [dateNoti, setDateNoti] = useState([]); //เก็บข้อมูลในnoti ที่เลือก
   const [pictures, setpictures] = React.useState([]);
-  const [picturesURL, setpicturesURL] = React.useState([ "https://www.flaticon.com/svg/vstatic/svg/685/685681.svg?token=exp=1614330391~hmac=cd046ed216e2f836c77176341ca21295",]);
+  const [picturesURL, setpicturesURL] = React.useState([img,]);
   const manageDateSync = (e) => {
     setDateClave(e);
     setDateCheckup(e.target.value);

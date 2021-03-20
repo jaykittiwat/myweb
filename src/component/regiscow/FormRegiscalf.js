@@ -12,6 +12,8 @@ import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import firebase from "../../backEnd/firebase";
 import axios from "axios";
+import img from"../Img/picture.png"
+
 const startStatecalf = {
   birth_id: "",
   birth_weight: "",
@@ -31,7 +33,7 @@ export default function FormRegiscalf(props) {
   const [dataCalf, setDataCalf] = React.useState(startStatecalf);
   const [pictures, setpictures] = React.useState([]);
   const [picturesURL, setpicturesURL] = React.useState([
-    "https://www.flaticon.com/svg/vstatic/svg/685/685681.svg?token=exp=1614330391~hmac=cd046ed216e2f836c77176341ca21295",
+    img,
   ]);
   const [color, setColor] = React.useState([]);
   const [strian, setStrian] = React.useState([]);

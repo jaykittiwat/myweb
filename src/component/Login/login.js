@@ -103,7 +103,7 @@ class Login extends Component {
                       <Form.Check type="checkbox" label="จำรหัสผ่าน" />
                     </Form.Group>
                     <div className="col-6 text-right">
-                      <a href="#restpassword">ลืมรหัสผ่าน</a>
+                      <a href="/repassword">ลืมรหัสผ่าน</a>
                     </div>
                   </div>
                   <Button

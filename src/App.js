@@ -21,6 +21,7 @@ import drugsetting from "./component/setting/drug/drugsetting";
 import farmsetting from "./component/setting/farm/farmsetting";
 import usersetting from "./component/setting/user/usersetting";
 import instructionmanual from "./component/instructionmanual/instructionmanual";
+import repassword from "./component/repassword/repass";
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 
@@ -32,6 +33,7 @@ class App extends Component{
       <Switch>
         <Route exact path="/" component={Monitor}/>
         <Route path="/login" component={login}/>
+        <Route path="/repassword" component={repassword}/>
         <Route path="/registor" component={Registor}/>
         <Route path="/registor2" component={Registor2}/>
         <Route path="/regiscattle" component={regiscattle}/>
