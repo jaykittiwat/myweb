@@ -17,7 +17,8 @@ class CheckUp extends Component {
       keysDate: [],
       dataNoti: [],
       UID: "",
-      fname:""
+      fname:"",
+      privilege:false
     };
   }
 
@@ -28,7 +29,7 @@ class CheckUp extends Component {
         axios
           .get("https://aipcattle.herokuapp.com/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname});
+            this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname,privilege:res.data[0].privilege==="พนักงานฟาร์ม"?true:false });
            
           })
           .then(() => {

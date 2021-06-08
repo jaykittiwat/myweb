@@ -322,6 +322,7 @@ const [howclave,setHowClave]=React.useState("")
                     <TableCell align="center">
                       {" "}
                       <Button
+                       disabled={props.posts.privilege}
                         variant="contained"
                         style={
                           index === indexRow

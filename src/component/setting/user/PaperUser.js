@@ -83,7 +83,7 @@ const upDateStatus=(index)=>{
                 <FormLabel style={{ color: "black" }}>ชื่อผู้ใช้(ID)</FormLabel>
                 <TextField
                   value={data.user || " "}
-                  disabled={disabled}
+                  disabled="true"
                   type="text"
                   className={classes.boxInput}
                   id="user"

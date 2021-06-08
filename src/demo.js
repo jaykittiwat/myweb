@@ -52,9 +52,9 @@ const [uid,setUid]= useState("");
       <AppBar position="static" style={{backgroundImage:"linear-gradient(#3128b9, #1d1499, #100874)"}}>
         <Toolbar>
           <Grid container>
-            <Grid item xs={"auto"} >
+            <Grid item xs={"auto"}  >
            
-              <B1 />
+              <B1  />
             </Grid>
             <Grid item xs={"auto"} >
               <B2 />
@@ -69,10 +69,11 @@ const [uid,setUid]= useState("");
               <B5 />
             </Grid>
             <Grid item xs={"auto"} >
-             <B6 alam={dataNoti} />
+            <B7 />
             </Grid>
             <Grid item xs={"auto"} >
-              <B7 />
+            <B6 alam={dataNoti} />
+         
             </Grid>
             <Grid item xs={"auto"} >
               <B8 />

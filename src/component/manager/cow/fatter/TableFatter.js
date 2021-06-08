@@ -38,7 +38,6 @@ export default function TableFatter(props) {
   const loading = props.posts.loading;
 
   const [UID, setUID] = useState("");
-
   const [recoder, setRecoder] = useState("");
   const [operator, setOperator] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -732,6 +731,7 @@ export default function TableFatter(props) {
         <div className="container-fluid text-center">
           <div className={classes.marTextField}>
             <Button
+            disabled={props.posts.privilege}
               variant="contained"
               color="primary"
               size="large"

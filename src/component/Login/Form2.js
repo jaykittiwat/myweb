@@ -275,7 +275,7 @@ export default function FormData(props) {
                 <option>สัตว์เลี้ยงของคุณชื่ออะไร</option>
                 <option>คุณชอบสีอะไร</option>
                 <option>แฟนของคุณคือใคร</option>
-                <option>คูณสอบเที่ยวที่ไหน</option>
+                <option>คูณชอบเที่ยวที่ไหน</option>
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="exampleForm.aswer">

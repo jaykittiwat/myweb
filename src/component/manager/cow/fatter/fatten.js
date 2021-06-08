@@ -18,7 +18,8 @@ class Fatten extends Component {
       dataNoti: [], //value ของnotification
       UID: "",
       fname:"",
-      pro_maintain:[]
+      pro_maintain:[],
+      privilege:false
     };
   }
 
@@ -29,14 +30,13 @@ class Fatten extends Component {
         axios
           .get("https://aipcattle.herokuapp.com/user/logIn/" + user.email)
           .then(res => {
-            this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname });
-            
+            this.setState({ ...this.state,UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,fname:res.data[0].fname,privilege:res.data[0].privilege==="พนักงานฟาร์ม"?true:false });   
           })
           .then(() => {
             axios
               .get("https://aipcattle.herokuapp.com/cattle/show/" + this.state.UID)
               .then(res => {
-              
+          
                 const key = Object.keys(res.data);
                 const data = Object.values(res.data);
                 const keyInduction = [];

@@ -277,6 +277,7 @@ export default function TableAbortion(props) {
          
           <Grid item xs={12} style={{textAlign:"center"}}>
             <Button
+             disabled={props.posts.privilege}
               variant="contained"
               color="primary"
               size="large"

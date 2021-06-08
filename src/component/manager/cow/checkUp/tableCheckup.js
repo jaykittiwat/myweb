@@ -970,6 +970,7 @@ export default function TableCheckUp(props) {
               style={{ marginTop: "20px", textAlign: "center" }}
             >
               <Button
+               disabled={props.posts.privilege}
                 variant="contained"
                 color="primary"
                 size="large"

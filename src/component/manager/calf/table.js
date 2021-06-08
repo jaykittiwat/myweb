@@ -130,7 +130,7 @@ export default function SimpleTable(props) {
     setDishorn(props.posts.datadishorn);
     setWean(props.posts.datawean);
     setBranding(props.posts.databranding)
-  
+
 
   }, [props]);
   const emptyRows =
@@ -387,16 +387,20 @@ export default function SimpleTable(props) {
                   row.note || "ไม่มี"
                 )}
               </TableCell>
-              <TableCell style={{ width: "200px" }} align="center">
-                {startEdit && indexRow === index && page === checkPage ? (
-                  <Save onClick={() => SAVE(index)} color="primary" />
-                ) : (
-                  <Creact
-                    onClick={() => UPDATE(index)}
-                    style={{ color: "#ffa000" }}
-                  />
-                )}
-              </TableCell>
+              {props.posts.privilege?<TableCell style={{ width: "200px" }} align="center"></TableCell>:
+                  <TableCell style={{ width: "200px" }} align="center">
+                  {startEdit && indexRow === index && page === checkPage  ? (
+                    <Save onClick={() => SAVE(index)} color="primary" />
+                  ) : (
+                    <Creact
+                    
+                      onClick={() => UPDATE(index)}
+                      style={{ color: "#ffa000" }}
+                    />
+                  )}
+                </TableCell>
+              }
+            
             </TableRow>
           ))}
           {emptyRows > 0 && (

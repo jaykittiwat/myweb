@@ -792,6 +792,7 @@ useEffect(() => {
 
         <Paper elevation={0} style={{ marginTop: "20px", textAlign: "center" }}>
           <Button
+           disabled={props.posts.privilege}
             variant="contained"
             color="primary"
             size="large"

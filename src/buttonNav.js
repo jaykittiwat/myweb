@@ -267,7 +267,7 @@ export function B7() {
     <div>
       <Button
         style={{
-          width: "170px",
+          width: "220px",
           color: "white",
           fontSize: "20px",
           outline: "none"
@@ -278,7 +278,7 @@ export function B7() {
         endIcon={<IconDrop/>}
         onClick={handleClick}
       >
-        เรียกดูข้อมูล
+        สถิติและรายงาน
       </Button>
       <StyledMenu
         id="customized-menu"

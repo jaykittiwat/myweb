@@ -803,6 +803,7 @@ export default function TableInduction(props) {
         <div className="container-fluid text-center">
           <div className={classes.marTextField}>
             <Button
+             disabled={props.posts.privilege}
               variant="contained"
               color="primary"
               size="large"

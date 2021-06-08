@@ -24,6 +24,7 @@ class Notification extends Component {
       keybranding: [],
       keydishorn: [],
       keywean: [],
+      privilege:false
     };
   }
   componentDidMount() {
@@ -38,6 +39,7 @@ class Notification extends Component {
               UID:res.data[0].privilege==="เจ้าของฟาร์ม"?res.data[0].user:res.data[0].adminfarm,
               fname: res.data[0].fname,
               lastname: res.data[0].lname,
+              privilege:res.data[0].privilege==="พนักงานฟาร์ม"?true:false 
             });
            
            
